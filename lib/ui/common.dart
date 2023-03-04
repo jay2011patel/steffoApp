@@ -37,7 +37,7 @@ Widget buttonStyle(String str,void c() ){
 
                 //add more colors
               ]),
-          borderRadius: BorderRadius.circular(30),
+          //borderRadius: BorderRadius.circular(30),
           boxShadow: <BoxShadow>[
             BoxShadow(
                 color: Color.fromRGBO(0, 0, 0, 0.57), //shadow for button

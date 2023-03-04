@@ -253,81 +253,89 @@ Widget orderRequestCard(context,Order orderReq,c()){
   String org_name=" Bhuyangdev Steel Corporation";
 
 
-  return Container(
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20)
-    ),
-    padding: EdgeInsets.all(5),
-    margin: EdgeInsets.all(5),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Container(child: Text("Order Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
-            Container(
-                width: MediaQuery.of(context).size.width-200,
-                child: IconButton(onPressed: (){
-                  http.post(
-                    Uri.parse("http://10.0.2.2:3000/orders/approveorder"),
-                    headers: <String, String>{
-                      'Content-Type': 'application/json; charset=UTF-8',
-                    },
-                    body: jsonEncode(<String, String>{
-                      "decision":"Approved",
-                      "order_id": orderReq.order_id!
-                    }),
-                  );
-                  c();
-                }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
-            IconButton(onPressed: (){
-              http.post(
-                Uri.parse("http://10.0.2.2:3000/orders/approveorder"),
-                headers: <String, String>{
-                  'Content-Type': 'application/json; charset=UTF-8',
-                },
-                body: jsonEncode(<String, String>{
-                  "decision":"Denied",
-                  "order_id": orderReq.order_id!
-                }),
-              );
-              c();
-            }, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
-          ],
-        ),
-        Container(
-          child: Row(
-            children: [
+  return Card(
+    elevation: 20,
+    shadowColor: Colors.black,
+    child: Container(
+      decoration: BoxDecoration(
+          color: Colors.white,
+          //borderRadius: BorderRadius.circular(20)
+      ),
+      padding: EdgeInsets.all(5),
+      margin: EdgeInsets.all(5),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
 
+            children: [
+              Container(child: Text("Order Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
               Container(
-                child: Text("Org Name:",style: TextStyle(fontFamily: "Roboto"),),
-                padding: EdgeInsets.symmetric(vertical: 5),
-              ),
+                  width: MediaQuery.of(context).size.width-200,
+                  child: IconButton(onPressed: (){
+                    http.post(
+                      Uri.parse("http://10.0.2.2:3000/orders/approveorder"),
+                      headers: <String, String>{
+                        'Content-Type': 'application/json; charset=UTF-8',
+                      },
+                      body: jsonEncode(<String, String>{
+                        "decision":"Approved",
+                        "order_id": orderReq.order_id!
+                      }),
+                    );
+                    c();
+                  }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
+              IconButton(onPressed: (){
+                http.post(
+                  Uri.parse("http://10.0.2.2:3000/orders/approveorder"),
+                  headers: <String, String>{
+                    'Content-Type': 'application/json; charset=UTF-8',
+                  },
+                  body: jsonEncode(<String, String>{
+                    "decision":"Denied",
+                    "order_id": orderReq.order_id!
+                  }),
+                );
+                c();
+              }, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
+            ],
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
 
-              Expanded(child: Text(orderReq.party_name!,overflow: TextOverflow.ellipsis,maxLines: 3,))
-            ],
-          ),
-        ),
-        Container(
-          child: Row(
-            children: [
-              Text("Order Date:"),
-              Text(orderReq.order_date!)
-            ],
-          ),
-        ),
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 5),
-          child: Row(
-            children: [
-              Text("Base Price"),
-              Text(orderReq.base_price!)
-            ],
-          ),
-        )
+                Container(
+                  child: Text("Org Name:",style: TextStyle(fontFamily: "Poppins_Bold"),),
+                  padding: EdgeInsets.symmetric(vertical: 5),
+                ),
 
-      ],
+                Text(orderReq.party_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Order Date:",style:TextStyle(fontFamily: "Poppins_Bold"),),
+                Text(orderReq.order_date!)
+              ],
+            ),
+          ),
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 5),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text("Base Price",style:TextStyle(fontFamily: "Poppins_Bold"),),
+                Text(orderReq.base_price!)
+              ],
+            ),
+          )
+
+        ],
+      ),
     ),
   );
 }

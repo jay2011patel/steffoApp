@@ -35,23 +35,33 @@ class _RegistrationFormState extends State<RegistrationForm>{
   TextEditingController user_type = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  onRegister() {
+  onRegister() async{
     print(selectedValue);
-    http.post(
-      Uri.parse('http://10.0.2.2:3000/user/register'),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+   var test= await http.post(
+      Uri.parse('http://urbanwebmobile.in/steffo/register.php'),
+      // headers: <String, String>{
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      // },
+      body: {
+        "firstName": first_name.text,
+        "lastName": last_name.text,
+        "email": email.text,
+        "password": password.text,
+        "mobileNumber": mob_num.text,
+        "userType": selectedValue!,
       },
-      body: jsonEncode(<String, String>{
-        'first_name': first_name.text,
-        'last_name': last_name.text,
-        'email': email.text,
-        'password': password.text,
-        'mob_num': mob_num.text,
-        'user_type': selectedValue!,
-      }),
     );
 
+   print(jsonEncode(<String, String>{
+     'firstName': first_name.text,
+     'lastName': last_name.text,
+     'email': email.text,
+     'password': password.text,
+     'mobileNumber': mob_num.text,
+     'userType': selectedValue!,
+   }));
+   print(test.request);
+   print(test.body);
   }
   @override
   Widget build(BuildContext context) {
@@ -121,7 +131,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
                 label: Text("First Name",style: TextStyle(fontFamily: "Poppins"),),
                 border: OutlineInputBorder(
                     borderSide:   BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)
+                    //borderRadius: BorderRadius.circular(20.0)
                 ),
               )
           ),
