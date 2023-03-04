@@ -182,7 +182,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                 controller: party_pan_no,
                 maxLines: 1,
                 decoration: InputDecoration(
-                    labelText: "Pan Number",
+                    labelText: "GST Number",
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     border: OutlineInputBorder(
                         // borderRadius: BorderRadius.circular(20),
