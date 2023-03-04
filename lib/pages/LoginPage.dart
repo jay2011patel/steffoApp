@@ -113,10 +113,10 @@ class _loginPageState extends State<LoginContent> {
                     prefixIcon: Icon(Icons.person),
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                    label: Text("Email",style: TextStyle(fontFamily: "Poppins"),),
+                    hintText: "Email",
                     border: OutlineInputBorder(
                         borderSide:   BorderSide.none,
-                        borderRadius: BorderRadius.circular(20.0)
+                        //borderRadius: BorderRadius.circular(20.0)
                     ),
                   )
               ),
@@ -144,11 +144,11 @@ class _loginPageState extends State<LoginContent> {
                     filled: true,
 
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                    label: Text("Password",style: TextStyle(fontFamily: "Poppins"),),
+                    hintText: "Password", //Text("Password",style: TextStyle(fontFamily: "Poppins"),),
                     border: OutlineInputBorder(
 
                         borderSide:   BorderSide.none, //<-- SEE HERE
-                        borderRadius: BorderRadius.circular(20.0)
+                        //borderRadius: BorderRadius.circular(20.0)
                     ),
                   )
               ),
