@@ -10,8 +10,11 @@ var width;
 Widget logo(BuildContext context) {
   width = MediaQuery.of(context).size.width;
   final String assetName = 'assets/images/logo.svg';
-  final Widget svg = SvgPicture.asset(assetName,
-      width: MediaQuery.of(context).size.width - 150);
+  final Widget svg = SvgPicture.asset(
+    assetName,
+    width: MediaQuery.of(context).size.width - 150,
+    height: MediaQuery.of(context).size.height / 3,
+  );
   return Container(
     padding: EdgeInsets.all(50),
     child: svg,
