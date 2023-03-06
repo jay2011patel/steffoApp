@@ -4,24 +4,29 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../UI/common.dart';
 
-class RegistrationPage extends StatelessWidget {
+class RegistrationPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-        backgroundColor: Colors.white,
-        body: Center(child: SingleChildScrollView(child: RegistrationForm())));
+      body: Center(
+        child: SingleChildScrollView(
+            child:RegistrationForm()
+        )
+      )
+    );
     throw UnimplementedError();
   }
-}
 
-class RegistrationForm extends StatefulWidget {
+}
+class RegistrationForm extends StatefulWidget{
   const RegistrationForm({super.key});
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
 }
 
-class _RegistrationFormState extends State<RegistrationForm> {
+class _RegistrationFormState extends State<RegistrationForm>{
+
   String? selectedValue;
   TextEditingController first_name = TextEditingController();
   TextEditingController last_name = TextEditingController();
@@ -30,9 +35,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
   TextEditingController user_type = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  onRegister() async {
+  onRegister() async{
     print(selectedValue);
-    var test = await http.post(
+   var test= await http.post(
       Uri.parse('http://urbanwebmobile.in/steffo/register.php'),
       // headers: <String, String>{
       //   'Content-Type': 'application/json; charset=UTF-8',
@@ -46,55 +51,49 @@ class _RegistrationFormState extends State<RegistrationForm> {
         "userType": selectedValue!,
       },
     );
-
-    print(jsonEncode(<String, String>{
-      'firstName': first_name.text,
-      'lastName': last_name.text,
-      'email': email.text,
-      'password': password.text,
-      'mobileNumber': mob_num.text,
-      'userType': selectedValue!,
-    }));
-    print(test.request);
-    print(test.body);
   }
-
   @override
   Widget build(BuildContext context) {
+
     return Center(
-        child: Container(
-      margin: EdgeInsets.fromLTRB(10, 40, 10, 20),
-      color: Color.fromRGBO(255, 255, 255, 1.0),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          logo(context),
+      child: Container(
+        margin: EdgeInsets.fromLTRB(10, 40, 10, 20),
+        color: Color.fromRGBO(255, 255, 255, 1.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 
-          //-----------------------FormDetails--------------------------
+            logo(context),
 
-          SingleChildScrollView(
+            //-----------------------FormDetails--------------------------
+
+            SingleChildScrollView(
               child: Container(
-            child: FormDetails(),
-          )),
 
-          //----------------------------Submit--------------------------------
-
-          Container(
+                child: FormDetails(),
+              )
+            ),
+            
+            //----------------------------Submit--------------------------------
+            
+            Container(
               margin: EdgeInsets.only(top: 20),
-              width: MediaQuery.of(context).size.width,
-              child: buttonStyle("Submit", () {
-                onRegister();
-              }))
-        ],
-      ),
-    ));
+                width: MediaQuery.of(context).size.width,
+                child: buttonStyle("Submit", () {
+                  onRegister();
+                }))
+          ],
+        ),
+      )
+    );
   }
 
-  Widget FormDetails() {
-    List<DropdownMenuItem<String>> dropdownItems = [];
-    List items = ["Distributor", "Dealer"];
-    List<DropdownMenuItem<String>> getItems() {
-      for (int i = 0; i < items.length; i++) {
+  Widget FormDetails(){
+    List<DropdownMenuItem<String>> dropdownItems=[];
+    List items = ["Distributor","Dealer"];
+    List<DropdownMenuItem<String>> getItems(){
+
+      for(int i = 0 ; i < items.length ;i++){
         DropdownMenuItem<String> it = DropdownMenuItem(
           value: items[i],
           child: Text(items[i]),
@@ -104,13 +103,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
       return dropdownItems;
     }
-
     return Column(
       children: [
         //--------------------------First Name------------------------------
         Container(
+
           width: width,
-          padding: EdgeInsets.fromLTRB(5, 0, 5, 5),
+          padding: EdgeInsets.fromLTRB(5,0,5,5),
           child: TextFormField(
               controller: first_name,
               textAlign: TextAlign.left,
@@ -118,16 +117,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: Icon(Icons.person),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                label: Text(
-                  "First Name",
-                  style: TextStyle(fontFamily: "Poppins"),
-                ),
+                label: Text("First Name",style: TextStyle(fontFamily: "Poppins"),),
                 border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  //borderRadius: BorderRadius.circular(20.0)
+                    borderSide:   BorderSide.none,
+                    //borderRadius: BorderRadius.circular(20.0)
                 ),
-              )),
+              )
+          ),
         ),
+
 
         //-----------------------LASTNAME-------------------------------
 
@@ -135,7 +133,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
           width: width,
-          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+          padding: EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
               controller: last_name,
               textAlign: TextAlign.left,
@@ -143,14 +141,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: Icon(Icons.person),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                label: Text(
-                  "Last Name",
-                  style: TextStyle(fontFamily: "Poppins"),
-                ),
+                label: Text("Last Name",style: TextStyle(fontFamily: "Poppins"),),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)),
-              )),
+                    borderSide:   BorderSide.none,
+                    borderRadius: BorderRadius.circular(20.0)
+                ),
+              )
+          ),
         ),
 
         //-------------------------Email------------------------------------
@@ -159,7 +156,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
           width: width,
-          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+          padding: EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
               controller: email,
               textAlign: TextAlign.left,
@@ -167,14 +164,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: Icon(Icons.person),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                label: Text(
-                  "Email",
-                  style: TextStyle(fontFamily: "Poppins"),
-                ),
+                label: Text("Email",style: TextStyle(fontFamily: "Poppins"),),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)),
-              )),
+                    borderSide:   BorderSide.none,
+                    borderRadius: BorderRadius.circular(20.0)
+                ),
+              )
+          ),
         ),
         //--------------------------------Password------------------------------
 
@@ -182,7 +178,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
           width: width,
-          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+          padding: EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
               obscureText: true,
               controller: password,
@@ -191,15 +187,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: Icon(Icons.password),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                label: Text(
-                  "Password",
-                  style: TextStyle(fontFamily: "Poppins"),
-                ),
+                label: Text("Password",style: TextStyle(fontFamily: "Poppins"),),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)),
-              )),
+                    borderSide:   BorderSide.none,
+                    borderRadius: BorderRadius.circular(20.0)
+                ),
+              )
+          ),
         ),
+
 
         //--------------------------------MobNum----------------------------
 
@@ -207,7 +203,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
           width: width,
-          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+          padding: EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
               controller: mob_num,
               textAlign: TextAlign.left,
@@ -215,14 +211,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 prefixIcon: Icon(Icons.person),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                label: Text(
-                  "Mobile Number",
-                  style: TextStyle(fontFamily: "Poppins"),
-                ),
+                label: Text("Mobile Number",style: TextStyle(fontFamily: "Poppins"),),
                 border: OutlineInputBorder(
-                    borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)),
-              )),
+                    borderSide:   BorderSide.none,
+                    borderRadius: BorderRadius.circular(20.0)
+                ),
+              )
+          ),
         ),
 
         //----------------------------UserType------------------------------
@@ -233,18 +228,22 @@ class _RegistrationFormState extends State<RegistrationForm> {
               decoration: InputDecoration(
                   hintText: "User Type",
                   filled: true,
-                  fillColor:
-                      const Color.fromRGBO(233, 236, 239, 0.792156862745098),
+                  fillColor: const Color.fromRGBO(233, 236, 239, 0.792156862745098),
                   border: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(20))),
+                      borderRadius: BorderRadius.circular(20)
+                  )
+              ),
               value: selectedValue,
               items: getItems(),
               onChanged: (String? newValue) {
                 selectedValue = newValue;
               },
-            )),
-      ],
-    );
-  }
+            )
+        ),
+
+        ],
+      );
+}
+
 }
