@@ -33,8 +33,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   String? id, supplier_id;
   Future<void> loadData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    id = await prefs.getString('user_id');
-    supplier_id = await prefs.getString('parent_id');
+    id = await prefs.getString('id');
+    supplier_id = await prefs.getString('parentId');
     setState(() {});
   }
 
@@ -53,24 +53,21 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   int itemNum = 1;
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() {
-    print("INPlaceORder");
+    //print("INPlaceORder");
     http.post(
-      Uri.parse("http://10.0.2.2:3000/orders/placeorder"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
-      },
-      body: jsonEncode(<String, String>{
-        "user_id": id!,
-        "reciever_id": supplier_id!,
-        "billing_address": id!,
-        "party_name": party_name.text,
-        "party_address": party_address.text,
-        "party_pan_num": party_pan_no.text,
-        "party_mob_num": party_mob_num.text,
-        "base_price": base_price.text,
+      Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
+      body: {
+        "userId": id!,
+        "supplierId": supplier_id!,
+        "shippingAddress": id!,
+        "partyName": party_name.text,
+        //"party_address": party_address.text,
+        "gstNumber": party_pan_no.text,
+        "mobileNumber": party_mob_num.text,
+        "basePrice": base_price.text,
         "status": "Pending",
-        "loading_type": loading_type.text,
-      }),
+        "loadingType": loading_type.text,
+      },
     );
   }
 
