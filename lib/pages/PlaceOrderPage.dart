@@ -140,14 +140,14 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
               child: TextFormField(
                 controller: party_name,
                 maxLines: 1,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                     labelText: "Name",
                     floatingLabelBehavior: FloatingLabelBehavior.never,
                     border: OutlineInputBorder(
                         // borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none),
                     filled: true,
-                    fillColor: const Color.fromRGBO(233, 236, 239,
+                    fillColor: Color.fromRGBO(233, 236, 239,
                         0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
 
                     ),

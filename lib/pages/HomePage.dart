@@ -164,49 +164,51 @@ class _HomePageState extends State<HomeContent>{
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                  //height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 255, 255, 0.5),
-                      borderRadius: BorderRadius.circular(8)
-                  ),
-                  margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
-                  child: Column(
-                    children: [
-                      Center(child: Text( "$id" ,style: TextStyle(fontFamily: "Poppins_Bold"),)),
-                      Container(
-                        height: 220,
-                        child: SingleChildScrollView(
-                          child: Container(
-                            child: ListView.builder(
-                              itemCount: orderList.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemBuilder: (context,index){
-                                return InkWell(
-                                    onTap: (){
-                                      Navigator.of(context).pushNamed("/order");
-                                    },
-                                    child:orderCard(context,orderList[index]));
-                              },
+              Card(
+                child: Container(
+                    //height: MediaQuery.of(context).size.height,
+                    decoration: BoxDecoration(
+                        color: Color.fromRGBO(255, 255, 255, 0.5),
+                        borderRadius: BorderRadius.circular(8)
+                    ),
+                    margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                    child: Column(
+                      children: [
+                        Center(child: Text( "$id" ,style: TextStyle(fontFamily: "Poppins_Bold"),)),
+                        Container(
+                          height: 220,
+                          child: SingleChildScrollView(
+                            child: Container(
+                              child: ListView.builder(
+                                itemCount: orderList.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder: (context,index){
+                                  return InkWell(
+                                      onTap: (){
+                                        Navigator.of(context).pushNamed("/order");
+                                      },
+                                      child:orderCard(context,orderList[index]));
+                                },
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                      Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          width: MediaQuery.of(context).size.width,
-                          child: TextButton(child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Text("View All")),onPressed: (){
-                            Navigator.of(context).pushNamed('/orders');
-                          },),
-                          )
+                        Container(
+                            margin: EdgeInsets.symmetric(horizontal: 20),
+                            width: MediaQuery.of(context).size.width,
+                            child: TextButton(child: Align(
+                                alignment: Alignment.centerRight,
+                                child: Text("View All")),onPressed: (){
+                              Navigator.of(context).pushNamed('/orders');
+                            },),
+                            )
 
 
-                    ],
-                  )
+                      ],
+                    )
+                ),
               ),
               Container(
                   //height: MediaQuery.of(context).size.height*0.36,
