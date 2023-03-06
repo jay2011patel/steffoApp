@@ -27,38 +27,33 @@ class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
   @override
-    Widget build(BuildContext context) {
-      SystemChrome.setPreferredOrientations([
-        DeviceOrientation.portraitUp,
-        DeviceOrientation.portraitDown,
-      ]);
-      return MaterialApp(
-        title: 'Flutter Demo',
-        home: SplashScreen(),
-        debugShowCheckedModeBanner: false,
-        routes: <String, WidgetBuilder>{
-          '/lrpage': (BuildContext context) => LRPage(),
-          '/login': (BuildContext context) => LoginPage(),
-          '/register': (BuildContext context) => RegistrationPage(),
-          '/home': (BuildContext context) => HomePage(),
-          '/inventory': (BuildContext context) => InventoryPage(),
-          '/dealer': (BuildContext context) => DealerPage(),
-          '/orderreq': (BuildContext context) => RequestPage(),
-          '/challanlist': (BuildContext context) => ChallanListPage(),
-          '/placeorder': (BuildContext context) => PlaceOrderPage(),
-          '/orders' :(BuildContext context) => OrdersPage(),
-          '/gnchallan' :(BuildContext context) => GenerateChallanPage(),
-          '/order': (BuildContext context) => OrderDetails(),
-          '/challan': (BuildContext context) => GeneratedChallan(),
-
-
-
-
-        },
-
-      );
-    }
+  Widget build(BuildContext context) {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    return MaterialApp(
+      title: 'Flutter Demo',
+      home: SplashScreen(),
+      debugShowCheckedModeBanner: false,
+      routes: <String, WidgetBuilder>{
+        '/lrpage': (BuildContext context) => LRPage(),
+        '/login': (BuildContext context) => LoginPage(),
+        '/register': (BuildContext context) => RegistrationPage(),
+        '/home': (BuildContext context) => HomePage(),
+        '/inventory': (BuildContext context) => InventoryPage(),
+        '/dealer': (BuildContext context) => DealerPage(),
+        '/orderreq': (BuildContext context) => RequestPage(),
+        '/challanlist': (BuildContext context) => ChallanListPage(),
+        '/placeorder': (BuildContext context) => PlaceOrderPage(),
+        '/orders': (BuildContext context) => OrdersPage(),
+        '/gnchallan': (BuildContext context) => GenerateChallanPage(),
+        '/order': (BuildContext context) => OrderDetails(),
+        '/challan': (BuildContext context) => GeneratedChallan(),
+      },
+    );
   }
+}
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -68,33 +63,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreen extends State<SplashScreen> {
-
   @override
   void initState() {
-    Timer(Duration(seconds: 2),
-        ()=> Navigator.of(context).pushNamed('/lrpage')
-    );
+    Timer(
+        Duration(seconds: 2), () => Navigator.of(context).pushNamed('/lrpage'));
     super.initState();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       body: Center(
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             logo(context).animate().fade(duration: Duration(seconds: 1)),
             //Form()
-
           ],
         ),
       ),
     );
   }
-  }
-
+}

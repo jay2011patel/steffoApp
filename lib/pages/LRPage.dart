@@ -4,19 +4,16 @@ import 'package:flutter/material.dart';
 import 'LoginPage.dart';
 import '../UI/common.dart';
 
-class LRPage extends StatelessWidget{
+class LRPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-
-    return  FirstScreen();
-
+    return FirstScreen();
 
     throw UnimplementedError();
   }
-
 }
 
-class FirstScreen extends StatelessWidget{
+class FirstScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -30,12 +27,11 @@ class FirstScreen extends StatelessWidget{
             Container(
               alignment: Alignment.bottomCenter,
               child: Container(
-                margin: EdgeInsets.only(top: 150),
-                padding: EdgeInsets.symmetric(horizontal: 20),
+                  margin: EdgeInsets.only(top: 150),
+                  padding: EdgeInsets.symmetric(horizontal: 20),
                   width: MediaQuery.of(context).size.width,
-                  child: buttonStyle("Login",()=>{
-                    Navigator.of(context).pushNamed('/login')
-                  })),
+                  child: buttonStyle("Login",
+                      () => {Navigator.of(context).pushNamed('/login')})),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -43,12 +39,12 @@ class FirstScreen extends StatelessWidget{
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   width: MediaQuery.of(context).size.width,
-                  child: buttonStyle("Register",()=>Navigator.of(context).pushNamed('/register'))),
+                  child: buttonStyle("Register",
+                      () => Navigator.of(context).pushNamed('/register'))),
             )
           ],
         ),
       ),
     );
   }
-
 }
