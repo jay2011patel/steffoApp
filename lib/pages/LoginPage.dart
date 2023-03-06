@@ -40,7 +40,7 @@ class _loginPageState extends State<LoginContent> {
   TextEditingController email = TextEditingController();
   TextEditingController pw = TextEditingController();
   bool userValid= true;
-  bool _isPWVisible = false;
+  bool _isPWVisible = true;
 
   onLogin(String email,String pw) async{
 
@@ -55,6 +55,28 @@ class _loginPageState extends State<LoginContent> {
 
     );
 
+    var responseData = json.decode(test.body);
+
+    print(responseData);
+    if(responseData["status"] == "200"){
+      userValid = true;
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      prefs.setString('id', responseData["id"]);
+      prefs.setString('firstName', responseData["firstName"]);
+      prefs.setString('lastName', responseData["lastName"]);
+      prefs.setString('email', responseData["email"]);
+      prefs.setString('mobileNumber', responseData["mobileNumber"]);
+      prefs.setString('parentId', responseData["parentId"]);
+
+      Navigator.of(context).pushNamed("/home");
+
+    }
+    else{
+      userValid = false;
+      setState(() {
+
+      });
+    }
   }
 
   @override
