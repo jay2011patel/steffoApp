@@ -40,43 +40,43 @@ class _loginPageState extends State<LoginContent> {
   TextEditingController email = TextEditingController();
   TextEditingController pw = TextEditingController();
   bool userValid= true;
-  bool _isPWVisible = false;
+  bool _isPWVisible = true;
 
   onLogin(String email,String pw) async{
-    final res = await http.post(
-      Uri.parse("http://10.0.2.2:3000/user/login"),
-      headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+
+    var test= await http.post(
+
+      Uri.parse('http://urbanwebmobile.in/steffo/login.php'),
+
+      body: {
+        "email": email,
+        "password": pw,
       },
-      body: jsonEncode(<String, String>{
-        'email': email,
-        'password': pw,
-      }),
+
     );
 
-    var responseData = jsonDecode(res.body);
-    if(responseData["status"] == "Success"){
-        //final user = jsonDecode(responseData["data"]);
-      print(responseData["data"][0]);
+    var responseData = json.decode(test.body);
+
+    print(responseData);
+    if(responseData["status"] == "200"){
+      userValid = true;
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      prefs.setString('user_id', responseData["data"][0]["id"].toString());
-      prefs.setString('first_name', responseData["data"][0]["first_name"]);
-      prefs.setString('last_name', responseData["data"][0]["last_name"]);
-      prefs.setString('email', responseData["data"][0]["email"]);
-      prefs.setString('password', responseData["data"][0]["password"]);
-      prefs.setString('parent_id', responseData["data"][0]["parent_id"]);
-      prefs.setString('mob_num', responseData["data"][0]["mob_num"]);
-      prefs.setString('user_type', responseData["data"][0]["user_type"]);
-      Navigator.pushNamed(context,'/home');
+      prefs.setString('id', responseData["id"]);
+      prefs.setString('firstName', responseData["firstName"]);
+      prefs.setString('lastName', responseData["lastName"]);
+      prefs.setString('email', responseData["email"]);
+      prefs.setString('mobileNumber', responseData["mobileNumber"]);
+      prefs.setString('parentId', responseData["parentId"]);
+
+      Navigator.of(context).pushNamed("/home");
 
     }
     else{
-      print(responseData);
+      userValid = false;
       setState(() {
-        userValid=false;
+
       });
     }
-
   }
 
   @override
@@ -91,7 +91,7 @@ class _loginPageState extends State<LoginContent> {
       child: SingleChildScrollView(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          //crossAxisAlignment: CrossAxisAlignment.center,
+
           children: [
 
             //--------------------------StartOfChildren---------------------------
@@ -102,7 +102,6 @@ class _loginPageState extends State<LoginContent> {
             ),
 
             Container(
-              //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
               width: width,
               padding: EdgeInsets.fromLTRB(10,0,10,5),
