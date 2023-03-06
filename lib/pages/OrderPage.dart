@@ -51,8 +51,8 @@ class _OrderPageState extends State<OrderPage> {
 
         appBar: appbar("Order"),
         body: Container(
-          decoration: BoxDecoration(
-              gradient:const LinearGradient(
+          decoration: const BoxDecoration(
+              gradient:LinearGradient(
                   transform: GradientRotation(1.57),
                   colors: [
                     Color.fromRGBO(75, 100, 160, 1.0),

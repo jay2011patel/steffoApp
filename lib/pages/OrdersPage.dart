@@ -159,14 +159,14 @@ class _OrdersPageState extends State<OrdersContent>{
     return Container(
       height: MediaQuery.of(context).size.height,
 
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              transform: GradientRotation(1.07),
-              colors: [
-                Color.fromRGBO(75, 100, 160, 1.0),
-                Color.fromRGBO(19, 59, 78, 1.0),
-              ]
-          )
+      decoration: const BoxDecoration(
+          // gradient: LinearGradient(
+          //     transform: GradientRotation(1.07),
+          //     colors: [
+          //       Color.fromRGBO(75, 100, 160, 1.0),
+          //       Color.fromRGBO(19, 59, 78, 1.0),
+          //     ]
+          // )
       ),
       child: SingleChildScrollView(
         child: Container(
@@ -176,13 +176,21 @@ class _OrdersPageState extends State<OrdersContent>{
           width: MediaQuery.of(context).size.width,
           child: CustomTabBar(
             selectedCardColor: Colors.white,
-            selectedTitleColor: Colors.black,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            selectedTitleColor: Color.fromRGBO(12, 53, 68, 1),
+            unSelectedCardColor: Color.fromRGBO(12, 53, 68, 1),
+            // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             tabBarItemExtend: ((MediaQuery.of(context).size.width)/2),
             tabBarItems: ["Sales","Purchase"],
             tabViewItems: [
-              Container(child: OrderList()),
-              Container(child: RegistrationList())
+              Card(
+                shadowColor: Colors.grey,
+                child: Container(
+                    child: OrderList()),
+              ),
+              Card(
+                child: Container(
+                    child: RegistrationList()),
+              )
             ],
             tabViewItemHeight: MediaQuery.of(context).size.height*0.7,
 
@@ -199,7 +207,7 @@ class _OrdersPageState extends State<OrdersContent>{
     return Container(
         decoration: BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 0.5),
-            borderRadius: BorderRadius.circular(8)
+            // borderRadius: BorderRadius.circular(8)
         ),
         height: 50,
         margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -230,9 +238,9 @@ class _OrdersPageState extends State<OrdersContent>{
 
   Widget RegistrationList(){
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 0.5),
-            borderRadius: BorderRadius.circular(5)
+            // borderRadius: BorderRadius.circular(5)
         ),
         height: 50,
         margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
@@ -305,16 +313,16 @@ Widget orderRequestCard(context,index){
         ),
         Container(
           child: Row(
-            children: [
+            children: const [
               Text("Order Date:"),
               Text(" 22-02-2023")
             ],
           ),
         ),
         Container(
-          padding: EdgeInsets.symmetric(vertical: 5),
+          padding: const EdgeInsets.symmetric(vertical: 5),
           child: Row(
-            children: [
+            children: const [
               Text("Credit Due:"),
               Text(" 1234567890")
             ],

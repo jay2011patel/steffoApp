@@ -42,23 +42,24 @@ class _ChallanPageState extends State<ChallanPage> {
     return Scaffold(
         appBar: appbar("Challan"),
         body: Container(
-          decoration: BoxDecoration(
-              gradient: const LinearGradient(
-                  transform: GradientRotation(1.57),
-                  colors: [
-                Color.fromRGBO(75, 100, 160, 1.0),
-                Color.fromRGBO(19, 59, 78, 1.0),
-              ])),
+          decoration: const BoxDecoration(
+          //     gradient:
+          //         LinearGradient(transform: GradientRotation(1.57), colors: [
+          //   Color.fromRGBO(75, 100, 160, 1.0),
+          //   Color.fromRGBO(19, 59, 78, 1.0),
+          // ]
+          //         )
+          ),
           child: Container(
             alignment: Alignment.topCenter,
             child: SingleChildScrollView(
                 child: Column(children: [
               Container(
                 width: MediaQuery.of(context).size.width - 20,
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                padding: EdgeInsets.all(0),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
+                margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                padding: const EdgeInsets.all(0),
+                decoration: const BoxDecoration(
+                  // borderRadius: BorderRadius.circular(20),
                   color: Colors.white,
                 ),
                 child: Row(children: [
@@ -74,7 +75,7 @@ class _ChallanPageState extends State<ChallanPage> {
                       //            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                             'Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210',
                             style: TextStyle(
                               fontSize: 10,
@@ -82,7 +83,7 @@ class _ChallanPageState extends State<ChallanPage> {
                             maxLines: 3,
                             softWrap: true),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                           style: TextStyle(color: Colors.black),
                           children: <TextSpan>[
                             TextSpan(
@@ -100,7 +101,7 @@ class _ChallanPageState extends State<ChallanPage> {
                           ],
                         )),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                           style: TextStyle(color: Colors.black),
                           children: <TextSpan>[
                             TextSpan(
@@ -118,7 +119,7 @@ class _ChallanPageState extends State<ChallanPage> {
                           ],
                         )),
                         RichText(
-                            text: TextSpan(
+                            text: const TextSpan(
                           style: TextStyle(color: Colors.black),
                           children: <TextSpan>[
                             TextSpan(
@@ -147,200 +148,212 @@ class _ChallanPageState extends State<ChallanPage> {
                   ),
                 ]),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 10.0,
               ),
-              Container(
-                  padding: EdgeInsets.all(10),
+              Card(
+                child: Container(
+                    padding: const EdgeInsets.all(10),
+                    width: MediaQuery.of(context).size.width - 20,
+                    decoration: BoxDecoration(
+                      // borderRadius: BorderRadius.circular(25),
+                      color: Colors.grey.withOpacity(0.20),
+                    ),
+                    child: Column(
+                        children: [
+                      Card(
+                        child: Container(
+                          padding:const  EdgeInsets.all(10),
+                          decoration: BoxDecoration(
+                            // borderRadius: BorderRadius.circular(20),
+                            color: Colors.white.withOpacity(0.50),
+                          ),
+                          child: Column(
+                            children: [
+                              Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: const [
+                                  Text(
+                                    "Shipping Address :",
+                                    style: TextStyle(
+                                      fontSize: 10,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                  Expanded(
+                                    // padding: EdgeInsets.only(bottom: 25, top: 10),
+                                    child: Text(
+                                      "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
+                                      style: TextStyle(fontSize: 10),
+                                      maxLines: 4,
+                                      softWrap: true,
+                                    ),
+                                  )
+                                ],
+                              ),
+                              const SizedBox(
+                                height: 5.0,
+                              ),
+                              Row(
+                                children: [
+                                  const Text("Contact:",
+                                      style: TextStyle(
+                                          fontSize: 10,
+                                          fontWeight: FontWeight.bold)),
+                                  Text("$ch_s_contact",
+                                      style:const  TextStyle(fontSize: 10))
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Card(
+                        child: Container(
+                            padding:const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.85),
+                            ),
+                            child: Column(
+                              children: [
+                                Row(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: const [
+                                    Text("Billing Address :",
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold)),
+                                    Expanded(
+                                      // padding: EdgeInsets.only(bottom: 25, top: 10),
+                                      child: Text(
+                                          "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
+                                          style: TextStyle(fontSize: 10),
+                                          maxLines: 4,
+                                          softWrap: true),
+                                    )
+                                  ],
+                                ),
+                                const SizedBox(
+                                  height: 5.0,
+                                ),
+                                Row(
+                                  children: const [
+                                    Text("Contact:",
+                                        style: TextStyle(
+                                            fontSize: 10,
+                                            fontWeight: FontWeight.bold)),
+                                    Text("Contact no",
+                                        style: TextStyle(fontSize: 10))
+                                  ],
+                                ),
+                              ],
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Card(
+                        child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.85),
+                            ),
+                            child: Row(
+                              children: const [
+                                Text("Loading Type:",
+                                    style: TextStyle(
+                                        fontSize: 10, fontWeight: FontWeight.bold)),
+                                Text("Loading Type", style: TextStyle(fontSize: 10))
+                              ],
+                            )),
+                      ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Card(
+                        child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              // borderRadius: BorderRadius.circular(20),
+                              color: Colors.white.withOpacity(0.85),
+                            ),
+                            child: Row(
+                              children: const [
+                                Text("Challan no:",
+                                    style: TextStyle(
+                                        fontSize: 10, fontWeight: FontWeight.bold)),
+                                Text("Challan no", style: TextStyle(fontSize: 10))
+                              ],
+                            )),
+                      ),
+                    ]
+                    )
+                ),
+              ),
+              Card(
+                child: Container(
+                  padding: const EdgeInsets.all(10),
                   width: MediaQuery.of(context).size.width - 20,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(25),
-                    color: Colors.white.withOpacity(0.70),
+                    // borderRadius: BorderRadius.circular(25),
+                    color: Colors.grey.withOpacity(0.20),
                   ),
-                  child: Column(children: [
+                  child: Column(
+                      children: [
                     Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white.withOpacity(0.85),
-                      ),
-                      child: Column(
-                        children: [
-                          Row(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                "Shipping Address :",
-                                style: TextStyle(
-                                  fontSize: 10,
-                                  fontWeight: FontWeight.bold,
-                                ),
-                              ),
-                              Expanded(
-                                // padding: EdgeInsets.only(bottom: 25, top: 10),
-                                child: Text(
-                                  "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
-                                  style: TextStyle(fontSize: 10),
-                                  maxLines: 4,
-                                  softWrap: true,
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(
-                            height: 5.0,
-                          ),
-                          Row(
-                            children: [
-                              Text("Contact:",
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold)),
-                              Text("$ch_s_contact",
-                                  style: TextStyle(fontSize: 10))
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white.withOpacity(0.85),
+                          // borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                        ),
+                        child: Row(
+                          children: const [
+                            Text("Transporter name:",
+                                style: TextStyle(
+                                    fontSize: 10, fontWeight: FontWeight.bold)),
+                            Text("Transporter", style: TextStyle(fontSize: 10))
+                          ],
+                        )
+                    ),
+                      const SizedBox(
+                        height: 10.0,
+                      ),
+                      Column(children: [
+                        Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          // borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
                         ),
                         child: Column(
                           children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Billing Address :",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
-                                Expanded(
-                                  // padding: EdgeInsets.only(bottom: 25, top: 10),
-                                  child: Text(
-                                      "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
-                                      style: TextStyle(fontSize: 10),
-                                      maxLines: 4,
-                                      softWrap: true),
-                                )
-                              ],
-                            ),
-                            SizedBox(
+                            // Row(
+                            //   crossAxisAlignment: CrossAxisAlignment.start,
+                            //   children: const [
+                            //     Text("Transporter Address :",
+                            //         style: TextStyle(
+                            //             fontSize: 10,
+                            //             fontWeight: FontWeight.bold)),
+                            //     Expanded(
+                            //       // padding: EdgeInsets.only(bottom: 25, top: 10),
+                            //       child: Text(
+                            //           "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
+                            //           style: TextStyle(fontSize: 10),
+                            //           maxLines: 4,
+                            //           softWrap: true),
+                            //     )
+                            //   ],
+                            // ),
+                            const SizedBox(
                               height: 5.0,
                             ),
                             Row(
-                              children: [
-                                Text("Contact:",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
-                                Text("Contact no",
-                                    style: TextStyle(fontSize: 10))
-                              ],
-                            ),
-                          ],
-                        )),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white.withOpacity(0.85),
-                        ),
-                        child: Row(
-                          children: [
-                            Text("Loading Type:",
-                                style: TextStyle(
-                                    fontSize: 10, fontWeight: FontWeight.bold)),
-                            Text("Loading Type", style: TextStyle(fontSize: 10))
-                          ],
-                        )),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white.withOpacity(0.85),
-                        ),
-                        child: Row(
-                          children: [
-                            Text("Challan no:",
-                                style: TextStyle(
-                                    fontSize: 10, fontWeight: FontWeight.bold)),
-                            Text("Challan no", style: TextStyle(fontSize: 10))
-                          ],
-                        )),
-                  ])),
-              SizedBox(
-                height: 10.0,
-              ),
-              Container(
-                padding: EdgeInsets.all(10),
-                width: MediaQuery.of(context).size.width - 20,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(25),
-                  color: Colors.white.withOpacity(0.70),
-                ),
-                child: Column(children: [
-                  Container(
-                      padding: EdgeInsets.all(10),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20),
-                        color: Colors.white.withOpacity(0.85),
-                      ),
-                      child: Row(
-                        children: [
-                          Text("Transporter name:",
-                              style: TextStyle(
-                                  fontSize: 10, fontWeight: FontWeight.bold)),
-                          Text("Transporter", style: TextStyle(fontSize: 10))
-                        ],
-                      )),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                      child: Column(children: [
-                    Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white.withOpacity(0.85),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text("Transporter Address :",
-                                    style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
-                                Expanded(
-                                  // padding: EdgeInsets.only(bottom: 25, top: 10),
-                                  child: Text(
-                                      "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
-                                      style: TextStyle(fontSize: 10),
-                                      maxLines: 4,
-                                      softWrap: true),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 5.0,
-                            ),
-                            Row(
-                              children: [
+                              children: const [
                                 Text("Transporter Contact:",
                                     style: TextStyle(
                                         fontSize: 10,
@@ -350,53 +363,54 @@ class _ChallanPageState extends State<ChallanPage> {
                               ],
                             ),
                           ],
-                        )),
-                    SizedBox(
-                      height: 10.0,
-                    ),
-                    Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white.withOpacity(0.85),
+                        )
                         ),
-                        child: Row(
-                          children: [
+                        const SizedBox(
+                      height: 10.0,
+                        ),
+                        Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: BoxDecoration(
+                          // borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
+                        ),
+                          child: Row(
+                          children: const [
                             Text("LR no:",
                                 style: TextStyle(
                                     fontSize: 10, fontWeight: FontWeight.bold)),
                             Text("LR", style: TextStyle(fontSize: 10))
                           ],
                         )),
-                    SizedBox(
+                        const SizedBox(
                       height: 10.0,
-                    ),
-                    Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white.withOpacity(0.85),
+                        ),
+                        Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          // borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
                         ),
                         child: Row(
-                          children: [
+                          children: const [
                             Text("Vehicle no",
                                 style: TextStyle(
                                     fontSize: 10, fontWeight: FontWeight.bold)),
                             Text("Vehicle", style: TextStyle(fontSize: 10))
                           ],
                         )),
-                    SizedBox(
+                        const SizedBox(
                       height: 10.0,
-                    ),
-                    Container(
-                        padding: EdgeInsets.all(10),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(20),
-                          color: Colors.white.withOpacity(0.85),
+                        ),
+                        Container(
+                        padding: const EdgeInsets.all(10),
+                        decoration: const BoxDecoration(
+                          // borderRadius: BorderRadius.circular(20),
+                          color: Colors.white,
                         ),
                         child: Row(
                           //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
+                          children: const [
                             Text("Date :",
                                 style: TextStyle(
                                     fontSize: 10, fontWeight: FontWeight.bold)),
@@ -405,30 +419,37 @@ class _ChallanPageState extends State<ChallanPage> {
                               style: TextStyle(fontSize: 10),
                             )
                           ],
-                        )),
-                  ]))
-                ]),
+                        )
+                        ),
+                      ]
+                      )
+                    ]
+                  ),
+                  ),
               ),
-              SizedBox(
+
+
+
+              const SizedBox(
                 height: 10.0,
               ),
               Center(
                 child: Container(
-                    padding: EdgeInsets.all(10),
-                    margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
+                    padding: const EdgeInsets.all(10),
+                    margin: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                     width: MediaQuery.of(context).size.width - 20,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(25),
-                      color: Colors.white.withOpacity(0.70),
+                      // borderRadius: BorderRadius.circular(25),
+                      color: Colors.grey.withOpacity(0.20),
                     ),
                     child: Column(
                       children: [
-                        Text(
+                        const Text(
                           "Items:",
                           style: TextStyle(
                               fontWeight: FontWeight.bold, fontSize: 20),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5.0,
                         ),
                         Container(
@@ -436,9 +457,10 @@ class _ChallanPageState extends State<ChallanPage> {
                           width: MediaQuery.of(context).size.width - 20,
                           // padding: EdgeInsets.only(
                           //     top: 10, bottom: 10, left: 10, right: 10),
-                          decoration: BoxDecoration(
+                          decoration: const BoxDecoration(
                               color: Colors.white,
-                              borderRadius: BorderRadius.circular(20.0)),
+                              // borderRadius: BorderRadius.circular(20.0)
+                          ),
                           // alignment: Alignment.center,
                           // padding: const EdgeInsets.only(top: 20),
                           // child: SingleChildScrollView(
@@ -448,15 +470,15 @@ class _ChallanPageState extends State<ChallanPage> {
                             scrollDirection: Axis.vertical,
                             child: Center(
                               child: DataTable(
-                                headingTextStyle: TextStyle(
+                                headingTextStyle: const TextStyle(
                                     fontWeight: FontWeight.bold,
                                     color: Colors.black),
-                                columns: [
+                                columns: const [
                                   DataColumn(label: Text("Sr. No.")),
                                   DataColumn(label: Text("Item name")),
                                   DataColumn(label: Text("Quantity"))
                                 ],
-                                rows: [
+                                rows: const [
                                   DataRow(cells: [
                                     DataCell(Text("1")),
                                     DataCell(Text("FE500")),

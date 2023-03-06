@@ -9,8 +9,7 @@ class RegistrationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return const Scaffold(
         backgroundColor: Colors.white,
-        body: Center(child: SingleChildScrollView(child: RegistrationForm())));
-    throw UnimplementedError();
+        body: Center(child: SingleChildScrollView(child: RegistrationForm()))); throw UnimplementedError();
   }
 }
 
@@ -114,7 +113,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           child: TextFormField(
               controller: first_name,
               textAlign: TextAlign.left,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.person),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -135,11 +134,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
           //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
           width: width,
-          padding: EdgeInsets.fromLTRB(5, 5, 5, 5),
+          padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
           child: TextFormField(
               controller: last_name,
               textAlign: TextAlign.left,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.person),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -149,7 +148,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 ),
                 border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)),
+                    // borderRadius: BorderRadius.circular(20.0)
+                ),
               )),
         ),
 
@@ -163,7 +163,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           child: TextFormField(
               controller: email,
               textAlign: TextAlign.left,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.person),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -173,7 +173,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 ),
                 border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)),
+                    // borderRadius: BorderRadius.circular(20.0)
+                ),
               )),
         ),
         //--------------------------------Password------------------------------
@@ -187,7 +188,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
               obscureText: true,
               controller: password,
               textAlign: TextAlign.left,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.password),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -197,7 +198,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 ),
                 border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)),
+                    // borderRadius: BorderRadius.circular(20.0)
+                ),
               )),
         ),
 
@@ -211,7 +213,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           child: TextFormField(
               controller: mob_num,
               textAlign: TextAlign.left,
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 prefixIcon: Icon(Icons.person),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -221,7 +223,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 ),
                 border: OutlineInputBorder(
                     borderSide: BorderSide.none,
-                    borderRadius: BorderRadius.circular(20.0)),
+                    // borderRadius: BorderRadius.circular(20.0)
+                ),
               )),
         ),
 
@@ -230,14 +233,16 @@ class _RegistrationFormState extends State<RegistrationForm> {
         Container(
             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
             child: DropdownButtonFormField(
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                   hintText: "User Type",
                   filled: true,
                   fillColor:
-                      const Color.fromRGBO(233, 236, 239, 0.792156862745098),
+                      Color.fromRGBO(233, 236, 239, 0.792156862745098),
                   border: OutlineInputBorder(
                       borderSide: BorderSide.none,
-                      borderRadius: BorderRadius.circular(20))),
+                      // borderRadius: BorderRadius.circular(20)
+                  )
+              ),
               value: selectedValue,
               items: getItems(),
               onChanged: (String? newValue) {

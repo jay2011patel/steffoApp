@@ -25,7 +25,7 @@ Widget logo(BuildContext context) {
 
 Widget buttonStyle(String str, void c()) {
   return DecoratedBox(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           gradient: LinearGradient(colors: [
             Color.fromRGBO(75, 100, 160, 1.0),
             Color.fromRGBO(19, 59, 78, 1.0),

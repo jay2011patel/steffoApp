@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       title: 'Flutter Demo',
-      home: SplashScreen(),
+      home: OrderDetails(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lrpage': (BuildContext context) => LRPage(),
