@@ -115,31 +115,30 @@ class _OrdersPageState extends State<OrdersContent>{
   Future<void> loadData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var m = id;
-    id = await prefs.getString('user_id');
+    id = await prefs.getString('id');
 
     if(m!=id){
 
       final res = await http.post(
-        Uri.parse("http://10.0.2.2:3000/orders/getpndgorders"),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
+        Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
+
+        body: {
           "id": id!
-        }),
+        },
       );
       var responseData = jsonDecode(res.body);
       print(responseData);
 
+
       for(int i = 0;i<responseData["data"].length;i++){
         Order req = Order();
-        req.status=responseData["data"][i]["status"];
-        req.party_name = responseData["data"][i]["party_name"];
+        req.status=responseData["data"][i]["orderStatus"];
+        req.party_name = responseData["data"][i]["partyName"];
         req.order_date = responseData["data"][i]["createdAt"];
-        req.base_price = responseData["data"][i]["base_price"];
+        req.base_price = responseData["data"][i]["basePrice"];
         req.order_id = responseData["data"][i]["id"].toString();
         req.user_id = responseData["data"][i]["user_id"];
-        req.reciever_id = responseData["data"][i]["reciever_id"];
+        req.reciever_id = responseData["data"][i]["supplier_id"];
         //print(req);
         if(req.status!="Rejected")  {
           if(id == req.user_id){
