@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../UI/common.dart';
@@ -163,9 +164,8 @@ class _RegistrationFormState extends State<RegistrationForm>{
 
         Container(
           //margin: EdgeInsets.fromLTRB(20, 20,20,0),
-
           width: width,
-          padding: EdgeInsets.fromLTRB(5,5,5,5),
+          padding: const EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
             autovalidateMode: AutovalidateMode.always,
               controller: email,
@@ -197,7 +197,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
               controller: password,
               textAlign: TextAlign.left,
               decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.password),
+                prefixIcon: Icon(Icons.lock),
                 filled: true,
                 fillColor: Color.fromRGBO(233, 236, 239, 1.0),
                 labelText: "Password",
@@ -207,11 +207,8 @@ class _RegistrationFormState extends State<RegistrationForm>{
                     borderSide:   BorderSide.none,
                     // borderRadius: BorderRadius.circular(20.0)
                 ),
+
               ),
-            validator: MultiValidator([
-              RequiredValidator(errorText: "Required"),
-              MinLengthValidator(6, errorText: "Minimum 6 digit required")
-            ])
             // validator: RequiredValidator(errorText: "Required"),
 
           ),
@@ -226,6 +223,8 @@ class _RegistrationFormState extends State<RegistrationForm>{
           width: width,
           padding: EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
+            keyboardType: TextInputType.number,
+            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               controller: mob_num,
               textAlign: TextAlign.left,
               decoration: const InputDecoration(
@@ -239,7 +238,13 @@ class _RegistrationFormState extends State<RegistrationForm>{
                     borderSide:   BorderSide.none,
                     // borderRadius: BorderRadius.circular(20.0)
                 ),
-              )
+              ),
+
+            validator: MultiValidator([
+              MaxLengthValidator(10, errorText: "No More"),
+              RequiredValidator(errorText: "Required"),
+
+            ]),
           ),
         ),
 

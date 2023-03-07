@@ -109,7 +109,7 @@ class _loginPageState extends State<LoginContent> {
               child: TextFormField(
                   controller: email,
                   textAlign: TextAlign.left,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.person),
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),

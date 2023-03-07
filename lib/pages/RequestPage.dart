@@ -267,7 +267,7 @@ Widget orderRequestCard(context,Order orderReq,c()){
     elevation: 20,
     shadowColor: Colors.black,
     child: Container(
-      decoration: BoxDecoration(
+      decoration: const BoxDecoration(
           color: Colors.white,
           //borderRadius: BorderRadius.circular(20)
       ),
@@ -279,7 +279,7 @@ Widget orderRequestCard(context,Order orderReq,c()){
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Container(child: Text("Order Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
+              Container(child: const Text("Order Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
               Container(
                   //width: MediaQuery.of(context).size.width-200,
                   child: IconButton(onPressed: () async {
