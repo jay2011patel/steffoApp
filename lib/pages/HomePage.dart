@@ -191,9 +191,9 @@ class _HomePageState extends State<HomeContent>{
                         ),
                       ),
                       Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          margin: const EdgeInsets.symmetric(horizontal: 20),
                           width: MediaQuery.of(context).size.width,
-                          child: TextButton(child: Align(
+                          child: TextButton(child: const Align(
                               alignment: Alignment.centerRight,
                               child: Text("View All")),onPressed: (){
                             Navigator.of(context).pushNamed('/orders');
@@ -207,13 +207,13 @@ class _HomePageState extends State<HomeContent>{
               Container(
                   //height: MediaQuery.of(context).size.height*0.36,
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 255, 255, 0.5),
+                      color: const Color.fromRGBO(255, 255, 255, 0.5),
                       borderRadius: BorderRadius.circular(8)
                   ),
-                  margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
+                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
                   child: Column(
                     children: [
-                      Center(child: Text("Request",style: TextStyle(fontFamily: "Poppins_Bold"),)),
+                      const Center(child: Text("Request",style: TextStyle(fontFamily: "Poppins_Bold"),)),
                       Container(
                         height: 240,
                         child: SingleChildScrollView(

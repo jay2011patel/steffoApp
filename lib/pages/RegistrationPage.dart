@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:stefomobileapp/validator/validations.dart';
 import '../UI/common.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
@@ -53,6 +54,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
         "userType": selectedValue!,
       },
     );
+   validateLoginDetails(AutofillHints.email, AutofillHints.password);
    Navigator.of(context).pushNamed("/login");
   }
   @override
@@ -108,172 +110,168 @@ class _RegistrationFormState extends State<RegistrationForm>{
 
       return dropdownItems;
     }
-    return Column(
+    return Form(
+      child: Column(
 
-      children: [
-        //--------------------------First Name---------------------------------
-        Container(
+        children: [
+          //--------------------------First Name---------------------------------
+          Container(
 
-          width: width,
-          padding: const EdgeInsets.fromLTRB(5,0,5,5),
-          child: TextFormField(
-              controller: first_name,
-              textAlign: TextAlign.left,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.person),
-                filled: true,
-                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                labelText: "First Name",
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                // label: Text("First Name",style: TextStyle(fontFamily: "Poppins"),),
-                border: OutlineInputBorder(
-                    borderSide:   BorderSide.none,
-                    //borderRadius: BorderRadius.circular(20.0)
-                ),
-              )
-          ),
-        ),
-
-
-        //-----------------------LASTNAME-------------------------------
-
-        Container(
-          //margin: EdgeInsets.fromLTRB(20, 20,20,0),
-
-          width: width,
-          padding: const EdgeInsets.fromLTRB(5,5,5,5),
-          child: TextFormField(
-              controller: last_name,
-              textAlign: TextAlign.left,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.person),
-                filled: true,
-                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                labelText: "Last Name",
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                // label: const Text("Last Name",style: TextStyle(fontFamily: "Poppins"),),
-                border: OutlineInputBorder(
-                    borderSide:   BorderSide.none,
-                    // borderRadius: BorderRadius.circular(20.0)
-                ),
-              )
-          ),
-        ),
-
-        //-------------------------Email------------------------------------
-
-        Container(
-          //margin: EdgeInsets.fromLTRB(20, 20,20,0),
-          width: width,
-          padding: const EdgeInsets.fromLTRB(5,5,5,5),
-          child: TextFormField(
-            autovalidateMode: AutovalidateMode.always,
-              controller: email,
-              textAlign: TextAlign.left,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.mail),
-                filled: true,
-                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                labelText: "Email",
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                // label: Text("Email",style: TextStyle(fontFamily: "Poppins"),),
-                border: OutlineInputBorder(
-                    borderSide:   BorderSide.none,
-                    // borderRadius: BorderRadius.circular(20.0)
-                ),
-              ),
-              validator: EmailValidator(errorText: "Not Valid"),
-          ),
-        ),
-        //--------------------------------Password------------------------------
-
-        Container(
-          //margin: EdgeInsets.fromLTRB(20, 20,20,0),
-
-          width: width,
-          padding: const EdgeInsets.fromLTRB(5,5,5,5),
-          child: TextFormField(
-              obscureText: true,
-              controller: password,
-              textAlign: TextAlign.left,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.lock),
-                filled: true,
-                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                labelText: "Password",
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                // label: Text("Password",style: TextStyle(fontFamily: "Poppins"),),
-                border: OutlineInputBorder(
-                    borderSide:   BorderSide.none,
-                    // borderRadius: BorderRadius.circular(20.0)
-                ),
-
-              ),
-            // validator: RequiredValidator(errorText: "Required"),
-
-          ),
-        ),
-
-
-        //--------------------------------MobNum----------------------------
-
-        Container(
-          //margin: EdgeInsets.fromLTRB(20, 20,20,0),
-
-          width: width,
-          padding: const EdgeInsets.fromLTRB(5,5,5,5),
-          child: TextFormField(
-            keyboardType: TextInputType.number,
-            inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-              controller: mob_num,
-              textAlign: TextAlign.left,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.phone),
-                labelText: "Mobile Number",
-                filled: true,
-                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                // label: Text("Mobile Number",style: TextStyle(fontFamily: "Poppins"),),
-                border: OutlineInputBorder(
-                    borderSide:   BorderSide.none,
-                    // borderRadius: BorderRadius.circular(20.0)
-                ),
-              ),
-
-            validator: MaxLengthValidator(10,errorText: "No more"),
-
-            // validator: MultiValidator([
-            //   MaxLengthValidator(10, errorText: "No More"),
-            //   RequiredValidator(errorText: "Required"),
-            //
-            // ]),
-          ),
-        ),
-
-        //----------------------------UserType------------------------------
-
-        Container(
-            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-            child: DropdownButtonFormField(
-              decoration: const InputDecoration(
-                  hintText: "User Type",
+            width: width,
+            padding: const EdgeInsets.fromLTRB(5,0,5,5),
+            child: TextFormField(
+                controller: first_name,
+                textAlign: TextAlign.left,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.person),
                   filled: true,
-                  fillColor: Color.fromRGBO(233, 236, 239, 0.792156862745098),
+                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                  labelText: "First Name",
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  // label: Text("First Name",style: TextStyle(fontFamily: "Poppins"),),
                   border: OutlineInputBorder(
-                      borderSide: BorderSide.none,
-                      // borderRadius: BorderRadius.circular(20)
-                  )
-              ),
-              value: selectedValue,
-              items: getItems(),
-              onChanged: (String? newValue) {
-                selectedValue = newValue;
-              },
-            )
-        ),
+                      borderSide:   BorderSide.none,
+                      //borderRadius: BorderRadius.circular(20.0)
+                  ),
+                ),
+            ),
+          ),
 
-        ],
-      );
+
+          //-----------------------LASTNAME-------------------------------
+
+          Container(
+            //margin: EdgeInsets.fromLTRB(20, 20,20,0),
+
+            width: width,
+            padding: const EdgeInsets.fromLTRB(5,5,5,5),
+            child: TextFormField(
+                controller: last_name,
+                textAlign: TextAlign.left,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.person),
+                  filled: true,
+                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                  labelText: "Last Name",
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  // label: const Text("Last Name",style: TextStyle(fontFamily: "Poppins"),),
+                  border: OutlineInputBorder(
+                      borderSide:   BorderSide.none,
+                      // borderRadius: BorderRadius.circular(20.0)
+                  ),
+                )
+            ),
+          ),
+
+          //-------------------------Email------------------------------------
+
+          Container(
+            //margin: EdgeInsets.fromLTRB(20, 20,20,0),
+            width: width,
+            padding: const EdgeInsets.fromLTRB(5,5,5,5),
+            child: TextFormField(
+              autovalidateMode: AutovalidateMode.always,
+                controller: email,
+                textAlign: TextAlign.left,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.mail),
+                  filled: true,
+                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                  labelText: "Email",
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  // label: Text("Email",style: TextStyle(fontFamily: "Poppins"),),
+                  border: OutlineInputBorder(
+                      borderSide:   BorderSide.none,
+                      // borderRadius: BorderRadius.circular(20.0)
+                  ),
+                ),
+                validator: EmailValidator(errorText: "Not Valid"),
+            ),
+          ),
+          //--------------------------------Password------------------------------
+
+          Container(
+            //margin: EdgeInsets.fromLTRB(20, 20,20,0),
+
+            width: width,
+            padding: const EdgeInsets.fromLTRB(5,5,5,5),
+            child: TextFormField(
+                obscureText: true,
+                controller: password,
+                textAlign: TextAlign.left,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.lock),
+                  filled: true,
+                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                  labelText: "Password",
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  // label: Text("Password",style: TextStyle(fontFamily: "Poppins"),),
+                  border: OutlineInputBorder(
+                      borderSide:   BorderSide.none,
+                      // borderRadius: BorderRadius.circular(20.0)
+                  ),
+                ),
+              // validator: RequiredValidator(errorText: "Required"),
+            ),
+          ),
+
+
+          //--------------------------------MobNum----------------------------
+
+          Container(
+            //margin: EdgeInsets.fromLTRB(20, 20,20,0),
+            width: width,
+            padding: const EdgeInsets.fromLTRB(5,5,5,5),
+            child: TextFormField(
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                controller: mob_num,
+                textAlign: TextAlign.left,
+                decoration: const InputDecoration(
+                  prefixIcon: Icon(Icons.phone),
+                  labelText: "Mobile Number",
+                  filled: true,
+                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                  floatingLabelBehavior: FloatingLabelBehavior.never,
+                  // label: Text("Mobile Number",style: TextStyle(fontFamily: "Poppins"),),
+                  border: OutlineInputBorder(
+                      borderSide:   BorderSide.none,
+                      // borderRadius: BorderRadius.circular(20.0)
+                  ),
+                ),
+              validator: MaxLengthValidator(10,errorText: "No more"),
+              // validator: MultiValidator([
+              //   MaxLengthValidator(10, errorText: "No More"),
+              //   RequiredValidator(errorText: "Required"),
+              //
+              // ]),
+            ),
+          ),
+
+          //----------------------------UserType------------------------------
+
+          Container(
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              child: DropdownButtonFormField(
+                decoration: const InputDecoration(
+                    hintText: "User Type",
+                    filled: true,
+                    fillColor: Color.fromRGBO(233, 236, 239, 0.792156862745098),
+                    border: OutlineInputBorder(
+                        borderSide: BorderSide.none,
+                        // borderRadius: BorderRadius.circular(20)
+                    )
+                ),
+                value: selectedValue,
+                items: getItems(),
+                onChanged: (String? newValue) {
+                  selectedValue = newValue;
+                },
+              )
+          ),
+          ],
+        ),
+    );
 }
 
 }

@@ -9,7 +9,7 @@ var width;
 
 Widget logo(BuildContext context) {
   width = MediaQuery.of(context).size.width;
-  final String assetName = 'assets/images/logo.svg';
+  const String assetName = 'assets/images/logo.svg';
   final Widget svg = SvgPicture.asset(
     assetName,
     width: MediaQuery.of(context).size.width - 150,
@@ -47,13 +47,13 @@ Widget buttonStyle(String str, void c()) {
           ),
           onPressed: c,
           child: Padding(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               top: 18,
               bottom: 18,
             ),
             child: Text(
               str,
-              style: TextStyle(fontFamily: 'Poppins_Bold'),
+              style: const TextStyle(fontFamily: 'Poppins_Bold'),
             ),
           )));
 }
@@ -65,7 +65,7 @@ AppBar appbar(String txt) {
     actions: [
       IconButton(
           onPressed: () {},
-          icon: Icon(
+          icon: const Icon(
             Icons.menu,
             color: Colors.black,
           ))
@@ -73,12 +73,12 @@ AppBar appbar(String txt) {
     title: Center(
         child: Text(
       txt,
-      style: TextStyle(color: Colors.black, fontFamily: "Poppins_Bold"),
+      style: const TextStyle(color: Colors.black, fontFamily: "Poppins_Bold"),
     )),
     backgroundColor: Colors.white,
     leading: IconButton(
         onPressed: () {},
-        icon: Icon(
+        icon: const Icon(
           Icons.arrow_back_ios_new,
           color: Colors.black,
         )),
