@@ -60,8 +60,8 @@ class _RegistrationFormState extends State<RegistrationForm>{
 
     return Center(
       child: Container(
-        margin: EdgeInsets.fromLTRB(10, 40, 10, 20),
-        color: Color.fromRGBO(255, 255, 255, 1.0),
+        margin: const EdgeInsets.fromLTRB(10, 40, 10, 20),
+        color: const Color.fromRGBO(255, 255, 255, 1.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -80,7 +80,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
             //----------------------------Submit--------------------------------
             
             Container(
-              margin: EdgeInsets.only(top: 20),
+              margin: const EdgeInsets.only(top: 20),
                 width: MediaQuery.of(context).size.width,
                 child: buttonStyle("Submit", () {
                   onRegister();
@@ -111,7 +111,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
     return Column(
 
       children: [
-        //--------------------------First Name------------------------------
+        //--------------------------First Name---------------------------------
         Container(
 
           width: width,
@@ -191,7 +191,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
           //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
           width: width,
-          padding: EdgeInsets.fromLTRB(5,5,5,5),
+          padding: const EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
               obscureText: true,
               controller: password,
@@ -221,7 +221,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
           //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
           width: width,
-          padding: EdgeInsets.fromLTRB(5,5,5,5),
+          padding: const EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -240,11 +240,13 @@ class _RegistrationFormState extends State<RegistrationForm>{
                 ),
               ),
 
-            validator: MultiValidator([
-              MaxLengthValidator(10, errorText: "No More"),
-              RequiredValidator(errorText: "Required"),
+            validator: MaxLengthValidator(10,errorText: "No more"),
 
-            ]),
+            // validator: MultiValidator([
+            //   MaxLengthValidator(10, errorText: "No More"),
+            //   RequiredValidator(errorText: "Required"),
+            //
+            // ]),
           ),
         ),
 

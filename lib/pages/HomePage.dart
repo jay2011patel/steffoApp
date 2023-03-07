@@ -15,7 +15,7 @@ class HomePage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return HomeContent();
+    return const HomeContent();
     throw UnimplementedError();
   }
 
@@ -165,7 +165,7 @@ class _HomePageState extends State<HomeContent>{
               Container(
                   //height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
-                      color: Color.fromRGBO(255, 255, 255, 0.5),
+                      color: const Color.fromRGBO(255, 255, 255, 0.5),
                       borderRadius: BorderRadius.circular(8)
                   ),
                   margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
