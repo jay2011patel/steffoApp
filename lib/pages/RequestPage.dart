@@ -359,6 +359,7 @@ Widget RegistrationRequestCard(context,index){
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        Text("PlaceHolder"),
         Row(
           children: [
             Container(child: Text("Entity Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),

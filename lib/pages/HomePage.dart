@@ -139,7 +139,7 @@ class _HomePageState extends State<HomeContent>{
         req.base_price = responseData["data"][i]["basePrice"];
         req.order_id = responseData["data"][i]["id"].toString();
         //print(req);
-        if(req.status != "Rejected" )  {
+        if(req.status != "Denied" && req.status != "Pending" )  {
           orderList.add(req);
         }
         if(req.status?.trim() == "Pending" && id == req.reciever_id) {
