@@ -279,27 +279,23 @@ Widget orderRequestCard(context,Order orderReq,c()){
                   //width: MediaQuery.of(context).size.width-200,
                   child: IconButton(onPressed: (){
                     http.post(
-                      Uri.parse("http://10.0.2.2:3000/orders/approveorder"),
-                      headers: <String, String>{
-                        'Content-Type': 'application/json; charset=UTF-8',
-                      },
-                      body: jsonEncode(<String, String>{
+                      Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
+
+                      body: {
                         "decision":"Approved",
                         "order_id": orderReq.order_id!
-                      }),
+                      },
                     );
                     c();
                   }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
               IconButton(onPressed: (){
                 http.post(
-                  Uri.parse("http://10.0.2.2:3000/orders/approveorder"),
-                  headers: <String, String>{
-                    'Content-Type': 'application/json; charset=UTF-8',
-                  },
-                  body: jsonEncode(<String, String>{
+                  Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
+
+                  body: {
                     "decision":"Denied",
                     "order_id": orderReq.order_id!
-                  }),
+                  },
                 );
                 c();
               }, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
