@@ -47,7 +47,7 @@ class _HomePageState extends State<HomeContent>{
       body:  HomePageBody(),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.of(context).popAndPushNamed('/placeorder');
+          Navigator.of(context).pushNamed('/placeorder');
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.red,
@@ -94,11 +94,11 @@ class _HomePageState extends State<HomeContent>{
           setState(() {
 
             if(index==1){
-              Navigator.of(context).popAndPushNamed('/inventory');
+              Navigator.of(context).pushReplacementNamed('/inventory');
             }
 
             if(index==2){
-              Navigator.of(context).popAndPushNamed('/dealer');           }
+              Navigator.of(context).pushReplacementNamed('/dealer');           }
 
           });
         },
@@ -203,7 +203,7 @@ class _HomePageState extends State<HomeContent>{
                           child: TextButton(child: Align(
                               alignment: Alignment.centerRight,
                               child: Text("View All")),onPressed: (){
-                            Navigator.of(context).popAndPushNamed('/orders');
+                            Navigator.of(context).pushNamed('/orders');
                           },),
                           )
 
@@ -258,7 +258,7 @@ class _HomePageState extends State<HomeContent>{
                         child: TextButton(child: Align(
                             alignment: Alignment.centerRight,
                             child: Text("View All")),onPressed: (){
-                          Navigator.of(context).popAndPushNamed('/orderreq');
+                          Navigator.of(context).pushNamed('/orderreq');
                         },),
                       )
 

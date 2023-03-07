@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 //import '../Models/gen_item_list.dart';
 import '../Models/order.dart';
 import '../UI/common.dart';
@@ -268,8 +269,63 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                   LayoutBuilder(builder: (context, constraints) {
-                    if(status.text == "Pending"){
-                      return Text("Y is greater than or equal to 10");
+                    if(widget.order.status == "Pending"){
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Expanded(flex:40,
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      await http.post(
+                                        Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
+
+                                        body: {
+                                          "decision":"Approved",
+                                          "order_id": widget.order.order_id!
+                                        },
+                                      );
+                                      widget.order.status="Confirmed";
+                                      setState(() {
+
+                                      });
+                                    },
+                                    child: Text("Confirm",style: TextStyle(color: Colors.green,fontSize: 15,fontFamily: "Poppins_Bold"),),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white
+                                    )
+                                )
+                            ),
+                            SizedBox(
+                              width: 10,
+                            )
+                            ,
+                            Expanded(flex:40,
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      await http.post(
+                                        Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
+
+                                        body: {
+                                          "decision":"Denied",
+                                          "order_id": widget.order.order_id!
+                                        },
+                                      );
+                                      widget.order.status="Denied";
+                                      setState(() {
+
+                                      });
+                                    },
+                                    child: Text("Reject",style: TextStyle(color: Colors.red,fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white
+                                    )
+                                )
+                            ),
+                          ],
+                        ),
+                      );
                     }else{
                       if(widget.order.status == "Confirmed"){
                       return Container(
