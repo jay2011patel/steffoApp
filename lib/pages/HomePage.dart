@@ -46,7 +46,7 @@ class _HomePageState extends State<HomeContent>{
       body:  HomePageBody(),
       floatingActionButton: FloatingActionButton(
         onPressed: (){
-          Navigator.of(context).pushNamed('/placeorder');
+          Navigator.of(context).popAndPushNamed('/placeorder');
         },
         child: Icon(Icons.add),
         backgroundColor: Colors.red,
@@ -117,7 +117,8 @@ class _HomePageState extends State<HomeContent>{
     id = await prefs.getString('id');
 
     if(m!=id){
-
+      requestList=[];
+      orderList=[];
       final res = await http.post(
         Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
 
@@ -226,7 +227,13 @@ class _HomePageState extends State<HomeContent>{
                               shrinkWrap: true,
                               itemBuilder: (context,index){
                                 return orderRequestCard(context,requestList[index],(){
-                                  requestList.removeAt(index);
+
+                                  // orderList.add(requestList[index]);
+                                  // requestList.removeAt(index);
+                                  id = "none";
+
+                                  loadData();
+
                                   setState(() {
 
                                   });
