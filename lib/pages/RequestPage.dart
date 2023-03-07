@@ -121,10 +121,11 @@ class _RequestPageState extends State<RequestContent>{
       for(int i = 0;i<responseData["data"].length;i++){
         Order req = Order();
         req.reciever_id = responseData["data"][i]["supplier_id"];
+        req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
-        if(req.reciever_id == id){
+        if(req.status?.trim() == "Pending" && id == req.reciever_id) {
           requestList.add(req);
         }
       }

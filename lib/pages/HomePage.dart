@@ -203,7 +203,7 @@ class _HomePageState extends State<HomeContent>{
                           child: TextButton(child: Align(
                               alignment: Alignment.centerRight,
                               child: Text("View All")),onPressed: (){
-                            Navigator.of(context).pushNamed('/orders');
+                            Navigator.of(context).popAndPushNamed('/orders');
                           },),
                           )
 
@@ -231,18 +231,22 @@ class _HomePageState extends State<HomeContent>{
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
                               itemBuilder: (context,index){
-                                return orderRequestCard(context,requestList[index],(){
-
-                                  // orderList.add(requestList[index]);
-                                  // requestList.removeAt(index);
-                                  id = "none";
-
-                                  loadData();
-
-                                  setState(() {
-
-                                  });
-                                });
+                                return InkWell(
+                                onTap: (){
+                                  Navigator.push(context,
+                                  MaterialPageRoute(
+                                  builder: (context) => OrderDetails(order: requestList[index]))
+                                  );
+                                  },
+                                  child:orderRequestCard(context,requestList[index],(){
+                                    // orderList.add(requestList[index]);
+                                    // requestList.removeAt(index);
+                                    id = "none";
+                                    loadData();
+                                    setState(() {});
+                                  }
+                                  )
+                                );
                               },
                             ),
                           ),
@@ -254,7 +258,7 @@ class _HomePageState extends State<HomeContent>{
                         child: TextButton(child: Align(
                             alignment: Alignment.centerRight,
                             child: Text("View All")),onPressed: (){
-                          Navigator.of(context).pushNamed('/orderreq');
+                          Navigator.of(context).popAndPushNamed('/orderreq');
                         },),
                       )
 
