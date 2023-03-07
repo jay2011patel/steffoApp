@@ -50,6 +50,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   List items = ["TMT"];
   List grades = ["FE500", "FE550", "FE500D", "FE550D"];
   List sizes = ["10", "20", "30", "40", "50"];
+
+
   int itemNum = 1;
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() {
@@ -164,8 +166,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         // borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none),
                     filled: true,
-                    fillColor: Color.fromRGBO(233, 236, 239,
-                        0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                    fillColor: Color.fromRGBO(233, 236, 239,0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
 
                     ),
               ),
