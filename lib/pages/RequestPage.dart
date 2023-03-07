@@ -7,6 +7,7 @@ import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../Models/order.dart';
 import '../UI/common.dart';
+import 'OrderPage.dart';
 
 
 
@@ -121,10 +122,16 @@ class _RequestPageState extends State<RequestContent>{
       for(int i = 0;i<responseData["data"].length;i++){
         Order req = Order();
         req.reciever_id = responseData["data"][i]["supplier_id"];
+        req.user_id = responseData["data"][i]["user_id"];
+        req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
+        req.party_address = responseData["data"][i]["shippingAddress"];
+        req.party_mob_num = responseData["data"][i]["mobileNumber"];
+        req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
-        if(req.reciever_id == id){
+        req.order_id = responseData["data"][i]["id"].toString();
+        if(req.status?.trim() == "Pending" && id == req.reciever_id) {
           requestList.add(req);
         }
       }
@@ -154,12 +161,13 @@ class _RequestPageState extends State<RequestContent>{
 
           width: MediaQuery.of(context).size.width,
           child: CustomTabBar(
-            selectedCardColor: Colors.white,
-            selectedTitleColor: Color.fromRGBO(12, 53, 68, 1),
-            unSelectedCardColor: Color.fromRGBO(12, 53, 68, 1),
+            selectedCardColor: Color.fromRGBO(12, 53, 68, 1),
+            selectedTitleColor: Colors.white,
+            unSelectedTitleColor: Colors.black,
+            unSelectedCardColor: Colors.white,
                 // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 tabBarItemExtend: ((MediaQuery.of(context).size.width)/2),
-                tabBarItems: ["Order","Registration"],
+                tabBarItems: ["Order","Registration\n(WORK IN PROGRESS)"],
                 tabViewItems: [
 
                   Container(child: OrderList()),
@@ -199,7 +207,22 @@ class _RequestPageState extends State<RequestContent>{
                     scrollDirection: Axis.vertical,
                     shrinkWrap: true,
                     itemBuilder: (context,index){
-                      return orderRequestCard(context,requestList[index],(){});
+                      return InkWell(
+                          onTap: (){
+                            Navigator.push(context,
+                                MaterialPageRoute(
+                                    builder: (context) => OrderDetails(order: requestList[index]))
+                            );
+                          },
+                          child:orderRequestCard(context,requestList[index],(){
+                            // orderList.add(requestList[index]);
+                            // requestList.removeAt(index);
+                            id = "none";
+                            loadData();
+                            setState(() {});
+                          }
+                          )
+                      );
                     },
                   ),
                 ),
@@ -367,16 +390,18 @@ Widget RegistrationRequestCard(context,index){
       children: [
         Text("PlaceHolder"),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(child: Text("Entity Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
             Container(
-                width: MediaQuery.of(context).size.width-200,
+                //width: MediaQuery.of(context).size.width-200,
                 child: IconButton(onPressed: (){}, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
             IconButton(onPressed: (){}, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
           ],
         ),
         Container(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
 
               Container(
@@ -390,6 +415,7 @@ Widget RegistrationRequestCard(context,index){
         ),
         Container(
           child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text("Region:"),
               Text(region[index])

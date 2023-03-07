@@ -1,6 +1,8 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-
+import 'package:http/http.dart' as http;
 //import '../Models/gen_item_list.dart';
+import '../Models/order.dart';
 import '../UI/common.dart';
 
 // void main(){
@@ -12,25 +14,30 @@ import '../UI/common.dart';
 
 
 class OrderDetails extends StatelessWidget {
-  const OrderDetails({super.key});
+  Order order;
+  OrderDetails({super.key,required this.order});
+
 
   @override
   Widget build(BuildContext context) {
-    return OrderPage();
+    return OrderPage(order: order);
   }
 }
 
 class OrderPage extends StatefulWidget {
-  const OrderPage({super.key});
 
+  OrderPage({Key? key, required this.order}):
+  super(key:key);
+  final Order order;
   @override
   State<OrderPage> createState() => _OrderPageState();
 }
 
 class _OrderPageState extends State<OrderPage> {
+
   @override
   Widget build(BuildContext context) {
-    num ch_s_contact = 9898989898;
+    num ch_s_contact = 90;
     //List<GeneratedItems> items;
 
     @override
@@ -45,7 +52,7 @@ class _OrderPageState extends State<OrderPage> {
     ];
 
     TextEditingController status = TextEditingController();
-    status.text = "Approved";
+    //status.text = widget.order.status!;
 
     return Scaffold(
 
@@ -85,21 +92,23 @@ class _OrderPageState extends State<OrderPage> {
                               child: Column(
                                 children: [
                                   Row(
-                                    children: const [
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
                                       Text("Shipping Address :",
-                                          style: TextStyle(fontSize: 13)),
-                                      Text("Shipping Address",
-                                          style: TextStyle(fontSize: 13))
+                                          style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                      Text(widget.order.party_address!,
+                                          style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                     ],
                                   ),
                                   const SizedBox(
                                     height: 5.0,
                                   ),
                                   Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      const Text("Contact:", style: TextStyle(fontSize: 13)),
-                                      Text("$ch_s_contact",
-                                          style: TextStyle(fontSize: 13))
+                                      const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                      Text(widget.order.party_mob_num!,
+                                          style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                     ],
                                   ),
                                 ],
@@ -119,20 +128,24 @@ class _OrderPageState extends State<OrderPage> {
                                 child: Column(
                                   children: [
                                     Row(
-                                      children:const  [
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                      children: [
                                         Text("Billing Address :",
-                                            style: TextStyle(fontSize: 13)),
-                                        Text("Billing Address",
-                                            style: TextStyle(fontSize: 13))
+                                            style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                        Text(widget.order.user_id!,
+                                            style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                       ],
                                     ),
                                     const SizedBox(
                                       height: 5.0,
                                     ),
                                     Row(
-                                      children:const  [
-                                        Text("Contact:", style: TextStyle(fontSize: 13)),
-                                        Text("Contact no", style: TextStyle(fontSize: 13))
+                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                      children: [
+                                        Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                        Text(widget.order.user_id!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                       ],
                                     ),
                                   ],
@@ -149,9 +162,11 @@ class _OrderPageState extends State<OrderPage> {
                                   color: Colors.white,
                                 ),
                                 child: Row(
-                                  children: const [
-                                    Text("Loading Type:", style: TextStyle(fontSize: 13)),
-                                    Text("Loading Type", style: TextStyle(fontSize: 13))
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                  children: [
+                                    Text("Loading Type:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    Text(widget.order.loading_type!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                   ],
                                 )),
                           ),
@@ -166,9 +181,11 @@ class _OrderPageState extends State<OrderPage> {
                                   color: Colors.white,
                                 ),
                                 child: Row(
-                                  children:const  [
-                                    Text("Base Price:", style: TextStyle(fontSize: 13)),
-                                    Text("Base Price", style: TextStyle(fontSize: 13))
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                  children: [
+                                    Text("Base Price:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    Text(widget.order.base_price!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                   ],
                                 )),
                           ),
@@ -184,9 +201,11 @@ class _OrderPageState extends State<OrderPage> {
                                   color: Colors.white,
                                 ),
                                 child: Row(
-                                  children: const [
-                                    Text("Status: ", style: TextStyle(fontSize: 13)),
-                                    Text("Status", style: TextStyle(fontSize: 13))
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                  children:  [
+                                    Text("Status: ", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    Text(widget.order.status!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                   ],
                                 )),
                           ),
@@ -250,10 +269,65 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                   LayoutBuilder(builder: (context, constraints) {
-                    if(status.text == "Pending"){
-                      return Text("Y is greater than or equal to 10");
+                    if(widget.order.status == "Pending"){
+                      return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          children: [
+                            Expanded(flex:40,
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      await http.post(
+                                        Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
+
+                                        body: {
+                                          "decision":"Approved",
+                                          "order_id": widget.order.order_id!
+                                        },
+                                      );
+                                      widget.order.status="Confirmed";
+                                      setState(() {
+
+                                      });
+                                    },
+                                    child: Text("Confirm",style: TextStyle(color: Colors.green,fontSize: 15,fontFamily: "Poppins_Bold"),),
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.white
+                                    )
+                                )
+                            ),
+                            SizedBox(
+                              width: 10,
+                            )
+                            ,
+                            Expanded(flex:40,
+                                child: ElevatedButton(
+                                    onPressed: () async {
+                                      await http.post(
+                                        Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
+
+                                        body: {
+                                          "decision":"Denied",
+                                          "order_id": widget.order.order_id!
+                                        },
+                                      );
+                                      widget.order.status="Denied";
+                                      setState(() {
+
+                                      });
+                                    },
+                                    child: Text("Reject",style: TextStyle(color: Colors.red,fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    style: ElevatedButton.styleFrom(
+                                        backgroundColor: Colors.white
+                                    )
+                                )
+                            ),
+                          ],
+                        ),
+                      );
                     }else{
-                      if(status.text == "Approved"){
+                      if(widget.order.status == "Confirmed"){
                       return Container(
                         width: MediaQuery.of(context).size.width,
                         padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),

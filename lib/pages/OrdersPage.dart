@@ -9,6 +9,7 @@ import '../Models/order.dart';
 import '../UI/common.dart';
 import '../ui/cards.dart';
 import '../ui/custom_tabbar.dart';
+import 'OrderPage.dart';
 
 
 class OrdersPage extends StatelessWidget{
@@ -131,13 +132,16 @@ class _OrdersPageState extends State<OrdersContent>{
 
       for(int i = 0;i<responseData["data"].length;i++){
         Order req = Order();
-        req.status=responseData["data"][i]["orderStatus"];
+        req.reciever_id = responseData["data"][i]["supplier_id"];
+        req.user_id = responseData["data"][i]["user_id"];
+        req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
+        req.party_address = responseData["data"][i]["shippingAddress"];
+        req.party_mob_num = responseData["data"][i]["mobileNumber"];
+        req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
         req.order_id = responseData["data"][i]["id"].toString();
-        req.user_id = responseData["data"][i]["user_id"];
-        req.reciever_id = responseData["data"][i]["supplier_id"];
         //print(req);
         if(req.status!="Rejected")  {
           if(id == req.user_id){
@@ -219,7 +223,14 @@ class _OrdersPageState extends State<OrdersContent>{
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemBuilder: (context,index){
-                    return orderCard(context,salesOrderList[index]);
+                    return InkWell(
+                        onTap: (){
+                          Navigator.push(context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderDetails(order: salesOrderList[index]))
+                          );
+                        },
+                        child:orderCard(context,salesOrderList[index]));
                   },
                 ),
               ),
