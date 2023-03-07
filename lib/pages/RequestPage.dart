@@ -6,7 +6,6 @@ import 'package:stefomobileapp/ui/custom_tabbar.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../Models/order.dart';
-import '../main.dart';
 import '../UI/common.dart';
 
 
@@ -17,7 +16,6 @@ class RequestPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
     return RequestContent();
-    throw UnimplementedError();
   }
 
 }
@@ -94,7 +92,6 @@ class _RequestPageState extends State<RequestContent>{
           },
         )
     );
-    throw UnimplementedError();
   }
 
   //----------------------------------PageBody----------------------------------
@@ -142,13 +139,13 @@ class _RequestPageState extends State<RequestContent>{
       height: MediaQuery.of(context).size.height,
 
       decoration: BoxDecoration(
-        gradient: LinearGradient(
-          transform: GradientRotation(1.07),
-          colors: [
-            Color.fromRGBO(75, 100, 160, 1.0),
-            Color.fromRGBO(19, 59, 78, 1.0),
-          ]
-        )
+        // gradient: LinearGradient(
+        //   transform: GradientRotation(1.07),
+        //   colors: [
+        //     Color.fromRGBO(75, 100, 160, 1.0),
+        //     Color.fromRGBO(19, 59, 78, 1.0),
+        //   ]
+        // )
       ),
       child: SingleChildScrollView(
         child: Container(
@@ -157,9 +154,10 @@ class _RequestPageState extends State<RequestContent>{
 
           width: MediaQuery.of(context).size.width,
           child: CustomTabBar(
-                selectedCardColor: Colors.white,
-                selectedTitleColor: Colors.black,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+            selectedCardColor: Colors.white,
+            selectedTitleColor: Color.fromRGBO(12, 53, 68, 1),
+            unSelectedCardColor: Color.fromRGBO(12, 53, 68, 1),
+                // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
                 tabBarItemExtend: ((MediaQuery.of(context).size.width)/2),
                 tabBarItems: ["Order","Registration"],
                 tabViewItems: [
@@ -181,32 +179,35 @@ class _RequestPageState extends State<RequestContent>{
   //----------------------------------OrderList---------------------------------
 
   Widget OrderList(){
-    return Container(
-      decoration: BoxDecoration(
-        color: Color.fromRGBO(255, 255, 255, 0.5),
-        borderRadius: BorderRadius.circular(8)
-      ),
-      height: 50,
-      margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-      child: SingleChildScrollView(
-        child: Column(
-          children: [
-            Center(child: Text("Orders",style: TextStyle(fontFamily: "Poppins_Bold"),)),
-            Container(
-                child: ListView.builder(
-                  itemCount: requestList.length,
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemBuilder: (context,index){
-                    return orderRequestCard(context,requestList[index],(){});
-                  },
-                ),
-              ),
-
-          ],
+    return Card(
+      shadowColor: Colors.grey,
+      child: Container(
+        decoration: BoxDecoration(
+          color: Color.fromRGBO(255, 255, 255, 0.5),
+          // borderRadius: BorderRadius.circular(8)
         ),
-      )
+        height: 50,
+        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              Center(child: Text("Orders",style: TextStyle(fontFamily: "Poppins_Bold"),)),
+              Container(
+                  child: ListView.builder(
+                    itemCount: requestList.length,
+                    physics: const NeverScrollableScrollPhysics(),
+                    scrollDirection: Axis.vertical,
+                    shrinkWrap: true,
+                    itemBuilder: (context,index){
+                      return orderRequestCard(context,requestList[index],(){});
+                    },
+                  ),
+                ),
+
+            ],
+          ),
+        )
+      ),
     );
   }
 
@@ -215,32 +216,36 @@ class _RequestPageState extends State<RequestContent>{
 
 
   Widget RegistrationList(){
-    return Container(
-        decoration: BoxDecoration(
-            color: Color.fromRGBO(255, 255, 255, 0.5),
-            borderRadius: BorderRadius.circular(5)
-        ),
-        height: 50,
-        margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Center(child: Text("Registration",style: TextStyle(fontFamily: "Poppins_Bold"),)),
-              Container(
-                child: ListView.builder(
-                  itemCount: 3,
-                  physics: const NeverScrollableScrollPhysics(),
-                  scrollDirection: Axis.vertical,
-                  shrinkWrap: true,
-                  itemBuilder: (context,index){
-                    return RegistrationRequestCard(context, index);
-                  },
-                ),
-              ),
-
-            ],
+    return Card(
+      child: Container(
+          decoration: BoxDecoration(
+              color: Color.fromRGBO(255, 255, 255, 0.5),
+              borderRadius: BorderRadius.circular(5)
           ),
-        )
+          height: 50,
+          margin: EdgeInsets.fromLTRB(10, 0, 10, 0),
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                Center(child: Text("Registration",style: TextStyle(fontFamily: "Poppins_Bold"),)),
+                Card(
+                  child: Container(
+                    child: ListView.builder(
+                      itemCount: 3,
+                      physics: const NeverScrollableScrollPhysics(),
+                      scrollDirection: Axis.vertical,
+                      shrinkWrap: true,
+                      itemBuilder: (context,index){
+                        return RegistrationRequestCard(context, index);
+                      },
+                    ),
+                  ),
+                ),
+
+              ],
+            ),
+          )
+      ),
     );
   }
 

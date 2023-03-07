@@ -183,63 +183,65 @@ class _ChallanListPageState extends State<ChallanListContent> {
   Widget ChallanCard(context, index) {
     String trp_name = "XY Transporter";
 
-    return Container(
-      decoration: BoxDecoration(
-          // color: Colors.white, borderRadius: BorderRadius.circular(20)
-      ),
-      padding: EdgeInsets.all(5),
-      margin: EdgeInsets.all(5),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          Row(
-            children: [
-              Container(
-                  child: const Text(
-                "Challan ID:",
-                textAlign: TextAlign.left,
-                style: TextStyle(fontFamily: "Poppins_Bold"),
-              )),
-              Container(
-                  padding: EdgeInsets.only(left: 65),
-                  child: const Text(
-                    "987611",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(fontFamily: "Poppins_Bold"),
-                  ))
-            ],
-          ),
-          Container(
-            child: Row(
+    return Card(
+      child: Container(
+        decoration: BoxDecoration(
+            // color: Colors.white, borderRadius: BorderRadius.circular(20)
+        ),
+        padding: EdgeInsets.all(5),
+        margin: EdgeInsets.all(5),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Row(
               children: [
                 Container(
-                  child: Text(
-                    "Transporter Name:",
-                    style: TextStyle(fontFamily: "Roboto"),
-                  ),
-                  padding: EdgeInsets.only(top: 5, bottom: 5, right: 20),
-                ),
-                Expanded(
+                    child: const Text(
+                  "Challan ID:",
+                  textAlign: TextAlign.left,
+                  style: TextStyle(fontFamily: "Poppins_Bold"),
+                )),
+                Container(
+                    padding: EdgeInsets.only(left: 65),
+                    child: const Text(
+                      "987611",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(fontFamily: "Poppins_Bold"),
+                    ))
+              ],
+            ),
+            Container(
+              child: Row(
+                children: [
+                  Container(
                     child: Text(
-                  trp_name,
-                  overflow: TextOverflow.ellipsis,
-                  maxLines: 3,
-                ))
-              ],
+                      "Transporter Name:",
+                      style: TextStyle(fontFamily: "Roboto"),
+                    ),
+                    padding: EdgeInsets.only(top: 5, bottom: 5, right: 20),
+                  ),
+                  Expanded(
+                      child: Text(
+                    trp_name,
+                    overflow: TextOverflow.ellipsis,
+                    maxLines: 3,
+                  ))
+                ],
+              ),
             ),
-          ),
-          Container(
-            child: Row(
-              children: [
-                Text("Vehicle Number:"),
-                Padding(
-                  padding: const EdgeInsets.only(left: 36.0),
-                  child: Text("GJ01XX1234"),
-                )
-              ],
+            Container(
+              child: Row(
+                children: [
+                  Text("Vehicle Number:"),
+                  Padding(
+                    padding: const EdgeInsets.only(left: 36.0),
+                    child: Text("GJ01XX1234"),
+                  )
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
