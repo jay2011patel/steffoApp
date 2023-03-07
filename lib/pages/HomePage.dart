@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stefomobileapp/pages/OrderPage.dart';
 import 'package:stefomobileapp/ui/common.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -135,6 +136,9 @@ class _HomePageState extends State<HomeContent>{
         req.user_id = responseData["data"][i]["user_id"];
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
+        req.party_address = responseData["data"][i]["shippingAddress"];
+        req.party_mob_num = responseData["data"][i]["mobileNumber"];
+        req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
         req.order_id = responseData["data"][i]["id"].toString();
@@ -183,7 +187,10 @@ class _HomePageState extends State<HomeContent>{
                             itemBuilder: (context,index){
                               return InkWell(
                                   onTap: (){
-                                    Navigator.of(context).pushNamed("/order");
+                                    Navigator.push(context,
+                                        MaterialPageRoute(
+                                            builder: (context) => OrderDetails(order: orderList[index]))
+                                    );
                                   },
                                   child:orderCard(context,orderList[index]));
                             },
