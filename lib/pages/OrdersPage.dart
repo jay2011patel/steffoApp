@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
@@ -32,7 +31,7 @@ class OrdersContent extends StatefulWidget{
 
 class _OrdersPageState extends State<OrdersContent>{
 
-  var _selected=0;
+  final _selected=0;
 
   @override
   Widget build(BuildContext context) {
@@ -204,7 +203,7 @@ class _OrdersPageState extends State<OrdersContent>{
 
   Widget OrderList(){
     return Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 0.5),
             // borderRadius: BorderRadius.circular(8)
         ),

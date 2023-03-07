@@ -167,8 +167,8 @@ class _OrderPageState extends State<OrderPage> {
                                 ),
                                 child: Row(
                                   children:const  [
-                                    Text("Challan no:", style: TextStyle(fontSize: 13)),
-                                    Text("Challan no", style: TextStyle(fontSize: 13))
+                                    Text("Base Price:", style: TextStyle(fontSize: 13)),
+                                    Text("Base Price", style: TextStyle(fontSize: 13))
                                   ],
                                 )),
                           ),
