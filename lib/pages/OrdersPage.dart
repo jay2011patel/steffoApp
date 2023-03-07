@@ -188,7 +188,7 @@ class _OrdersPageState extends State<OrdersContent>{
               ),
               Card(
                 child: Container(
-                    child: RegistrationList()),
+                    child: PurchaseOrderList()),
               )
             ],
             tabViewItemHeight: MediaQuery.of(context).size.height*0.7,
@@ -232,10 +232,10 @@ class _OrdersPageState extends State<OrdersContent>{
   }
 
 
-//------------------------------RegistrationList--------------------------------
+//------------------------------PurchaseOrderList--------------------------------
 
 
-  Widget RegistrationList(){
+  Widget PurchaseOrderList(){
     return Container(
         decoration: const BoxDecoration(
             color: Color.fromRGBO(255, 255, 255, 0.5),
@@ -273,66 +273,6 @@ class _OrdersPageState extends State<OrdersContent>{
 
 //---------------------------------SingleOrderRequestWidget---------------------
 
-Widget orderRequestCard(context,index){
-
-  String org_name=" Bhuyangdev Steel Corporation";
-
-
-  return Container(
-    decoration: BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.circular(20)
-    ),
-    padding: EdgeInsets.all(5),
-    margin: EdgeInsets.all(5),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Container(child: Text("Order Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
-            Container(
-                width: MediaQuery.of(context).size.width-200,
-                child: IconButton(onPressed: (){}, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
-            IconButton(onPressed: (){}, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
-          ],
-        ),
-        Container(
-          child: Row(
-            children: [
-
-              Container(
-                child: Text("Org Name:",style: TextStyle(fontFamily: "Roboto"),),
-                padding: EdgeInsets.symmetric(vertical: 5),
-              ),
-
-              Expanded(child: Text(org_name,overflow: TextOverflow.ellipsis,maxLines: 3,))
-            ],
-          ),
-        ),
-        Container(
-          child: Row(
-            children: const [
-              Text("Order Date:"),
-              Text(" 22-02-2023")
-            ],
-          ),
-        ),
-        Container(
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: Row(
-            children: const [
-              Text("Credit Due:"),
-              Text(" 1234567890")
-            ],
-          ),
-        )
-
-      ],
-    ),
-  );
-}
-
 
 //-------------------------------SingleRegistrationRequest----------------------
 
@@ -351,6 +291,7 @@ Widget RegistrationRequestCard(context,index){
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        Text("PlaceHolder"),
         Row(
           children: [
             Container(child: Text("Entity Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),

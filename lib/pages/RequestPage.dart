@@ -282,8 +282,8 @@ Widget orderRequestCard(context,Order orderReq,c()){
               Container(child: Text("Order Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
               Container(
                   //width: MediaQuery.of(context).size.width-200,
-                  child: IconButton(onPressed: (){
-                    http.post(
+                  child: IconButton(onPressed: () async {
+                    await http.post(
                       Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
 
                       body: {
@@ -293,8 +293,8 @@ Widget orderRequestCard(context,Order orderReq,c()){
                     );
                     c();
                   }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
-              IconButton(onPressed: (){
-                http.post(
+              IconButton(onPressed: () async {
+                await http.post(
                   Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
 
                   body: {
@@ -365,6 +365,7 @@ Widget RegistrationRequestCard(context,index){
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
+        Text("PlaceHolder"),
         Row(
           children: [
             Container(child: Text("Entity Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
