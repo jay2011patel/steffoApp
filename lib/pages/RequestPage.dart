@@ -317,6 +317,7 @@ Widget orderRequestCard(context,Order orderReq,c()){
           ),
           Container(
             child: Row(
+
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Order Date:",style:TextStyle(fontFamily: "Poppins_Bold"),),
