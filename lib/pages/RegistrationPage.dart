@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../UI/common.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 class RegistrationPage extends StatelessWidget{
   @override
@@ -107,6 +108,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
       return dropdownItems;
     }
     return Column(
+
       children: [
         //--------------------------First Name------------------------------
         Container(
@@ -165,6 +167,7 @@ class _RegistrationFormState extends State<RegistrationForm>{
           width: width,
           padding: EdgeInsets.fromLTRB(5,5,5,5),
           child: TextFormField(
+            autovalidateMode: AutovalidateMode.always,
               controller: email,
               textAlign: TextAlign.left,
               decoration: const InputDecoration(
@@ -178,7 +181,8 @@ class _RegistrationFormState extends State<RegistrationForm>{
                     borderSide:   BorderSide.none,
                     // borderRadius: BorderRadius.circular(20.0)
                 ),
-              )
+              ),
+              validator: EmailValidator(errorText: "Not Valid"),
           ),
         ),
         //--------------------------------Password------------------------------
@@ -203,7 +207,13 @@ class _RegistrationFormState extends State<RegistrationForm>{
                     borderSide:   BorderSide.none,
                     // borderRadius: BorderRadius.circular(20.0)
                 ),
-              )
+              ),
+            validator: MultiValidator([
+              RequiredValidator(errorText: "Required"),
+              MinLengthValidator(6, errorText: "Minimum 6 digit required")
+            ])
+            // validator: RequiredValidator(errorText: "Required"),
+
           ),
         ),
 
