@@ -177,9 +177,10 @@ class _OrdersPageState extends State<OrdersContent>{
 
           width: MediaQuery.of(context).size.width,
           child: CustomTabBar(
-            selectedCardColor: Colors.white,
-            selectedTitleColor: Color.fromRGBO(12, 53, 68, 1),
-            unSelectedCardColor: Color.fromRGBO(12, 53, 68, 1),
+            selectedCardColor: Color.fromRGBO(12, 53, 68, 1),
+            selectedTitleColor: Colors.white,
+            unSelectedCardColor: Colors.white,
+            unSelectedTitleColor: Color.fromRGBO(12, 53, 68, 1),
             // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
             tabBarItemExtend: ((MediaQuery.of(context).size.width)/2),
             tabBarItems: ["Sales","Purchase"],
