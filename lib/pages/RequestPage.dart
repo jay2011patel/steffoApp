@@ -106,28 +106,30 @@ class _RequestPageState extends State<RequestContent>{
   Future<void> loadData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var m = id;
-    id = await prefs.getString('user_id');
+    id = await prefs.getString('id');
 
     if(m!=id){
 
       final res = await http.post(
-        Uri.parse("http://10.0.2.2:3000/orders/getpndgorders"),
-        headers: <String, String>{
-          'Content-Type': 'application/json; charset=UTF-8',
-        },
-        body: jsonEncode(<String, String>{
+        Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
+
+        body: {
           "id": id!
-        }),
+        },
       );
       var responseData = jsonDecode(res.body);
       print(responseData);
 
+
       for(int i = 0;i<responseData["data"].length;i++){
         Order req = Order();
-        req.party_name = responseData["data"][i]["party_name"];
+        req.reciever_id = responseData["data"][i]["supplier_id"];
+        req.party_name = responseData["data"][i]["partyName"];
         req.order_date = responseData["data"][i]["createdAt"];
-        req.base_price = responseData["data"][i]["base_price"];
-        requestList.add(req);
+        req.base_price = responseData["data"][i]["basePrice"];
+        if(req.reciever_id == id){
+          requestList.add(req);
+        }
       }
       setState(() {});
 
@@ -161,8 +163,11 @@ class _RequestPageState extends State<RequestContent>{
                 tabBarItemExtend: ((MediaQuery.of(context).size.width)/2),
                 tabBarItems: ["Order","Registration"],
                 tabViewItems: [
+
                   Container(child: OrderList()),
+
                   Container(child: RegistrationList())
+
                 ],
                 tabViewItemHeight: MediaQuery.of(context).size.height*0.7,
 
@@ -267,11 +272,11 @@ Widget orderRequestCard(context,Order orderReq,c()){
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Row(
-
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Container(child: Text("Order Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
               Container(
-                  width: MediaQuery.of(context).size.width-200,
+                  //width: MediaQuery.of(context).size.width-200,
                   child: IconButton(onPressed: (){
                     http.post(
                       Uri.parse("http://10.0.2.2:3000/orders/approveorder"),

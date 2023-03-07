@@ -118,36 +118,35 @@ class _HomePageState extends State<HomeContent>{
 
     if(m!=id){
 
-      // final res = await http.post(
-      //   Uri.parse("http://10.0.2.2:3000/orders/getpndgorders"),
-      //   headers: <String, String>{
-      //     'Content-Type': 'application/json; charset=UTF-8',
-      //   },
-      //   body: jsonEncode(<String, String>{
-      //     "id": id!
-      //   }),
-      // );
-      // var responseData = jsonDecode(res.body);
-      // print(responseData);
-      //
-      // for(int i = 0;i<responseData["data"].length;i++){
-      //   Order req = Order();
-      //   req.reciever_id = responseData["data"][i]["reciever_id"];
-      //   req.user_id = responseData["data"][i]["user_id"];
-      //   req.status = responseData["data"][i]["status"];
-      //   req.party_name = responseData["data"][i]["party_name"];
-      //   req.order_date = responseData["data"][i]["createdAt"];
-      //   req.base_price = responseData["data"][i]["base_price"];
-      //   req.order_id = responseData["data"][i]["id"].toString();
-      //   //print(req);
-      //   if(req.status != "Rejected" )  {
-      //     orderList.add(req);
-      //   }
-      //   if(req.status=="Pending" && id == req.reciever_id) {
-      //     requestList.add(req);
-      //   }
-      //
-      // }
+      final res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
+
+        body: {
+          "id": id!
+        },
+      );
+      var responseData = jsonDecode(res.body);
+      print(responseData);
+
+      for(int i = 0;i<responseData["data"].length;i++){
+        Order req = Order();
+        req.reciever_id = responseData["data"][i]["supplier_id"];
+        req.user_id = responseData["data"][i]["user_id"];
+        req.status = responseData["data"][i]["orderStatus"];
+        req.party_name = responseData["data"][i]["partyName"];
+        req.order_date = responseData["data"][i]["createdAt"];
+        req.base_price = responseData["data"][i]["basePrice"];
+        req.order_id = responseData["data"][i]["id"].toString();
+        //print(req);
+        if(req.status != "Rejected" )  {
+          orderList.add(req);
+        }
+        if(req.status?.trim() == "Pending" && id == req.reciever_id) {
+          requestList.add(req);
+          print("Added to req list");
+        }
+
+      }
        setState(() {});
 
     }
@@ -171,7 +170,7 @@ class _HomePageState extends State<HomeContent>{
                   margin: EdgeInsets.fromLTRB(10, 20, 10, 10),
                   child: Column(
                     children: [
-                      Center(child: Text( "$id" ,style: TextStyle(fontFamily: "Poppins_Bold"),)),
+                      Center(child: Text( "Orders" ,style: TextStyle(fontFamily: "Poppins_Bold"),)),
                       Container(
                         height: 220,
                         child: SingleChildScrollView(
@@ -243,7 +242,7 @@ class _HomePageState extends State<HomeContent>{
                         child: TextButton(child: Align(
                             alignment: Alignment.centerRight,
                             child: Text("View All")),onPressed: (){
-                          Navigator.of(context).pushNamed('/orders');
+                          Navigator.of(context).pushNamed('/orderreq');
                         },),
                       )
 
