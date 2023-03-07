@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       title: 'Flutter Demo',
-      home: LRPage(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lrpage': (BuildContext context) => LRPage(),
@@ -66,7 +66,7 @@ class _SplashScreen extends State<SplashScreen> {
   @override
   void initState() {
     Timer(
-        Duration(seconds: 2), () => Navigator.of(context).pushNamed('/lrpage'));
+        Duration(seconds: 4), () => Navigator.of(context).pushNamed('/lrpage'));
     super.initState();
   }
 
