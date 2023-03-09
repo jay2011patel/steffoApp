@@ -61,7 +61,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
       body: {
         "userId": id!,
         "supplierId": supplier_id!,
-        "shippingAddress": id!,
+        "shippingAddress": party_address.text,
         "partyName": party_name.text,
         //"party_address": party_address.text,
         "gstNumber": party_pan_no.text,
