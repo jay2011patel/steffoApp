@@ -142,13 +142,13 @@ class _HomePageState extends State<HomeContent>{
         req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
-        req.order_id = responseData["data"][i]["id"].toString();
+        req.order_id = responseData["data"][i]["order_id"].toString();
         //print(req);
         if(req.status != "Denied" && req.status != "Pending" )  {
           orderList.add(req);
         }
         if(req.status?.trim() == "Pending" && id == req.reciever_id) {
-          requestList.add(req);
+          //requestList.add(req);
           print("Added to req list");
         }
 
