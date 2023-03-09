@@ -51,11 +51,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   List grades = ["FE500", "FE550", "FE500D", "FE550D"];
   List sizes = ["10", "20", "30", "40", "50"];
 
-
   int itemNum = 1;
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() {
-
     http.post(
       Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
       body: {
@@ -167,7 +165,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         // borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none),
                     filled: true,
-                    fillColor: Color.fromRGBO(233, 236, 239,0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                    fillColor: Color.fromRGBO(233, 236, 239,
+                        0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
 
                     ),
               ),
@@ -187,7 +186,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         // borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none),
                     filled: true,
-                    fillColor: const Color.fromRGBO(233, 236, 239,0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                    fillColor: const Color.fromRGBO(233, 236, 239,
+                        0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
 
                     ),
               ),
@@ -265,7 +265,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                   Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                       child: DropdownButtonFormField(
-                        decoration:const InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: "Select The Product",
                             filled: true,
                             fillColor: Color.fromRGBO(
@@ -301,10 +301,10 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                   Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                       child: DropdownButtonFormField(
-                        decoration:const InputDecoration(
+                        decoration: const InputDecoration(
                             hintText: "Select The Size",
                             filled: true,
-                            fillColor:  Color.fromRGBO(
+                            fillColor: Color.fromRGBO(
                                 233, 236, 239, 0.792156862745098),
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
@@ -321,14 +321,14 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                     child: TextFormField(
                       maxLines: 1,
                       controller: qty,
-                      decoration:const  InputDecoration(
+                      decoration: const InputDecoration(
                         labelText: "Quantity",
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                         border: OutlineInputBorder(
                             // borderRadius: BorderRadius.circular(20),
                             borderSide: BorderSide.none),
                         filled: true,
-                        fillColor:Color.fromRGBO(233, 236, 239,
+                        fillColor: Color.fromRGBO(233, 236, 239,
                             0.792156862745098), //Color.fromRGBO(233, 236, 239, 0.792156862745098)
                       ),
                     ),
@@ -376,7 +376,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         .map(
                           ((element) => DataRow(
                                 cells: <DataCell>[
-                                  DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
+                                  DataCell(Text(element[
+                                      "Sr_no"]!)), //Extracting from Map element the value
                                   DataCell(Text(element["Name"]!)),
                                   DataCell(Text(element["Qty"]!)),
                                 ],
