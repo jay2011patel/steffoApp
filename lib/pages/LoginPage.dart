@@ -99,8 +99,8 @@ class _loginPageState extends State<LoginContent> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.black);
+          backgroundColor: Colors.blueAccent,
+          textColor: Colors.white);
     } else {
       userValid = false;
       setState(() {});
