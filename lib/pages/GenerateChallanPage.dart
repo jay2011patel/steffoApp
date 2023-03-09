@@ -5,11 +5,12 @@ import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../UI/common.dart';
+import 'package:http/http.dart' as http;
 
 class GenerateChallanPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return GenerateChallanContent();
+    return const GenerateChallanContent();
     throw UnimplementedError();
   }
 }
@@ -28,7 +29,30 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
   String? selectedValue;
   int itemNum = 1;
 
+  TextEditingController transporter_name = TextEditingController();
+  TextEditingController vehicle_number = TextEditingController();
+  TextEditingController lr_number = TextEditingController();
   TextEditingController qty = TextEditingController();
+
+  onRegister() async {
+    print(selectedValue);
+    var test = await http.post(
+      Uri.parse('http://urbanwebmobile.in/steffo/transporter.php'),
+      // headers: <String, String>{
+      //   'Content-Type': 'application/json; charset=UTF-8',
+      // },
+      body: {
+        "transporter_name": transporter_name.text,
+        "vehicle_": vehicle_number.text,
+        "lr_number": lr_number.text,
+        "qty": qty.text,
+      },
+    );
+  }
+
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -136,6 +160,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               width: width,
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
+                controller: transporter_name,
                   textAlign: TextAlign.left,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.emoji_transportation_rounded),
@@ -158,6 +183,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               width: width,
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
+                controller: vehicle_number,
                   textAlign: TextAlign.left,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.fire_truck_rounded),
@@ -178,6 +204,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               width: width,
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
+                controller: lr_number,
                   textAlign: TextAlign.left,
                   decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.numbers),
@@ -262,7 +289,6 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                     ),
                     child: Container(
                         height: 200,
-
                         // width: MediaQuery.of(context).size.width - 20,
                         // padding: EdgeInsets.only(
                         //     top: 10, bottom: 10, left: 10, right: 10),
@@ -285,7 +311,6 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
                                   // borderRadius: BorderRadius.circular(20)
                                 ),
-
                                 columns: const [
                                   DataColumn(label: Text('Sr\nNo')),
                                   DataColumn(label: Text('HSN/Name')),
@@ -315,6 +340,8 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                 width: MediaQuery.of(context).size.width,
                 padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 child: buttonStyle("Submit", () {
+                  onRegister();
+
                   Navigator.of(context).pushNamed("/challan");
                 }))
           ],

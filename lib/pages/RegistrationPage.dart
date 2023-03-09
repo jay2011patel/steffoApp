@@ -6,29 +6,37 @@ import 'package:http/http.dart' as http;
 import 'package:stefomobileapp/validator/validations.dart';
 import '../UI/common.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
-class RegistrationPage extends StatelessWidget{
+class RegistrationPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      body: Center(
-        child: SingleChildScrollView(
-            child:RegistrationForm()
-        )
-      )
-    );
+        body: Center(child: SingleChildScrollView(child: RegistrationForm())));
     throw UnimplementedError();
   }
-
 }
-class RegistrationForm extends StatefulWidget{
+
+class RegistrationForm extends StatefulWidget {
   const RegistrationForm({super.key});
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
 }
 
-class _RegistrationFormState extends State<RegistrationForm>{
+class _RegistrationFormState extends State<RegistrationForm> {
+  final _formKey = GlobalKey<FormState>();
+
+  late FocusNode focusNode1;
+  late FocusNode focusNode2;
+  late FocusNode focusNode3;
+  late FocusNode focusNode4;
+  late FocusNode focusNode5;
+  final field1Key = GlobalKey<FormFieldState>();
+  final field2Key = GlobalKey<FormFieldState>();
+  final field3Key = GlobalKey<FormFieldState>();
+  final field4Key = GlobalKey<FormFieldState>();
+  final field5Key = GlobalKey<FormFieldState>();
 
   String? selectedValue;
   TextEditingController first_name = TextEditingController();
@@ -38,9 +46,54 @@ class _RegistrationFormState extends State<RegistrationForm>{
   TextEditingController user_type = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  onRegister() async{
+  @override
+  void initState() {
+    super.initState();
+    focusNode1 = FocusNode();
+    focusNode2 = FocusNode();
+    focusNode3 = FocusNode();
+    focusNode4 = FocusNode();
+    focusNode5 = FocusNode();
+    focusNode1.addListener(() {
+      if (!focusNode1.hasFocus) {
+        field1Key.currentState?.validate();
+      }
+    });
+    focusNode2.addListener(() {
+      if (!focusNode2.hasFocus) {
+        field2Key.currentState?.validate();
+      }
+    });
+    focusNode3.addListener(() {
+      if (!focusNode3.hasFocus) {
+        field3Key.currentState?.validate();
+      }
+    });
+    focusNode4.addListener(() {
+      if (!focusNode4.hasFocus) {
+        field4Key.currentState?.validate();
+      }
+    });
+    focusNode5.addListener(() {
+      if (!focusNode5.hasFocus) {
+        field5Key.currentState?.validate();
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    focusNode1.dispose();
+    focusNode2.dispose();
+    focusNode3.dispose();
+    focusNode4.dispose();
+    focusNode5.dispose();
+    super.dispose();
+  }
+
+  onRegister() async {
     print(selectedValue);
-   var test= await http.post(
+    var test = await http.post(
       Uri.parse('http://urbanwebmobile.in/steffo/register.php'),
       // headers: <String, String>{
       //   'Content-Type': 'application/json; charset=UTF-8',
@@ -54,53 +107,50 @@ class _RegistrationFormState extends State<RegistrationForm>{
         "userType": selectedValue!,
       },
     );
-   validateLoginDetails(AutofillHints.email, AutofillHints.password);
-   Navigator.of(context).pushNamed("/login");
+    Fluttertoast.showToast(
+        msg: 'Registered Successfully',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 1,
+        backgroundColor: Colors.green,
+        textColor: Colors.black);
+    validateLoginDetails(AutofillHints.email, AutofillHints.password);
+    Navigator.of(context).pushNamed("/login");
   }
+
   @override
   Widget build(BuildContext context) {
-
     return Center(
-      child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 40, 10, 20),
-        color: const Color.fromRGBO(255, 255, 255, 1.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
+        child: Container(
+      margin: const EdgeInsets.fromLTRB(10, 40, 10, 20),
+      color: const Color.fromRGBO(255, 255, 255, 1.0),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        logo(context),
 
-            logo(context),
+        //-----------------------FormDetails--------------------------
 
-            //-----------------------FormDetails--------------------------
+        SingleChildScrollView(
+            child: Container(
+          child: FormDetails(),
+        )),
 
-            SingleChildScrollView(
-              child: Container(
+        //----------------------------Submit--------------------------------
 
-                child: FormDetails(),
-              )
-            ),
-            
-            //----------------------------Submit--------------------------------
-            
-            Container(
-              margin: const EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width,
-                child: buttonStyle("Submit", () {
-                  onRegister();
-                }
-                )
-            ),
-        ]
-        ),
-      )
-    );
+        Container(
+            margin: const EdgeInsets.only(top: 20),
+            width: MediaQuery.of(context).size.width,
+            child: buttonStyle("Submit", () {
+              onRegister();
+            })),
+      ]),
+    ));
   }
 
-  Widget FormDetails(){
-    List<DropdownMenuItem<String>> dropdownItems=[];
-    List items = ["Distributor","Dealer"];
-    List<DropdownMenuItem<String>> getItems(){
-
-      for(int i = 0 ; i < items.length ;i++){
+  Widget FormDetails() {
+    List<DropdownMenuItem<String>> dropdownItems = [];
+    List items = ["Distributor", "Dealer"];
+    List<DropdownMenuItem<String>> getItems() {
+      for (int i = 0; i < items.length; i++) {
         DropdownMenuItem<String> it = DropdownMenuItem(
           value: items[i],
           child: Text(items[i]),
@@ -110,33 +160,40 @@ class _RegistrationFormState extends State<RegistrationForm>{
 
       return dropdownItems;
     }
-    return Form(
-      child: Column(
 
+    return Form(
+      key: _formKey,
+      child: Column(
         children: [
           //--------------------------First Name---------------------------------
           Container(
-
             width: width,
-            padding: const EdgeInsets.fromLTRB(5,0,5,5),
+            padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
             child: TextFormField(
-                controller: first_name,
-                textAlign: TextAlign.left,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.person),
-                  filled: true,
-                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                  labelText: "First Name",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  // label: Text("First Name",style: TextStyle(fontFamily: "Poppins"),),
-                  border: OutlineInputBorder(
-                      borderSide:   BorderSide.none,
-                      //borderRadius: BorderRadius.circular(20.0)
-                  ),
+              controller: first_name,
+              textAlign: TextAlign.left,
+              key: field1Key,
+              focusNode: focusNode1,
+              validator: (value) {
+                if (value!.isEmpty || value == null) {
+                  return 'Please enter a value.';
+                }
+                return null;
+              },
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.person),
+                filled: true,
+                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                labelText: "First Name",
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                // label: Text("First Name",style: TextStyle(fontFamily: "Poppins"),),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  //borderRadius: BorderRadius.circular(20.0)
                 ),
+              ),
             ),
           ),
-
 
           //-----------------------LASTNAME-------------------------------
 
@@ -144,8 +201,16 @@ class _RegistrationFormState extends State<RegistrationForm>{
             //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
             width: width,
-            padding: const EdgeInsets.fromLTRB(5,5,5,5),
+            padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
             child: TextFormField(
+                key: field2Key,
+                focusNode: focusNode2,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a value.';
+                  }
+                  return null;
+                },
                 controller: last_name,
                 textAlign: TextAlign.left,
                 decoration: const InputDecoration(
@@ -156,11 +221,10 @@ class _RegistrationFormState extends State<RegistrationForm>{
                   floatingLabelBehavior: FloatingLabelBehavior.never,
                   // label: const Text("Last Name",style: TextStyle(fontFamily: "Poppins"),),
                   border: OutlineInputBorder(
-                      borderSide:   BorderSide.none,
-                      // borderRadius: BorderRadius.circular(20.0)
+                    borderSide: BorderSide.none,
+                    // borderRadius: BorderRadius.circular(20.0)
                   ),
-                )
-            ),
+                )),
           ),
 
           //-------------------------Email------------------------------------
@@ -168,24 +232,24 @@ class _RegistrationFormState extends State<RegistrationForm>{
           Container(
             //margin: EdgeInsets.fromLTRB(20, 20,20,0),
             width: width,
-            padding: const EdgeInsets.fromLTRB(5,5,5,5),
+            padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
             child: TextFormField(
               autovalidateMode: AutovalidateMode.always,
-                controller: email,
-                textAlign: TextAlign.left,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.mail),
-                  filled: true,
-                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                  labelText: "Email",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  // label: Text("Email",style: TextStyle(fontFamily: "Poppins"),),
-                  border: OutlineInputBorder(
-                      borderSide:   BorderSide.none,
-                      // borderRadius: BorderRadius.circular(20.0)
-                  ),
+              controller: email,
+              textAlign: TextAlign.left,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.mail),
+                filled: true,
+                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                labelText: "Email",
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                // label: Text("Email",style: TextStyle(fontFamily: "Poppins"),),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  // borderRadius: BorderRadius.circular(20.0)
                 ),
-                validator: EmailValidator(errorText: "Not Valid"),
+              ),
+              validator: EmailValidator(errorText: "Not Valid"),
             ),
           ),
           //--------------------------------Password------------------------------
@@ -194,52 +258,73 @@ class _RegistrationFormState extends State<RegistrationForm>{
             //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
             width: width,
-            padding: const EdgeInsets.fromLTRB(5,5,5,5),
+            padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
             child: TextFormField(
-                obscureText: true,
-                controller: password,
-                textAlign: TextAlign.left,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.lock),
-                  filled: true,
-                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                  labelText: "Password",
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  // label: Text("Password",style: TextStyle(fontFamily: "Poppins"),),
-                  border: OutlineInputBorder(
-                      borderSide:   BorderSide.none,
-                      // borderRadius: BorderRadius.circular(20.0)
-                  ),
+              key: field3Key,
+              focusNode: focusNode3,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter a value.';
+                }
+                if (value.length < 8) {
+                  return 'Minimum length for password is 8';
+                }
+                return null;
+              },
+              obscureText: true,
+              controller: password,
+              textAlign: TextAlign.left,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.lock),
+                filled: true,
+                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                labelText: "Password",
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                // label: Text("Password",style: TextStyle(fontFamily: "Poppins"),),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  // borderRadius: BorderRadius.circular(20.0)
                 ),
+              ),
               // validator: RequiredValidator(errorText: "Required"),
             ),
           ),
-
 
           //--------------------------------MobNum----------------------------
 
           Container(
             //margin: EdgeInsets.fromLTRB(20, 20,20,0),
             width: width,
-            padding: const EdgeInsets.fromLTRB(5,5,5,5),
+            padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
             child: TextFormField(
+              key: field4Key,
+              focusNode: focusNode4,
+              validator: (value) {
+                if (value!.isEmpty) {
+                  return 'Please enter a value.';
+                }
+                if (value.length != 10) {
+                  return 'Mobile number should contain 10 digits';
+                }
+                return null;
+              },
               keyboardType: TextInputType.number,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                controller: mob_num,
-                textAlign: TextAlign.left,
-                decoration: const InputDecoration(
-                  prefixIcon: Icon(Icons.phone),
-                  labelText: "Mobile Number",
-                  filled: true,
-                  fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                  floatingLabelBehavior: FloatingLabelBehavior.never,
-                  // label: Text("Mobile Number",style: TextStyle(fontFamily: "Poppins"),),
-                  border: OutlineInputBorder(
-                      borderSide:   BorderSide.none,
-                      // borderRadius: BorderRadius.circular(20.0)
-                  ),
+              controller: mob_num,
+              textAlign: TextAlign.left,
+              decoration: const InputDecoration(
+                prefixIcon: Icon(Icons.phone),
+                labelText: "Mobile Number",
+                filled: true,
+                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                floatingLabelBehavior: FloatingLabelBehavior.never,
+                // label: Text("Mobile Number",style: TextStyle(fontFamily: "Poppins"),),
+                border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
+                  // borderRadius: BorderRadius.circular(20.0)
                 ),
-              validator: MaxLengthValidator(10,errorText: "No more"),
+              ),
+              // validator: MaxLengthValidator(10, errorText: "No more"),
               // validator: MultiValidator([
               //   MaxLengthValidator(10, errorText: "No More"),
               //   RequiredValidator(errorText: "Required"),
@@ -253,25 +338,30 @@ class _RegistrationFormState extends State<RegistrationForm>{
           Container(
               padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: DropdownButtonFormField(
+                key: field5Key,
+                focusNode: focusNode5,
                 decoration: const InputDecoration(
                     hintText: "User Type",
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 0.792156862745098),
                     border: OutlineInputBorder(
-                        borderSide: BorderSide.none,
-                        // borderRadius: BorderRadius.circular(20)
-                    )
-                ),
+                      borderSide: BorderSide.none,
+                      // borderRadius: BorderRadius.circular(20)
+                    )),
                 value: selectedValue,
                 items: getItems(),
                 onChanged: (String? newValue) {
                   selectedValue = newValue;
                 },
-              )
-          ),
-          ],
-        ),
+                validator: (selectedValue) {
+                  if (selectedValue!.isEmpty) {
+                    return 'Please select a value.';
+                  }
+                  return null;
+                },
+              )),
+        ],
+      ),
     );
-}
-
+  }
 }

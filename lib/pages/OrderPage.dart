@@ -26,7 +26,7 @@ class OrderDetails extends StatelessWidget {
 
 class OrderPage extends StatefulWidget {
 
-  const OrderPage({Key? key, required this.order}):
+  OrderPage({Key? key, required this.order}):
   super(key:key);
   final Order order;
   @override
@@ -37,6 +37,7 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
+    num ch_s_contact = 90;
     //List<GeneratedItems> items;
 
     @override
@@ -70,11 +71,11 @@ class _OrderPageState extends State<OrderPage> {
             child: SingleChildScrollView(
                 child: Column(
                     children: [
-                      const Padding(padding: EdgeInsets.all(10)),
+                      Padding(padding: EdgeInsets.all(10)),
 
                   Card(
                     child: Container(
-                        padding: const EdgeInsets.all(10),
+                        padding: EdgeInsets.all(10),
                         width: MediaQuery.of(context).size.width - 20,
                         decoration: BoxDecoration(
                           // borderRadius: BorderRadius.circular(25),
@@ -83,7 +84,7 @@ class _OrderPageState extends State<OrderPage> {
                         child: Column(children: [
                           Card(
                             child: Container(
-                              padding: const EdgeInsets.all(10),
+                              padding: EdgeInsets.all(10),
                               decoration: const BoxDecoration(
                                 // borderRadius: BorderRadius.circular(20),
                                 color: Colors.white,
@@ -144,7 +145,7 @@ class _OrderPageState extends State<OrderPage> {
 
                                       children: [
                                         const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                        Text(widget.order.user_id!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                        Text(widget.order.user_mob_num!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                       ],
                                     ),
                                   ],
@@ -290,10 +291,10 @@ class _OrderPageState extends State<OrderPage> {
 
                                       });
                                     },
-                                    child: Text("Confirm",style: TextStyle(color: Colors.green,fontSize: 15,fontFamily: "Poppins_Bold"),),
                                     style: ElevatedButton.styleFrom(
                                       backgroundColor: Colors.white
-                                    )
+                                    ),
+                                    child: const Text("Confirm",style: TextStyle(color: Colors.green,fontSize: 15,fontFamily: "Poppins_Bold"),)
                                 )
                             ),
                             const SizedBox(
@@ -316,10 +317,10 @@ class _OrderPageState extends State<OrderPage> {
 
                                       });
                                     },
+                                    child: Text("Reject",style: TextStyle(color: Colors.red,fontSize: 15,fontFamily: "Poppins_Bold")),
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.white
-                                    ),
-                                    child: const Text("Reject",style: TextStyle(color: Colors.red,fontSize: 15,fontFamily: "Poppins_Bold"))
+                                    )
                                 )
                             ),
                           ],
