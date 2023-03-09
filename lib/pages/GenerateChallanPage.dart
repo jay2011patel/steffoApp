@@ -43,7 +43,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
       // },
       body: {
         "transporter_name": transporter_name.text,
-        "vehicle_": vehicle_number.text,
+        "vehicle_number": vehicle_number.text,
         "lr_number": lr_number.text,
         "qty": qty.text,
       },
