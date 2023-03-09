@@ -112,8 +112,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
-        backgroundColor: Colors.green,
-        textColor: Colors.black);
+        backgroundColor: Colors.blueAccent,
+        textColor: Colors.white);
     validateLoginDetails(AutofillHints.email, AutofillHints.password);
     Navigator.of(context).pushNamed("/login");
   }
@@ -140,7 +140,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
             margin: const EdgeInsets.only(top: 20),
             width: MediaQuery.of(context).size.width,
             child: buttonStyle("Submit", () {
-              onRegister();
+              if (_formKey.currentState!.validate()) {
+                onRegister();
+              }
             })),
       ]),
     ));
@@ -163,6 +165,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
 
     return Form(
       key: _formKey,
+      autovalidateMode: AutovalidateMode.disabled,
       child: Column(
         children: [
           //--------------------------First Name---------------------------------
@@ -309,10 +312,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 return null;
               },
               keyboardType: TextInputType.number,
+              maxLength: 10,
               inputFormatters: [FilteringTextInputFormatter.digitsOnly],
               controller: mob_num,
               textAlign: TextAlign.left,
               decoration: const InputDecoration(
+                counterText: "",
                 prefixIcon: Icon(Icons.phone),
                 labelText: "Mobile Number",
                 filled: true,
@@ -353,12 +358,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 onChanged: (String? newValue) {
                   selectedValue = newValue;
                 },
-                validator: (selectedValue) {
-                  if (selectedValue!.isEmpty) {
-                    return 'Please select a value.';
-                  }
-                  return null;
-                },
+                // validator: (selectedValue) {
+                //   if (selectedValue!.isEmpty) {
+                //     return 'Please select a value.';
+                //   }
+                //   return null;
+                // },
               )),
         ],
       ),

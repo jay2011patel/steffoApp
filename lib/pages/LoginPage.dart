@@ -99,8 +99,8 @@ class _loginPageState extends State<LoginContent> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.black);
+          backgroundColor: Colors.blueAccent,
+          textColor: Colors.white);
     } else {
       userValid = false;
       setState(() {});
@@ -217,7 +217,11 @@ class _loginPageState extends State<LoginContent> {
                       padding: EdgeInsets.symmetric(horizontal: 20),
                       width: MediaQuery.of(context).size.width,
                       child: buttonStyle(
-                          "Login", () => {onLogin(email.text, pw.text)}))),
+                          "Login",
+                          () => {
+                                if (_formKey.currentState!.validate())
+                                  {onLogin(email.text, pw.text)}
+                              }))),
               //-----------------------------Register Now-------------------------
               Container(
                 //margin: EdgeInsets.fromLTRB(20, 0,20,0),
