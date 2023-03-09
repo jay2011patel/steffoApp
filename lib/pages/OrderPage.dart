@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -34,10 +36,37 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  var listOfColumns =[];
+  loadData() async {
+    final res = await http.post(
+      Uri.parse("http://urbanwebmobile.in/steffo/getorderdetails.php"),
+
+      body: {
+        "order_id" :widget.order.order_id,
+      },
+    );
+    var responseData = jsonDecode(res.body);
+    //print(responseData);
+    listOfColumns=[];
+    for(int i = 0 ; i < responseData["data"].length;i++){
+      listOfColumns.add(
+      {
+        "Sr_no" : (i+1).toString(),
+        "Name": responseData["data"][i]["name"],
+        "Qty": responseData["data"][i]["qty"],
+      }
+      );
+    }
+    setState(() {
+
+    });
+  }
+
 
   @override
   Widget build(BuildContext context) {
     num ch_s_contact = 90;
+    loadData();
     //List<GeneratedItems> items;
 
     @override
@@ -47,9 +76,11 @@ class _OrderPageState extends State<OrderPage> {
       super.initState();
     }
 
-    var listOfColumns =[
-      {"Sr_no" :"1","Name" :"TMT FE500D 10 mm","Qty" :"1"}
-    ];
+
+
+
+
+
 
     TextEditingController status = TextEditingController();
     //status.text = widget.order.status!;
