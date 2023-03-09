@@ -134,6 +134,7 @@ class _HomePageState extends State<HomeContent>{
         Order req = Order();
         req.reciever_id = responseData["data"][i]["supplier_id"];
         req.user_id = responseData["data"][i]["user_id"];
+        req.user_mob_num = responseData["data"][i]["mobileNumber"];
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];

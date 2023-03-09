@@ -145,7 +145,7 @@ class _OrderPageState extends State<OrderPage> {
 
                                       children: [
                                         Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                        Text(widget.order.user_id!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                        Text(widget.order.user_mob_num!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                       ],
                                     ),
                                   ],
