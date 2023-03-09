@@ -134,10 +134,10 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
               width: width,
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
                   textAlign: TextAlign.left,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.emoji_transportation_rounded),
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -156,10 +156,10 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
               width: width,
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
                   textAlign: TextAlign.left,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.fire_truck_rounded),
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -176,10 +176,10 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
               width: width,
-              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
                   textAlign: TextAlign.left,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     prefixIcon: Icon(Icons.numbers),
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -200,10 +200,10 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                       Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: DropdownButtonFormField(
-                            decoration: InputDecoration(
+                            decoration: const InputDecoration(
                                 hintText: "Select The Product",
                                 filled: true,
-                                fillColor: const Color.fromRGBO(
+                                fillColor: Color.fromRGBO(
                                     233, 236, 239, 0.792156862745098),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -220,20 +220,20 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                         child: TextFormField(
                           maxLines: 1,
                           controller: qty,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             hintText: "Quantity",
                             border: OutlineInputBorder(
                                 // borderRadius: BorderRadius.circular(20),
                                 borderSide: BorderSide.none),
                             filled: true,
-                            fillColor: const Color.fromRGBO(233, 236, 239,
+                            fillColor: Color.fromRGBO(233, 236, 239,
                                 0.792156862745098), //Color.fromRGBO(233, 236, 239, 0.792156862745098)
                           ),
                         ),
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              shape: RoundedRectangleBorder(
+                              shape: const RoundedRectangleBorder(
                                   // borderRadius: BorderRadius.circular(20),
                                   side: BorderSide.none),
                               minimumSize: const Size(190, 40)),
@@ -256,7 +256,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
                 Container(
                     margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.white,
                       // borderRadius: BorderRadius.circular(20)
                     ),
@@ -279,8 +279,8 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                             child: Center(
                               child: DataTable(
                                 //border: TableBorder.all(borderRadius: BorderRadius.circular(20)),
-                                decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(
+                                decoration: const BoxDecoration(
+                                  color: Color.fromRGBO(
                                       233, 236, 239, 0.792156862745098),
 
                                   // borderRadius: BorderRadius.circular(20)
@@ -313,7 +313,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
             Container(
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 child: buttonStyle("Submit", () {
                   Navigator.of(context).pushNamed("/challan");
                 }))

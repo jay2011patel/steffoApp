@@ -63,7 +63,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         "supplierId": supplier_id!,
         "shippingAddress": id!,
         "partyName": party_name.text,
-        //"party_address": party_address.text,
+        // "party_address": party_address.text,
         "gstNumber": party_pan_no.text,
         "mobileNumber": party_mob_num.text,
         "basePrice": base_price.text,
@@ -186,7 +186,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         // borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none),
                     filled: true,
-                    fillColor: const Color.fromRGBO(233, 236, 239,
+                    fillColor: Color.fromRGBO(233, 236, 239,
                         0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
 
                     ),

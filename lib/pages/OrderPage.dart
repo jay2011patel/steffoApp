@@ -26,7 +26,7 @@ class OrderDetails extends StatelessWidget {
 
 class OrderPage extends StatefulWidget {
 
-  OrderPage({Key? key, required this.order}):
+  const OrderPage({Key? key, required this.order}):
   super(key:key);
   final Order order;
   @override
@@ -37,7 +37,6 @@ class _OrderPageState extends State<OrderPage> {
 
   @override
   Widget build(BuildContext context) {
-    num ch_s_contact = 90;
     //List<GeneratedItems> items;
 
     @override
@@ -71,11 +70,11 @@ class _OrderPageState extends State<OrderPage> {
             child: SingleChildScrollView(
                 child: Column(
                     children: [
-                      Padding(padding: EdgeInsets.all(10)),
+                      const Padding(padding: EdgeInsets.all(10)),
 
                   Card(
                     child: Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         width: MediaQuery.of(context).size.width - 20,
                         decoration: BoxDecoration(
                           // borderRadius: BorderRadius.circular(25),
@@ -84,7 +83,7 @@ class _OrderPageState extends State<OrderPage> {
                         child: Column(children: [
                           Card(
                             child: Container(
-                              padding: EdgeInsets.all(10),
+                              padding: const EdgeInsets.all(10),
                               decoration: const BoxDecoration(
                                 // borderRadius: BorderRadius.circular(20),
                                 color: Colors.white,
@@ -94,10 +93,10 @@ class _OrderPageState extends State<OrderPage> {
                                   Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Text("Shipping Address :",
+                                      const Text("Shipping Address :",
                                           style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
                                       Text(widget.order.party_address!,
-                                          style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                          style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                     ],
                                   ),
                                   const SizedBox(
@@ -108,7 +107,7 @@ class _OrderPageState extends State<OrderPage> {
                                     children: [
                                       const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
                                       Text(widget.order.party_mob_num!,
-                                          style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                          style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                     ],
                                   ),
                                 ],
@@ -131,10 +130,10 @@ class _OrderPageState extends State<OrderPage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                                       children: [
-                                        Text("Billing Address :",
+                                        const Text("Billing Address :",
                                             style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
                                         Text(widget.order.user_id!,
-                                            style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                            style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                       ],
                                     ),
                                     const SizedBox(
@@ -144,8 +143,8 @@ class _OrderPageState extends State<OrderPage> {
                                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                                       children: [
-                                        Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                        Text(widget.order.user_id!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                        const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                        Text(widget.order.user_id!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                       ],
                                     ),
                                   ],
@@ -165,8 +164,8 @@ class _OrderPageState extends State<OrderPage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                                   children: [
-                                    Text("Loading Type:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.loading_type!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                    const Text("Loading Type:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    Text(widget.order.loading_type!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                   ],
                                 )),
                           ),
@@ -184,8 +183,8 @@ class _OrderPageState extends State<OrderPage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                                   children: [
-                                    Text("Base Price:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.base_price!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                    const Text("Base Price:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    Text(widget.order.base_price!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                   ],
                                 )),
                           ),
@@ -204,8 +203,8 @@ class _OrderPageState extends State<OrderPage> {
                                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
                                   children:  [
-                                    Text("Status: ", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.status!, style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                    const Text("Status: ", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    Text(widget.order.status!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
                                   ],
                                 )),
                           ),
@@ -217,7 +216,7 @@ class _OrderPageState extends State<OrderPage> {
 
                   Card(
                     child: Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         // margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
                         width: MediaQuery.of(context).size.width - 20,
                         decoration: BoxDecoration(
@@ -271,7 +270,7 @@ class _OrderPageState extends State<OrderPage> {
                   LayoutBuilder(builder: (context, constraints) {
                     if(widget.order.status == "Pending"){
                       return Container(
-                        padding: EdgeInsets.symmetric(horizontal: 20),
+                        padding: const EdgeInsets.symmetric(horizontal: 20),
                         width: MediaQuery.of(context).size.width,
                         child: Row(
                           children: [
@@ -297,7 +296,7 @@ class _OrderPageState extends State<OrderPage> {
                                     )
                                 )
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             )
                             ,
@@ -317,10 +316,10 @@ class _OrderPageState extends State<OrderPage> {
 
                                       });
                                     },
-                                    child: Text("Reject",style: TextStyle(color: Colors.red,fontSize: 15,fontFamily: "Poppins_Bold")),
                                     style: ElevatedButton.styleFrom(
                                         backgroundColor: Colors.white
-                                    )
+                                    ),
+                                    child: const Text("Reject",style: TextStyle(color: Colors.red,fontSize: 15,fontFamily: "Poppins_Bold"))
                                 )
                             ),
                           ],
@@ -330,7 +329,7 @@ class _OrderPageState extends State<OrderPage> {
                       if(widget.order.status == "Confirmed"){
                       return Container(
                         width: MediaQuery.of(context).size.width,
-                        padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
+                        padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                         child: buttonStyle("View Challan", () {
                           Navigator.of(context).pushNamed("/challanlist");
                         }),
