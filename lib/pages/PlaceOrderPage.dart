@@ -54,9 +54,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
 
   int itemNum = 1;
   final List<Map<String, String>> listOfColumns = [];
-  onPlaceOrder() {
+  onPlaceOrder() async {
 
-    http.post(
+    var res = await http.post(
       Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
       body: {
         "userId": id!,
@@ -71,7 +71,27 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         "loadingType": loading_type.text,
       },
     );
-    print(listOfColumns[0]['Name']);
+
+    var responseData = json.decode(res.body);
+
+    print(responseData["value"].toString());
+
+    if(responseData["status"]=='200'){
+      for(int i = 0 ; i<listOfColumns.length;i++){
+        http.post(
+          Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
+          body: {
+            "order_id":responseData["value"].toString(),
+            "name":listOfColumns[i]["Name"],
+            "qty":listOfColumns[i]["Qty"]
+          },
+        );
+      }
+
+
+    }
+
+     // print(listOfColumns[0]['Name']);
   }
 
   Widget PlaceOrderBody() {
@@ -344,7 +364,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           listOfColumns.add({
                             "Sr_no": itemNum.toString(),
                             "Name":
-                                "$selectedValue $selectedGrade $selectedSize",
+                                "$selectedValue $selectedGrade $selectedSize mm",
                             "Qty": qty.text
                           });
                           itemNum = itemNum + 1;
