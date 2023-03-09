@@ -247,7 +247,7 @@ class _OrderPageState extends State<OrderPage> {
                                         columns: const [
                                           DataColumn(label: Text("Sr\nNo")),
                                           DataColumn(label: Text("Item name")),
-                                          DataColumn(label: Text("Quantity"))
+                                          DataColumn(label: Text("Quantity\n(Tons)"))
                                         ],
                                         rows: listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
                                             .map(
