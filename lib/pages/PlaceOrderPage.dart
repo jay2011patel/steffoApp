@@ -55,13 +55,13 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   int itemNum = 1;
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() {
-    //print("INPlaceORder");
+
     http.post(
       Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
       body: {
         "userId": id!,
         "supplierId": supplier_id!,
-        "shippingAddress": id!,
+        "shippingAddress": party_address.text,
         "partyName": party_name.text,
         //"party_address": party_address.text,
         "gstNumber": party_pan_no.text,
@@ -71,6 +71,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         "loadingType": loading_type.text,
       },
     );
+    print(listOfColumns[0]['Name']);
   }
 
   Widget PlaceOrderBody() {
@@ -186,8 +187,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         // borderRadius: BorderRadius.circular(20),
                         borderSide: BorderSide.none),
                     filled: true,
-                    fillColor: const Color.fromRGBO(233, 236, 239,
-                        0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                    fillColor: const Color.fromRGBO(233, 236, 239,0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
 
                     ),
               ),
@@ -342,10 +342,10 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                       onPressed: () {
                         setState(() {
                           listOfColumns.add({
-                            "Name": itemNum.toString(),
-                            "Number":
+                            "Sr_no": itemNum.toString(),
+                            "Name":
                                 "$selectedValue $selectedGrade $selectedSize",
-                            "State": qty.text
+                            "Qty": qty.text
                           });
                           itemNum = itemNum + 1;
                         });
@@ -376,10 +376,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         .map(
                           ((element) => DataRow(
                                 cells: <DataCell>[
-                                  DataCell(Text(element[
-                                      "Name"]!)), //Extracting from Map element the value
-                                  DataCell(Text(element["Number"]!)),
-                                  DataCell(Text(element["State"]!)),
+                                  DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
+                                  DataCell(Text(element["Name"]!)),
+                                  DataCell(Text(element["Qty"]!)),
                                 ],
                               )),
                         )
