@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       title: 'Flutter Demo',
-      home: const SplashScreen(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lrpage': (BuildContext context) => LRPage(),
@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         '/orders': (BuildContext context) => OrdersPage(),
         '/gnchallan': (BuildContext context) => GenerateChallanPage(),
         //'/order': (BuildContext context) => OrderDetails(),
-        '/challan': (BuildContext context) => GeneratedChallan(),
+        '/challan': (BuildContext context) => ChallanPage(),
       },
     );
   }

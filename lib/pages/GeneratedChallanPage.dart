@@ -307,7 +307,7 @@ class _ChallanPageState extends State<ChallanPage> {
                       children: [
                     Container(
                         padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           // borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
@@ -370,7 +370,7 @@ class _ChallanPageState extends State<ChallanPage> {
                         ),
                         Container(
                         padding: const EdgeInsets.all(10),
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           // borderRadius: BorderRadius.circular(20),
                           color: Colors.white,
                         ),
