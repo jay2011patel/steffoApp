@@ -137,7 +137,7 @@ class _HomePageState extends State<HomeContent>{
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];
-        req.party_mob_num = responseData["data"][i]["mobileNumber"];
+        req.party_mob_num = responseData["data"][i]["partyMobileNumber"];
         req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
