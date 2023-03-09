@@ -148,7 +148,7 @@ class _HomePageState extends State<HomeContent>{
           orderList.add(req);
         }
         if(req.status?.trim() == "Pending" && id == req.reciever_id) {
-          //requestList.add(req);
+          requestList.add(req);
           print("Added to req list");
         }
 
