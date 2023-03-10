@@ -13,7 +13,7 @@ import '../UI/common.dart';
 // }
 
 class GeneratedChallan extends StatelessWidget {
-  final int challan_id;
+  final String challan_id;
   const GeneratedChallan({super.key,required this.challan_id});
 
   @override
@@ -24,7 +24,7 @@ class GeneratedChallan extends StatelessWidget {
 }
 
 class ChallanPage extends StatefulWidget {
-  final int challan_id;
+  final String challan_id;
 
   const ChallanPage({super.key,required this.challan_id});
 
