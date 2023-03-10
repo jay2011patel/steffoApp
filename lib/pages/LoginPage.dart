@@ -99,8 +99,8 @@ class _loginPageState extends State<LoginContent> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.BOTTOM,
           timeInSecForIosWeb: 1,
-          backgroundColor: Colors.green,
-          textColor: Colors.black);
+          backgroundColor: Colors.blueAccent,
+          textColor: Colors.white);
     } else {
       userValid = false;
       setState(() {});
@@ -142,9 +142,11 @@ class _loginPageState extends State<LoginContent> {
                     textAlign: TextAlign.left,
                     decoration: const InputDecoration(
                       prefixIcon: Icon(Icons.person),
+                      labelText: "Email",
+                      floatingLabelBehavior: FloatingLabelBehavior.never,
                       filled: true,
                       fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                      hintText: "Email",
+                      // hintText: "Email",
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
                         //borderRadius: BorderRadius.circular(20.0)
