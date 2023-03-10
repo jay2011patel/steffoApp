@@ -49,7 +49,7 @@ class MyApp extends StatelessWidget {
         '/orders': (BuildContext context) => OrdersPage(),
         //'/gnchallan': (BuildContext context) => GenerateChallanPage(),
         //'/order': (BuildContext context) => OrderDetails(),
-        '/challan': (BuildContext context) => GeneratedChallan(),
+        //'/challan': (BuildContext context) => GeneratedChallan(),
       },
     );
   }

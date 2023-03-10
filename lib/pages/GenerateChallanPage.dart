@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:stefomobileapp/pages/GeneratedChallanPage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../Models/order.dart';
@@ -137,6 +138,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
   TextEditingController transporter_name = TextEditingController();
   TextEditingController vehicle_number = TextEditingController();
   TextEditingController lr_number = TextEditingController();
+  var challan_id;
   onSubmit() async {
     final res = await http.post(
       Uri.parse("http://urbanwebmobile.in/steffo/addchallan.php"),
@@ -151,6 +153,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
     var responseData = jsonDecode(res.body);
     if(responseData["status"] =="200"){
       print(responseData["data"]);
+      challan_id =responseData["data"];
     }
 
 
@@ -396,7 +399,12 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
                   onSubmit();
 
-                  Navigator.of(context).pushNamed("/challan");
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => GeneratedChallan(challan_id: challan_id)
+                    )
+                  );
                 }))
           ],
         ),

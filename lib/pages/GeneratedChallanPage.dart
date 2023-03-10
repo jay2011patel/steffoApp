@@ -13,16 +13,19 @@ import '../UI/common.dart';
 // }
 
 class GeneratedChallan extends StatelessWidget {
-  const GeneratedChallan({super.key});
+  final int challan_id;
+  const GeneratedChallan({super.key,required this.challan_id});
 
   @override
   Widget build(BuildContext context) {
-    return ChallanPage();
+    return ChallanPage(challan_id: challan_id,);
   }
 }
 
 class ChallanPage extends StatefulWidget {
-  const ChallanPage({super.key});
+  final int challan_id;
+
+  const ChallanPage({super.key,required this.challan_id});
 
   @override
   State<ChallanPage> createState() => _ChallanPageState();
@@ -32,8 +35,6 @@ class _ChallanPageState extends State<ChallanPage> {
 
     @override
     Widget build(BuildContext context) {
-      num ch_s_contact = 9898989898;
-      //List<GeneratedItems> items;
 
       @override
       void initState() {
@@ -220,7 +221,7 @@ class _ChallanPageState extends State<ChallanPage> {
                                                     fontSize: 10,
                                                     fontWeight: FontWeight
                                                         .bold)),
-                                            Text("$ch_s_contact",
+                                            Text("Contact",
                                                 style: const TextStyle(
                                                     fontSize: 10))
                                           ],
