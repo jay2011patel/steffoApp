@@ -1,21 +1,25 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+import '../Models/order.dart';
 import '../UI/common.dart';
 
 class GenerateChallanPage extends StatelessWidget {
+
+  Order order;
+
+  GenerateChallanPage({super.key,required this.order});
+
   @override
   Widget build(BuildContext context) {
-    return GenerateChallanContent();
+    return GenerateChallanContent(order: order);
     throw UnimplementedError();
   }
 }
 
 class GenerateChallanContent extends StatefulWidget {
-  const GenerateChallanContent({super.key});
+  GenerateChallanContent({super.key,required this.order});
+  final Order order;
   @override
   State<GenerateChallanContent> createState() => _GenerateChallanPageState();
 }
@@ -24,7 +28,6 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
   var _selected = 0;
   List listOfColumns = [];
   List items = ["Item 1", "Item 2", "Item 3"];
-
   String? selectedValue;
   int itemNum = 1;
 
