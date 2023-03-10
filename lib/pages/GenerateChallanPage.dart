@@ -1,7 +1,10 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../Models/order.dart';
+import 'package:http/http.dart' as http;
 import '../UI/common.dart';
 
 class GenerateChallanPage extends StatelessWidget {
@@ -27,7 +30,7 @@ class GenerateChallanContent extends StatefulWidget {
 class _GenerateChallanPageState extends State<GenerateChallanContent> {
   var _selected = 0;
   List listOfColumns = [];
-  List items = ["Item 1", "Item 2", "Item 3"];
+  List items = [];
   String? selectedValue;
   int itemNum = 1;
 
@@ -103,11 +106,38 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
         ));
     throw UnimplementedError();
   }
+  int flag = 0;
+  loadData() async {
+    if(flag == 0){
+      final res = await http.post(
 
+        Uri.parse("http://urbanwebmobile.in/steffo/getorderdetails.php"),
+
+        body: {
+
+          "order_id" :widget.order.order_id,
+
+        },
+      );
+
+      var responseData = jsonDecode(res.body);
+      print(responseData);
+      for(int i = 0 ; i < responseData["data"].length ; i++){
+        items.add(responseData["data"][i]["name"]);
+      }
+
+        setState(() {
+
+        });
+        flag = 1;
+      }
+
+  }
   Widget GenerateChallanPageBody() {
     List<DropdownMenuItem<String>> dropdownItems = [];
 
-    getItems() {
+    loadData();
+    getItems()  {
       dropdownItems.clear();
       for (int i = 0; i < items.length; i++) {
         DropdownMenuItem<String> item = DropdownMenuItem<String>(
@@ -241,6 +271,9 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                                   side: BorderSide.none),
                               minimumSize: const Size(190, 40)),
                           onPressed: () {
+                            int i = items.indexOf(selectedValue);
+                            items.removeAt(i);
+
                             setState(() {
                               listOfColumns.add({
                                 "Sr_no": itemNum.toString(),
@@ -248,6 +281,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                                 "Qty": qty.text
                               });
                               itemNum = itemNum + 1;
+                              selectedValue = null;
                             });
                           },
                           child: const Text("Add Item"))
@@ -299,8 +333,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                                         .map(
                                           ((element) => DataRow(
                                                 cells: <DataCell>[
-                                                  DataCell(Text(element[
-                                                      "Sr_no"]!)), //Extracting from Map element the value
+                                                  DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
                                                   DataCell(
                                                       Text(element["Name"]!)),
                                                   DataCell(
