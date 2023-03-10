@@ -107,7 +107,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
     throw UnimplementedError();
   }
   int flag = 0;
-  loadData() async {
+   loadOrderData() async {
     if(flag == 0){
       final res = await http.post(
 
@@ -125,20 +125,60 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
       for(int i = 0 ; i < responseData["data"].length ; i++){
         items.add(responseData["data"][i]["name"]);
       }
-
+      flag = 1;
+      print("Heloooooooo");
         setState(() {
 
         });
-        flag = 1;
+
       }
 
   }
+  TextEditingController transporter_name = TextEditingController();
+  TextEditingController vehicle_number = TextEditingController();
+  TextEditingController lr_number = TextEditingController();
+  onSubmit() async {
+    final res = await http.post(
+      Uri.parse("http://urbanwebmobile.in/steffo/addchallan.php"),
+
+      body: {
+        "order_id":widget.order.order_id,
+        "transporter_name":transporter_name.text,
+        "vehicle_number":vehicle_number.text,
+        "lr_number":lr_number.text
+      },
+    );
+    var responseData = jsonDecode(res.body);
+    if(responseData["status"] =="200"){
+      print(responseData["data"]);
+    }
+
+
+
+
+
+    for(int i = 0 ; i < listOfColumns.length;i++){
+      final res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/addtochallan.php"),
+
+        body: {
+          "challan_id":responseData["data"].toString(),
+          "name":listOfColumns[i]["Name"],
+          "qty":listOfColumns[i]["Qty"].toString(),
+        },
+      );
+    }
+  }
+
   Widget GenerateChallanPageBody() {
     List<DropdownMenuItem<String>> dropdownItems = [];
 
-    loadData();
+    loadOrderData();
     getItems()  {
-      dropdownItems.clear();
+      print("*****************************************************************");
+      print(items);
+      print("*****************************************************************");
+      dropdownItems=[];
       for (int i = 0; i < items.length; i++) {
         DropdownMenuItem<String> item = DropdownMenuItem<String>(
             value: items[i],
@@ -169,6 +209,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               width: width,
               padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
+                controller: transporter_name,
                   textAlign: TextAlign.left,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.emoji_transportation_rounded),
@@ -191,6 +232,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               width: width,
               padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
+                controller: vehicle_number,
                   textAlign: TextAlign.left,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.fire_truck_rounded),
@@ -211,6 +253,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               width: width,
               padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
+                controller: lr_number,
                   textAlign: TextAlign.left,
                   decoration: InputDecoration(
                     prefixIcon: Icon(Icons.numbers),
@@ -271,18 +314,17 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                                   side: BorderSide.none),
                               minimumSize: const Size(190, 40)),
                           onPressed: () {
-                            int i = items.indexOf(selectedValue);
-                            items.removeAt(i);
-
-                            setState(() {
                               listOfColumns.add({
                                 "Sr_no": itemNum.toString(),
                                 "Name": "$selectedValue",
                                 "Qty": qty.text
                               });
+                              // int i = items.indexOf(selectedValue);
+                              // items.removeAt(i);
+
                               itemNum = itemNum + 1;
                               selectedValue = null;
-                            });
+                              setState(() {});
                           },
                           child: const Text("Add Item"))
                     ],
@@ -351,6 +393,9 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                 width: MediaQuery.of(context).size.width,
                 padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 child: buttonStyle("Submit", () {
+
+                  onSubmit();
+
                   Navigator.of(context).pushNamed("/challan");
                 }))
           ],
