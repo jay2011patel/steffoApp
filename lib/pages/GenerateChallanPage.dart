@@ -1,22 +1,28 @@
-import 'package:flutter/cupertino.dart';
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:getwidget/components/dropdown/gf_dropdown.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
-import '../UI/common.dart';
+import '../Models/order.dart';
 import 'package:http/http.dart' as http;
+import '../UI/common.dart';
 
 class GenerateChallanPage extends StatelessWidget {
+
+  Order order;
+
+  GenerateChallanPage({super.key,required this.order});
+
   @override
   Widget build(BuildContext context) {
-    return const GenerateChallanContent();
+    return GenerateChallanContent(order: order);
     throw UnimplementedError();
   }
 }
 
 class GenerateChallanContent extends StatefulWidget {
-  const GenerateChallanContent({super.key});
+  GenerateChallanContent({super.key,required this.order});
+  final Order order;
   @override
   State<GenerateChallanContent> createState() => _GenerateChallanPageState();
 }
@@ -24,35 +30,11 @@ class GenerateChallanContent extends StatefulWidget {
 class _GenerateChallanPageState extends State<GenerateChallanContent> {
   var _selected = 0;
   List listOfColumns = [];
-  List items = ["Item 1", "Item 2", "Item 3"];
-
+  List items = [];
   String? selectedValue;
   int itemNum = 1;
 
-  TextEditingController transporter_name = TextEditingController();
-  TextEditingController vehicle_number = TextEditingController();
-  TextEditingController lr_number = TextEditingController();
   TextEditingController qty = TextEditingController();
-
-  onRegister() async {
-    print(selectedValue);
-    var test = await http.post(
-      Uri.parse('http://urbanwebmobile.in/steffo/transporter.php'),
-      // headers: <String, String>{
-      //   'Content-Type': 'application/json; charset=UTF-8',
-      // },
-      body: {
-        "transporter_name": transporter_name.text,
-        "vehicle_number": vehicle_number.text,
-        "lr_number": lr_number.text,
-        "qty": qty.text,
-      },
-    );
-  }
-
-
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -124,12 +106,79 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
         ));
     throw UnimplementedError();
   }
+  int flag = 0;
+   loadOrderData() async {
+    if(flag == 0){
+      final res = await http.post(
+
+        Uri.parse("http://urbanwebmobile.in/steffo/getorderdetails.php"),
+
+        body: {
+
+          "order_id" :widget.order.order_id,
+
+        },
+      );
+
+      var responseData = jsonDecode(res.body);
+      print(responseData);
+      for(int i = 0 ; i < responseData["data"].length ; i++){
+        items.add(responseData["data"][i]["name"]);
+      }
+      flag = 1;
+      print("Heloooooooo");
+        setState(() {
+
+        });
+
+      }
+
+  }
+  TextEditingController transporter_name = TextEditingController();
+  TextEditingController vehicle_number = TextEditingController();
+  TextEditingController lr_number = TextEditingController();
+  onSubmit() async {
+    final res = await http.post(
+      Uri.parse("http://urbanwebmobile.in/steffo/addchallan.php"),
+
+      body: {
+        "order_id":widget.order.order_id,
+        "transporter_name":transporter_name.text,
+        "vehicle_number":vehicle_number.text,
+        "lr_number":lr_number.text
+      },
+    );
+    var responseData = jsonDecode(res.body);
+    if(responseData["status"] =="200"){
+      print(responseData["data"]);
+    }
+
+
+
+
+
+    for(int i = 0 ; i < listOfColumns.length;i++){
+      final res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/addtochallan.php"),
+
+        body: {
+          "challan_id":responseData["data"].toString(),
+          "name":listOfColumns[i]["Name"],
+          "qty":listOfColumns[i]["Qty"].toString(),
+        },
+      );
+    }
+  }
 
   Widget GenerateChallanPageBody() {
     List<DropdownMenuItem<String>> dropdownItems = [];
 
-    getItems() {
-      dropdownItems.clear();
+    loadOrderData();
+    getItems()  {
+      print("*****************************************************************");
+      print(items);
+      print("*****************************************************************");
+      dropdownItems=[];
       for (int i = 0; i < items.length; i++) {
         DropdownMenuItem<String> item = DropdownMenuItem<String>(
             value: items[i],
@@ -158,11 +207,11 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
               width: width,
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
                 controller: transporter_name,
                   textAlign: TextAlign.left,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Icon(Icons.emoji_transportation_rounded),
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -181,11 +230,11 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
               width: width,
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
                 controller: vehicle_number,
                   textAlign: TextAlign.left,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Icon(Icons.fire_truck_rounded),
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -202,11 +251,11 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
               //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
               width: width,
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
               child: TextFormField(
                 controller: lr_number,
                   textAlign: TextAlign.left,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     prefixIcon: Icon(Icons.numbers),
                     filled: true,
                     fillColor: Color.fromRGBO(233, 236, 239, 1.0),
@@ -227,10 +276,10 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                       Container(
                           padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                           child: DropdownButtonFormField(
-                            decoration: const InputDecoration(
+                            decoration: InputDecoration(
                                 hintText: "Select The Product",
                                 filled: true,
-                                fillColor: Color.fromRGBO(
+                                fillColor: const Color.fromRGBO(
                                     233, 236, 239, 0.792156862745098),
                                 border: OutlineInputBorder(
                                   borderSide: BorderSide.none,
@@ -247,32 +296,35 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                         child: TextFormField(
                           maxLines: 1,
                           controller: qty,
-                          decoration: const InputDecoration(
+                          decoration: InputDecoration(
                             hintText: "Quantity",
                             border: OutlineInputBorder(
                                 // borderRadius: BorderRadius.circular(20),
                                 borderSide: BorderSide.none),
                             filled: true,
-                            fillColor: Color.fromRGBO(233, 236, 239,
+                            fillColor: const Color.fromRGBO(233, 236, 239,
                                 0.792156862745098), //Color.fromRGBO(233, 236, 239, 0.792156862745098)
                           ),
                         ),
                       ),
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
-                              shape: const RoundedRectangleBorder(
+                              shape: RoundedRectangleBorder(
                                   // borderRadius: BorderRadius.circular(20),
                                   side: BorderSide.none),
                               minimumSize: const Size(190, 40)),
                           onPressed: () {
-                            setState(() {
                               listOfColumns.add({
                                 "Sr_no": itemNum.toString(),
                                 "Name": "$selectedValue",
                                 "Qty": qty.text
                               });
+                              // int i = items.indexOf(selectedValue);
+                              // items.removeAt(i);
+
                               itemNum = itemNum + 1;
-                            });
+                              selectedValue = null;
+                              setState(() {});
                           },
                           child: const Text("Add Item"))
                     ],
@@ -283,12 +335,13 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
                 Container(
                     margin: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       color: Colors.white,
                       // borderRadius: BorderRadius.circular(20)
                     ),
                     child: Container(
                         height: 200,
+
                         // width: MediaQuery.of(context).size.width - 20,
                         // padding: EdgeInsets.only(
                         //     top: 10, bottom: 10, left: 10, right: 10),
@@ -305,12 +358,13 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                             child: Center(
                               child: DataTable(
                                 //border: TableBorder.all(borderRadius: BorderRadius.circular(20)),
-                                decoration: const BoxDecoration(
-                                  color: Color.fromRGBO(
+                                decoration: BoxDecoration(
+                                  color: const Color.fromRGBO(
                                       233, 236, 239, 0.792156862745098),
 
                                   // borderRadius: BorderRadius.circular(20)
                                 ),
+
                                 columns: const [
                                   DataColumn(label: Text('Sr\nNo')),
                                   DataColumn(label: Text('HSN/Name')),
@@ -321,8 +375,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                                         .map(
                                           ((element) => DataRow(
                                                 cells: <DataCell>[
-                                                  DataCell(Text(element[
-                                                      "Sr_no"]!)), //Extracting from Map element the value
+                                                  DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
                                                   DataCell(
                                                       Text(element["Name"]!)),
                                                   DataCell(
@@ -338,9 +391,10 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
             Container(
                 width: MediaQuery.of(context).size.width,
-                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                 child: buttonStyle("Submit", () {
-                  onRegister();
+
+                  onSubmit();
 
                   Navigator.of(context).pushNamed("/challan");
                 }))

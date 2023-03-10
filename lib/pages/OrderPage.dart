@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:stefomobileapp/pages/GenerateChallanPage.dart';
 //import '../Models/gen_item_list.dart';
 import '../Models/order.dart';
 import '../UI/common.dart';
@@ -36,30 +37,29 @@ class OrderPage extends StatefulWidget {
 }
 
 class _OrderPageState extends State<OrderPage> {
+  int flag =0;
   var listOfColumns =[];
   loadData() async {
-    final res = await http.post(
-      Uri.parse("http://urbanwebmobile.in/steffo/getorderdetails.php"),
-
-      body: {
-        "order_id" :widget.order.order_id,
-      },
-    );
-    var responseData = jsonDecode(res.body);
-    //print(responseData);
-    listOfColumns=[];
-    for(int i = 0 ; i < responseData["data"].length;i++){
-      listOfColumns.add(
-      {
-        "Sr_no" : (i+1).toString(),
-        "Name": responseData["data"][i]["name"],
-        "Qty": responseData["data"][i]["qty"],
-      }
+    if(flag == 0){
+      final res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/getorderdetails.php"),
+        body: {
+          "order_id": widget.order.order_id,
+        },
       );
+      var responseData = jsonDecode(res.body);
+      //print(responseData);
+      listOfColumns = [];
+      for (int i = 0; i < responseData["data"].length; i++) {
+        listOfColumns.add({
+          "Sr_no": (i + 1).toString(),
+          "Name": responseData["data"][i]["name"],
+          "Qty": responseData["data"][i]["qty"],
+        });
+      }
+      flag = 1;
+      setState(() {});
     }
-    setState(() {
-
-    });
   }
 
 
@@ -408,7 +408,12 @@ class _OrderPageState extends State<OrderPage> {
                         width: MediaQuery.of(context).size.width,
                         padding: const EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                         child: buttonStyle("View Challan", () {
-                          Navigator.of(context).pushNamed("/challanlist");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GenerateChallanPage(order: widget.order,)
+                            )
+                          );
                         }),
                       );
                     }else{
