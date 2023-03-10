@@ -153,12 +153,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
     var responseData = jsonDecode(res.body);
     if(responseData["status"] =="200"){
       print(responseData["data"]);
-      challan_id =responseData["data"];
     }
-
-
-
-
 
     for(int i = 0 ; i < listOfColumns.length;i++){
       final res = await http.post(
@@ -171,6 +166,13 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
         },
       );
     }
+
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => GeneratedChallan(challan_id: responseData['data'])
+        )
+    );
   }
 
   Widget GenerateChallanPageBody() {
@@ -399,12 +401,6 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
                   onSubmit();
 
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => GeneratedChallan(challan_id: challan_id)
-                    )
-                  );
                 }))
           ],
         ),

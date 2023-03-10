@@ -18,7 +18,8 @@ class GeneratedChallan extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ChallanPage(challan_id: challan_id,);
+    print(challan_id);
+    return ChallanPage(challan_id: challan_id);
   }
 }
 
@@ -32,7 +33,42 @@ class ChallanPage extends StatefulWidget {
 }
 
 class _ChallanPageState extends State<ChallanPage> {
+    int flag = 0;
+    var responseData,listOfColumns;
+    loadChallanData() async {
+        if(flag == 0){
+          final res = await http.post(
+            Uri.parse("http://urbanwebmobile.in/steffo/getchallandetails.php"),
+            body: {
+              "challan_id": widget.challan_id.toString(),
+            },
+          );
 
+          responseData = jsonDecode(res.body);
+          print(responseData);
+
+          final resp = await http.post(
+            Uri.parse("http://urbanwebmobile.in/steffo/getchallanitemdetails.php"),
+            body: {
+              "challan_id": widget.challan_id.toString(),
+            },
+          );
+
+          var itemlist = jsonDecode(resp.body);
+
+          listOfColumns = [];
+          for (int i = 0; i < itemlist["data"].length; i++) {
+            listOfColumns.add({
+              "Sr_no": (i + 1).toString(),
+              "Name": itemlist["data"][i]["name"],
+              "Qty": itemlist["data"][i]["qty"],
+            });
+          }
+          print(listOfColumns);
+          flag = 1;
+          setState(() {});
+        }
+    }
     @override
     Widget build(BuildContext context) {
 
@@ -42,7 +78,7 @@ class _ChallanPageState extends State<ChallanPage> {
 
         super.initState();
       }
-
+      loadChallanData();
       return Scaffold(
           appBar: appbar("Challan"),
           body: Container(
@@ -192,7 +228,7 @@ class _ChallanPageState extends State<ChallanPage> {
                                         Row(
                                           crossAxisAlignment: CrossAxisAlignment
                                               .start,
-                                          children: const [
+                                          children:  [
                                             Text(
                                               "Shipping Address :",
                                               style: TextStyle(
@@ -203,7 +239,7 @@ class _ChallanPageState extends State<ChallanPage> {
                                             Expanded(
                                               // padding: EdgeInsets.only(bottom: 25, top: 10),
                                               child: Text(
-                                                "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
+                                                responseData["data"][0]["shippingAddress"],
                                                 style: TextStyle(fontSize: 10),
                                                 maxLines: 4,
                                                 softWrap: true,
@@ -221,7 +257,7 @@ class _ChallanPageState extends State<ChallanPage> {
                                                     fontSize: 10,
                                                     fontWeight: FontWeight
                                                         .bold)),
-                                            Text("Contact",
+                                            Text(responseData["data"][0]["partyMobileNumber"],
                                                 style: const TextStyle(
                                                     fontSize: 10))
                                           ],
@@ -245,7 +281,7 @@ class _ChallanPageState extends State<ChallanPage> {
                                           Row(
                                             crossAxisAlignment: CrossAxisAlignment
                                                 .start,
-                                            children: const [
+                                            children:  [
                                               Text("Billing Address :",
                                                   style: TextStyle(
                                                       fontSize: 10,
@@ -254,7 +290,7 @@ class _ChallanPageState extends State<ChallanPage> {
                                               Expanded(
                                                 // padding: EdgeInsets.only(bottom: 25, top: 10),
                                                 child: Text(
-                                                    "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
+                                                    responseData["data"][0]["user_id"],
                                                     style: TextStyle(
                                                         fontSize: 10),
                                                     maxLines: 4,
@@ -266,13 +302,13 @@ class _ChallanPageState extends State<ChallanPage> {
                                             height: 5.0,
                                           ),
                                           Row(
-                                            children: const [
+                                            children:[
                                               Text("Contact:",
                                                   style: TextStyle(
                                                       fontSize: 10,
                                                       fontWeight: FontWeight
                                                           .bold)),
-                                              Text("Contact no",
+                                              Text(responseData["data"][0]["user_id"],
                                                   style: TextStyle(
                                                       fontSize: 10))
                                             ],
@@ -291,12 +327,12 @@ class _ChallanPageState extends State<ChallanPage> {
                                         color: Colors.white.withOpacity(0.85),
                                       ),
                                       child: Row(
-                                        children: const [
+                                        children:  [
                                           Text("Loading Type:",
                                               style: TextStyle(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.bold)),
-                                          Text("Loading Type",
+                                          Text(responseData["data"][0]["loadingType"],
                                               style: TextStyle(fontSize: 10))
                                         ],
                                       )),
@@ -312,12 +348,12 @@ class _ChallanPageState extends State<ChallanPage> {
                                         color: Colors.white.withOpacity(0.85),
                                       ),
                                       child: Row(
-                                        children: const [
+                                        children:  [
                                           Text("Challan no:",
                                               style: TextStyle(
                                                   fontSize: 10,
                                                   fontWeight: FontWeight.bold)),
-                                          Text("Challan no",
+                                          Text(responseData["data"][0]["challan_id"],
                                               style: TextStyle(fontSize: 10))
                                         ],
                                       )),
@@ -346,12 +382,12 @@ class _ChallanPageState extends State<ChallanPage> {
                                     color: Colors.white,
                                   ),
                                   child: Row(
-                                    children: const [
+                                    children:  [
                                       Text("Transporter name:",
                                           style: TextStyle(
                                               fontSize: 10,
                                               fontWeight: FontWeight.bold)),
-                                      Text("Transporter",
+                                      Text(responseData["data"][0]["transporter_name"],
                                           style: TextStyle(fontSize: 10))
                                     ],
                                   )
@@ -366,58 +402,13 @@ class _ChallanPageState extends State<ChallanPage> {
                                       // borderRadius: BorderRadius.circular(20),
                                       color: Colors.white,
                                     ),
-                                    child: Column(
-                                      children: [
-                                        // Row(
-                                        //   crossAxisAlignment: CrossAxisAlignment.start,
-                                        //   children: const [
-                                        //     Text("Transporter Address :",
-                                        //         style: TextStyle(
-                                        //             fontSize: 10,
-                                        //             fontWeight: FontWeight.bold)),
-                                        //     Expanded(
-                                        //       // padding: EdgeInsets.only(bottom: 25, top: 10),
-                                        //       child: Text(
-                                        //           "Survey NO 311, Tajpur Road Vill- Bhat, Changodar, Ahmedabad, Gujarat- 382210",
-                                        //           style: TextStyle(fontSize: 10),
-                                        //           maxLines: 4,
-                                        //           softWrap: true),
-                                        //     )
-                                        //   ],
-                                        // ),
-                                        const SizedBox(
-                                          height: 5.0,
-                                        ),
-                                        Row(
-                                          children: const [
-                                            Text("Transporter Contact:",
-                                                style: TextStyle(
-                                                    fontSize: 10,
-                                                    fontWeight: FontWeight
-                                                        .bold)),
-                                            Text("Contact no",
-                                                style: TextStyle(fontSize: 10))
-                                          ],
-                                        ),
-                                      ],
-                                    )
-                                ),
-                                const SizedBox(
-                                  height: 10.0,
-                                ),
-                                Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: const BoxDecoration(
-                                      // borderRadius: BorderRadius.circular(20),
-                                      color: Colors.white,
-                                    ),
                                     child: Row(
-                                      children: const [
+                                      children:  [
                                         Text("LR no:",
                                             style: TextStyle(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.bold)),
-                                        Text("LR",
+                                        Text(responseData["data"][0]["lr_number"],
                                             style: TextStyle(fontSize: 10))
                                       ],
                                     )),
@@ -431,12 +422,12 @@ class _ChallanPageState extends State<ChallanPage> {
                                       color: Colors.white,
                                     ),
                                     child: Row(
-                                      children: const [
+                                      children:  [
                                         Text("Vehicle no",
                                             style: TextStyle(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.bold)),
-                                        Text("Vehicle",
+                                        Text(responseData["data"][0]["vehicle_number"],
                                             style: TextStyle(fontSize: 10))
                                       ],
                                     )),
@@ -451,13 +442,13 @@ class _ChallanPageState extends State<ChallanPage> {
                                     ),
                                     child: Row(
                                       //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children: const [
+                                      children:  [
                                         Text("Date :",
                                             style: TextStyle(
                                                 fontSize: 10,
                                                 fontWeight: FontWeight.bold)),
                                         Text(
-                                          "DT",
+                                          responseData["data"][0]["updatedAt"],
                                           style: TextStyle(fontSize: 10),
                                         )
                                       ],
@@ -521,37 +512,20 @@ class _ChallanPageState extends State<ChallanPage> {
                                           fontWeight: FontWeight.bold,
                                           color: Colors.black),
                                       columns: const [
-                                        DataColumn(label: Text("Sr. No.")),
+                                        DataColumn(label: Text("Sr\nNo")),
                                         DataColumn(label: Text("Item name")),
-                                        DataColumn(label: Text("Quantity"))
+                                        DataColumn(label: Text("Quantity\n(Tons)"))
                                       ],
-                                      rows: const [
-                                        DataRow(cells: [
-                                          DataCell(Text("1")),
-                                          DataCell(Text("FE500")),
-                                          DataCell(Text("100")),
-                                        ]),
-                                        DataRow(cells: [
-                                          DataCell(Text("1")),
-                                          DataCell(Text("FE500")),
-                                          DataCell(Text("100")),
-                                        ]),
-                                        DataRow(cells: [
-                                          DataCell(Text("1")),
-                                          DataCell(Text("FE500")),
-                                          DataCell(Text("100")),
-                                        ]),
-                                        DataRow(cells: [
-                                          DataCell(Text("1")),
-                                          DataCell(Text("FE500")),
-                                          DataCell(Text("100")),
-                                        ]),
-                                        DataRow(cells: [
-                                          DataCell(Text("1")),
-                                          DataCell(Text("FE500")),
-                                          DataCell(Text("100")),
-                                        ]),
-                                      ],
+                                      rows:
+                                      listOfColumns.map<DataRow>(
+                                        ((element) => DataRow(
+                                          cells: <DataCell>[
+                                            DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
+                                            DataCell(Text(element["Name"]!)),
+                                            DataCell(Text(element["Qty"]!)),
+                                          ],
+                                        )),
+                                      ).toList(),
                                     ),
                                   ),
                                 ),
