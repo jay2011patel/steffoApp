@@ -47,7 +47,7 @@ class MyApp extends StatelessWidget {
         '/challanlist': (BuildContext context) => ChallanListPage(),
         '/placeorder': (BuildContext context) => PlaceOrderPage(),
         '/orders': (BuildContext context) => OrdersPage(),
-        '/gnchallan': (BuildContext context) => GenerateChallanPage(),
+        //'/gnchallan': (BuildContext context) => GenerateChallanPage(),
         //'/order': (BuildContext context) => OrderDetails(),
         '/challan': (BuildContext context) => GeneratedChallan(),
       },

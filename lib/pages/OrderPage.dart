@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:stefomobileapp/pages/GenerateChallanPage.dart';
 //import '../Models/gen_item_list.dart';
 import '../Models/order.dart';
 import '../UI/common.dart';
@@ -363,7 +364,12 @@ class _OrderPageState extends State<OrderPage> {
                         width: MediaQuery.of(context).size.width,
                         padding: EdgeInsets.symmetric(vertical: 10,horizontal: 20),
                         child: buttonStyle("View Challan", () {
-                          Navigator.of(context).pushNamed("/challanlist");
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => GenerateChallanPage(order: widget.order,)
+                            )
+                          );
                         }),
                       );
                     }else{
