@@ -20,7 +20,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TODO: implement build
-    return LoginContent();
+    return const LoginContent();
     throw UnimplementedError();
   }
 }
@@ -128,13 +128,13 @@ class _loginPageState extends State<LoginContent> {
 
               Container(
                 width: width,
-                padding: EdgeInsets.fromLTRB(10, 0, 10, 5),
+                padding: const EdgeInsets.fromLTRB(10, 0, 10, 5),
                 child: TextFormField(
                     key: field1Key,
                     focusNode: focusNode1,
                     validator: (value) {
                       if (value!.isEmpty || value == null) {
-                        return 'Please enter a value.';
+                        return 'Please enter an email.';
                       }
                       return null;
                     },
@@ -158,24 +158,24 @@ class _loginPageState extends State<LoginContent> {
 
               Container(
                 width: width,
-                padding: EdgeInsets.fromLTRB(10, 5, 10, 10),
+                padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
                 child: TextFormField(
                     key: field2Key,
                     focusNode: focusNode2,
                     validator: (value) {
                       if (value!.isEmpty) {
-                        return 'Please enter a value.';
+                        return 'Please enter a password.';
                       }
-                      if (value.length < 8) {
-                        return 'Minimum length for password is 8';
-                      }
+                      // if (value.length < 8) {
+                      //   return 'Incorrect Password';
+                      // }
                       return null;
                     },
                     controller: pw,
                     textAlign: TextAlign.left,
                     obscureText: _isPWVisible,
                     decoration: InputDecoration(
-                      prefixIcon: Icon(Icons.lock_outline_rounded),
+                      prefixIcon: const Icon(Icons.lock_outline_rounded),
 
                       suffixIcon: IconButton(
                           onPressed: () {
@@ -183,14 +183,14 @@ class _loginPageState extends State<LoginContent> {
                               _isPWVisible = !_isPWVisible;
                             });
                           },
-                          icon: Icon(Icons.remove_red_eye)),
+                          icon: const Icon(Icons.remove_red_eye)),
 
                       filled: true,
 
-                      fillColor: Color.fromRGBO(233, 236, 239, 1.0),
+                      fillColor: const Color.fromRGBO(233, 236, 239, 1.0),
                       hintText:
                           "Password", //Text("Password",style: TextStyle(fontFamily: "Poppins"),),
-                      border: OutlineInputBorder(
+                      border: const OutlineInputBorder(
                         borderSide: BorderSide.none, //<-- SEE HERE
                         //borderRadius: BorderRadius.circular(20.0)
                       ),
@@ -199,12 +199,12 @@ class _loginPageState extends State<LoginContent> {
 
               LayoutBuilder(builder: (context, constraints) {
                 if (!userValid) {
-                  return Text(
+                  return const Text(
                     "Incorrect Username or Password",
                     style: TextStyle(color: Colors.red),
                   );
                 } else {
-                  return Text("");
+                  return const Text("");
                 }
               }),
 
@@ -213,8 +213,8 @@ class _loginPageState extends State<LoginContent> {
               Container(
                   alignment: Alignment.bottomCenter,
                   child: Container(
-                      margin: EdgeInsets.only(top: 20),
-                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      margin: const EdgeInsets.only(top: 20),
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
                       width: MediaQuery.of(context).size.width,
                       child: buttonStyle(
                           "Login",
@@ -227,7 +227,7 @@ class _loginPageState extends State<LoginContent> {
                 //margin: EdgeInsets.fromLTRB(20, 0,20,0),
 
                 width: MediaQuery.of(context).size.width,
-                padding: EdgeInsets.fromLTRB(20, 0, 20, 10),
+                padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -239,16 +239,16 @@ class _loginPageState extends State<LoginContent> {
                               //     MaterialPageRoute(builder: (context) => )
                               // );
                             },
-                            child: Text("Forgot Password ?"))),
+                            child: const Text("Forgot Password ?"))),
                     Container(
-                      child: Text("|"),
+                      child: const Text("|"),
                     ),
                     Container(
                       child: TextButton(
                           onPressed: () {
                             Navigator.of(context).pushNamed('/register');
                           },
-                          child: Text("Register Now")),
+                          child: const Text("Register Now")),
                     )
                   ],
                 ),

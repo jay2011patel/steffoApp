@@ -122,27 +122,27 @@ class _RegistrationFormState extends State<RegistrationForm> {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-      margin: const EdgeInsets.fromLTRB(10, 40, 10, 20),
-      color: const Color.fromRGBO(255, 255, 255, 1.0),
-      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-        logo(context),
+        margin: const EdgeInsets.fromLTRB(10, 40, 10, 20),
+        color: const Color.fromRGBO(255, 255, 255, 1.0),
+          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+            logo(context),
 
         //-----------------------FormDetails--------------------------
 
-        SingleChildScrollView(
-            child: Container(
-          child: FormDetails(),
-        )),
+            SingleChildScrollView(
+                child: Container(
+              child: FormDetails(),
+            )),
 
-        //----------------------------Submit--------------------------------
+            //----------------------------Submit--------------------------------
 
-        Container(
-            margin: const EdgeInsets.only(top: 20),
-            width: MediaQuery.of(context).size.width,
-            child: buttonStyle("Submit", () {
-              if (_formKey.currentState!.validate()) {
-                onRegister();
-              }
+            Container(
+                margin: const EdgeInsets.only(top: 20),
+                width: MediaQuery.of(context).size.width,
+                child: buttonStyle("Submit", () {
+                  if (_formKey.currentState!.validate()) {
+                    onRegister();
+                  }
             })),
       ]),
     ));

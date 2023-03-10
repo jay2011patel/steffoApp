@@ -102,50 +102,94 @@ class _OrderPageState extends State<OrderPage> {
             child: SingleChildScrollView(
                 child: Column(
                     children: [
-                      Padding(padding: EdgeInsets.all(10)),
+                      const Padding(padding: EdgeInsets.all(10)),
+
+
 
                   Card(
                     child: Container(
-                        padding: EdgeInsets.all(10),
+                        padding: const EdgeInsets.all(10),
                         width: MediaQuery.of(context).size.width - 20,
                         decoration: BoxDecoration(
                           // borderRadius: BorderRadius.circular(25),
                           color: Colors.grey.withOpacity(0.20),
                         ),
-                        child: Column(children: [
-                          Card(
-                            child: Container(
-                              padding: EdgeInsets.all(10),
-                              decoration: const BoxDecoration(
-                                // borderRadius: BorderRadius.circular(20),
-                                color: Colors.white,
-                              ),
-                              child: Column(
-                                children: [
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        child: Column(
+                            children: [
+                              Card(
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: const BoxDecoration(
+                                    // borderRadius: BorderRadius.circular(20),
+                                    color: Colors.white,
+                                  ),
+                                  child: Column(
                                     children: [
-                                      const Text("Shipping Address :",
-                                          style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                      Text(widget.order.party_address!,
-                                          style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                      Row(
+                                        children: const [
+                                          Text("Shipping Address :",
+                                              style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                        ],
+                                      ),
+
+                                      Row(
+                                        children: [
+                                          Flexible(
+                                            child: Text(widget.order.party_address!,
+                                                style: const TextStyle(
+                                                  fontSize: 15,
+                                                  fontFamily: "Poppins",
+                                                )
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      // const Padding(padding: EdgeInsets.only(right: 10)),
+                                      // Row(
+                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      //   children: [
+                                      //     const Text("Shipping Address :",
+                                      //         style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                      //     // SizedBox(width: 60,),
+                                      //     Flexible(
+                                      //       child: Text(widget.order.party_address!,
+                                      //           style: const TextStyle(
+                                      //             fontSize: 15,
+                                      //             fontFamily: "Poppins",
+                                      //           )
+                                      //       ),
+                                      //     )
+                                      //   ],
+                                      // ),
+                                      const SizedBox(
+                                        height: 5.0,
+                                      ),
+
+                                      Row(
+                                        children:const [
+                                          Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                        ],
+                                      ),
+                                      Row(
+                                        children: [
+                                          Text(widget.order.party_mob_num!,
+                                              style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                        ],
+                                      ),
+                                      // Row(
+                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                      //   children: [
+                                      //     const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                      //     Text(widget.order.party_mob_num!,
+                                      //         style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                      //   ],
+                                      // ),
                                     ],
                                   ),
-                                  const SizedBox(
-                                    height: 5.0,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                      Text(widget.order.party_mob_num!,
-                                          style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
-                                    ],
-                                  ),
-                                ],
+
+                                ),
                               ),
-                            ),
-                          ),
+
                           const SizedBox(
                             height: 10.0,
                           ),
@@ -165,7 +209,7 @@ class _OrderPageState extends State<OrderPage> {
                                         const Text("Billing Address :",
                                             style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
                                         Text(widget.order.user_id!,
-                                            style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                            style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
                                       ],
                                     ),
                                     const SizedBox(
@@ -176,7 +220,7 @@ class _OrderPageState extends State<OrderPage> {
 
                                       children: [
                                         const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                        Text(widget.order.user_mob_num!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                        Text(widget.order.user_mob_num!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
                                       ],
                                     ),
                                   ],
@@ -197,7 +241,7 @@ class _OrderPageState extends State<OrderPage> {
 
                                   children: [
                                     const Text("Loading Type:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.loading_type!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                    Text(widget.order.loading_type!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
                                   ],
                                 )),
                           ),
@@ -216,7 +260,7 @@ class _OrderPageState extends State<OrderPage> {
 
                                   children: [
                                     const Text("Base Price:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.base_price!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                    Text(widget.order.base_price!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
                                   ],
                                 )),
                           ),
@@ -236,10 +280,11 @@ class _OrderPageState extends State<OrderPage> {
 
                                   children:  [
                                     const Text("Status: ", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.status!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins_Bold"))
+                                    Text(widget.order.status!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
                                   ],
                                 )),
                           ),
+
                         ])),
                   ),
                   const SizedBox(
@@ -261,7 +306,7 @@ class _OrderPageState extends State<OrderPage> {
                               scrollDirection: Axis.vertical,
                               child: Card(
                                 child: Container(
-                                    height: 300,
+                                    height: 250,
                                     width: MediaQuery.of(context).size.width - 20,
                                     padding: const EdgeInsets.only(
                                         top: 10, bottom: 10, left: 10, right: 10),
