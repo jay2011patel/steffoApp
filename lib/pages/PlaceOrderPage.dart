@@ -136,7 +136,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         "mobileNumber": party_mob_num.text,
         "basePrice": base_price.text,
         "status": "Pending",
-        "loadingType": loading_type.text,
+        "loadingType": selectedType,
       },
     );
     Fluttertoast.showToast(
