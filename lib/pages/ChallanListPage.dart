@@ -1,21 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stefomobileapp/Models/challan.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
-
+import "package:http/http.dart" as http;
+import '../Models/order.dart';
 import '../UI/common.dart';
+import 'GenerateChallanPage.dart';
+import 'GeneratedChallanPage.dart';
 // import 'RequestPage.dart';
 
 class ChallanListPage extends StatelessWidget {
+  final Order order;
+  ChallanListPage({super.key,required this.order});
   @override
   Widget build(BuildContext context) {
-    return const ChallanListContent();
+    return ChallanListContent(order: order,);
     throw UnimplementedError();
   }
 }
 
 class ChallanListContent extends StatefulWidget {
-  const ChallanListContent({super.key});
+  final Order order;
+  ChallanListContent({super.key,required this.order});
   final selected = 0;
   @override
   State<ChallanListContent> createState() => _ChallanListPageState();
@@ -93,10 +102,37 @@ class _ChallanListPageState extends State<ChallanListContent> {
         ));
     throw UnimplementedError();
   }
+  int flag =0;
+  List<Challan> challanList = [];
+  loadChallanList() async{
+    if(flag == 0){
+      final res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/getchallanlist.php"),
+        body: {"order_id": widget.order.order_id},
+      );
+      var responseData = jsonDecode(res.body);
+      print(responseData);
+
+      for (int i = 0; i < responseData["data"].length; i++) {
+          Challan ch = Challan();
+          ch.order_id=responseData["data"][i]["order_id"];
+          ch.challan_id=responseData["data"][i]["challan_id"].toString();
+          ch.transporter_name=responseData["data"][i]["transporter_name"];
+          ch.vehicle_number=responseData["data"][i]["vehicle_number"];
+          ch.lr_number=responseData["data"][i]["lr_number"];
+          challanList.add(ch);
+      }
+      flag =1;
+      setState(() {
+
+      });
+    }
+  }
 
   //-----------------------------------ChallanListMainBody----------------------
 
   Widget ChallanListBody() {
+    loadChallanList();
     return Container(
         height: MediaQuery.of(context).size.height * 0.83,
         decoration: const BoxDecoration(
@@ -149,16 +185,21 @@ class _ChallanListPageState extends State<ChallanListContent> {
                         child: Container(
                           height: MediaQuery.of(context).size.height * 0.6,
                           child: ListView.builder(
-                            itemCount: 2,
+                            itemCount: challanList.length,
                             //physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: false,
                             itemBuilder: (context, index) {
                               return InkWell(
                                   onTap: () {
-                                    Navigator.of(context).pushNamed("/challan");
-                                  },
-                                  child: ChallanCard(context, index));
+                                    Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                            builder: (context) => GeneratedChallan(challan_id: challanList[index].challan_id!)
+                                        )
+                                    );
+                                    },
+                                  child: ChallanCard(context, challanList[index]));
                             },
                           ),
                         ),
@@ -171,7 +212,12 @@ class _ChallanListPageState extends State<ChallanListContent> {
                   margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
                   width: MediaQuery.of(context).size.width,
                   child: buttonStyle("Generate Challan", () {
-                    Navigator.of(context).pushNamed('/gnchallan');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                        builder: (context) => GenerateChallanPage(order: widget.order,)
+                        )
+                    );
                   }))
             ],
           ),
@@ -180,7 +226,7 @@ class _ChallanListPageState extends State<ChallanListContent> {
 
   //----------------------------SingleChallanCard-------------------------------
 
-  Widget ChallanCard(context, index) {
+  Widget ChallanCard(context, Challan challan) {
     String trp_name = "XY Transporter";
 
     return Card(
@@ -203,8 +249,8 @@ class _ChallanListPageState extends State<ChallanListContent> {
                 )),
                 Container(
                     padding: EdgeInsets.only(left: 65),
-                    child: const Text(
-                      "987611",
+                    child:  Text(
+                      challan.challan_id!.toString(),
                       textAlign: TextAlign.center,
                       style: TextStyle(fontFamily: "Poppins_Bold"),
                     ))
@@ -222,7 +268,7 @@ class _ChallanListPageState extends State<ChallanListContent> {
                   ),
                   Expanded(
                       child: Text(
-                    trp_name,
+                    challan.transporter_name!,
                     overflow: TextOverflow.ellipsis,
                     maxLines: 3,
                   ))
@@ -235,7 +281,7 @@ class _ChallanListPageState extends State<ChallanListContent> {
                   Text("Vehicle Number:"),
                   Padding(
                     padding: const EdgeInsets.only(left: 36.0),
-                    child: Text("GJ01XX1234"),
+                    child: Text(challan.vehicle_number!),
                   )
                 ],
               ),

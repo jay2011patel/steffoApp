@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:stefomobileapp/pages/ChallanListPage.dart';
 import 'package:stefomobileapp/pages/GenerateChallanPage.dart';
 //import '../Models/gen_item_list.dart';
 import '../Models/order.dart';
@@ -411,7 +412,7 @@ class _OrderPageState extends State<OrderPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => GenerateChallanPage(order: widget.order,)
+                                builder: (context) => ChallanListPage(order: widget.order,)
                             )
                           );
                         }),
