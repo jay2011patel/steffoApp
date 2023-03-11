@@ -105,8 +105,6 @@ class _OrderPageState extends State<OrderPage> {
                     children: [
                       const Padding(padding: EdgeInsets.all(10)),
 
-
-
                   Card(
                     child: Container(
                         padding: const EdgeInsets.all(10),
@@ -117,6 +115,27 @@ class _OrderPageState extends State<OrderPage> {
                         ),
                         child: Column(
                             children: [
+                              Card(
+                                child: Container(
+                                  padding: const EdgeInsets.all(10),
+                                  decoration: const BoxDecoration(
+                                    color: Colors.white,
+                                  ),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
+                                    children: [
+                                      const Text("Order From:",
+                                          style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                      Text(widget.order.user_name!,
+                                          style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                    ],
+                                  ),
+                                ),
+
+                              ),
+
+
                               Card(
                                 child: Container(
                                   padding: const EdgeInsets.all(10),

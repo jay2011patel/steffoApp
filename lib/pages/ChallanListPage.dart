@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/Models/challan.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -103,8 +104,12 @@ class _ChallanListPageState extends State<ChallanListContent> {
     throw UnimplementedError();
   }
   int flag =0;
+  String? id;
   List<Challan> challanList = [];
   loadChallanList() async{
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    id = await prefs.getString('id');
     if(flag == 0){
       final res = await http.post(
         Uri.parse("http://urbanwebmobile.in/steffo/getchallanlist.php"),
