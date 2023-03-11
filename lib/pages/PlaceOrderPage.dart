@@ -333,7 +333,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                   maxLength: 15,
                   validator: (value) {
                     if (value!.isEmpty) {
-                      return 'Please enter a value.';
+                      return 'Please enter a GST Number.';
                     } else if (value.length < 15) {
                       return 'Please Enter Valid Number';
                     }
@@ -415,7 +415,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                     focusNode: focusNode5,
                     validator: (selectedValue) {
                       if (selectedValue == null) {
-                        return 'Please select a value.';
+                        return 'Please select a Loading Type.';
                       }
                       return null;
                     },
@@ -506,7 +506,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           focusNode: focusNode9,
                           validator: (selectedValue) {
                             if (selectedValue == null) {
-                              return 'Please select a value.';
+                              return 'Please select a Product.';
                             }
                             return null;
                           },
@@ -532,7 +532,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           focusNode: focusNode8,
                           validator: (selectedValue) {
                             if (selectedValue == null) {
-                              return 'Please select a value.';
+                              return 'Please select a Grade.';
                             }
                             return null;
                           },
@@ -558,7 +558,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           focusNode: focusNode7,
                           validator: (selectedValue) {
                             if (selectedValue == null) {
-                              return 'Please select a value.';
+                              return 'Please select a Size.';
                             }
                             return null;
                           },
@@ -568,6 +568,12 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                       child: TextFormField(
                         maxLines: 1,
                         controller: qty,
+                        validator: (value) {
+                          if (value!.isEmpty || value == null) {
+                            return 'Please enter a Qty..';
+                          }
+                          return null;
+                        },
                         decoration: const InputDecoration(
                           labelText: "Quantity",
                           floatingLabelBehavior: FloatingLabelBehavior.never,
