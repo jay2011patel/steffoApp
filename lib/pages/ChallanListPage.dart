@@ -215,16 +215,25 @@ class _ChallanListPageState extends State<ChallanListContent> {
                 ),
               ),
               Container(
-                  margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
-                  width: MediaQuery.of(context).size.width,
-                  child: buttonStyle("Generate Challan", () {
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                        builder: (context) => GenerateChallanPage(order: widget.order,)
-                        )
-                    );
-                  }))
+                  child:LayoutBuilder(builder: (context, constraints) {
+                    if(id == widget.order.reciever_id){
+                      return Container(
+                          margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+                          width: MediaQuery.of(context).size.width,
+                          child: buttonStyle("Generate Challan", () {
+                            Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => GenerateChallanPage(order: widget.order,)
+                                )
+                            );
+                          }));
+                    }else{
+                      return Container();
+                    }
+                  })
+              )
+
             ],
           ),
         ));
