@@ -46,6 +46,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
   TextEditingController user_type = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  bool _isPWVisible = true;
+
   @override
   void initState() {
     super.initState();
@@ -122,27 +124,27 @@ class _RegistrationFormState extends State<RegistrationForm> {
   Widget build(BuildContext context) {
     return Center(
         child: Container(
-        margin: const EdgeInsets.fromLTRB(10, 40, 10, 20),
-        color: const Color.fromRGBO(255, 255, 255, 1.0),
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            logo(context),
+      margin: const EdgeInsets.fromLTRB(10, 40, 10, 20),
+      color: const Color.fromRGBO(255, 255, 255, 1.0),
+      child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+        logo(context),
 
         //-----------------------FormDetails--------------------------
 
-            SingleChildScrollView(
-                child: Container(
-              child: FormDetails(),
-            )),
+        SingleChildScrollView(
+            child: Container(
+          child: FormDetails(),
+        )),
 
-            //----------------------------Submit--------------------------------
+        //----------------------------Submit--------------------------------
 
-            Container(
-                margin: const EdgeInsets.only(top: 20),
-                width: MediaQuery.of(context).size.width,
-                child: buttonStyle("Submit", () {
-                  if (_formKey.currentState!.validate()) {
-                    onRegister();
-                  }
+        Container(
+            margin: const EdgeInsets.only(top: 20),
+            width: MediaQuery.of(context).size.width,
+            child: buttonStyle("Submit", () {
+              if (_formKey.currentState!.validate()) {
+                onRegister();
+              }
             })),
       ]),
     ));
@@ -263,34 +265,43 @@ class _RegistrationFormState extends State<RegistrationForm> {
             width: width,
             padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
             child: TextFormField(
-              key: field3Key,
-              focusNode: focusNode3,
-              validator: (value) {
-                if (value!.isEmpty) {
-                  return 'Please enter a value.';
-                }
-                if (value.length < 8) {
-                  return 'Minimum length for password is 8';
-                }
-                return null;
-              },
-              obscureText: true,
-              controller: password,
-              textAlign: TextAlign.left,
-              decoration: const InputDecoration(
-                prefixIcon: Icon(Icons.lock),
-                filled: true,
-                fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-                labelText: "Password",
-                floatingLabelBehavior: FloatingLabelBehavior.never,
-                // label: Text("Password",style: TextStyle(fontFamily: "Poppins"),),
-                border: OutlineInputBorder(
-                  borderSide: BorderSide.none,
-                  // borderRadius: BorderRadius.circular(20.0)
-                ),
-              ),
-              // validator: RequiredValidator(errorText: "Required"),
-            ),
+                key: field3Key,
+                focusNode: focusNode3,
+                validator: (value) {
+                  if (value!.isEmpty) {
+                    return 'Please enter a value.';
+                  }
+                  if (value.length < 8) {
+                    return 'Minimum length for password is 8';
+                  }
+                  return null;
+                },
+                obscureText: _isPWVisible,
+                controller: password,
+                textAlign: TextAlign.left,
+                decoration: InputDecoration(
+                  prefixIcon: const Icon(Icons.lock_outline_rounded),
+
+                  suffixIcon: IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _isPWVisible = !_isPWVisible;
+                      });
+                    },
+                    icon: Icon(
+                        _isPWVisible ? Icons.visibility : Icons.visibility_off),
+                  ),
+
+                  filled: true,
+
+                  fillColor: const Color.fromRGBO(233, 236, 239, 1.0),
+                  hintText:
+                      "Password", //Text("Password",style: TextStyle(fontFamily: "Poppins"),),
+                  border: const OutlineInputBorder(
+                    borderSide: BorderSide.none, //<-- SEE HERE
+                    //borderRadius: BorderRadius.circular(20.0)
+                  ),
+                )),
           ),
 
           //--------------------------------MobNum----------------------------
