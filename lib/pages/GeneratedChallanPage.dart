@@ -375,84 +375,92 @@ class _ChallanPageState extends State<ChallanPage> {
                         ),
                         child: Column(
                             children: [
-                              Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: const BoxDecoration(
-                                    // borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white,
-                                  ),
-                                  child: Row(
-                                    children:  [
-                                      Text("Transporter name:",
-                                          style: TextStyle(
-                                              fontSize: 10,
-                                              fontWeight: FontWeight.bold)),
-                                      Text(responseData["data"][0]["transporter_name"],
-                                          style: TextStyle(fontSize: 10))
-                                    ],
-                                  )
+                              Card(
+                                child: Container(
+                                    padding: const EdgeInsets.all(10),
+                                    decoration: const BoxDecoration(
+                                      // borderRadius: BorderRadius.circular(20),
+                                      color: Colors.white,
+                                    ),
+                                    child: Row(
+                                      children:  [
+                                        Text("Transporter name:",
+                                            style: TextStyle(
+                                                fontSize: 10,
+                                                fontWeight: FontWeight.bold)),
+                                        Text(responseData["data"][0]["transporter_name"],
+                                            style: TextStyle(fontSize: 10))
+                                      ],
+                                    )
+                                ),
                               ),
                               const SizedBox(
                                 height: 10.0,
                               ),
                               Column(children: [
-                                Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: const BoxDecoration(
-                                      // borderRadius: BorderRadius.circular(20),
-                                      color: Colors.white,
-                                    ),
-                                    child: Row(
-                                      children:  [
-                                        Text("LR no:",
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold)),
-                                        Text(responseData["data"][0]["lr_number"],
-                                            style: TextStyle(fontSize: 10))
-                                      ],
-                                    )),
+                                Card(
+                                  child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        // borderRadius: BorderRadius.circular(20),
+                                        color: Colors.white,
+                                      ),
+                                      child: Row(
+                                        children:  [
+                                          Text("LR no:",
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(responseData["data"][0]["lr_number"],
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      )),
+                                ),
                                 const SizedBox(
                                   height: 10.0,
                                 ),
-                                Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: const BoxDecoration(
-                                      // borderRadius: BorderRadius.circular(20),
-                                      color: Colors.white,
-                                    ),
-                                    child: Row(
-                                      children:  [
-                                        Text("Vehicle no",
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold)),
-                                        Text(responseData["data"][0]["vehicle_number"],
-                                            style: TextStyle(fontSize: 10))
-                                      ],
-                                    )),
+                                Card(
+                                  child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        // borderRadius: BorderRadius.circular(20),
+                                        color: Colors.white,
+                                      ),
+                                      child: Row(
+                                        children:  [
+                                          Text("Vehicle no",
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(responseData["data"][0]["vehicle_number"],
+                                              style: TextStyle(fontSize: 10))
+                                        ],
+                                      )),
+                                ),
                                 const SizedBox(
                                   height: 10.0,
                                 ),
-                                Container(
-                                    padding: const EdgeInsets.all(10),
-                                    decoration: const BoxDecoration(
-                                      // borderRadius: BorderRadius.circular(20),
-                                      color: Colors.white,
-                                    ),
-                                    child: Row(
-                                      //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                      children:  [
-                                        Text("Date :",
-                                            style: TextStyle(
-                                                fontSize: 10,
-                                                fontWeight: FontWeight.bold)),
-                                        Text(
-                                          responseData["data"][0]["updatedAt"],
-                                          style: TextStyle(fontSize: 10),
-                                        )
-                                      ],
-                                    )
+                                Card(
+                                  child: Container(
+                                      padding: const EdgeInsets.all(10),
+                                      decoration: const BoxDecoration(
+                                        // borderRadius: BorderRadius.circular(20),
+                                        color: Colors.white,
+                                      ),
+                                      child: Row(
+                                        //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                        children:  [
+                                          Text("Date :",
+                                              style: TextStyle(
+                                                  fontSize: 10,
+                                                  fontWeight: FontWeight.bold)),
+                                          Text(
+                                            responseData["data"][0]["updatedAt"],
+                                            style: TextStyle(fontSize: 10),
+                                          )
+                                        ],
+                                      )
+                                  ),
                                 ),
                               ]
                               )
