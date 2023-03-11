@@ -178,12 +178,15 @@ class _loginPageState extends State<LoginContent> {
                       prefixIcon: const Icon(Icons.lock_outline_rounded),
 
                       suffixIcon: IconButton(
-                          onPressed: () {
-                            setState(() {
-                              _isPWVisible = !_isPWVisible;
-                            });
-                          },
-                          icon: const Icon(Icons.remove_red_eye)),
+                        onPressed: () {
+                          setState(() {
+                            _isPWVisible = !_isPWVisible;
+                          });
+                        },
+                        icon: Icon(_isPWVisible
+                            ? Icons.visibility
+                            : Icons.visibility_off),
+                      ),
 
                       filled: true,
 

@@ -12,125 +12,123 @@ import '../Models/order.dart';
 import '../ui/cards.dart';
 import 'RequestPage.dart';
 
-class HomePage extends StatelessWidget{
-
+class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const HomeContent();
     throw UnimplementedError();
   }
-
 }
 
-class HomeContent extends StatefulWidget{
+class HomeContent extends StatefulWidget {
   const HomeContent({super.key});
   final selected = 0;
   @override
-  State<HomeContent> createState()=> _HomePageState(selected);
+  State<HomeContent> createState() => _HomePageState(selected);
 }
 
-
-class _HomePageState extends State<HomeContent>{
-
-  var _selected=0;
+class _HomePageState extends State<HomeContent> {
+  var _selected = 0;
   String? _id;
 
-  _HomePageState(int val){
+  _HomePageState(int val) {
     _selected = val;
   }
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar("Home"),
-      body:  HomePageBody(),
-      floatingActionButton: FloatingActionButton(
-        onPressed: (){
-          Navigator.of(context).pushNamed('/placeorder');
-        },
-        child: Icon(Icons.add),
-        backgroundColor: Colors.red,
-      ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: StylishBottomBar(
-        option: AnimatedBarOptions(
-          iconSize: 30,
-          //barAnimation: BarAnimation.liquid,
-          iconStyle: IconStyle.simple,
-          opacity: 0.3,
+        appBar: appbar("Home"),
+        body: HomePageBody(),
+        floatingActionButton: FloatingActionButton(
+          onPressed: () {
+            Navigator.of(context).pushNamed('/placeorder');
+          },
+          child: Icon(Icons.add),
+          backgroundColor: Colors.red,
         ),
-
-        items: [
-          BottomBarItem(
-            icon: const Icon(Icons.home_filled,),
-            title: const Text('Abc'),
-            backgroundColor: Colors.red,
-            selectedIcon: const Icon(Icons.home_filled,color:Colors.blueAccent),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        bottomNavigationBar: StylishBottomBar(
+          option: AnimatedBarOptions(
+            iconSize: 30,
+            //barAnimation: BarAnimation.liquid,
+            iconStyle: IconStyle.simple,
+            opacity: 0.3,
           ),
-          BottomBarItem(
-              icon: const Icon(Icons.inventory_2_rounded,),
-              title: const Text('Safety'),
-              backgroundColor: Colors.orange,
-              selectedIcon: const Icon(Icons.inventory_2_rounded,color:Colors.blueAccent)
-          ),
-          BottomBarItem(
-              icon: const Icon(Icons.warehouse_rounded,),
-              title: const Text('Safety'),
-              backgroundColor: Colors.orange,
-              selectedIcon: const Icon(Icons.warehouse_rounded,color:Colors.blueAccent)
-          ),
-          BottomBarItem(
-              icon: const Icon(Icons.person_pin,),
-              title: const Text('Cabin'),
-              backgroundColor: Colors.purple,
-              selectedIcon: const Icon(Icons.person_pin,color:Colors.blueAccent)
-          ),
-        ],
-        fabLocation: StylishBarFabLocation.center,
-        hasNotch: false,
-        currentIndex: _selected,
-        onTap: (index) {
-          setState(() {
+          items: [
+            BottomBarItem(
+              icon: const Icon(
+                Icons.home_filled,
+              ),
+              title: const Text('Abc'),
+              backgroundColor: Colors.red,
+              selectedIcon:
+                  const Icon(Icons.home_filled, color: Colors.blueAccent),
+            ),
+            BottomBarItem(
+                icon: const Icon(
+                  Icons.inventory_2_rounded,
+                ),
+                title: const Text('Safety'),
+                backgroundColor: Colors.orange,
+                selectedIcon: const Icon(Icons.inventory_2_rounded,
+                    color: Colors.blueAccent)),
+            BottomBarItem(
+                icon: const Icon(
+                  Icons.warehouse_rounded,
+                ),
+                title: const Text('Safety'),
+                backgroundColor: Colors.orange,
+                selectedIcon: const Icon(Icons.warehouse_rounded,
+                    color: Colors.blueAccent)),
+            BottomBarItem(
+                icon: const Icon(
+                  Icons.person_pin,
+                ),
+                title: const Text('Cabin'),
+                backgroundColor: Colors.purple,
+                selectedIcon:
+                    const Icon(Icons.person_pin, color: Colors.blueAccent)),
+          ],
+          fabLocation: StylishBarFabLocation.center,
+          hasNotch: false,
+          currentIndex: _selected,
+          onTap: (index) {
+            setState(() {
+              if (index == 1) {
+                Navigator.of(context).pushReplacementNamed('/inventory');
+              }
 
-            if(index==1){
-              Navigator.of(context).pushReplacementNamed('/inventory');
-            }
-
-            if(index==2){
-              Navigator.of(context).pushReplacementNamed('/dealer');           }
-
-          });
-        },
-      )
-      );
+              if (index == 2) {
+                Navigator.of(context).pushReplacementNamed('/dealer');
+              }
+            });
+          },
+        ));
     throw UnimplementedError();
   }
 
-  String? id ="";
+  String? id = "";
 
-  List<Order> requestList= [];
-  List<Order> orderList=[];
+  List<Order> requestList = [];
+  List<Order> orderList = [];
 
   Future<void> loadData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var m = id;
     id = await prefs.getString('id');
 
-    if(m!=id){
-      requestList=[];
-      orderList=[];
+    if (m != id) {
+      requestList = [];
+      orderList = [];
       final res = await http.post(
         Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
-
-        body: {
-          "id": id!
-        },
+        body: {"id": id!},
       );
       var responseData = jsonDecode(res.body);
       print(responseData);
 
-      for(int i = 0;i<responseData["data"].length;i++){
+      for (int i = 0; i < responseData["data"].length; i++) {
         Order req = Order();
         req.reciever_id = responseData["data"][i]["supplier_id"];
         req.user_id = responseData["data"][i]["user_id"];
@@ -144,26 +142,23 @@ class _HomePageState extends State<HomeContent>{
         req.base_price = responseData["data"][i]["basePrice"];
         req.order_id = responseData["data"][i]["order_id"].toString();
         //print(req);
-        if(req.status != "Denied" && req.status != "Pending" )  {
+        if (req.status != "Denied" && req.status != "Pending") {
           orderList.add(req);
         }
-        if(req.status?.trim() == "Pending" && id == req.reciever_id) {
+        if (req.status?.trim() == "Pending" && id == req.reciever_id) {
           requestList.add(req);
           print("Added to req list");
         }
-
       }
-       setState(() {});
-
+      setState(() {});
     }
   }
-  Widget HomePageBody(){
+
+  Widget HomePageBody() {
     loadData();
     return Container(
-      height: MediaQuery.of(context).size.height,
-      decoration: const BoxDecoration(
-          color: Colors.white
-      ),
+        height: MediaQuery.of(context).size.height,
+        decoration: const BoxDecoration(color: Colors.white),
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -171,12 +166,15 @@ class _HomePageState extends State<HomeContent>{
                   //height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
                       color: const Color.fromRGBO(255, 255, 255, 0.5),
-                      borderRadius: BorderRadius.circular(8)
-                  ),
+                      borderRadius: BorderRadius.circular(8)),
                   margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
                   child: Column(
                     children: [
-                      const Center(child: Text( "Orders" ,style: TextStyle(fontFamily: "Poppins_Bold"),)),
+                      const Center(
+                          child: Text(
+                        "Orders",
+                        style: TextStyle(fontFamily: "Poppins_Bold"),
+                      )),
                       Container(
                         height: 220,
                         child: SingleChildScrollView(
@@ -185,43 +183,51 @@ class _HomePageState extends State<HomeContent>{
                             physics: const NeverScrollableScrollPhysics(),
                             scrollDirection: Axis.vertical,
                             shrinkWrap: true,
-                            itemBuilder: (context,index){
+                            itemBuilder: (context, index) {
                               return InkWell(
-                                  onTap: (){
-                                    Navigator.push(context,
+                                  onTap: () {
+                                    Navigator.push(
+                                        context,
                                         MaterialPageRoute(
-                                            builder: (context) => OrderDetails(order: orderList[index]))
-                                    );
+                                            builder: (context) => OrderDetails(
+                                                order: orderList[index])));
                                   },
-                                  child:orderCard(context,orderList[index]));
+                                  child: orderCard(context, orderList[index]));
                             },
                           ),
                         ),
                       ),
-                      Container(
-                          margin: const EdgeInsets.symmetric(horizontal: 20),
-                          width: MediaQuery.of(context).size.width,
-                          child: TextButton(child: const Align(
-                              alignment: Alignment.centerRight,
-                              child: Text("View All")),onPressed: (){
-                            Navigator.of(context).pushNamed('/orders');
-                          },),
-                          )
-
-
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          margin: const EdgeInsets.symmetric(
+                              horizontal: 20, vertical: 0),
+                          width: MediaQuery.of(context).size.width / 4,
+                          child: TextButton(
+                            child: const Align(
+                                alignment: Alignment.center,
+                                child: Text("View All")),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/orders');
+                            },
+                          ),
+                        ),
+                      )
                     ],
-                  )
-              ),
+                  )),
               Container(
                   //height: MediaQuery.of(context).size.height*0.36,
                   decoration: BoxDecoration(
                       color: const Color.fromRGBO(255, 255, 255, 0.5),
-                      borderRadius: BorderRadius.circular(8)
-                  ),
+                      borderRadius: BorderRadius.circular(8)),
                   margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
                   child: Column(
                     children: [
-                      const Center(child: Text("Request",style: TextStyle(fontFamily: "Poppins_Bold"),)),
+                      const Center(
+                          child: Text(
+                        "Request",
+                        style: TextStyle(fontFamily: "Poppins_Bold"),
+                      )),
                       Container(
                         height: 240,
                         child: SingleChildScrollView(
@@ -231,48 +237,49 @@ class _HomePageState extends State<HomeContent>{
                               physics: const NeverScrollableScrollPhysics(),
                               scrollDirection: Axis.vertical,
                               shrinkWrap: true,
-                              itemBuilder: (context,index){
+                              itemBuilder: (context, index) {
                                 return InkWell(
-                                onTap: (){
-                                  Navigator.push(context,
-                                  MaterialPageRoute(
-                                  builder: (context) => OrderDetails(order: requestList[index]))
-                                  );
-                                  },
-                                  child:orderRequestCard(context,requestList[index],(){
-                                    // orderList.add(requestList[index]);
-                                    // requestList.removeAt(index);
-                                    id = "none";
-                                    loadData();
-                                    setState(() {});
-                                  }
-                                  )
-                                );
+                                    onTap: () {
+                                      Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  OrderDetails(
+                                                      order:
+                                                          requestList[index])));
+                                    },
+                                    child: orderRequestCard(
+                                        context, requestList[index], () {
+                                      // orderList.add(requestList[index]);
+                                      // requestList.removeAt(index);
+                                      id = "none";
+                                      loadData();
+                                      setState(() {});
+                                    }));
                               },
                             ),
                           ),
                         ),
                       ),
-                      Container(
-                        margin: EdgeInsets.symmetric(horizontal: 20),
-                        width: MediaQuery.of(context).size.width,
-                        child: TextButton(child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text("View All")),onPressed: (){
-                          Navigator.of(context).pushNamed('/orderreq');
-                        },),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: Container(
+                          margin: EdgeInsets.symmetric(horizontal: 20),
+                          width: MediaQuery.of(context).size.width / 4,
+                          child: TextButton(
+                            child: Align(
+                                alignment: Alignment.center,
+                                child: Text("View All")),
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('/orderreq');
+                            },
+                          ),
+                        ),
                       )
-
-
                     ],
-                  )
-              ),
-              ],
+                  )),
+            ],
           ),
-        )
-    );
+        ));
   }
-
-
-
 }
