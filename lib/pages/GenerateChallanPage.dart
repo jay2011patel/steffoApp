@@ -170,7 +170,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
     Navigator.push(
         context,
         MaterialPageRoute(
-            builder: (context) => GeneratedChallan(challan_id: responseData['data'])
+            builder: (context) => GeneratedChallan(challan_id: responseData['data'].toString())
         )
     );
   }
