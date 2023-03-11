@@ -266,7 +266,14 @@ class _OrdersPageState extends State<OrdersContent>{
                   scrollDirection: Axis.vertical,
                   shrinkWrap: true,
                   itemBuilder: (context,index){
-                    return orderCard(context, purchaseOrderList[index]);
+                    return InkWell(
+                        onTap: (){
+                          Navigator.push(context,
+                              MaterialPageRoute(
+                                  builder: (context) => OrderDetails(order: purchaseOrderList[index]))
+                          );
+                        },
+                        child:orderCard(context,purchaseOrderList[index]));
                   },
                 ),
               ),
