@@ -77,7 +77,8 @@ AppBar appbar(String txt) {
     )),
     backgroundColor: Colors.white,
     leading: IconButton(
-        onPressed: () {},
+        onPressed: () {
+        },
         icon: const Icon(
           Icons.arrow_back_ios_new,
           color: Colors.black,
