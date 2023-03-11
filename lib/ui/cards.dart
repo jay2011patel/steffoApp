@@ -27,13 +27,15 @@ Widget orderCard(BuildContext context,Order order){
                   child: Text(order.order_id!,textAlign: TextAlign.left,)),
             ],
           ),Container(
+            padding: EdgeInsets.only(top: 7,bottom: 5),
+
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
 
                 Container(
                   child: Text("Order From:",style: TextStyle(fontFamily: "Poppins_Bold"),),
-                  padding: EdgeInsets.only(top: 7,bottom: 5),
+
                 ),
 
                 Text(order.user_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
