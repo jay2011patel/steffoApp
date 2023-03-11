@@ -352,7 +352,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
           //----------------------------UserType------------------------------
 
           Container(
-              padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+              padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
               child: DropdownButtonFormField(
                 key: field5Key,
                 focusNode: focusNode5,
@@ -369,12 +369,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 onChanged: (String? newValue) {
                   selectedValue = newValue;
                 },
-                // validator: (selectedValue) {
-                //   if (selectedValue!.isEmpty) {
-                //     return 'Please select a value.';
-                //   }
-                //   return null;
-                // },
+                validator: (selectedValue) {
+                  if (selectedValue == null) {
+                    return 'Please select a value.';
+                  }
+                  return null;
+                },
               )),
         ],
       ),

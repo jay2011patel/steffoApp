@@ -32,12 +32,18 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   late FocusNode focusNode4;
   late FocusNode focusNode5;
   late FocusNode focusNode6;
+  late FocusNode focusNode7;
+  late FocusNode focusNode8;
+  late FocusNode focusNode9;
   final field1Key = GlobalKey<FormFieldState>();
   final field2Key = GlobalKey<FormFieldState>();
   final field3Key = GlobalKey<FormFieldState>();
   final field4Key = GlobalKey<FormFieldState>();
   final field5Key = GlobalKey<FormFieldState>();
   final field6Key = GlobalKey<FormFieldState>();
+  final field8Key = GlobalKey<FormFieldState>();
+  final field7Key = GlobalKey<FormFieldState>();
+  final field9Key = GlobalKey<FormFieldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -55,7 +61,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
     setState(() {});
   }
 
-  String? selectedValue, selectedSize, selectedGrade,selectedType;
+  String? selectedValue, selectedSize, selectedGrade, selectedType;
   TextEditingController qty = TextEditingController();
   TextEditingController party_name = TextEditingController();
   TextEditingController party_address = TextEditingController();
@@ -73,6 +79,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
     focusNode4 = FocusNode();
     focusNode5 = FocusNode();
     focusNode6 = FocusNode();
+    focusNode7 = FocusNode();
+    focusNode8 = FocusNode();
+    focusNode9 = FocusNode();
     focusNode1.addListener(() {
       if (!focusNode1.hasFocus) {
         field1Key.currentState?.validate();
@@ -103,7 +112,23 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         field6Key.currentState?.validate();
       }
     });
+    focusNode7.addListener(() {
+      if (!focusNode7.hasFocus) {
+        field7Key.currentState?.validate();
+      }
+    });
+    focusNode8.addListener(() {
+      if (!focusNode8.hasFocus) {
+        field8Key.currentState?.validate();
+      }
+    });
+    focusNode9.addListener(() {
+      if (!focusNode9.hasFocus) {
+        field9Key.currentState?.validate();
+      }
+    });
   }
+
   @override
   void dispose() {
     focusNode1.dispose();
@@ -112,6 +137,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
     focusNode4.dispose();
     focusNode5.dispose();
     focusNode6.dispose();
+    focusNode7.dispose();
+    focusNode8.dispose();
+    focusNode9.dispose();
     super.dispose();
   }
 
@@ -119,7 +147,6 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   List grades = ["FE500", "FE550", "FE500D", "FE550D"];
   List sizes = ["10", "20", "30", "40", "50"];
   List type = ["Loose", "Bhari"];
-
 
   int itemNum = 1;
   final List<Map<String, String>> listOfColumns = [];
@@ -152,19 +179,19 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
     var responseData = json.decode(res.body);
     print(responseData["value"].toString());
 
-    if(responseData["status"]=='200'){
-      for(int i = 0 ; i<listOfColumns.length;i++){
+    if (responseData["status"] == '200') {
+      for (int i = 0; i < listOfColumns.length; i++) {
         http.post(
           Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
           body: {
-            "order_id":responseData["value"].toString(),
-            "name":listOfColumns[i]["Name"],
-            "qty":listOfColumns[i]["Qty"]
+            "order_id": responseData["value"].toString(),
+            "name": listOfColumns[i]["Name"],
+            "qty": listOfColumns[i]["Qty"]
           },
         );
       }
     }
-     // print(listOfColumns[0]['Name']);
+    // print(listOfColumns[0]['Name']);
   }
 
   Widget PlaceOrderBody() {
@@ -287,7 +314,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           // borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none),
                       filled: true,
-                      fillColor: Color.fromRGBO(233, 236, 239,0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                      fillColor: Color.fromRGBO(233, 236, 239,
+                          0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
 
                       ),
                 ),
@@ -306,7 +334,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a value.';
-                    }else if(value.length < 15){
+                    } else if (value.length < 15) {
                       return 'Please Enter Valid Number';
                     }
                     if (value.length > 15) {
@@ -321,7 +349,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           // borderRadius: BorderRadius.circular(20),
                           borderSide: BorderSide.none),
                       filled: true,
-                      fillColor: const Color.fromRGBO(233, 236, 239,0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                      fillColor: const Color.fromRGBO(233, 236, 239,
+                          0.792156862745098) //Color.fromRGBO(233, 236, 239, 0.792156862745098)
 
                       ),
                 ),
@@ -341,7 +370,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please Enter a Number.';
-                    }else if(value.length < 10){
+                    } else if (value.length < 10) {
                       return 'Please Enter Valid Number';
                     }
                     if (value.length > 10) {
@@ -368,11 +397,11 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
               Container(
                   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                   child: DropdownButtonFormField(
-                    decoration:const InputDecoration(
+                    decoration: const InputDecoration(
                         hintText: "Select Loading Type",
                         filled: true,
-                        fillColor: Color.fromRGBO(
-                            233, 236, 239, 0.792156862745098),
+                        fillColor:
+                            Color.fromRGBO(233, 236, 239, 0.792156862745098),
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           // borderRadius: BorderRadius.circular(20)
@@ -381,6 +410,14 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                     items: getType(),
                     onChanged: (String? newValue) {
                       selectedType = newValue;
+                    },
+                    key: field5Key,
+                    focusNode: focusNode5,
+                    validator: (selectedValue) {
+                      if (selectedValue == null) {
+                        return 'Please select a value.';
+                      }
+                      return null;
                     },
                   )),
 
@@ -445,13 +482,13 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                 margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                 decoration: const BoxDecoration(
                     // color: Colors.white, borderRadius: BorderRadius.circular(20)
-                ),
+                    ),
                 child: Column(
                   children: [
                     Container(
                         padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: DropdownButtonFormField(
-                          decoration:const InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: "Select The Product",
                               filled: true,
                               fillColor: Color.fromRGBO(
@@ -464,6 +501,14 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           items: getItems(),
                           onChanged: (String? newValue) {
                             selectedValue = newValue;
+                          },
+                          key: field9Key,
+                          focusNode: focusNode9,
+                          validator: (selectedValue) {
+                            if (selectedValue == null) {
+                              return 'Please select a value.';
+                            }
+                            return null;
                           },
                         )),
                     Container(
@@ -483,14 +528,22 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           onChanged: (String? newValue) {
                             selectedGrade = newValue;
                           },
+                          key: field8Key,
+                          focusNode: focusNode8,
+                          validator: (selectedValue) {
+                            if (selectedValue == null) {
+                              return 'Please select a value.';
+                            }
+                            return null;
+                          },
                         )),
                     Container(
                         padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                         child: DropdownButtonFormField(
-                          decoration:const InputDecoration(
+                          decoration: const InputDecoration(
                               hintText: "Select The Size",
                               filled: true,
-                              fillColor:  Color.fromRGBO(
+                              fillColor: Color.fromRGBO(
                                   233, 236, 239, 0.792156862745098),
                               border: OutlineInputBorder(
                                 borderSide: BorderSide.none,
@@ -501,20 +554,28 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           onChanged: (String? newValue) {
                             selectedSize = newValue;
                           },
+                          key: field7Key,
+                          focusNode: focusNode7,
+                          validator: (selectedValue) {
+                            if (selectedValue == null) {
+                              return 'Please select a value.';
+                            }
+                            return null;
+                          },
                         )),
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                       child: TextFormField(
                         maxLines: 1,
                         controller: qty,
-                        decoration:const  InputDecoration(
+                        decoration: const InputDecoration(
                           labelText: "Quantity",
                           floatingLabelBehavior: FloatingLabelBehavior.never,
                           border: OutlineInputBorder(
                               // borderRadius: BorderRadius.circular(20),
                               borderSide: BorderSide.none),
                           filled: true,
-                          fillColor:Color.fromRGBO(233, 236, 239,
+                          fillColor: Color.fromRGBO(233, 236, 239,
                               0.792156862745098), //Color.fromRGBO(233, 236, 239, 0.792156862745098)
                         ),
                       ),
@@ -549,12 +610,13 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                     height: 250,
                     margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                     decoration: BoxDecoration(
-                        color: Colors.white, borderRadius: BorderRadius.circular(20)),
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(20)),
                     child: SingleChildScrollView(
                       child: DataTable(
                         //border: TableBorder.all(borderRadius: BorderRadius.circular(20)),
-                        decoration:
-                            BoxDecoration(borderRadius: BorderRadius.circular(20)),
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(20)),
 
                         columns: const [
                           DataColumn(label: Text('Sr\nNo')),
@@ -566,7 +628,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 .map(
                                   ((element) => DataRow(
                                         cells: <DataCell>[
-                                          DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
+                                          DataCell(Text(element[
+                                              "Sr_no"]!)), //Extracting from Map element the value
                                           DataCell(Text(element["Name"]!)),
                                           DataCell(Text(element["Qty"]!)),
                                         ],
@@ -586,7 +649,6 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                     if (_formKey.currentState!.validate()) {
                       onPlaceOrder();
                     }
-
                   }))
             ],
           ),
