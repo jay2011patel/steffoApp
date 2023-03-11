@@ -117,7 +117,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
 
   List items = ["TMT"];
   List grades = ["FE500", "FE550", "FE500D", "FE550D"];
-  List sizes = ["10mm", "20mm", "30mm", "40mm", "50mm"];
+  List sizes = ["10", "20", "30", "40", "50"];
   List type = ["Loose", "Bhari"];
 
 
@@ -302,6 +302,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                   focusNode: focusNode3,
                   controller: party_pan_no,
                   maxLines: 1,
+                  maxLength: 15,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a value.';
@@ -336,6 +337,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                   controller: party_mob_num,
                   maxLines: 1,
                   keyboardType: TextInputType.number,
+                  maxLength: 10,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please Enter a Number.';
@@ -418,6 +420,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                   focusNode: focusNode6,
                   controller: base_price,
                   maxLines: 1,
+                  keyboardType: TextInputType.number,
                   validator: (value) {
                     if (value!.isEmpty) {
                       return 'Please enter a value.';
