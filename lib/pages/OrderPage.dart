@@ -127,7 +127,7 @@ class _OrderPageState extends State<OrderPage> {
                                     children: [
                                       const Text("Order From:",
                                           style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                      Text(widget.order.party_name!,
+                                      Text(widget.order.user_name!,
                                           style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
                                     ],
                                   ),
