@@ -156,14 +156,15 @@ class _ChallanListPageState extends State<ChallanListContent> {
                 margin: const EdgeInsets.only(top: 20),
                 padding: const EdgeInsets.symmetric(horizontal: 10),
                 child: Row(
-                  children: const [
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children:  [
                     Text(
                       "Order Id:",
                       style: TextStyle(fontFamily: "Poppins_Bold"),
                     ),
                     Padding(
                       padding: EdgeInsets.only(left: 8.0),
-                      child: Text("98761"),
+                      child: Text(widget.order.order_id.toString()),
                     )
                   ],
                 ),
@@ -240,6 +241,7 @@ class _ChallanListPageState extends State<ChallanListContent> {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Container(
                     child: const Text(
@@ -258,25 +260,29 @@ class _ChallanListPageState extends State<ChallanListContent> {
             ),
             Container(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Container(
                     child: Text(
                       "Transporter Name:",
                       style: TextStyle(fontFamily: "Roboto"),
                     ),
-                    padding: EdgeInsets.only(top: 5, bottom: 5, right: 20),
+                    padding: EdgeInsets.only(top: 5, bottom: 5),
                   ),
-                  Expanded(
-                      child: Text(
-                    challan.transporter_name!,
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 3,
-                  ))
+                  Container(
+                    child: Text(
+                      challan.transporter_name!,
+                      overflow: TextOverflow.ellipsis,
+                      maxLines: 3,
+                    ),
+                  )
                 ],
               ),
             ),
             Container(
               child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+
                 children: [
                   Text("Vehicle Number:"),
                   Padding(
