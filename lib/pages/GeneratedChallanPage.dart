@@ -242,39 +242,67 @@ class _ChallanPageState extends State<ChallanPage> {
                           child: Column(
                             children: [
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   Text(
                                     "Shipping Address :",
                                     style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold,
+                                      fontFamily: "Poppins_Bold",
+                                      fontSize: 15,
+                                      // fontWeight: FontWeight.bold,
                                     ),
                                   ),
+                                ],
+                              ),
+                              Row(
+                                children: [
                                   Expanded(
-                                    // padding: EdgeInsets.only(bottom: 25, top: 10),
-                                    child: Text(or.party_address!,
-                                      style: TextStyle(fontSize: 10,),
-                                      textAlign: TextAlign.right,
-                                      maxLines: 4,
-                                      softWrap: true,
-                                    ),
+                                          // padding: EdgeInsets.only(bottom: 25, top: 10),
+                                          child: Text(or.party_address!,
+                                            style: TextStyle(fontSize: 15,fontFamily: "Poppins"),
+                                            // textAlign: TextAlign.right,
+                                            maxLines: 4,
+                                            softWrap: true,
+                                          ),
                                   )
                                 ],
                               ),
+                              // Row(
+                              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //   children: [
+                              //     Text(
+                              //       "Shipping Address :",
+                              //       style: TextStyle(
+                              //         fontSize: 10,
+                              //         fontWeight: FontWeight.bold,
+                              //       ),
+                              //     ),
+                              //     Expanded(
+                              //       // padding: EdgeInsets.only(bottom: 25, top: 10),
+                              //       child: Text(or.party_address!,
+                              //         style: TextStyle(fontSize: 10,),
+                              //         textAlign: TextAlign.right,
+                              //         maxLines: 4,
+                              //         softWrap: true,
+                              //       ),
+                              //     )
+                              //   ],
+                              // ),
                               const SizedBox(
                                 height: 5.0,
                               ),
-                              Row(
 
+                              Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
                                   const Text("Contact:",
                                       style: TextStyle(
-                                          fontSize: 10,
-                                          fontWeight: FontWeight.bold)),
+                                          fontFamily: "Poppins_Bold",
+                                          fontSize: 15,
+                                          // fontWeight: FontWeight.bold
+                                      )
+                                  ),
                                   Text(or.party_mob_num!,
-                                      style: const TextStyle(fontSize: 10))
+                                      style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
                                 ],
                               ),
                             ],
@@ -297,10 +325,12 @@ class _ChallanPageState extends State<ChallanPage> {
                               children: [
                                 Text("Loading Type:",
                                     style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
+                                        fontFamily: "Poppins_Bold",
+                                        fontSize: 15,
+                                        // fontWeight: FontWeight.bold
+                                    )),
                                 Text(or.loading_type!,
-                                    style: TextStyle(fontSize: 10))
+                                    style: TextStyle(fontSize: 15,fontFamily: "Poppins"))
                               ],
                             )),
                       ),
@@ -320,10 +350,12 @@ class _ChallanPageState extends State<ChallanPage> {
                               children: [
                                 Text("Challan no:",
                                     style: TextStyle(
-                                        fontSize: 10,
-                                        fontWeight: FontWeight.bold)),
+                                        fontFamily: "Poppins_Bold",
+                                        fontSize: 15,
+                                        // fontWeight: FontWeight.bold
+                                    )),
                                 Text(ch.challan_id!,
-                                    style: TextStyle(fontSize: 10))
+                                    style: TextStyle(fontSize: 15,fontFamily: "Poppins"))
                               ],
                             )),
                       ),
@@ -338,90 +370,107 @@ class _ChallanPageState extends State<ChallanPage> {
                     color: Colors.grey.withOpacity(0.20),
                   ),
                   child: Column(children: [
-                    Container(
-                        padding: const EdgeInsets.all(10),
-                        decoration: const BoxDecoration(
-                          // borderRadius: BorderRadius.circular(20),
-                          color: Colors.white,
-                        ),
-                        child: Row(
+                    Card(
+                      child: Container(
+                          padding: const EdgeInsets.all(10),
+                          decoration: const BoxDecoration(
+                            // borderRadius: BorderRadius.circular(20),
+                            color: Colors.white,
+                          ),
+                          child: Row(
 
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text("Transporter name:",
-                                style: TextStyle(
-                                    fontSize: 10, fontWeight: FontWeight.bold)),
-                            Text(ch.transporter_name!,
-                                style: TextStyle(fontSize: 10))
-                          ],
-                        )),
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text("Transporter name:",
+                                  style: TextStyle(
+                                      fontFamily: "Poppins_Bold",
+                                      fontSize: 15,
+                                      // fontWeight: FontWeight.bold
+                                  )),
+                              Text(ch.transporter_name!,
+                                  style: TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                            ],
+                          )),
+                    ),
                     const SizedBox(
                       height: 10.0,
                     ),
                     Column(children: [
-                      Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            // borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
-                          ),
-                          child: Row(
+                      Card(
+                        child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              // borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                            ),
+                            child: Row(
 
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("LR no:",
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold)),
-                              Text(ch.challan_id!,
-                                  style: TextStyle(fontSize: 10))
-                            ],
-                          )),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("LR no:",
+                                    style: TextStyle(
+                                        fontFamily: "Poppins_Bold",
+                                        fontSize: 15,
+                                        // fontWeight: FontWeight.bold
+                                    )),
+                                Text(ch.challan_id!,
+                                    style: TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                              ],
+                            )),
+                      ),
                       const SizedBox(
                         height: 10.0,
                       ),
-                      Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            // borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
-                          ),
-                          child: Row(
+                      Card(
+                        child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              // borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                            ),
+                            child: Row(
 
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text("Vehicle no",
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold)),
-                              Text(ch.vehicle_number!,
-                                  style: TextStyle(fontSize: 10))
-                            ],
-                          )),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text("Vehicle no",
+                                    style: TextStyle(
+                                        fontFamily: "Poppins_Bold",
+                                        fontSize: 15,
+                                        // fontWeight: FontWeight.bold
+                                    )),
+                                Text(ch.vehicle_number!,
+                                    style: TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                              ],
+                            )),
+                      ),
                       const SizedBox(
                         height: 10.0,
                       ),
-                      Container(
-                          padding: const EdgeInsets.all(10),
-                          decoration: const BoxDecoration(
-                            // borderRadius: BorderRadius.circular(20),
-                            color: Colors.white,
-                          ),
-                          child: Row(
+                      Card(
+                        child: Container(
+                            padding: const EdgeInsets.all(10),
+                            decoration: const BoxDecoration(
+                              // borderRadius: BorderRadius.circular(20),
+                              color: Colors.white,
+                            ),
+                            child: Row(
 
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            //     mainAxisAlignment: MainAxisAlignment.spaceAround,
-                            children: [
-                              Text("Date :",
-                                  style: TextStyle(
-                                      fontSize: 10,
-                                      fontWeight: FontWeight.bold)),
-                              Text(
-                                or.order_date!,
-                                style: TextStyle(fontSize: 10),
-                              )
-                            ],
-                          )),
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              //     mainAxisAlignment: MainAxisAlignment.spaceAround,
+                              children: [
+                                Text("Date :",
+                                    style: TextStyle(
+                                        fontFamily: "Poppins_Bold",
+                                        fontSize: 15,
+                                        // fontWeight: FontWeight.bold
+                                    )),
+                                Text(
+                                  or.order_date!,
+                                  style: TextStyle(fontSize: 15,fontFamily: "Poppins"),
+                                )
+                              ],
+                            )),
+                      ),
                     ])
                   ]),
                 ),
