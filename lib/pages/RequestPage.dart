@@ -336,6 +336,20 @@ Widget orderRequestCard(context,Order orderReq,c()){
               children: [
 
                 Container(
+                  child: Text("Order From:",style: TextStyle(fontFamily: "Poppins_Bold"),),
+                  padding: EdgeInsets.only(top: 5),
+                ),
+
+                Text(orderReq.user_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
+              ],
+            ),
+          ),
+          Container(
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+
+                Container(
                   child: Text("Org Name:",style: TextStyle(fontFamily: "Poppins_Bold"),),
                   padding: EdgeInsets.symmetric(vertical: 5),
                 ),
