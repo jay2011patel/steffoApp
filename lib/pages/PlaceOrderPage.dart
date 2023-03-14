@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
@@ -149,6 +150,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   List type = ["Loose", "Bhari"];
 
   int itemNum = 1;
+  int totalQuantity = 0;
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() async {
     var res = await http.post(
@@ -592,10 +594,12 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                               "Sr_no": itemNum.toString(),
                               "Name":
                                   "$selectedValue $selectedGrade $selectedSize mm",
-                              "Qty": qty.text
+                              "Qty": qty.text,
                             });
                             itemNum = itemNum + 1;
                           });
+                          totalQuantity = totalQuantity + int.parse(qty.text);
+                          print(totalQuantity);
                         },
                         child: const Text("Add Item"))
                   ],
@@ -606,38 +610,77 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
 
               Card(
                 child: SingleChildScrollView(
-                  child: Container(
-                    height: 250,
-                    margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    decoration: BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.circular(20)),
-                    child: SingleChildScrollView(
-                      child: DataTable(
-                        //border: TableBorder.all(borderRadius: BorderRadius.circular(20)),
+                  child: Column(
+                    children: [
+                      Container(
+                        height: 250,
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                         decoration: BoxDecoration(
+                            color: Colors.white,
                             borderRadius: BorderRadius.circular(20)),
+                        child: SingleChildScrollView(
+                          child: DataTable(
+                            columnSpacing:
+                                MediaQuery.of(context).size.width / 18,
+                            //border: TableBorder.all(borderRadius: BorderRadius.circular(20)),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(20)),
 
-                        columns: const [
-                          DataColumn(label: Text('Sr\nNo')),
-                          DataColumn(label: Text('HSN/Name')),
-                          DataColumn(label: Text('Quantity(Tons)')),
-                        ],
-                        rows:
-                            listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
-                                .map(
-                                  ((element) => DataRow(
-                                        cells: <DataCell>[
-                                          DataCell(Text(element[
-                                              "Sr_no"]!)), //Extracting from Map element the value
-                                          DataCell(Text(element["Name"]!)),
-                                          DataCell(Text(element["Qty"]!)),
-                                        ],
-                                      )),
-                                )
-                                .toList(),
+                            columns: const [
+                              DataColumn(label: Text('Sr\nNo')),
+                              DataColumn(
+                                  label: Text(
+                                'HSN/Name',
+                                textAlign: TextAlign.center,
+                              )),
+                              DataColumn(
+                                  label: Text(
+                                'Quantity\n(Tons)',
+                                textAlign: TextAlign.center,
+                              )),
+                              DataColumn(label: Text(''))
+                            ],
+                            rows:
+                                listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
+                                    .map(
+                                      ((element) => DataRow(
+                                            cells: <DataCell>[
+                                              DataCell(Text(element[
+                                                  "Sr_no"]!)), //Extracting from Map element the value
+                                              DataCell(Text(element["Name"]!)),
+                                              DataCell(Align(
+                                                  child: Text(element["Qty"]!),
+                                                  alignment: Alignment.center)),
+                                              DataCell(IconButton(
+                                                icon: Icon(Icons.delete_rounded,
+                                                    color: Colors.red),
+                                                onPressed: () {
+                                                  setState(() {
+                                                    // listOfColumns.remove();
+                                                    // itemNum = itemNum - 1;
+                                                  });
+                                                },
+                                              )),
+
+                                              // DataCell(Icon(element["Action"]!))
+                                            ],
+                                          )),
+                                    )
+                                    .toList(),
+                          ),
+                        ),
                       ),
-                    ),
+                      Align(
+                        child: Container(
+                            child: Text("Total = $totalQuantity Tons",
+                                style: TextStyle(
+                                    color: Colors.blueAccent,
+                                    fontWeight: FontWeight.w700)),
+                            margin: EdgeInsets.fromLTRB(0, 10, 10, 10)),
+                        alignment: Alignment.bottomRight,
+                      )
+                    ],
                   ),
                 ),
               ),
