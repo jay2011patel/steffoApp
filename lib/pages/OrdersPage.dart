@@ -6,7 +6,7 @@ import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 import '../Models/order.dart';
-import '../UI/common.dart';
+import '../ui/common.dart';
 import '../ui/cards.dart';
 import '../ui/custom_tabbar.dart';
 import 'OrderPage.dart';
@@ -37,7 +37,9 @@ class _OrdersPageState extends State<OrdersContent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbar("Orders"),
+        appBar: appbar("Orders",(){
+          Navigator.pop(context);
+        }),
         body: OrdersPageBody(),
         floatingActionButton: FloatingActionButton(
           onPressed: (){

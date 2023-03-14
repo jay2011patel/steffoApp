@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-import '../UI/common.dart';
+import '../ui/common.dart';
 
 
 class DealerPage extends StatelessWidget{
@@ -30,7 +30,9 @@ class _DealerPageState extends State<DealerContent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbar("Dealer"),
+        appBar: appbar("Dealer",(){
+          Navigator.pop(context);
+        }),
         body: DealerPageBody(),
         floatingActionButton: FloatingActionButton(
           onPressed: (){},

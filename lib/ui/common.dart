@@ -60,11 +60,12 @@ Widget buttonStyle(String str, void c()) {
 
 //----------------------------------Appbar----------------------------------
 
-AppBar appbar(String txt) {
+AppBar appbar(String txt, void c()) {
   return AppBar(
     actions: [
       IconButton(
-          onPressed: () {},
+          onPressed: () {
+          },
           icon: const Icon(
             Icons.menu,
             color: Colors.black,
@@ -77,8 +78,7 @@ AppBar appbar(String txt) {
     )),
     backgroundColor: Colors.white,
     leading: IconButton(
-        onPressed: () {
-        },
+        onPressed: c,
         icon: const Icon(
           Icons.arrow_back_ios_new,
           color: Colors.black,

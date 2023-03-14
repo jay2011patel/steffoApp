@@ -5,7 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:stefomobileapp/Models/challan.dart';
 //import '../Models/gen_item_list.dart';
 import '../Models/order.dart';
-import '../UI/common.dart';
+import '../ui/common.dart';
 
 // void main(){
 //   runApp(MaterialApp(
@@ -99,7 +99,9 @@ class _ChallanPageState extends State<ChallanPage> {
   Widget build(BuildContext context) {
     loadChallanData();
     return Scaffold(
-        appBar: appbar("Challan"),
+        appBar: appbar("Challan",(){
+        Navigator.pop(context);
+        }),
         body: LayoutBuilder(builder: (context, constraints) {
           if(isDataAvailable){
             return ChallanBody();

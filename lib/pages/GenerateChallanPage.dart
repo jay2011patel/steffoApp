@@ -6,7 +6,7 @@ import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../Models/order.dart';
 import 'package:http/http.dart' as http;
-import '../UI/common.dart';
+import '../ui/common.dart';
 
 class GenerateChallanPage extends StatelessWidget {
 
@@ -105,7 +105,9 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbar("Generate Challan"),
+        appBar: appbar("Generate Challan",(){
+          Navigator.pop(context);
+        }),
         body: GenerateChallanPageBody(),
         // floatingActionButton: FloatingActionButton(
         //   onPressed: (){},

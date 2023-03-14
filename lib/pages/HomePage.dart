@@ -38,7 +38,10 @@ class _HomePageState extends State<HomeContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbar("Home"),
+        appBar: appbar("Home",(){
+          print("Back Pressed");
+          Navigator.pop(context);
+        }),
         body: HomePageBody(),
         floatingActionButton: FloatingActionButton(
           onPressed: () {

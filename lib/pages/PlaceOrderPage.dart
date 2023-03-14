@@ -6,7 +6,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
-import '../UI/common.dart';
+import '../ui/common.dart';
 
 class PlaceOrderPage extends StatelessWidget {
   const PlaceOrderPage({super.key});
@@ -49,7 +49,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar("Place Order"),
+      appBar: appbar("Place Order",(){
+        Navigator.pop(context);
+      }),
       body: PlaceOrderBody(),
     );
   }
