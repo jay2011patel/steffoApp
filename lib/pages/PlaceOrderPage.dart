@@ -49,7 +49,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar("Place Order",(){
+      appBar: appbar("Place Order", () {
         Navigator.pop(context);
       }),
       body: PlaceOrderBody(),
@@ -592,16 +592,17 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
                           setState(() {
+                            itemNum = listOfColumns.length + 1;
                             listOfColumns.add({
                               "Sr_no": itemNum.toString(),
                               "Name":
                                   "$selectedValue $selectedGrade $selectedSize mm",
                               "Qty": qty.text,
                             });
-                            itemNum = itemNum + 1;
                           });
+
                           totalQuantity = totalQuantity + int.parse(qty.text);
-                          print(totalQuantity);
+                          // print(totalQuantity);
                         },
                         child: const Text("Add Item"))
                   ],
@@ -659,8 +660,14 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                                     color: Colors.red),
                                                 onPressed: () {
                                                   setState(() {
+                                                    listOfColumns
+                                                        .remove(element);
+                                                    totalQuantity =
+                                                        totalQuantity -
+                                                            int.parse(element[
+                                                                "Qty"]!);
                                                     // listOfColumns.remove();
-                                                    // itemNum = itemNum - 1;
+                                                    itemNum = itemNum - 1;
                                                   });
                                                 },
                                               )),
