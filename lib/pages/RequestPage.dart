@@ -6,7 +6,7 @@ import 'package:stefomobileapp/ui/custom_tabbar.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../Models/order.dart';
-import '../UI/common.dart';
+import '../ui/common.dart';
 import 'OrderPage.dart';
 
 
@@ -36,7 +36,9 @@ class _RequestPageState extends State<RequestContent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbar("Requests"),
+        appBar: appbar("Requests",(){
+          Navigator.pop(context);
+        }),
         extendBodyBehindAppBar: false,
         body:RequestPageBody(),
         bottomNavigationBar: StylishBottomBar(
@@ -124,6 +126,7 @@ class _RequestPageState extends State<RequestContent>{
         req.reciever_id = responseData["data"][i]["supplier_id"];
         req.user_id = responseData["data"][i]["user_id"];
         req.user_mob_num = responseData["data"][i]["mobileNumber"];
+        req.user_name = responseData["data"][i]["firstName"]+" " +responseData["data"][i]["lastName"];
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];

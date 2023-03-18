@@ -7,7 +7,7 @@ import 'package:stefomobileapp/pages/ChallanListPage.dart';
 import 'package:stefomobileapp/pages/GenerateChallanPage.dart';
 //import '../Models/gen_item_list.dart';
 import '../Models/order.dart';
-import '../UI/common.dart';
+import '../ui/common.dart';
 
 // void main(){
 //   runApp(MaterialApp(
@@ -88,7 +88,9 @@ class _OrderPageState extends State<OrderPage> {
 
     return Scaffold(
 
-        appBar: appbar("Order"),
+        appBar: appbar("Order",(){
+          Navigator.pop(context);
+        }),
         body: Container(
           decoration: const BoxDecoration(
               // gradient:LinearGradient(

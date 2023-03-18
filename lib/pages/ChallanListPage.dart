@@ -8,7 +8,7 @@ import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import "package:http/http.dart" as http;
 import '../Models/order.dart';
-import '../UI/common.dart';
+import '../ui/common.dart';
 import 'GenerateChallanPage.dart';
 import 'GeneratedChallanPage.dart';
 // import 'RequestPage.dart';
@@ -37,7 +37,9 @@ class _ChallanListPageState extends State<ChallanListContent> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbar("Challan"),
+        appBar: appbar("Challan",(){
+          Navigator.pop(context);
+        }),
         body: ChallanListBody(),
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(

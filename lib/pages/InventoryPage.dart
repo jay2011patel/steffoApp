@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
-import '../UI/common.dart';
+import '../ui/common.dart';
 
 
 class InventoryPage extends StatelessWidget{
@@ -31,7 +31,9 @@ class _InventoryPageState extends State<InventoryContent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbar("Inventory"),
+        appBar: appbar("Inventory",(){
+          Navigator.pop(context);
+        }),
         body: HomePageBody(),
         floatingActionButton: FloatingActionButton(
           onPressed: (){
