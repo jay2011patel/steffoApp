@@ -26,6 +26,7 @@ class PlaceOrderContent extends StatefulWidget {
 class _PlaceOrderPageState extends State<PlaceOrderContent> {
   final _formKey = GlobalKey<FormState>();
 
+
   late FocusNode focusNode1;
   late FocusNode focusNode2;
   late FocusNode focusNode3;
@@ -593,16 +594,19 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 side: BorderSide.none),
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
-                          setState(() {
-                            listOfColumns.add({
-                              "Sr_no": itemNum.toString(),
-                              "Name":
-                                  "$selectedValue $selectedGrade $selectedSize mm",
-                              "Qty": qty.text
+                          if (_formKey.currentState!.validate()) {
+                            setState(() {
+                              listOfColumns.add({
+                                "Sr_no": itemNum.toString(),
+                                "Name":
+                                "$selectedValue $selectedGrade $selectedSize mm",
+                                "Qty": qty.text
+                              });
+                              itemNum = itemNum + 1;
                             });
-                            itemNum = itemNum + 1;
-                          });
+                          };
                         },
+
                         child: const Text("Add Item"))
                   ],
                 ),

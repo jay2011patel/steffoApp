@@ -229,7 +229,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     borderSide: BorderSide.none,
                     // borderRadius: BorderRadius.circular(20.0)
                   ),
-                )),
+                )
+            ),
           ),
 
           //-------------------------Email------------------------------------

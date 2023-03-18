@@ -282,7 +282,7 @@ class _RequestPageState extends State<RequestContent>{
 
 //---------------------------------SingleOrderRequestWidget---------------------
 
-Widget orderRequestCard(context,Order orderReq,c()){
+Widget orderRequestCard(context,Order order,c()){
 
   String org_name=" Bhuyangdev Steel Corporation";
 
@@ -312,18 +312,20 @@ Widget orderRequestCard(context,Order orderReq,c()){
 
                       body: {
                         "decision":"Approved",
-                        "order_id": orderReq.order_id!
+                        "order_id": order.order_id!
                       },
                     );
                     c();
-                  }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
+                    }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,)
+                  )
+              ),
               IconButton(onPressed: () async {
                 await http.post(
                   Uri.parse("http://urbanwebmobile.in/steffo/approveorder.php"),
 
                   body: {
                     "decision":"Denied",
-                    "order_id": orderReq.order_id!
+                    "order_id": order.order_id!
                   },
                 );
                 c();
@@ -340,7 +342,7 @@ Widget orderRequestCard(context,Order orderReq,c()){
                   padding: EdgeInsets.only(top: 5),
                 ),
 
-                Text(orderReq.user_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
+                Text(order.user_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
               ],
             ),
           ),
@@ -354,7 +356,7 @@ Widget orderRequestCard(context,Order orderReq,c()){
                   padding: EdgeInsets.symmetric(vertical: 5),
                 ),
 
-                Text(orderReq.party_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
+                Text(order.party_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
               ],
             ),
           ),
@@ -364,7 +366,7 @@ Widget orderRequestCard(context,Order orderReq,c()){
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Order Date:",style:TextStyle(fontFamily: "Poppins_Bold"),),
-                Text(orderReq.order_date!)
+                Text(order.order_date!)
               ],
             ),
           ),
@@ -374,7 +376,7 @@ Widget orderRequestCard(context,Order orderReq,c()){
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text("Base Price",style:TextStyle(fontFamily: "Poppins_Bold"),),
-                Text(orderReq.base_price!)
+                Text(order.base_price!)
               ],
             ),
           )

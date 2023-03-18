@@ -247,7 +247,10 @@ class _HomePageState extends State<HomeContent> {
                                               builder: (context) =>
                                                   OrderDetails(
                                                       order:
-                                                          requestList[index])));
+                                                          requestList[index]
+                                                  )
+                                          )
+                                      );
                                     },
                                     child: orderRequestCard(
                                         context, requestList[index], () {
