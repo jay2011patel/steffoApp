@@ -2,7 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
-
 import '../ui/common.dart';
 
 
@@ -95,6 +94,7 @@ class _DealerPageState extends State<DealerContent>{
   }
 
   Widget DealerPageBody(){
+    //loadChildData();
     return Container(
 
     );

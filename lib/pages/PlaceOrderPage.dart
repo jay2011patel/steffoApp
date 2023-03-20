@@ -591,17 +591,28 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 side: BorderSide.none),
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
+
                           setState(() {
-                            listOfColumns.add({
-                              "Sr_no": itemNum.toString(),
-                              "Name":
-                                  "$selectedValue $selectedGrade $selectedSize mm",
-                              "Qty": qty.text,
-                            });
-                            itemNum = itemNum + 1;
+                            int f = 0 ;
+                            for (int i = 0 ; i < listOfColumns.length;i++){
+                              if (listOfColumns.elementAt(i)["Name"]! == "$selectedValue $selectedGrade $selectedSize mm") {
+                                int quty = int.parse(listOfColumns.elementAt(i)["Qty"]!);
+                                quty = quty + int.parse(qty.text);
+                                listOfColumns.elementAt(i)["Qty"] = quty.toString();
+                                f =1;
+                              }
+                            }
+                            if(f == 0){
+                              listOfColumns.add({
+                                "Sr_no": itemNum.toString(),
+                                "Name": "$selectedValue $selectedGrade $selectedSize mm",
+                                "Qty": qty.text,
+                              });
+                              itemNum = itemNum + 1;
+                            }
                           });
                           totalQuantity = totalQuantity + int.parse(qty.text);
-                          print(totalQuantity);
+                          //print(totalQuantity);
                         },
                         child: const Text("Add Item"))
                   ],
@@ -646,28 +657,37 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             rows:
                                 listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
                                     .map(
-                                      ((element) => DataRow(
-                                            cells: <DataCell>[
-                                              DataCell(Text(element[
-                                                  "Sr_no"]!)), //Extracting from Map element the value
-                                              DataCell(Text(element["Name"]!)),
-                                              DataCell(Align(
-                                                  child: Text(element["Qty"]!),
-                                                  alignment: Alignment.center)),
-                                              DataCell(IconButton(
-                                                icon: Icon(Icons.delete_rounded,
-                                                    color: Colors.red),
-                                                onPressed: () {
-                                                  setState(() {
-                                                    // listOfColumns.remove();
-                                                    // itemNum = itemNum - 1;
-                                                  });
-                                                },
-                                              )),
+                                      (element){
 
-                                              // DataCell(Icon(element["Action"]!))
-                                            ],
-                                          )),
+
+                                        //listOfColumns.indexWhere((element) => false);
+                                      return DataRow(
+                                      cells: <DataCell>[
+                                      DataCell(
+                                          Text(element["Sr_no"]!)
+                                      ), //Extracting from Map element the value
+                                      DataCell(
+                                          Text(element["Name"]!)
+                                      ),
+                                      DataCell(
+                                          Align(
+                                            child: Text(element["Qty"]!),
+                                            alignment: Alignment.center
+                                          )
+                                      ),
+                                      DataCell(IconButton(
+                                        icon: Icon(Icons.delete_rounded,
+                                        color: Colors.red),
+                                        onPressed: () {
+                                            setState(() {
+                                            listOfColumns.remove(element);
+                                            });
+                                        },
+                                      )),
+
+                                      // DataCell(Icon(element["Action"]!))
+                                      ],
+                                      );},
                                     )
                                     .toList(),
                           ),
