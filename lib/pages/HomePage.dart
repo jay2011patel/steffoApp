@@ -30,25 +30,41 @@ class HomeContent extends StatefulWidget {
 class _HomePageState extends State<HomeContent> {
   var _selected = 0;
   String? _id;
+  var fabLoc;
 
   _HomePageState(int val) {
     _selected = val;
   }
+  var user_type;
+  void loadusertype() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    user_type = await prefs.getString('userType');
+  }
 
   @override
   Widget build(BuildContext context) {
+    loadusertype();
     return Scaffold(
         appBar: appbar("Home",(){
           print("Back Pressed");
           Navigator.pop(context);
         }),
         body: HomePageBody(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed('/placeorder');
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.red,
+        floatingActionButton: LayoutBuilder(
+          builder: (context,constraints) {
+            if(user_type != "Manufacturer"){
+              //fabLoc = FloatingActionButtonLocation.centerDocked;
+              return FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/placeorder');
+                },
+                child: Icon(Icons.add),
+                backgroundColor: Colors.red,
+              );
+            }else{
+              return Container();
+            }
+        }
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: StylishBottomBar(
@@ -93,7 +109,7 @@ class _HomePageState extends State<HomeContent> {
                 selectedIcon:
                     const Icon(Icons.person_pin, color: Colors.blueAccent)),
           ],
-          fabLocation: StylishBarFabLocation.center,
+          //fabLocation: StylishBarFabLocation.center,
           hasNotch: false,
           currentIndex: _selected,
           onTap: (index) {
