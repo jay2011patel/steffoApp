@@ -195,28 +195,61 @@ class _HomePageState extends State<HomeContent> {
                         "Orders",
                         style: TextStyle(fontFamily: "Poppins_Bold"),
                       )),
-                      Container(
-                        height: 220,
-                        child: SingleChildScrollView(
-                          child: ListView.builder(
-                            itemCount: orderList.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => OrderDetails(
-                                                order: orderList[index])));
-                                  },
-                                  child: orderCard(context, orderList[index]));
-                            },
-                          ),
-                        ),
+                      LayoutBuilder(
+                          builder: (context,constraints) {
+                            if(user_type == "Dealer"){
+                              return Container(
+                                height: MediaQuery.of(context).size.height *0.7,
+
+                                child: SingleChildScrollView(
+                                  child: ListView.builder(
+                                    itemCount: orderList.length,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => OrderDetails(
+                                                        order: orderList[index])));
+                                          },
+                                          child: orderCard(context, orderList[index]));
+                                    },
+                                  ),
+                                ),
+                              );
+                            }
+                            else{
+                              return Container(
+                                height: MediaQuery.of(context).size.height *0.3,
+
+                                child: SingleChildScrollView(
+                                  child: ListView.builder(
+                                    itemCount: orderList.length,
+                                    physics: const NeverScrollableScrollPhysics(),
+                                    scrollDirection: Axis.vertical,
+                                    shrinkWrap: true,
+                                    itemBuilder: (context, index) {
+                                      return InkWell(
+                                          onTap: () {
+                                            Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) => OrderDetails(
+                                                        order: orderList[index])));
+                                          },
+                                          child: orderCard(context, orderList[index]));
+                                    },
+                                  ),
+                                ),
+                              );
+                            }
+                          }
                       ),
+
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
@@ -235,69 +268,78 @@ class _HomePageState extends State<HomeContent> {
                       )
                     ],
                   )),
-              Container(
-                  //height: MediaQuery.of(context).size.height*0.36,
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(255, 255, 255, 0.5),
-                      borderRadius: BorderRadius.circular(8)),
-                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
-                  child: Column(
-                    children: [
-                      const Center(
-                          child: Text(
-                        "Request",
-                        style: TextStyle(fontFamily: "Poppins_Bold"),
-                      )),
-                      Container(
-                        height: 240,
-                        child: SingleChildScrollView(
-                          child: Container(
-                            child: ListView.builder(
-                              itemCount: requestList.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  OrderDetails(
-                                                      order:
-                                                          requestList[index])));
-                                    },
-                                    child: orderRequestCard(
-                                        context, requestList[index], () {
-                                      // orderList.add(requestList[index]);
-                                      // requestList.removeAt(index);
-                                      id = "none";
-                                      loadData();
-                                      setState(() {});
-                                    }));
-                              },
+              LayoutBuilder(
+                builder: (context,constraints) {
+                  if(user_type != "Dealer"){
+                  return Container(
+                      //height: MediaQuery.of(context).size.height*0.36,
+                      decoration: BoxDecoration(
+                          color: const Color.fromRGBO(255, 255, 255, 0.5),
+                          borderRadius: BorderRadius.circular(8)),
+                      margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                      child: Column(
+                        children: [
+                          const Center(
+                              child: Text(
+                            "Request",
+                            style: TextStyle(fontFamily: "Poppins_Bold"),
+                          )),
+                          Container(
+                            height: 240,
+                            child: SingleChildScrollView(
+                              child: Container(
+                                child: ListView.builder(
+                                  itemCount: requestList.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OrderDetails(
+                                                          order: requestList[
+                                                              index])));
+                                        },
+                                        child: orderRequestCard(
+                                            context, requestList[index], () {
+                                          // orderList.add(requestList[index]);
+                                          // requestList.removeAt(index);
+                                          id = "none";
+                                          loadData();
+                                          setState(() {});
+                                        }));
+                                  },
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          width: MediaQuery.of(context).size.width / 4,
-                          child: TextButton(
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: Text("View All")),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/orderreq');
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              width: MediaQuery.of(context).size.width / 4,
+                              child: TextButton(
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text("View All")),
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('/orderreq');
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ));
+                }
+                  else{
+                    return Container();
+                  }
+              }
+              ),
             ],
           ),
         ));
