@@ -641,7 +641,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 borderRadius: BorderRadius.circular(20)),
 
                             columns: const [
-                              DataColumn(label: Text('Sr\nNo')),
+                              DataColumn(label: Text('Sr\nNo'),numeric: true),
                               DataColumn(
                                   label: Text(
                                 'HSN/Name',
@@ -652,19 +652,28 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 'Quantity\n(Tons)',
                                 textAlign: TextAlign.center,
                               )),
-                              DataColumn(label: Text(''))
+                              DataColumn(label: Text('Action'))
                             ],
                             rows:
                                 listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
                                     .map(
                                       (element){
+                                        int i;
+
+                                        for (i = 0 ; i < listOfColumns.length ; i++){
+
+                                          if(listOfColumns.elementAt(i)["Name"] == element["Name"]!){
+                                            break;
+                                          }
+
+                                        }
 
 
                                         //listOfColumns.indexWhere((element) => false);
                                       return DataRow(
                                       cells: <DataCell>[
                                       DataCell(
-                                          Text(element["Sr_no"]!)
+                                          Text((i+1).toString())
                                       ), //Extracting from Map element the value
                                       DataCell(
                                           Text(element["Name"]!)
@@ -681,6 +690,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                         onPressed: () {
                                             setState(() {
                                             listOfColumns.remove(element);
+                                            totalQuantity = totalQuantity - int.parse(element["Qty"]!);
                                             });
                                         },
                                       )),
