@@ -200,10 +200,9 @@ class _HomePageState extends State<HomeContent> {
                             if(user_type == "Dealer"){
                               return Container(
                                 height: MediaQuery.of(context).size.height *0.7,
-
                                 child: SingleChildScrollView(
                                   child: ListView.builder(
-                                    itemCount: orderList.length,
+                                    itemCount: 3,
                                     physics: const NeverScrollableScrollPhysics(),
                                     scrollDirection: Axis.vertical,
                                     shrinkWrap: true,
