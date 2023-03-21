@@ -46,10 +46,20 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   final field7Key = GlobalKey<FormFieldState>();
   final field9Key = GlobalKey<FormFieldState>();
 
+  var user_type;
+  void loadusertype() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    user_type = await prefs.getString('userType');
+  }
+
+  String isItem = " ";
+
   @override
   Widget build(BuildContext context) {
+    loadusertype();
+
     return Scaffold(
-      appBar: appbar("Place Order",(){
+      appBar: appbar("Place Order", () {
         Navigator.pop(context);
       }),
       body: PlaceOrderBody(),
@@ -64,7 +74,12 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
     setState(() {});
   }
 
-  String? selectedValue, selectedSize, selectedGrade, selectedType;
+  String? selectedValue,
+      selectedSize,
+      selectedGrade,
+      selectedType,
+      selectedTransType,
+      selectedOrderType;
   TextEditingController qty = TextEditingController();
   TextEditingController party_name = TextEditingController();
   TextEditingController party_address = TextEditingController();
@@ -148,8 +163,10 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
 
   List items = ["TMT"];
   List grades = ["FE500", "FE550", "FE500D", "FE550D"];
-  List sizes = ["10", "20", "30", "40", "50"];
+  List sizes = ["10mm", "20mm", "30mm", "40mm", "50mm"];
   List type = ["Loose", "Bhari"];
+  List transType = ["CIF", "FOB"];
+  List orderType = ["Lump-sum", "With Size"];
 
   int itemNum = 1;
   int totalQuantity = 0;
@@ -203,6 +220,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
     List<DropdownMenuItem<String>> dropdownGrades = [];
     List<DropdownMenuItem<String>> dropdownSize = [];
     List<DropdownMenuItem<String>> dropdownType = [];
+    List<DropdownMenuItem<String>> dropdownTransType = [];
+    List<DropdownMenuItem<String>> dropdownOrderType = [];
     List<DropdownMenuItem<String>> getItems() {
       for (int i = 0; i < items.length; i++) {
         DropdownMenuItem<String> it = DropdownMenuItem(
@@ -246,6 +265,28 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         dropdownType.add(it);
       }
       return dropdownType;
+    }
+
+    List<DropdownMenuItem<String>> getTransType() {
+      for (int i = 0; i < transType.length; i++) {
+        DropdownMenuItem<String> it = DropdownMenuItem(
+          value: transType[i],
+          child: Text(transType[i]),
+        );
+        dropdownTransType.add(it);
+      }
+      return dropdownTransType;
+    }
+
+    List<DropdownMenuItem<String>> getOrderType() {
+      for (int i = 0; i < orderType.length; i++) {
+        DropdownMenuItem<String> it = DropdownMenuItem(
+          value: orderType[i],
+          child: Text(orderType[i]),
+        );
+        dropdownOrderType.add(it);
+      }
+      return dropdownOrderType;
     }
 
     loadData();
@@ -419,7 +460,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                     focusNode: focusNode5,
                     validator: (selectedValue) {
                       if (selectedValue == null) {
-                        return 'Please select a value.';
+                        // return 'Please select a value.';
                       }
                       return null;
                     },
@@ -451,6 +492,71 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
               //         ),
               //   ),
               // ),
+
+              //--------------------------Shipping Type--------------------------
+
+              LayoutBuilder(builder: (context, constraints) {
+                if (user_type == "Distributor") {
+                  return Column(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          child: DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                hintText: "Select Transportation Type",
+                                filled: true,
+                                fillColor: Color.fromRGBO(
+                                    233, 236, 239, 0.792156862745098),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  // borderRadius: BorderRadius.circular(20)
+                                )),
+                            value: selectedTransType,
+                            items: getTransType(),
+                            onChanged: (String? newValue) {
+                              selectedTransType = newValue;
+                            },
+                            // key: field5Key,
+                            // focusNode: focusNode5,
+                            validator: (selectedValue) {
+                              if (selectedValue == null) {
+                                return 'Please select a value.';
+                              }
+                              return null;
+                            },
+                          )),
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          child: DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                hintText: "Select Order Type",
+                                filled: true,
+                                fillColor: Color.fromRGBO(
+                                    233, 236, 239, 0.792156862745098),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  // borderRadius: BorderRadius.circular(20)
+                                )),
+                            value: selectedOrderType,
+                            items: getOrderType(),
+                            onChanged: (String? newValue) {
+                              selectedOrderType = newValue;
+                            },
+                            // key: field5Key,
+                            // focusNode: focusNode5,
+                            validator: (selectedValue) {
+                              if (selectedValue == null) {
+                                return 'Please select a value.';
+                              }
+                              return null;
+                            },
+                          )),
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              }),
 
               //------------------------------BasePrice--------------------------
 
@@ -541,37 +647,45 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             return null;
                           },
                         )),
-                    Container(
-                        padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                        child: DropdownButtonFormField(
-                          decoration: const InputDecoration(
-                              hintText: "Select The Size",
-                              filled: true,
-                              fillColor: Color.fromRGBO(
-                                  233, 236, 239, 0.792156862745098),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide.none,
-                                // borderRadius: BorderRadius.circular(20)
-                              )),
-                          value: selectedSize,
-                          items: getSize(),
-                          onChanged: (String? newValue) {
-                            selectedSize = newValue;
-                          },
-                          key: field7Key,
-                          focusNode: focusNode7,
-                          validator: (selectedValue) {
-                            if (selectedValue == null) {
-                              return 'Please select a value.';
-                            }
-                            return null;
-                          },
-                        )),
+                    LayoutBuilder(builder: (context, constraints) {
+                      if (selectedOrderType == "With Size") {
+                        return Container(
+                            padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                            child: DropdownButtonFormField(
+                              decoration: const InputDecoration(
+                                  hintText: "Select The Size",
+                                  filled: true,
+                                  fillColor: Color.fromRGBO(
+                                      233, 236, 239, 0.792156862745098),
+                                  border: OutlineInputBorder(
+                                    borderSide: BorderSide.none,
+                                    // borderRadius: BorderRadius.circular(20)
+                                  )),
+                              value: selectedSize,
+                              items: getSize(),
+                              onChanged: (String? newValue) {
+                                selectedSize = newValue;
+                              },
+                              key: field7Key,
+                              focusNode: focusNode7,
+                              validator: (selectedValue) {
+                                if (selectedValue == null) {
+                                  return 'Please select a value.';
+                                }
+                                return null;
+                              },
+                            ));
+                      } else {
+                        selectedSize = " ";
+                        return Container();
+                      }
+                    }),
                     Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 10),
                       child: TextFormField(
                         maxLines: 1,
                         controller: qty,
+                        keyboardType: TextInputType.number,
                         decoration: const InputDecoration(
                           labelText: "Quantity",
                           floatingLabelBehavior: FloatingLabelBehavior.never,
@@ -584,6 +698,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         ),
                       ),
                     ),
+                    Center(
+                      child: Text(isItem, style: TextStyle(color: Colors.red)),
+                    ),
                     ElevatedButton(
                         style: ElevatedButton.styleFrom(
                             shape: const RoundedRectangleBorder(
@@ -591,28 +708,40 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 side: BorderSide.none),
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
-
-                          setState(() {
-                            int f = 0 ;
-                            for (int i = 0 ; i < listOfColumns.length;i++){
-                              if (listOfColumns.elementAt(i)["Name"]! == "$selectedValue $selectedGrade $selectedSize mm") {
-                                int quty = int.parse(listOfColumns.elementAt(i)["Qty"]!);
-                                quty = quty + int.parse(qty.text);
-                                listOfColumns.elementAt(i)["Qty"] = quty.toString();
-                                f =1;
+                          if (selectedValue != null &&
+                              selectedGrade != null &&
+                              selectedSize != null &&
+                              qty.text != "") {
+                            setState(() {
+                              isItem = " ";
+                              int f = 0;
+                              for (int i = 0; i < listOfColumns.length; i++) {
+                                if (listOfColumns.elementAt(i)["Name"]! ==
+                                    "$selectedValue $selectedGrade $selectedSize ") {
+                                  int quty = int.parse(
+                                      listOfColumns.elementAt(i)["Qty"]!);
+                                  quty = quty + int.parse(qty.text);
+                                  listOfColumns.elementAt(i)["Qty"] =
+                                      quty.toString();
+                                  f = 1;
+                                }
                               }
-                            }
-                            if(f == 0){
-                              listOfColumns.add({
-                                "Sr_no": itemNum.toString(),
-                                "Name": "$selectedValue $selectedGrade $selectedSize mm",
-                                "Qty": qty.text,
-                              });
-                              itemNum = itemNum + 1;
-                            }
-                          });
-                          totalQuantity = totalQuantity + int.parse(qty.text);
-                          //print(totalQuantity);
+                              if (f == 0) {
+                                listOfColumns.add({
+                                  "Sr_no": itemNum.toString(),
+                                  "Name":
+                                      "$selectedValue $selectedGrade $selectedSize ",
+                                  "Qty": qty.text,
+                                });
+                                itemNum = itemNum + 1;
+                              }
+                            });
+                            totalQuantity = totalQuantity + int.parse(qty.text);
+                            //print(totalQuantity);
+                          } else {
+                            isItem = "Please Enter Item";
+                            setState(() {});
+                          }
                         },
                         child: const Text("Add Item"))
                   ],
@@ -641,7 +770,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 borderRadius: BorderRadius.circular(20)),
 
                             columns: const [
-                              DataColumn(label: Text('Sr\nNo'),numeric: true),
+                              DataColumn(label: Text('Sr\nNo'), numeric: true),
                               DataColumn(
                                   label: Text(
                                 'HSN/Name',
@@ -657,49 +786,42 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             rows:
                                 listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
                                     .map(
-                                      (element){
-                                        int i;
+                              (element) {
+                                int i;
 
-                                        for (i = 0 ; i < listOfColumns.length ; i++){
+                                for (i = 0; i < listOfColumns.length; i++) {
+                                  if (listOfColumns.elementAt(i)["Name"] ==
+                                      element["Name"]!) {
+                                    break;
+                                  }
+                                }
 
-                                          if(listOfColumns.elementAt(i)["Name"] == element["Name"]!){
-                                            break;
-                                          }
+                                //listOfColumns.indexWhere((element) => false);
+                                return DataRow(
+                                  cells: <DataCell>[
+                                    DataCell(Text((i + 1)
+                                        .toString())), //Extracting from Map element the value
+                                    DataCell(Text(element["Name"]!)),
+                                    DataCell(Align(
+                                        child: Text(element["Qty"]!),
+                                        alignment: Alignment.center)),
+                                    DataCell(IconButton(
+                                      icon: Icon(Icons.delete_rounded,
+                                          color: Colors.red),
+                                      onPressed: () {
+                                        setState(() {
+                                          listOfColumns.remove(element);
+                                          totalQuantity = totalQuantity -
+                                              int.parse(element["Qty"]!);
+                                        });
+                                      },
+                                    )),
 
-                                        }
-
-
-                                        //listOfColumns.indexWhere((element) => false);
-                                      return DataRow(
-                                      cells: <DataCell>[
-                                      DataCell(
-                                          Text((i+1).toString())
-                                      ), //Extracting from Map element the value
-                                      DataCell(
-                                          Text(element["Name"]!)
-                                      ),
-                                      DataCell(
-                                          Align(
-                                            child: Text(element["Qty"]!),
-                                            alignment: Alignment.center
-                                          )
-                                      ),
-                                      DataCell(IconButton(
-                                        icon: Icon(Icons.delete_rounded,
-                                        color: Colors.red),
-                                        onPressed: () {
-                                            setState(() {
-                                            listOfColumns.remove(element);
-                                            totalQuantity = totalQuantity - int.parse(element["Qty"]!);
-                                            });
-                                        },
-                                      )),
-
-                                      // DataCell(Icon(element["Action"]!))
-                                      ],
-                                      );},
-                                    )
-                                    .toList(),
+                                    // DataCell(Icon(element["Action"]!))
+                                  ],
+                                );
+                              },
+                            ).toList(),
                           ),
                         ),
                       ),

@@ -45,27 +45,25 @@ class _HomePageState extends State<HomeContent> {
   Widget build(BuildContext context) {
     loadusertype();
     return Scaffold(
-        appBar: appbar("Home",(){
+        appBar: appbar("Home", () {
           print("Back Pressed");
           Navigator.pop(context);
         }),
         body: HomePageBody(),
-        floatingActionButton: LayoutBuilder(
-          builder: (context,constraints) {
-            if(user_type != "Manufacturer"){
-              //fabLoc = FloatingActionButtonLocation.centerDocked;
-              return FloatingActionButton(
-                onPressed: () {
-                  Navigator.of(context).pushNamed('/placeorder');
-                },
-                child: Icon(Icons.add),
-                backgroundColor: Colors.red,
-              );
-            }else{
-              return Container();
-            }
-        }
-        ),
+        floatingActionButton: LayoutBuilder(builder: (context, constraints) {
+          if (user_type != "Manufacturer") {
+            //fabLoc = FloatingActionButtonLocation.centerDocked;
+            return FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/placeorder');
+              },
+              child: Icon(Icons.add),
+              backgroundColor: Colors.red,
+            );
+          } else {
+            return Container();
+          }
+        }),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(
@@ -152,7 +150,9 @@ class _HomePageState extends State<HomeContent> {
         req.reciever_id = responseData["data"][i]["supplier_id"];
         req.user_id = responseData["data"][i]["user_id"];
         req.user_mob_num = responseData["data"][i]["mobileNumber"];
-        req.user_name = responseData["data"][i]["firstName"]+" " +responseData["data"][i]["lastName"];
+        req.user_name = responseData["data"][i]["firstName"] +
+            " " +
+            responseData["data"][i]["lastName"];
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];
@@ -195,60 +195,62 @@ class _HomePageState extends State<HomeContent> {
                         "Orders",
                         style: TextStyle(fontFamily: "Poppins_Bold"),
                       )),
-                      LayoutBuilder(
-                          builder: (context,constraints) {
-                            if(user_type == "Dealer"){
-                              return Container(
-                                height: MediaQuery.of(context).size.height *0.7,
-                                child: SingleChildScrollView(
-                                  child: ListView.builder(
-                                    itemCount: 3,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => OrderDetails(
-                                                        order: orderList[index])));
-                                          },
-                                          child: orderCard(context, orderList[index]));
-                                    },
-                                  ),
-                                ),
-                              );
-                            }
-                            else{
-                              return Container(
-                                height: MediaQuery.of(context).size.height *0.3,
-
-                                child: SingleChildScrollView(
-                                  child: ListView.builder(
-                                    itemCount: orderList.length,
-                                    physics: const NeverScrollableScrollPhysics(),
-                                    scrollDirection: Axis.vertical,
-                                    shrinkWrap: true,
-                                    itemBuilder: (context, index) {
-                                      return InkWell(
-                                          onTap: () {
-                                            Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                    builder: (context) => OrderDetails(
-                                                        order: orderList[index])));
-                                          },
-                                          child: orderCard(context, orderList[index]));
-                                    },
-                                  ),
-                                ),
-                              );
-                            }
-                          }
-                      ),
-
+                      LayoutBuilder(builder: (context, constraints) {
+                        if (user_type == "Dealer") {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            child: SingleChildScrollView(
+                              child: ListView.builder(
+                                itemCount:
+                                    orderList.length > 3 ? 3 : orderList.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OrderDetails(
+                                                        order:
+                                                            orderList[index])));
+                                      },
+                                      child:
+                                          orderCard(context, orderList[index]));
+                                },
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: SingleChildScrollView(
+                              child: ListView.builder(
+                                itemCount: orderList.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OrderDetails(
+                                                        order:
+                                                            orderList[index])));
+                                      },
+                                      child:
+                                          orderCard(context, orderList[index]));
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      }),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
@@ -267,9 +269,8 @@ class _HomePageState extends State<HomeContent> {
                       )
                     ],
                   )),
-              LayoutBuilder(
-                builder: (context,constraints) {
-                  if(user_type != "Dealer"){
+              LayoutBuilder(builder: (context, constraints) {
+                if (user_type != "Dealer") {
                   return Container(
                       //height: MediaQuery.of(context).size.height*0.36,
                       decoration: BoxDecoration(
@@ -333,12 +334,10 @@ class _HomePageState extends State<HomeContent> {
                           )
                         ],
                       ));
+                } else {
+                  return Container();
                 }
-                  else{
-                    return Container();
-                  }
-              }
-              ),
+              }),
             ],
           ),
         ));
