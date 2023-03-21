@@ -9,7 +9,7 @@ import 'package:stefomobileapp/validator/validations.dart';
 import '../UI/common.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:editable_image/editable_image.dart';
+// import 'package:editable_image/editable_image.dart';
 
 class UserProfilePage extends StatelessWidget {
   @override
