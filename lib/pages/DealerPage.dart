@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:page_transition/page_transition.dart';
+import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import '../ui/common.dart';
@@ -33,12 +35,6 @@ class _DealerPageState extends State<DealerContent>{
           Navigator.pop(context);
         }),
         body: DealerPageBody(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){},
-          child: Icon(Icons.add),
-          backgroundColor: Colors.red,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(
             iconSize: 30,
@@ -73,18 +69,20 @@ class _DealerPageState extends State<DealerContent>{
                 selectedIcon: const Icon(Icons.person_pin,color:Colors.blueAccent)
             ),
           ],
-          fabLocation: StylishBarFabLocation.center,
+          //fabLocation: StylishBarFabLocation.center,
           hasNotch: false,
           currentIndex: _selected,
           onTap: (index) {
             setState(() {
 
               if(index==0){
-                Navigator.of(context).popAndPushNamed('/home');
+                Navigator.of(context).pushReplacementNamed('/home');
               }
 
+
+
               if(index==1){
-                Navigator.of(context).popAndPushNamed('/inventory');              }
+                Navigator.of(context).pushReplacementNamed('/inventory');              }
 
             });
           },

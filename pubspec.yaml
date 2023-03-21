@@ -45,6 +45,7 @@ dependencies:
   http: ^0.13.5
   shared_preferences: ^2.0.18
   fluttertoast: ^8.2.1
+  page_transition: ^2.0.9
 
 
 
