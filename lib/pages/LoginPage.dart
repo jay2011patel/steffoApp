@@ -94,7 +94,7 @@ class _loginPageState extends State<LoginContent> {
       prefs.setString('parentId', responseData["parentId"]);
       prefs.setString('userType', responseData["userType"]);
 
-      Navigator.of(context).pushNamed("/home");
+      Navigator.of(context).pushNamed("/profile");
       Fluttertoast.showToast(
           msg: 'Logged In Successfully',
           toastLength: Toast.LENGTH_SHORT,
