@@ -659,7 +659,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                                     color: Colors.red),
                                                 onPressed: () {
                                                   setState(() {
-                                                    // listOfColumns.remove();
+                                                    listOfColumns.remove(element);
                                                     // itemNum = itemNum - 1;
                                                   });
                                                 },

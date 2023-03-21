@@ -63,18 +63,20 @@ Widget buttonStyle(String str, void c()) {
 AppBar appbar(String txt, void c()) {
   return AppBar(
     actions: [
-      IconButton(
-          onPressed: () {
-          },
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.black,
-          ))
+      // IconButton(
+      //     onPressed: () {
+      //     },
+      //     icon: const Icon(
+      //       Icons.menu,
+      //       color: Colors.black,
+      //     )
+      // )
     ],
     title: Center(
         child: Text(
       txt,
-      style: const TextStyle(color: Colors.black, fontFamily: "Poppins_Bold"),
+      // textAlign: TextAlign.center,
+      style: const TextStyle(color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
     )),
     backgroundColor: Colors.white,
     leading: IconButton(
