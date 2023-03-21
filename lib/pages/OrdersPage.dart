@@ -54,7 +54,7 @@ class _OrdersPageState extends State<OrdersContent>{
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(
             iconSize: 30,
-            //barAnimation: BarAnimation.liquid,
+            // barAnimation: BarAnimation.liquid,
             iconStyle: IconStyle.simple,
             opacity: 0.3,
           ),

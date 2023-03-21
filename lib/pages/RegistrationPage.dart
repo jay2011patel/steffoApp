@@ -181,7 +181,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
               focusNode: focusNode1,
               validator: (value) {
                 if (value!.isEmpty || value == null) {
-                  return 'Please enter a value.';
+                  return 'Please enter a First Name.';
                 }
                 return null;
               },
@@ -212,7 +212,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 focusNode: focusNode2,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter a value.';
+                    return 'Please enter a Last Name.';
                   }
                   return null;
                 },
@@ -229,7 +229,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     borderSide: BorderSide.none,
                     // borderRadius: BorderRadius.circular(20.0)
                   ),
-                )),
+                )
+            ),
           ),
 
           //-------------------------Email------------------------------------
@@ -269,7 +270,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 focusNode: focusNode3,
                 validator: (value) {
                   if (value!.isEmpty) {
-                    return 'Please enter a value.';
+                    return 'Please enter a Password.';
                   }
                   if (value.length < 8) {
                     return 'Minimum length for password is 8';
@@ -281,7 +282,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
                 textAlign: TextAlign.left,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.lock_outline_rounded),
-
                   suffixIcon: IconButton(
                     onPressed: () {
                       setState(() {
@@ -291,9 +291,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     icon: Icon(
                         _isPWVisible ? Icons.visibility : Icons.visibility_off),
                   ),
-
                   filled: true,
-
                   fillColor: const Color.fromRGBO(233, 236, 239, 1.0),
                   hintText:
                       "Password", //Text("Password",style: TextStyle(fontFamily: "Poppins"),),
@@ -315,7 +313,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
               focusNode: focusNode4,
               validator: (value) {
                 if (value!.isEmpty) {
-                  return 'Please enter a value.';
+                  return 'Please enter a Mobile Number.';
                 }
                 if (value.length != 10) {
                   return 'Mobile number should contain 10 digits';

@@ -15,6 +15,7 @@ import 'package:stefomobileapp/pages/RegistrationPage.dart';
 import 'package:stefomobileapp/pages/RequestPage.dart';
 import 'package:stefomobileapp/pages/ChallanListPage.dart';
 import 'package:stefomobileapp/pages/PlaceOrderPage.dart';
+import 'package:stefomobileapp/pages/UserProfilePage.dart';
 
 import 'pages/LRPage.dart';
 import 'UI/common.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         //'/gnchallan': (BuildContext context) => GenerateChallanPage(),
         //'/order': (BuildContext context) => OrderDetails(),
         // '/challan': (BuildContext context) => GeneratedChallan(),
+        '/profile':(BuildContext context) => UserProfilePage(),
       },
     );
   }

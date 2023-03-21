@@ -5,9 +5,6 @@ import '../Models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:stefomobileapp/pages/HomePage.dart';
-import 'package:stefomobileapp/pages/RegistrationPage.dart';
-import 'package:stefomobileapp/validator/validations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../UI/common.dart';
@@ -93,8 +90,11 @@ class _loginPageState extends State<LoginContent> {
       prefs.setString('mobileNumber', responseData["mobileNumber"]);
       prefs.setString('parentId', responseData["parentId"]);
       prefs.setString('userType', responseData["userType"]);
-
-      Navigator.of(context).pushNamed("/home");
+      if(responseData['userStatus'] == 'Approved'){
+        Navigator.of(context).pushNamed("/home");
+      }else{
+        Navigator.of(context).pushNamed('/profile');
+      }
       Fluttertoast.showToast(
           msg: 'Logged In Successfully',
           toastLength: Toast.LENGTH_SHORT,
