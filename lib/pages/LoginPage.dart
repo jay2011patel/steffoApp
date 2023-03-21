@@ -5,9 +5,6 @@ import '../Models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:stefomobileapp/pages/HomePage.dart';
-import 'package:stefomobileapp/pages/RegistrationPage.dart';
-import 'package:stefomobileapp/validator/validations.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
 import '../UI/common.dart';
