@@ -92,6 +92,7 @@ class _loginPageState extends State<LoginContent> {
       prefs.setString('email', responseData["email"]);
       prefs.setString('mobileNumber', responseData["mobileNumber"]);
       prefs.setString('parentId', responseData["parentId"]);
+      prefs.setString('userType', responseData["userType"]);
 
       Navigator.of(context).pushNamed("/home");
       Fluttertoast.showToast(

@@ -30,26 +30,40 @@ class HomeContent extends StatefulWidget {
 class _HomePageState extends State<HomeContent> {
   var _selected = 0;
   String? _id;
+  var fabLoc;
 
   _HomePageState(int val) {
     _selected = val;
   }
+  var user_type;
+  void loadusertype() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    user_type = await prefs.getString('userType');
+  }
 
   @override
   Widget build(BuildContext context) {
+    loadusertype();
     return Scaffold(
-        appBar: appbar("Home",(){
+        appBar: appbar("Home", () {
           print("Back Pressed");
           Navigator.pop(context);
         }),
         body: HomePageBody(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {
-            Navigator.of(context).pushNamed('/placeorder');
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.red,
-        ),
+        floatingActionButton: LayoutBuilder(builder: (context, constraints) {
+          if (user_type != "Manufacturer") {
+            //fabLoc = FloatingActionButtonLocation.centerDocked;
+            return FloatingActionButton(
+              onPressed: () {
+                Navigator.of(context).pushNamed('/placeorder');
+              },
+              child: Icon(Icons.add),
+              backgroundColor: Colors.red,
+            );
+          } else {
+            return Container();
+          }
+        }),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(
@@ -93,7 +107,7 @@ class _HomePageState extends State<HomeContent> {
                 selectedIcon:
                     const Icon(Icons.person_pin, color: Colors.blueAccent)),
           ],
-          fabLocation: StylishBarFabLocation.center,
+          //fabLocation: StylishBarFabLocation.center,
           hasNotch: false,
           currentIndex: _selected,
           onTap: (index) {
@@ -136,7 +150,9 @@ class _HomePageState extends State<HomeContent> {
         req.reciever_id = responseData["data"][i]["supplier_id"];
         req.user_id = responseData["data"][i]["user_id"];
         req.user_mob_num = responseData["data"][i]["mobileNumber"];
-        req.user_name = responseData["data"][i]["firstName"]+" " +responseData["data"][i]["lastName"];
+        req.user_name = responseData["data"][i]["firstName"] +
+            " " +
+            responseData["data"][i]["lastName"];
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];
@@ -179,28 +195,62 @@ class _HomePageState extends State<HomeContent> {
                         "Orders",
                         style: TextStyle(fontFamily: "Poppins_Bold"),
                       )),
-                      Container(
-                        height: 220,
-                        child: SingleChildScrollView(
-                          child: ListView.builder(
-                            itemCount: orderList.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            scrollDirection: Axis.vertical,
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                  onTap: () {
-                                    Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) => OrderDetails(
-                                                order: orderList[index])));
-                                  },
-                                  child: orderCard(context, orderList[index]));
-                            },
-                          ),
-                        ),
-                      ),
+                      LayoutBuilder(builder: (context, constraints) {
+                        if (user_type == "Dealer") {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.7,
+                            child: SingleChildScrollView(
+                              child: ListView.builder(
+                                itemCount:
+                                    orderList.length > 3 ? 3 : orderList.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OrderDetails(
+                                                        order:
+                                                            orderList[index])));
+                                      },
+                                      child:
+                                          orderCard(context, orderList[index]));
+                                },
+                              ),
+                            ),
+                          );
+                        } else {
+                          return Container(
+                            height: MediaQuery.of(context).size.height * 0.3,
+                            child: SingleChildScrollView(
+                              child: ListView.builder(
+                                itemCount: orderList.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                      onTap: () {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    OrderDetails(
+                                                        order:
+                                                            orderList[index])));
+                                      },
+                                      child:
+                                          orderCard(context, orderList[index]));
+                                },
+                              ),
+                            ),
+                          );
+                        }
+                      }),
                       Align(
                         alignment: Alignment.centerRight,
                         child: Container(
@@ -219,72 +269,75 @@ class _HomePageState extends State<HomeContent> {
                       )
                     ],
                   )),
-              Container(
-                  //height: MediaQuery.of(context).size.height*0.36,
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(255, 255, 255, 0.5),
-                      borderRadius: BorderRadius.circular(8)),
-                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
-                  child: Column(
-                    children: [
-                      const Center(
-                          child: Text(
-                        "Request",
-                        style: TextStyle(fontFamily: "Poppins_Bold"),
-                      )),
-                      Container(
-                        height: 240,
-                        child: SingleChildScrollView(
-                          child: Container(
-                            child: ListView.builder(
-                              itemCount: requestList.length,
-                              physics: const NeverScrollableScrollPhysics(),
-                              scrollDirection: Axis.vertical,
-                              shrinkWrap: true,
-                              itemBuilder: (context, index) {
-                                return InkWell(
-                                    onTap: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  OrderDetails(
-                                                      order:
-                                                          requestList[index]
-                                                  )
-                                          )
-                                      );
-                                    },
-                                    child: orderRequestCard(
-                                        context, requestList[index], () {
-                                      // orderList.add(requestList[index]);
-                                      // requestList.removeAt(index);
-                                      id = "none";
-                                      loadData();
-                                      setState(() {});
-                                    }));
-                              },
+              LayoutBuilder(builder: (context, constraints) {
+                if (user_type != "Dealer") {
+                  return Container(
+                      //height: MediaQuery.of(context).size.height*0.36,
+                      decoration: BoxDecoration(
+                          color: const Color.fromRGBO(255, 255, 255, 0.5),
+                          borderRadius: BorderRadius.circular(8)),
+                      margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
+                      child: Column(
+                        children: [
+                          const Center(
+                              child: Text(
+                            "Request",
+                            style: TextStyle(fontFamily: "Poppins_Bold"),
+                          )),
+                          Container(
+                            height: 240,
+                            child: SingleChildScrollView(
+                              child: Container(
+                                child: ListView.builder(
+                                  itemCount: requestList.length,
+                                  physics: const NeverScrollableScrollPhysics(),
+                                  scrollDirection: Axis.vertical,
+                                  shrinkWrap: true,
+                                  itemBuilder: (context, index) {
+                                    return InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                              context,
+                                              MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      OrderDetails(
+                                                          order: requestList[
+                                                              index])));
+                                        },
+                                        child: orderRequestCard(
+                                            context, requestList[index], () {
+                                          // orderList.add(requestList[index]);
+                                          // requestList.removeAt(index);
+                                          id = "none";
+                                          loadData();
+                                          setState(() {});
+                                        }));
+                                  },
+                                ),
+                              ),
                             ),
                           ),
-                        ),
-                      ),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          margin: EdgeInsets.symmetric(horizontal: 20),
-                          width: MediaQuery.of(context).size.width / 4,
-                          child: TextButton(
-                            child: Align(
-                                alignment: Alignment.center,
-                                child: Text("View All")),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/orderreq');
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  )),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Container(
+                              margin: EdgeInsets.symmetric(horizontal: 20),
+                              width: MediaQuery.of(context).size.width / 4,
+                              child: TextButton(
+                                child: Align(
+                                    alignment: Alignment.center,
+                                    child: Text("View All")),
+                                onPressed: () {
+                                  Navigator.of(context).pushNamed('/orderreq');
+                                },
+                              ),
+                            ),
+                          )
+                        ],
+                      ));
+                } else {
+                  return Container();
+                }
+              }),
             ],
           ),
         ));

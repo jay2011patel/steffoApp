@@ -45,11 +45,7 @@ dependencies:
   http: ^0.13.5
   shared_preferences: ^2.0.18
   fluttertoast: ^8.2.1
-  sizer: ^2.0.15
-  google_fonts: ^3.0.1
-  editable_image: ^2.0.0
-
-
+  page_transition: ^2.0.9
 
 
 

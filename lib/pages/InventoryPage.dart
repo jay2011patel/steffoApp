@@ -17,7 +17,7 @@ class InventoryPage extends StatelessWidget{
 }
 
 class InventoryContent extends StatefulWidget{
-  const InventoryContent({super.key});
+  InventoryContent({super.key});
   final selected = 0;
   @override
   State<InventoryContent> createState()=> _InventoryPageState();
@@ -34,20 +34,11 @@ class _InventoryPageState extends State<InventoryContent>{
         appBar: appbar("Inventory",(){
           Navigator.pop(context);
         }),
-        body: HomePageBody(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-
-              Navigator.of(context).popAndPushNamed('/challanlist');
-            
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.red,
-        ),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+        body: InventoryPageBody(),
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(
             iconSize: 30,
+            barAnimation: BarAnimation.fade,
             //barAnimation: BarAnimation.liquid,
             iconStyle: IconStyle.simple,
             opacity: 0.3,
@@ -69,7 +60,6 @@ class _InventoryPageState extends State<InventoryContent>{
             BottomBarItem(
                 icon: const Icon(Icons.warehouse_rounded,),
                 title: const Text('Safety'),
-                backgroundColor: Colors.orange,
                 selectedIcon: const Icon(Icons.warehouse_rounded,color:Colors.blueAccent)
             ),
             BottomBarItem(
@@ -79,18 +69,19 @@ class _InventoryPageState extends State<InventoryContent>{
                 selectedIcon: const Icon(Icons.person_pin,color:Colors.blueAccent)
             ),
           ],
-          fabLocation: StylishBarFabLocation.center,
+          //fabLocation: StylishBarFabLocation.center,
           hasNotch: false,
           currentIndex: _selected,
           onTap: (index) {
             setState(() {
 
               if(index==0){
-                Navigator.of(context).popAndPushNamed('/home');
+                Navigator.of(context).pushReplacementNamed('/home');
               }
 
               if(index==2){
-                Navigator.of(context).popAndPushNamed('/dealer');              }
+                Navigator.of(context).pushReplacementNamed('/dealer');
+              }
 
             });
           },
@@ -99,10 +90,8 @@ class _InventoryPageState extends State<InventoryContent>{
     throw UnimplementedError();
   }
 
-  Widget HomePageBody(){
-    return Container(
-
-    );
+  Widget InventoryPageBody(){
+    return Scaffold();
   }
 
 }
