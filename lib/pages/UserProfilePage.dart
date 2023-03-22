@@ -71,8 +71,21 @@ class _ProfileFormState extends State<ProfileForm> {
 
   bool _isPWVisible = true;
 
+  String? userType,firstName,lastName;
+
+  loadData() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+     userType = await prefs.getString('userType');
+     firstName = await prefs.getString('firstName');
+     lastName = await prefs.getString('lastName');
+    setState(() {
+
+    });
+
+  }
   @override
   void initState() {
+    loadData();
     super.initState();
     focusNode1 = FocusNode();
     focusNode2 = FocusNode();
@@ -178,6 +191,8 @@ class _ProfileFormState extends State<ProfileForm> {
   TextEditingController panNumber = TextEditingController();
   TextEditingController adhNumber = TextEditingController();
   TextEditingController address = TextEditingController();
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -300,14 +315,14 @@ class _ProfileFormState extends State<ProfileForm> {
                     // mainAxisAlignment: MainAxisAlignment.start,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text("User Type",
+                      Text(userType!,
                           style: TextStyle(
                             fontFamily: "Poppins_Bold",
                             fontSize: 15,
                             color: Color.fromRGBO(19, 59, 78, 1),
                           )),
                       Text(
-                        "User Name",
+                        firstName! +" "+ lastName!,
                         style: TextStyle(
                           fontFamily: "Poppins_Bold",
                           fontSize: 25,
