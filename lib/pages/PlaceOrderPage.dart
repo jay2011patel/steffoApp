@@ -437,34 +437,73 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                 ),
               ),
 
+              LayoutBuilder(builder: (context, constraints) {
+                if (user_type == "Distributor" || user_type == "Dealer") {
+                  return Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: DropdownButtonFormField(
+                        decoration: const InputDecoration(
+                            hintText: "Select Order Type",
+                            filled: true,
+                            fillColor: Color.fromRGBO(
+                                233, 236, 239, 0.792156862745098),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              // borderRadius: BorderRadius.circular(20)
+                            )),
+                        value: selectedOrderType,
+                        items: getOrderType(),
+                        onChanged: (String? newValue) {
+                          selectedOrderType = newValue;
+                        },
+                        // key: field5Key,
+                        // focusNode: focusNode5,
+                        validator: (selectedValue) {
+                          if (selectedValue == null) {
+                            return 'Please select a value.';
+                          }
+                          return null;
+                        },
+                      ));
+                } else {
+                  return Container();
+                }
+              }),
+
               //--------------------------Loading Type--------------------------
 
-              Container(
-                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                  child: DropdownButtonFormField(
-                    decoration: const InputDecoration(
-                        hintText: "Select Loading Type",
-                        filled: true,
-                        fillColor:
-                            Color.fromRGBO(233, 236, 239, 0.792156862745098),
-                        border: OutlineInputBorder(
-                          borderSide: BorderSide.none,
-                          // borderRadius: BorderRadius.circular(20)
-                        )),
-                    value: selectedType,
-                    items: getType(),
-                    onChanged: (String? newValue) {
-                      selectedType = newValue;
-                    },
-                    key: field5Key,
-                    focusNode: focusNode5,
-                    validator: (selectedValue) {
-                      if (selectedValue == null) {
-                        // return 'Please select a value.';
-                      }
-                      return null;
-                    },
-                  )),
+              LayoutBuilder(builder: (context, constraints) {
+                if (selectedOrderType != "Lump-sum") {
+                  return Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: DropdownButtonFormField(
+                        decoration: const InputDecoration(
+                            hintText: "Select Loading Type",
+                            filled: true,
+                            fillColor: Color.fromRGBO(
+                                233, 236, 239, 0.792156862745098),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              // borderRadius: BorderRadius.circular(20)
+                            )),
+                        value: selectedType,
+                        items: getType(),
+                        onChanged: (String? newValue) {
+                          selectedType = newValue;
+                        },
+                        key: field5Key,
+                        focusNode: focusNode5,
+                        validator: (selectedValue) {
+                          if (selectedValue == null) {
+                            // return 'Please select a value.';
+                          }
+                          return null;
+                        },
+                      ));
+                } else {
+                  return Container();
+                }
+              }),
 
               // Container(
               //   padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
@@ -497,62 +536,32 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
 
               LayoutBuilder(builder: (context, constraints) {
                 if (user_type == "Distributor") {
-                  return Column(
-                    children: [
-                      Container(
-                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          child: DropdownButtonFormField(
-                            decoration: const InputDecoration(
-                                hintText: "Select Transportation Type",
-                                filled: true,
-                                fillColor: Color.fromRGBO(
-                                    233, 236, 239, 0.792156862745098),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  // borderRadius: BorderRadius.circular(20)
-                                )),
-                            value: selectedTransType,
-                            items: getTransType(),
-                            onChanged: (String? newValue) {
-                              selectedTransType = newValue;
-                            },
-                            // key: field5Key,
-                            // focusNode: focusNode5,
-                            validator: (selectedValue) {
-                              if (selectedValue == null) {
-                                return 'Please select a value.';
-                              }
-                              return null;
-                            },
-                          )),
-                      Container(
-                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                          child: DropdownButtonFormField(
-                            decoration: const InputDecoration(
-                                hintText: "Select Order Type",
-                                filled: true,
-                                fillColor: Color.fromRGBO(
-                                    233, 236, 239, 0.792156862745098),
-                                border: OutlineInputBorder(
-                                  borderSide: BorderSide.none,
-                                  // borderRadius: BorderRadius.circular(20)
-                                )),
-                            value: selectedOrderType,
-                            items: getOrderType(),
-                            onChanged: (String? newValue) {
-                              selectedOrderType = newValue;
-                            },
-                            // key: field5Key,
-                            // focusNode: focusNode5,
-                            validator: (selectedValue) {
-                              if (selectedValue == null) {
-                                return 'Please select a value.';
-                              }
-                              return null;
-                            },
-                          )),
-                    ],
-                  );
+                  return Container(
+                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      child: DropdownButtonFormField(
+                        decoration: const InputDecoration(
+                            hintText: "Select Transportation Type",
+                            filled: true,
+                            fillColor: Color.fromRGBO(
+                                233, 236, 239, 0.792156862745098),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide.none,
+                              // borderRadius: BorderRadius.circular(20)
+                            )),
+                        value: selectedTransType,
+                        items: getTransType(),
+                        onChanged: (String? newValue) {
+                          selectedTransType = newValue;
+                        },
+                        // key: field5Key,
+                        // focusNode: focusNode5,
+                        validator: (selectedValue) {
+                          if (selectedValue == null) {
+                            return 'Please select a value.';
+                          }
+                          return null;
+                        },
+                      ));
                 } else {
                   return Container();
                 }
@@ -649,6 +658,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         )),
                     LayoutBuilder(builder: (context, constraints) {
                       if (selectedOrderType == "With Size") {
+                        if (selectedSize == " ") {
+                          selectedSize = null;
+                        }
                         return Container(
                             padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                             child: DropdownButtonFormField(
