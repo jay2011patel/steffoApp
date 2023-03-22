@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/validator/validations.dart';
 import '../UI/common.dart';
 import 'package:form_field_validator/form_field_validator.dart';
@@ -19,11 +20,6 @@ class UserProfilePage extends StatelessWidget {
           print("Back Pressed");
           Navigator.pop(context);
         }),
-        // appBar: AppBar(
-        //
-        //   backgroundColor: Colors.white.withOpacity(0.50),
-        //   title: Text("Profile",style: TextStyle(color: Color.fromRGBO(19, 59, 78, 1.0)),textAlign: TextAlign.center),
-        // ),
         body: Container(
           height: MediaQuery.of(context).size.height,
           color: Colors.white,
@@ -166,28 +162,17 @@ class _ProfileFormState extends State<ProfileForm> {
   }
 
   onRegister() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+    var id = await prefs.getString('id');
     print(selectedValue);
     var test = await http.post(
-      Uri.parse('http://urbanwebmobile.in/steffo/register.php'),
-      // headers: <String, String>{
-      //   'Content-Type': 'application/json; charset=UTF-8',
-      // },
+      Uri.parse('http://urbanwebmobile.in/steffo/updateuser.php'),
       body: {
-        "firstName": first_name.text,
-        "lastName": last_name.text,
-        "email": email.text,
-        "password": password.text,
-        "mobileNumber": mob_num.text,
-        "userType": selectedValue!,
+        id: id,
+
+
       },
     );
-    // Fluttertoast.showToast(
-    //     msg: 'Registered Successfully',
-    //     toastLength: Toast.LENGTH_SHORT,
-    //     gravity: ToastGravity.BOTTOM,
-    //     timeInSecForIosWeb: 1,
-    //     backgroundColor: Colors.blueAccent,
-    //     textColor: Colors.white);
     validateLoginDetails(AutofillHints.email, AutofillHints.password);
     Navigator.of(context).pushNamed("/login");
   }
@@ -216,7 +201,6 @@ class _ProfileFormState extends State<ProfileForm> {
               width: MediaQuery.of(context).size.width,
               child: buttonStyle("Submit", () {
                 if (_formKey.currentState!.validate()) {
-                  onRegister();
                 }
             })),
       ]),
@@ -768,34 +752,6 @@ class _ProfileFormState extends State<ProfileForm> {
                 ),
               ),
             ),
-
-            //----------------------------UserType------------------------------
-
-            // Container(
-            //     padding: const EdgeInsets.fromLTRB(5, 10, 5, 0),
-            //     child: DropdownButtonFormField(
-            //       key: field5Key,
-            //       focusNode: focusNode5,
-            //       decoration: const InputDecoration(
-            //           hintText: "User Type",
-            //           filled: true,
-            //           fillColor: Color.fromRGBO(233, 236, 239, 0.792156862745098),
-            //           border: OutlineInputBorder(
-            //             borderSide: BorderSide.none,
-            //             // borderRadius: BorderRadius.circular(20)
-            //           )),
-            //       value: selectedValue,
-            //       items: getItems(),
-            //       onChanged: (String? newValue) {
-            //         selectedValue = newValue;
-            //       },
-            //       validator: (selectedValue) {
-            //         if (selectedValue == null) {
-            //           return 'Please select a value.';
-            //         }
-            //         return null;
-            //       },
-            //     )),
           ],
         ),
       ),
