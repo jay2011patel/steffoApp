@@ -24,19 +24,10 @@ class UserProfilePage extends StatelessWidget {
         //   backgroundColor: Colors.white.withOpacity(0.50),
         //   title: Text("Profile",style: TextStyle(color: Color.fromRGBO(19, 59, 78, 1.0)),textAlign: TextAlign.center),
         // ),
-        body: SingleChildScrollView(
-          child: Container(
-            height: MediaQuery.of(context).size.height,
-            color: Colors.white,
-            child: Center(
-              child: Column(
-                children: [
-                  // Image.asset("assets/images/stefo_logo.png"),
-                  Center(child: SingleChildScrollView(child: ProfileForm())),
-                ],
-              ),
-            ),
-          ),
+        body: Container(
+          height: MediaQuery.of(context).size.height,
+          color: Colors.white,
+          child: SingleChildScrollView(child: ProfileForm()),
         )
     );
     throw UnimplementedError();
