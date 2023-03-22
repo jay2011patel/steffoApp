@@ -161,17 +161,27 @@ class _ProfileFormState extends State<ProfileForm> {
     var test = await http.post(
       Uri.parse('http://urbanwebmobile.in/steffo/updateuser.php'),
       body: {
-        id: id,
-
-
+        "id": id,
+        "orgName": orgName.text,
+        "gstNumber": gstNumber.text,
+        "panNumber": panNumber.text,
+        "adhNumber": adhNumber.text,
+        "address": address.text,
       },
     );
     validateLoginDetails(AutofillHints.email, AutofillHints.password);
-    Navigator.of(context).pushNamed("/home");
+    Navigator.of(context).pushNamed("/login");
   }
+
+  TextEditingController orgName = TextEditingController();
+  TextEditingController gstNumber = TextEditingController();
+  TextEditingController panNumber = TextEditingController();
+  TextEditingController adhNumber = TextEditingController();
+  TextEditingController address = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+
     return Center(
         child: Card(
           elevation: 20,
@@ -194,6 +204,7 @@ class _ProfileFormState extends State<ProfileForm> {
               width: MediaQuery.of(context).size.width,
               child: buttonStyle("Submit", () {
                 if (_formKey.currentState!.validate()) {
+                  onRegister();
                 }
             })),
       ]),
@@ -202,19 +213,6 @@ class _ProfileFormState extends State<ProfileForm> {
   }
 
   Widget FormDetails() {
-    // List<DropdownMenuItem<String>> dropdownItems = [];
-    // List items = ["Distributor", "Dealer"];
-    // List<DropdownMenuItem<String>> getItems() {
-    //   for (int i = 0; i < items.length; i++) {
-    //     DropdownMenuItem<String> it = DropdownMenuItem(
-    //       value: items[i],
-    //       child: Text(items[i]),
-    //     );
-    //     dropdownItems.add(it);
-    //   }
-    //
-    //   return dropdownItems;
-    // }
 
     return SingleChildScrollView(
       child: Form(
@@ -222,187 +220,6 @@ class _ProfileFormState extends State<ProfileForm> {
         autovalidateMode: AutovalidateMode.disabled,
         child: Column(
           children: [
-            // //--------------------------First Name---------------------------------
-            // Container(
-            //   width: width,
-            //   padding: const EdgeInsets.fromLTRB(5, 0, 5, 5),
-            //   child: TextFormField(
-            //     controller: first_name,
-            //     textAlign: TextAlign.left,
-            //     key: field1Key,
-            //     focusNode: focusNode1,
-            //     validator: (value) {
-            //       if (value!.isEmpty || value == null) {
-            //         return 'Please enter a First Name.';
-            //       }
-            //       return null;
-            //     },
-            //     decoration: const InputDecoration(
-            //       // prefixIcon: Icon(Icons.person),
-            //       filled: true,
-            //       fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-            //       labelText: "First Name",
-            //       floatingLabelBehavior: FloatingLabelBehavior.never,
-            //       // label: Text("First Name",style: TextStyle(fontFamily: "Poppins"),),
-            //       border: OutlineInputBorder(
-            //         borderSide: BorderSide.none,
-            //         //borderRadius: BorderRadius.circular(20.0)
-            //       ),
-            //     ),
-            //   ),
-            // ),
-            //
-            // //-----------------------LASTNAME-------------------------------
-            //
-            // Container(
-            //   //margin: EdgeInsets.fromLTRB(20, 20,20,0),
-            //
-            //   width: width,
-            //   padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-            //   child: TextFormField(
-            //       key: field2Key,
-            //       focusNode: focusNode2,
-            //       validator: (value) {
-            //         if (value!.isEmpty) {
-            //           return 'Please enter a Last Name.';
-            //         }
-            //         return null;
-            //       },
-            //       controller: last_name,
-            //       textAlign: TextAlign.left,
-            //       decoration: const InputDecoration(
-            //         // prefixIcon: Icon(Icons.person),
-            //         filled: true,
-            //         fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-            //         labelText: "Last Name",
-            //         floatingLabelBehavior: FloatingLabelBehavior.never,
-            //         // label: const Text("Last Name",style: TextStyle(fontFamily: "Poppins"),),
-            //         border: OutlineInputBorder(
-            //           borderSide: BorderSide.none,
-            //           // borderRadius: BorderRadius.circular(20.0)
-            //         ),
-            //       )
-            //   ),
-            // ),
-            //
-            // //-------------------------Email------------------------------------
-            //
-            // Container(
-            //   //margin: EdgeInsets.fromLTRB(20, 20,20,0),
-            //   width: width,
-            //   padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-            //   child: TextFormField(
-            //     key: field3Key,
-            //     focusNode: focusNode3,
-            //     autovalidateMode: AutovalidateMode.always,
-            //     controller: email,
-            //     textAlign: TextAlign.left,
-            //     decoration: const InputDecoration(
-            //       // prefixIcon: Icon(Icons.mail),
-            //       filled: true,
-            //       fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-            //       labelText: "Email",
-            //       floatingLabelBehavior: FloatingLabelBehavior.never,
-            //       // label: Text("Email",style: TextStyle(fontFamily: "Poppins"),),
-            //       border: OutlineInputBorder(
-            //         borderSide: BorderSide.none,
-            //         // borderRadius: BorderRadius.circular(20.0)
-            //       ),
-            //     ),
-            //     validator: EmailValidator(errorText: "Not Valid"),
-            //   ),
-            // ),
-            // //--------------------------------Password------------------------------
-            //
-            // Container(
-            //   //margin: EdgeInsets.fromLTRB(20, 20,20,0),
-            //
-            //   width: width,
-            //   padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-            //   child: TextFormField(
-            //       key: field4Key,
-            //       focusNode: focusNode4,
-            //       validator: (value) {
-            //         if (value!.isEmpty) {
-            //           return 'Please enter a Password.';
-            //         }
-            //         if (value.length < 8) {
-            //           return 'Minimum length for password is 8';
-            //         }
-            //         return null;
-            //       },
-            //       obscureText: _isPWVisible,
-            //       controller: password,
-            //       textAlign: TextAlign.left,
-            //       decoration: InputDecoration(
-            //         // prefixIcon: const Icon(Icons.lock_outline_rounded),
-            //         suffixIcon: IconButton(
-            //           onPressed: () {
-            //             setState(() {
-            //               _isPWVisible = !_isPWVisible;
-            //             });
-            //           },
-            //           icon: Icon(
-            //               _isPWVisible ? Icons.visibility : Icons.visibility_off),
-            //         ),
-            //         filled: true,
-            //         fillColor: const Color.fromRGBO(233, 236, 239, 1.0),
-            //         hintText:
-            //         "Password", //Text("Password",style: TextStyle(fontFamily: "Poppins"),),
-            //         border: const OutlineInputBorder(
-            //           borderSide: BorderSide.none, //<-- SEE HERE
-            //           //borderRadius: BorderRadius.circular(20.0)
-            //         ),
-            //       )),
-            // ),
-            //
-            // //--------------------------------MobNum----------------------------
-            //
-            // Container(
-            //   width: width,
-            //   padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
-            //   child: TextFormField(
-            //     key: field5Key,
-            //     focusNode: focusNode5,
-            //     validator: (value) {
-            //       if (value!.isEmpty) {
-            //         return 'Please enter a Mobile Number.';
-            //       }
-            //       if (value.length != 10) {
-            //         return 'Mobile number should contain 10 digits';
-            //       }
-            //       return null;
-            //     },
-            //     keyboardType: TextInputType.number,
-            //     maxLength: 10,
-            //     inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-            //     controller: mob_num,
-            //     textAlign: TextAlign.left,
-            //     decoration: const InputDecoration(
-            //       counterText: "",
-            //       // prefixIcon: Icon(Icons.phone),
-            //       labelText: "Mobile Number",
-            //       filled: true,
-            //       fillColor: Color.fromRGBO(233, 236, 239, 1.0),
-            //       floatingLabelBehavior: FloatingLabelBehavior.never,
-            //       border: OutlineInputBorder(
-            //         borderSide: BorderSide.none,
-            //       ),
-            //     ),
-            //   ),
-            // ),
-
-            //----------------------------GST Number------------------------------
-            // Row(
-            //   children: [
-            //     TextFormField(
-            //       decoration: InputDecoration(
-            //         hintText: "Contact Number",
-            //       ),
-            //     )
-            //   ],
-            // ),
-
 //             Column(
 //               children: [
 //                 Padding(padding: EdgeInsets.all(10.0)),
@@ -582,6 +399,7 @@ class _ProfileFormState extends State<ProfileForm> {
               width: width,
               padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
               child: TextFormField(
+                controller: orgName,
                 key: field3Key,
                 focusNode: focusNode3,
                 maxLength: 15,
@@ -591,7 +409,6 @@ class _ProfileFormState extends State<ProfileForm> {
                   }
                   return null;
                 },
-                // controller: mob_num,
                 // textAlign: TextAlign.left,
                 decoration: const InputDecoration(
                   counterText: "",
@@ -614,6 +431,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 key: field7Key,
                 focusNode: focusNode7,
                 maxLength: 15,
+                controller: gstNumber,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a GST Number.';
@@ -650,6 +468,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 key: field8Key,
                 focusNode: focusNode8,
                 maxLength: 10,
+                controller: panNumber,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a PAN Number.';
@@ -684,6 +503,7 @@ class _ProfileFormState extends State<ProfileForm> {
               padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
               child: TextFormField(
                 key: field9Key,
+                controller: adhNumber,
                 focusNode: focusNode9,
                 maxLength: 12,
                 validator: (value) {
@@ -721,6 +541,7 @@ class _ProfileFormState extends State<ProfileForm> {
               child: TextFormField(
                 style: TextStyle(fontFamily: "Poppins"),
                 key: field6Key,
+                controller: address,
                 focusNode: focusNode6,
                 validator: (value) {
                   if (value!.isEmpty) {

@@ -90,18 +90,30 @@ class _loginPageState extends State<LoginContent> {
       prefs.setString('mobileNumber', responseData["mobileNumber"]);
       prefs.setString('parentId', responseData["parentId"]);
       prefs.setString('userType', responseData["userType"]);
+      prefs.setString('userStatus', responseData["userStatus"]);
       if(responseData['userStatus'] == 'Approved'){
         Navigator.of(context).pushNamed("/home");
-      }else{
+        Fluttertoast.showToast(
+            msg: 'Logged In Successfully',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blueAccent,
+            textColor: Colors.white);
+      }else if(responseData['userStatus'] == 'Pending'){
         Navigator.of(context).pushNamed('/profile');
+        Fluttertoast.showToast(
+            msg: 'Logged In Successfully',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blueAccent,
+            textColor: Colors.white);
       }
-      Fluttertoast.showToast(
-          msg: 'Logged In Successfully',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blueAccent,
-          textColor: Colors.white);
+      else{
+          
+      }
+
     } else {
       userValid = false;
       setState(() {});
