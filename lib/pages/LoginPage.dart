@@ -90,18 +90,46 @@ class _loginPageState extends State<LoginContent> {
       prefs.setString('mobileNumber', responseData["mobileNumber"]);
       prefs.setString('parentId', responseData["parentId"]);
       prefs.setString('userType', responseData["userType"]);
+      prefs.setString('userStatus', responseData["userStatus"]);
       if(responseData['userStatus'] == 'Approved'){
         Navigator.of(context).pushNamed("/home");
-      }else{
+        Fluttertoast.showToast(
+            msg: 'Logged In Successfully',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blueAccent,
+            textColor: Colors.white);
+      }else if(responseData['userStatus'] == 'Pending'){
+        Navigator.of(context).pushNamed('/profile');
+        Fluttertoast.showToast(
+            msg: 'Logged In Successfully',
+            toastLength: Toast.LENGTH_SHORT,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blueAccent,
+            textColor: Colors.white);
+      }
+      else if(responseData['userStatus'] == 'Registered'){
+        Fluttertoast.showToast(
+            msg: 'Your Request Is In Review',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blueAccent,
+            textColor: Colors.white);
+      }
+      else{
+        Fluttertoast.showToast(
+            msg: 'Your Request Has Been Rejected.\n Please Register Again',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white);
         Navigator.of(context).pushNamed('/profile');
       }
-      Fluttertoast.showToast(
-          msg: 'Logged In Successfully',
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.BOTTOM,
-          timeInSecForIosWeb: 1,
-          backgroundColor: Colors.blueAccent,
-          textColor: Colors.white);
+
     } else {
       userValid = false;
       setState(() {});
