@@ -23,14 +23,7 @@ class UserProfilePage extends StatelessWidget {
         body: Container(
           height: MediaQuery.of(context).size.height,
           color: Colors.white,
-          child: Center(
-            child: Column(
-              children: [
-                // Image.asset("assets/images/stefo_logo.png"),
-                Center(child: SingleChildScrollView(child: ProfileForm())),
-              ],
-            ),
-          ),
+          child: SingleChildScrollView(child: ProfileForm()),
         )
     );
     throw UnimplementedError();
@@ -174,7 +167,7 @@ class _ProfileFormState extends State<ProfileForm> {
       },
     );
     validateLoginDetails(AutofillHints.email, AutofillHints.password);
-    Navigator.of(context).pushNamed("/login");
+    Navigator.of(context).pushNamed("/home");
   }
 
   @override
