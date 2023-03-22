@@ -110,8 +110,24 @@ class _loginPageState extends State<LoginContent> {
             backgroundColor: Colors.blueAccent,
             textColor: Colors.white);
       }
+      else if(responseData['userStatus'] == 'Registered'){
+        Fluttertoast.showToast(
+            msg: 'Your Request Is In Review',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.blueAccent,
+            textColor: Colors.white);
+      }
       else{
-          
+        Fluttertoast.showToast(
+            msg: 'Your Request Has Been Rejected.\n Please Register Again',
+            toastLength: Toast.LENGTH_LONG,
+            gravity: ToastGravity.BOTTOM,
+            timeInSecForIosWeb: 1,
+            backgroundColor: Colors.redAccent,
+            textColor: Colors.white);
+        Navigator.of(context).pushNamed('/profile');
       }
 
     } else {
