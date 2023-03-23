@@ -16,6 +16,7 @@ import 'package:stefomobileapp/pages/RequestPage.dart';
 import 'package:stefomobileapp/pages/ChallanListPage.dart';
 import 'package:stefomobileapp/pages/PlaceOrderPage.dart';
 import 'package:stefomobileapp/pages/UserProfilePage.dart';
+import 'package:stefomobileapp/pages/UserRequestPage.dart';
 
 import 'pages/LRPage.dart';
 import 'UI/common.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       title: 'Flutter Demo',
-      home: InventoryContent(),
+      home: UserRequestPage(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lrpage': (BuildContext context) => LRPage(),
@@ -51,7 +52,8 @@ class MyApp extends StatelessWidget {
         //'/gnchallan': (BuildContext context) => GenerateChallanPage(),
         //'/order': (BuildContext context) => OrderDetails(),
         // '/challan': (BuildContext context) => GeneratedChallan(),
-        '/profile': (BuildContext context) => UserProfilePage(),
+        '/profile':(BuildContext context) => UserProfilePage(),
+        '/request':(BuildContext context) => UserRequestPage(),
       },
     );
   }
