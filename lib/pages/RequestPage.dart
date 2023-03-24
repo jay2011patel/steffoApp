@@ -494,8 +494,29 @@ Widget RegistrationRequestCard(context,index,User user){
             Container(child: Text("Entity Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
             Container(
                 //width: MediaQuery.of(context).size.width-200,
-                child: IconButton(onPressed: (){}, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
-            IconButton(onPressed: (){}, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
+                child: IconButton(onPressed: () async{
+                  final res = await http.post(
+                    Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
+                    body: {
+                      "decision":"Approve",
+                      "id": user.id
+                    },
+                  );
+                  var responseData = jsonDecode(res.body);
+                  print(responseData);
+                }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
+            IconButton(onPressed: () async {
+              final res = await http.post(
+                Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
+                body: {
+                  "decision":"Reject",
+                  "id": user.id
+                },
+              );
+              var responseData = jsonDecode(res.body);
+              print(responseData);
+
+            }, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
           ],
         ),
         Container(

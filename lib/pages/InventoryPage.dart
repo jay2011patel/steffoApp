@@ -1,5 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:stefomobileapp/pages/DealerPage.dart';
+import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -79,12 +81,25 @@ class _InventoryPageState extends State<InventoryContent> {
           onTap: (index) {
             setState(() {
               if (index == 0) {
-                Navigator.of(context).pushReplacementNamed('/home');
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => HomePage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
               }
 
               if (index == 2) {
-                Navigator.of(context).pushReplacementNamed('/dealer');
-              }
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => DealerPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );              }
             });
           },
         ));
