@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       title: 'Flutter Demo',
-      home: UserRequestPage(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lrpage': (BuildContext context) => LRPage(),
@@ -53,7 +53,7 @@ class MyApp extends StatelessWidget {
         //'/order': (BuildContext context) => OrderDetails(),
         // '/challan': (BuildContext context) => GeneratedChallan(),
         '/profile':(BuildContext context) => UserProfilePage(),
-        '/request':(BuildContext context) => UserRequestPage(),
+        //'/request':(BuildContext context) => UserRequestPage(User user),
       },
     );
   }
