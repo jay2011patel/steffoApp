@@ -2,6 +2,8 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stefomobileapp/Models/user.dart';
+import 'package:stefomobileapp/pages/UserRequestPage.dart';
 import 'package:stefomobileapp/ui/custom_tabbar.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -100,6 +102,7 @@ class _RequestPageState extends State<RequestContent>{
   //----------------------------------PageBody----------------------------------
 
   String? id ="";
+  String? userType;
 
   List<Order> requestList= [];
 
@@ -107,6 +110,7 @@ class _RequestPageState extends State<RequestContent>{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var m = id;
     id = await prefs.getString('id');
+    userType = await prefs.getString('userType');
 
     if(m!=id){
 
@@ -146,43 +150,79 @@ class _RequestPageState extends State<RequestContent>{
 
   Widget RequestPageBody() {
     loadData();
-    return Container(
-      height: MediaQuery.of(context).size.height,
+    return LayoutBuilder(
+      builder: (context,constraints) {
+        if(userType == "Manufacturer"){
+        return Container(
+          height: MediaQuery.of(context).size.height,
+          decoration: BoxDecoration(
+              // gradient: LinearGradient(
+              //   transform: GradientRotation(1.07),
+              //   colors: [
+              //     Color.fromRGBO(75, 100, 160, 1.0),
+              //     Color.fromRGBO(19, 59, 78, 1.0),
+              //   ]
+              // )
+              ),
+          child: SingleChildScrollView(
+            child: Container(
+              //margin: EdgeInsets.symmetric(horizontal: 5),
+              padding: EdgeInsets.symmetric(vertical: 20),
 
-      decoration: BoxDecoration(
-        // gradient: LinearGradient(
-        //   transform: GradientRotation(1.07),
-        //   colors: [
-        //     Color.fromRGBO(75, 100, 160, 1.0),
-        //     Color.fromRGBO(19, 59, 78, 1.0),
-        //   ]
-        // )
-      ),
-      child: SingleChildScrollView(
-        child: Container(
-          //margin: EdgeInsets.symmetric(horizontal: 5),
-          padding: EdgeInsets.symmetric(vertical: 20),
-
-          width: MediaQuery.of(context).size.width,
-          child: CustomTabBar(
-            selectedCardColor: Color.fromRGBO(12, 53, 68, 1),
-            selectedTitleColor: Colors.white,
-            unSelectedTitleColor: Colors.black,
-            unSelectedCardColor: Colors.white,
+              width: MediaQuery.of(context).size.width,
+              child: CustomTabBar(
+                selectedCardColor: Color.fromRGBO(12, 53, 68, 1),
+                selectedTitleColor: Colors.white,
+                unSelectedTitleColor: Colors.black,
+                unSelectedCardColor: Colors.white,
                 // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
-                tabBarItemExtend: ((MediaQuery.of(context).size.width)/2),
-                tabBarItems: ["Order","Registration\n(WORK IN PROGRESS)"],
+                tabBarItemExtend: ((MediaQuery.of(context).size.width) / 2),
+                tabBarItems: ["Order", "Registration"],
                 tabViewItems: [
-
                   Container(child: OrderList()),
-
                   Container(child: RegistrationList())
-
                 ],
-                tabViewItemHeight: MediaQuery.of(context).size.height*0.7,
+                tabViewItemHeight: MediaQuery.of(context).size.height * 0.7,
+              ),
             ),
-        ),
-      ),
+          ),
+        );
+      }else{
+          return Container(
+            height: MediaQuery.of(context).size.height,
+            decoration: BoxDecoration(
+              // gradient: LinearGradient(
+              //   transform: GradientRotation(1.07),
+              //   colors: [
+              //     Color.fromRGBO(75, 100, 160, 1.0),
+              //     Color.fromRGBO(19, 59, 78, 1.0),
+              //   ]
+              // )
+            ),
+            child: SingleChildScrollView(
+              child: Container(
+                //margin: EdgeInsets.symmetric(horizontal: 5),
+                padding: EdgeInsets.symmetric(vertical: 20),
+
+                width: MediaQuery.of(context).size.width,
+                child: CustomTabBar(
+                  selectedCardColor: Color.fromRGBO(12, 53, 68, 1),
+                  selectedTitleColor: Colors.white,
+                  unSelectedTitleColor: Colors.black,
+                  unSelectedCardColor: Colors.white,
+                  // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+                  tabBarItemExtend: ((MediaQuery.of(context).size.width) ),
+                  tabBarItems: ["Order"],
+                  tabViewItems: [
+                    Container(child: OrderList()),
+                  ],
+                  tabViewItemHeight: MediaQuery.of(context).size.height * 0.7,
+                ),
+              ),
+            ),
+          );
+        }
+    }
     );
 
   }
@@ -239,9 +279,43 @@ class _RequestPageState extends State<RequestContent>{
 
 
 //------------------------------RegistrationList--------------------------------
+  List<User> regReqList = [];
+  var flag =0;
+  getRegReqs() async{
+    if(flag == 0){
+      var test = await http.post(
+        Uri.parse('http://urbanwebmobile.in/steffo/getrequests.php'),
+      );
+      //Navigator.of(context).pushNamed("/home");
 
+      var responseData = json.decode(test.body);
 
+      print(responseData);
+      for (int i = 0; i < responseData["data"].length; i++) {
+        User u = User();
+        u.id = responseData['data'][i]['id'];
+        u.firstName = responseData['data'][i]['firstName'];
+        u.lastName = responseData['data'][i]['lastName'];
+        u.email = responseData['data'][i]['email'];
+        u.mobileNumber = responseData['data'][i]['mobileNumber'];
+        u.parentId = responseData['data'][i]['parentId'];
+        u.userType = responseData['data'][i]['userType'];
+        u.userStatus = responseData['data'][i]['userStatus'];
+        u.orgName = responseData['data'][i]['orgName'];
+        u.gstNumber = responseData['data'][i]['gstNumber'];
+        u.panNumber = responseData['data'][i]['panNumber'];
+        u.adhNumber = responseData['data'][i]['adhNumber'];
+        u.address = responseData['data'][i]['address'];
+        regReqList.add(u);
+      }
+      setState(() {
+
+      });
+      flag = 1;
+    }
+  }
   Widget RegistrationList(){
+    getRegReqs();
     return Card(
       child: Container(
           decoration: BoxDecoration(
@@ -257,12 +331,18 @@ class _RequestPageState extends State<RequestContent>{
                 Card(
                   child: Container(
                     child: ListView.builder(
-                      itemCount: 3,
+                      itemCount: regReqList.length,
                       physics: const NeverScrollableScrollPhysics(),
                       scrollDirection: Axis.vertical,
                       shrinkWrap: true,
                       itemBuilder: (context,index){
-                        return RegistrationRequestCard(context, index);
+                        return InkWell(
+                            onTap: (){
+                              Navigator.of(context).push(
+                                MaterialPageRoute(builder: (context) => UserRequestPage(user: regReqList[index]))
+                              );
+                            },
+                            child: RegistrationRequestCard(context, index,regReqList[index]));
                       },
                     ),
                   ),
@@ -392,7 +472,7 @@ Widget orderRequestCard(context,Order order,c()){
 
 //-------------------------------SingleRegistrationRequest----------------------
 
-Widget RegistrationRequestCard(context,index){
+Widget RegistrationRequestCard(context,index,User user){
 
   String org_name=" Bhuyangdev Steel Corporation";
   var region = ['Ahmedabad','Mehsana','Anand'];
@@ -407,15 +487,36 @@ Widget RegistrationRequestCard(context,index){
     child: Column(
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
-        Text("PlaceHolder"),
+
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Container(child: Text("Entity Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
             Container(
                 //width: MediaQuery.of(context).size.width-200,
-                child: IconButton(onPressed: (){}, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
-            IconButton(onPressed: (){}, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
+                child: IconButton(onPressed: () async{
+                  final res = await http.post(
+                    Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
+                    body: {
+                      "decision":"Approve",
+                      "id": user.id
+                    },
+                  );
+                  var responseData = jsonDecode(res.body);
+                  print(responseData);
+                }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
+            IconButton(onPressed: () async {
+              final res = await http.post(
+                Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
+                body: {
+                  "decision":"Reject",
+                  "id": user.id
+                },
+              );
+              var responseData = jsonDecode(res.body);
+              print(responseData);
+
+            }, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
           ],
         ),
         Container(
@@ -428,7 +529,7 @@ Widget RegistrationRequestCard(context,index){
                 padding: EdgeInsets.symmetric(vertical: 5),
               ),
 
-              Expanded(child: Text(org_name,overflow: TextOverflow.ellipsis,maxLines: 3,))
+              Expanded(child: Text(user.orgName!,overflow: TextOverflow.ellipsis,maxLines: 3,textAlign: TextAlign.right,))
             ],
           ),
         ),
@@ -436,8 +537,23 @@ Widget RegistrationRequestCard(context,index){
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
+
+              Container(
+                child: Text("Org Type:",style: TextStyle(fontFamily: "Roboto"),),
+                padding: EdgeInsets.symmetric(vertical: 5),
+              ),
+
+              Expanded(child: Text(user.userType!,overflow: TextOverflow.ellipsis,maxLines: 3,textAlign: TextAlign.right,))
+            ],
+          ),
+        ),
+        Container(
+          margin: EdgeInsets.symmetric(vertical: 5),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
               Text("Region:"),
-              Text(region[index])
+              Expanded(child: Text(user.address!,overflow: TextOverflow.ellipsis,maxLines: 3,textAlign: TextAlign.right,))
             ],
           ),
         ),

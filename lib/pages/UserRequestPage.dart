@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:stefomobileapp/UI/common.dart';
 
+import '../Models/user.dart';
+
 class UserRequestPage extends StatelessWidget {
-  const UserRequestPage({Key? key}) : super(key: key);
+  final User user;
+  const UserRequestPage({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -26,20 +29,20 @@ class UserRequestPage extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text("Distributor",
+                  Text(user.userType!,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         fontFamily: "Poppins_Bold",
                         fontSize: 17,
                         color: Colors.green,
                       )),SizedBox(height: 10),
-                  Text("Business Name",
+                  Text(user.orgName!,
                       style: TextStyle(
                         fontFamily: "Poppins_Bold",
                         fontSize: 20,
                         color: Color.fromRGBO(19, 59, 78, 1),
                       )),SizedBox(height: 10),
-                  Text("1104, Shilp Epitome,B/H Shyamvilla Bunglow,S G Highway,Ahmedabad",
+                  Text(user.address!,
                       style: TextStyle(
                         fontFamily: "Poppins",
                         fontSize: 15,
@@ -71,9 +74,6 @@ class UserRequestPage extends StatelessWidget {
                       Text("Contact Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
                       ),
                       SizedBox(height:20),
-                      Text("Phone Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                      ),
-                      SizedBox(height:20),
                       Text("Email:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
                       ),
                       SizedBox(height:20),
@@ -95,25 +95,25 @@ class UserRequestPage extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       // Padding(padding: EdgeInsets.only(top: 10,bottom: 10)),
-                      Text("xyz",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                      Text(user.firstName! + user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
                       ),
                       SizedBox(height:20),
-                      Text("9876543210",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                      Text(user.mobileNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
                       ),
                       SizedBox(height:20),
-                      Text("98765432",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                      // Text("98765432",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                      // ),
+                      // SizedBox(height:20),
+                      Text(user.email!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
                       ),
                       SizedBox(height:20),
-                      Text("abc@gmail.com",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                      Text(user.gstNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
                       ),
                       SizedBox(height:20),
-                      Text("OIUYTE947J",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                      Text(user.panNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
                       ),
                       SizedBox(height:20),
-                      Text("325614789657",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                      ),
-                      SizedBox(height:20),
-                      Text("KJ98HU36RH73HF7",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                      Text(user.adhNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
                       ),
                       SizedBox(height:20),
                       Text("21/03/2023",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)

@@ -3,6 +3,8 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stefomobileapp/pages/DealerPage.dart';
+import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/OrderPage.dart';
 import 'package:stefomobileapp/ui/common.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
@@ -113,12 +115,25 @@ class _HomePageState extends State<HomeContent> {
           onTap: (index) {
             setState(() {
               if (index == 1) {
-                Navigator.of(context).pushReplacementNamed('/inventory');
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => InventoryPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
               }
 
               if (index == 2) {
-                Navigator.of(context).pushReplacementNamed('/dealer');
-              }
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => DealerPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );              }
             });
           },
         ));

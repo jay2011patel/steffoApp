@@ -11,14 +11,12 @@ import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/LoginPage.dart';
 import 'package:stefomobileapp/pages/OrderPage.dart';
 import 'package:stefomobileapp/pages/OrdersPage.dart';
-import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stefomobileapp/pages/RegistrationPage.dart';
 import 'package:stefomobileapp/pages/RequestPage.dart';
 import 'package:stefomobileapp/pages/ChallanListPage.dart';
 import 'package:stefomobileapp/pages/PlaceOrderPage.dart';
 import 'package:stefomobileapp/pages/UserProfilePage.dart';
 import 'package:stefomobileapp/pages/UserRequestPage.dart';
-// import 'package:stefomobileapp/pages/example.dart';
 
 import 'pages/LRPage.dart';
 import 'UI/common.dart';
@@ -54,10 +52,8 @@ class MyApp extends StatelessWidget {
         //'/gnchallan': (BuildContext context) => GenerateChallanPage(),
         //'/order': (BuildContext context) => OrderDetails(),
         // '/challan': (BuildContext context) => GeneratedChallan(),
-        '/userprofile':(BuildContext context) => UserProfilePage(),
-        '/request':(BuildContext context) => UserRequestPage(),
-        '/profile':(BuildContext context) => ProfilePage(),
-        // '/sheet':(BuildContext context) => example(),
+        '/profile': (BuildContext context) => UserProfilePage(),
+        //'/request': (BuildContext context) => UserRequestPage(),
       },
     );
   }
