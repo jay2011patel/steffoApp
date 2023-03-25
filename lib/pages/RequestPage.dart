@@ -180,7 +180,6 @@ class _RequestPageState extends State<RequestContent>{
 
                 ],
                 tabViewItemHeight: MediaQuery.of(context).size.height*0.7,
-
             ),
         ),
       ),

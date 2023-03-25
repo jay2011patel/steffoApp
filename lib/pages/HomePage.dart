@@ -311,7 +311,9 @@ class _HomePageState extends State<HomeContent> {
                                           id = "none";
                                           loadData();
                                           setState(() {});
-                                        }));
+                                        }
+                                        )
+                                    );
                                   },
                                 ),
                               ),

@@ -179,7 +179,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         "supplierId": supplier_id!,
         "shippingAddress": party_address.text,
         "partyName": party_name.text,
-        //"party_address": party_address.text,
+        // "party_address": party_address.text,
         "gstNumber": party_pan_no.text,
         "mobileNumber": party_mob_num.text,
         "basePrice": base_price.text,
@@ -187,20 +187,19 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         "loadingType": selectedType,
       },
     );
-    Fluttertoast.showToast(
+       Fluttertoast.showToast(
         msg: 'Your Order Is Placed',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.blueAccent,
         textColor: Colors.white);
+      Navigator.of(context).pushNamed("/home");
 
-    Navigator.of(context).pushNamed("/home");
+     var responseData = json.decode(res.body);
+     print(responseData["value"].toString());
 
-    var responseData = json.decode(res.body);
-    print(responseData["value"].toString());
-
-    if (responseData["status"] == '200') {
+      if (responseData["status"] == '200') {
       for (int i = 0; i < listOfColumns.length; i++) {
         http.post(
           Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
@@ -772,7 +771,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         margin: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                         decoration: BoxDecoration(
                             color: Colors.white,
-                            borderRadius: BorderRadius.circular(20)),
+                            // borderRadius: BorderRadius.circular(20)
+                        ),
                         child: SingleChildScrollView(
                           child: DataTable(
                             columnSpacing:
