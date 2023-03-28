@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:stefomobileapp/UI/common.dart';
-
+import 'package:http/http.dart' as http;
 import '../Models/user.dart';
+import 'HomePage.dart';
 
 class UserRequestPage extends StatelessWidget {
   final User user;
@@ -126,6 +129,59 @@ class UserRequestPage extends StatelessWidget {
                 ],
               ),
 
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 60,
+            margin: EdgeInsets.only(top: 5),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Color.fromRGBO(102, 178, 83, 1.0)
+                ),
+                onPressed: () async{
+
+                  final res = await http.post(
+                    Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
+                    body: {
+                      "decision":"Approve",
+                      "id": user.id
+                    },
+
+                  );
+                },
+                child: Text("Approve")
+            ),
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width,
+            height: 60,
+            margin: EdgeInsets.only(top: 5),
+            padding: EdgeInsets.symmetric(horizontal: 10),
+            child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                    backgroundColor: Color.fromARGB(255, 255, 113, 91)
+                ),
+                onPressed: () async{
+
+                  final res = await http.post(
+                    Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
+                    body: {
+                      "decision":"Reject",
+                      "id": user.id
+                    },
+
+                  );
+                  Navigator.of(context).popUntil((route){
+                    if(route.isFirst){
+                      return false;
+                    }else{
+                      return true;
+                    }
+                  });
+                },
+                child: Text("Reject")
             ),
           )
         ],

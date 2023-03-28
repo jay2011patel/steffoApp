@@ -4,20 +4,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
-import 'package:stefomobileapp/pages/GenerateChallanPage.dart';
-import 'package:stefomobileapp/pages/GeneratedChallanPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/LoginPage.dart';
-import 'package:stefomobileapp/pages/OrderPage.dart';
 import 'package:stefomobileapp/pages/OrdersPage.dart';
 import 'package:stefomobileapp/pages/RegistrationPage.dart';
 import 'package:stefomobileapp/pages/RequestPage.dart';
-import 'package:stefomobileapp/pages/ChallanListPage.dart';
 import 'package:stefomobileapp/pages/PlaceOrderPage.dart';
 import 'package:stefomobileapp/pages/UserProfilePage.dart';
-import 'package:stefomobileapp/pages/UserRequestPage.dart';
-
 import 'pages/LRPage.dart';
 import 'UI/common.dart';
 
@@ -36,7 +30,7 @@ class MyApp extends StatelessWidget {
     ]);
     return MaterialApp(
       title: 'Flutter Demo',
-      home: SplashScreen(),
+      home: PlaceOrderPage(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lrpage': (BuildContext context) => LRPage(),
