@@ -64,19 +64,18 @@ AppBar appbar(String txt, void c()) {
   return AppBar(
     actions: [
       IconButton(
-          onPressed: () {
-          },
+          onPressed: () {},
           icon: const Icon(
             Icons.menu,
             color: Colors.black,
-          )
-      )
+          ))
     ],
     title: Center(
         child: Text(
       txt,
       // textAlign: TextAlign.center,
-      style: const TextStyle(color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
+      style: const TextStyle(
+          color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
     )),
     backgroundColor: Colors.white,
     leading: IconButton(

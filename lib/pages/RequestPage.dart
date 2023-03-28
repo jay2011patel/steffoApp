@@ -342,7 +342,12 @@ class _RequestPageState extends State<RequestContent>{
                                 MaterialPageRoute(builder: (context) => UserRequestPage(user: regReqList[index]))
                               );
                             },
-                            child: RegistrationRequestCard(context, index,regReqList[index]));
+                            child: Card(
+                              elevation: 20,
+                              child: RegistrationRequestCard(context, index,regReqList[index],(){setState(() {
+
+                              });}),
+                            ));
                       },
                     ),
                   ),
@@ -365,9 +370,6 @@ class _RequestPageState extends State<RequestContent>{
 //---------------------------------SingleOrderRequestWidget---------------------
 
 Widget orderRequestCard(context,Order order,c()){
-
-  String org_name=" Bhuyangdev Steel Corporation";
-
 
   return Card(
     elevation: 20,
@@ -472,10 +474,8 @@ Widget orderRequestCard(context,Order order,c()){
 
 //-------------------------------SingleRegistrationRequest----------------------
 
-Widget RegistrationRequestCard(context,index,User user){
+Widget RegistrationRequestCard(context,index,User user,c()){
 
-  String org_name=" Bhuyangdev Steel Corporation";
-  var region = ['Ahmedabad','Mehsana','Anand'];
 
   return Container(
     decoration: BoxDecoration(
@@ -491,20 +491,24 @@ Widget RegistrationRequestCard(context,index,User user){
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(child: Text("Entity Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
+            Container(child: Text(user.userType!,textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
             Container(
                 //width: MediaQuery.of(context).size.width-200,
-                child: IconButton(onPressed: () async{
-                  final res = await http.post(
-                    Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
-                    body: {
-                      "decision":"Approve",
-                      "id": user.id
+                child: IconButton(
+                      onPressed: () async{
+
+                        final res = await http.post(
+                          Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
+                          body: {
+                            "decision":"Approve",
+                            "id": user.id
+                          },
+                        );
+                      c();
+                      var responseData = jsonDecode(res.body);
+                      print(responseData);
                     },
-                  );
-                  var responseData = jsonDecode(res.body);
-                  print(responseData);
-                }, icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
+                    icon: Icon(Icons.thumb_up_alt_rounded,color: Colors.green,))),
             IconButton(onPressed: () async {
               final res = await http.post(
                 Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
@@ -513,6 +517,7 @@ Widget RegistrationRequestCard(context,index,User user){
                   "id": user.id
                 },
               );
+              c();
               var responseData = jsonDecode(res.body);
               print(responseData);
 
@@ -530,20 +535,6 @@ Widget RegistrationRequestCard(context,index,User user){
               ),
 
               Expanded(child: Text(user.orgName!,overflow: TextOverflow.ellipsis,maxLines: 3,textAlign: TextAlign.right,))
-            ],
-          ),
-        ),
-        Container(
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-
-              Container(
-                child: Text("Org Type:",style: TextStyle(fontFamily: "Roboto"),),
-                padding: EdgeInsets.symmetric(vertical: 5),
-              ),
-
-              Expanded(child: Text(user.userType!,overflow: TextOverflow.ellipsis,maxLines: 3,textAlign: TextAlign.right,))
             ],
           ),
         ),

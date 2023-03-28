@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
-import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -83,7 +82,8 @@ class _InventoryPageState extends State<InventoryContent> {
                 Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => HomePage(),
+                    pageBuilder: (context, animation1, animation2) =>
+                        HomePage(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
@@ -94,17 +94,8 @@ class _InventoryPageState extends State<InventoryContent> {
                 Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => DealerPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
-              if (index == 3) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => ProfilePage() ,
+                    pageBuilder: (context, animation1, animation2) =>
+                        DealerPage(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
@@ -112,112 +103,208 @@ class _InventoryPageState extends State<InventoryContent> {
               }
             });
           },
-        )
-    );
+        ));
   }
 
   Widget InventoryPageBody() {
     return Container(
       width: MediaQuery.of(context).size.width,
-      child: SingleChildScrollView(
-        child: Column(children: [
-          Card(
-              color: Colors.white,
-              elevation: 5,
-              margin: EdgeInsets.all(5.0),
-              child: Container(
-                padding: EdgeInsets.all(5.0),
-                child: Column(children: [
-                  Container(
-                    width: MediaQuery.of(context).size.width,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text("Distributor Name",
-                            style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                fontSize:26,
-                                    // MediaQuery.of(context).size.width / 16,
-                                color: Colors.black)),
-                        Align(
-                          child: RichText(
-                            text: TextSpan(style: TextStyle(), children: [
-                              TextSpan(
-                                  text: "Total Quantity: ",
-                                  style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontWeight: FontWeight.w900,
-                                      fontSize:
-                                          MediaQuery.of(context).size.width /
-                                              35)),
-                              TextSpan(
-                                  text: "9999999",
-                                  style: TextStyle(
-                                    color: Colors.blueAccent,
-                                    fontWeight: FontWeight.w900,
+      child: Column(
+        children: [
+          SizedBox(
+            height: 10,
+          ),
+          Container(
+            width: MediaQuery.of(context).size.width - 10,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(5.0),
+              color: Colors.grey,
+            ),
+            padding: EdgeInsets.all(10.0),
+            alignment: Alignment.center,
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: "FE500 : ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16)),
+                      TextSpan(
+                          text: "99999999",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16)),
+                    ])),
+                    RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: "FE550 : ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16)),
+                      TextSpan(
+                          text: "99999999",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16)),
+                    ])),
+                  ],
+                ),
+                // SizedBox(
+                //   width: 20,
+                // ),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: "FE500D : ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16)),
+                      TextSpan(
+                          text: "99999999",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16)),
+                    ])),
+                    RichText(
+                        text: TextSpan(children: [
+                      TextSpan(
+                          text: "FE550D : ",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16)),
+                      TextSpan(
+                          text: "99999999",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w900,
+                              fontSize: 16)),
+                    ])),
+                  ],
+                ),
+              ],
+            ),
+          ),
+          SingleChildScrollView(
+            child: Column(children: [
+              Card(
+                  color: Colors.white,
+                  elevation: 5,
+                  margin: EdgeInsets.all(5.0),
+                  child: Container(
+                    padding: EdgeInsets.all(5.0),
+                    child: Column(children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text("Order no.",
+                                style: TextStyle(
+                                    fontWeight: FontWeight.bold,
                                     fontSize:
-                                        MediaQuery.of(context).size.width / 35,
-                                  ))
-                            ]),
-                          ),
-                        )
-                      ],
-                    ),
-                  ),
-                  Align(
-                    alignment: Alignment.centerLeft,
-                    child: RichText(
-                      text: TextSpan(children: [
-                        TextSpan(
-                            text: "Ordered On: ",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 30,
-                                fontWeight: FontWeight.bold)),
-                        TextSpan(
-                            text: "21/10/2021",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 30))
-                      ]),
-                    ),
-                  ),
-                  SizedBox(
-                    height: 10.0,
-                  ),
-                  Container(
-                    width: MediaQuery.of(context).size.width - 20,
-                    padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-                    child: DataTable(
-                        columnSpacing: double.minPositive,
-                        headingTextStyle: const TextStyle(
-                            fontWeight: FontWeight.bold, color: Colors.black),
-                        columns: const [
-                          DataColumn(
-                              label: Text(
-                            "Sr No",
-                            textAlign: TextAlign.center,
-                          )),
-                          DataColumn(label: Text("Item name")),
-                          DataColumn(label: Text("Quantity\n(Tons)"))
-                        ],
-                        rows: [
-                          DataRow(
-                            cells: <DataCell>[
-                              DataCell(Text(
-                                  "1")), //Extracting from Map element the value
-
-                              DataCell(Text("FE500")),
-                              DataCell(Text("999"))
+                                        MediaQuery.of(context).size.width / 17,
+                                    color: Colors.black)),
+                            Align(
+                              child: RichText(
+                                text: TextSpan(style: TextStyle(), children: [
+                                  TextSpan(
+                                      text: "Total Quantity: ",
+                                      style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              30)),
+                                  TextSpan(
+                                      text: "9999999",
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width /
+                                                30,
+                                      ))
+                                ]),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: "Ordered On: ",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 30,
+                                    fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: "21/10/2021",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 30))
+                          ]),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 20,
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: DataTable(
+                            columnSpacing: double.minPositive,
+                            headingTextStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                            columns: const [
+                              DataColumn(
+                                  label: Text(
+                                "Sr No",
+                                textAlign: TextAlign.center,
+                              )),
+                              DataColumn(label: Text("Item name")),
+                              DataColumn(label: Text("Quantity\n(Tons)"))
                             ],
-                          )
-                        ]),
-                  )
-                ]),
-              )),
-        ]),
+                            rows: [
+                              DataRow(
+                                cells: <DataCell>[
+                                  DataCell(Text(
+                                      "1")), //Extracting from Map element the value
+
+                                  DataCell(Text("FE500")),
+                                  DataCell(Text("999"))
+                                ],
+                              )
+                            ]),
+                      )
+                    ]),
+                  )),
+            ]),
+          ),
+        ],
       ),
     );
   }
