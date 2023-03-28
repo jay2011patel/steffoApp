@@ -499,7 +499,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           }
                           return null;
                         },
-                      ));
+                      )
+                  );
                 } else {
                   return Container();
                 }
@@ -565,7 +566,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                 } else {
                   return Container();
                 }
-              }),
+              }
+              ),
 
               //------------------------------BasePrice--------------------------
 

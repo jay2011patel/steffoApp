@@ -1,11 +1,33 @@
 
 import 'package:flutter/material.dart';
 import 'package:stefomobileapp/UI/common.dart';
+import 'package:stefomobileapp/pages/InventoryPage.dart';
+import 'package:stylish_bottom_bar/model/bar_items.dart';
+import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
+
+import 'DealerPage.dart';
+import 'HomePage.dart';
+
 
 class ProfilePage extends StatelessWidget {
-  const ProfilePage({Key? key}) : super(key: key);
+  @override
+  Widget build(BuildContext context) {
+    return ProfileContent();
+  }
+}
 
 
+class ProfileContent extends StatefulWidget {
+  ProfileContent({super.key});
+  // final selected = 0;
+  @override
+  State<ProfileContent> createState() => _ProfilePageState();
+}
+
+class _ProfilePageState extends State<ProfileContent>{
+  var _selected = 3;
+// class ProfilePage extends StatelessWidget {
+//   const ProfilePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,10 +60,47 @@ class ProfilePage extends StatelessWidget {
               padding: EdgeInsets.only(left: 10,right: 10),
               child: Column(
                 children: [
+                  Row(
+                    children: [
+                      Text("Your Information",style: TextStyle(fontSize: 25,color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins_Bold")),
+                    ],
+                  ),
                   Padding(padding: EdgeInsets.only(bottom: 10,top: 10)),
                   Card(
-                    child: TextFormField(
+                    elevation: 5,
+                    child: TextField(
                       decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Colors.black),
+                          //<-- SEE HERE
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 2, color: Colors.indigo),
+                        ),
+                        hoverColor: Colors.black,
+                        labelText: "Name",
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
+                    ),
+                  ),
+
+                  SizedBox(
+                    height: 10,
+                  ),
+
+                  Card(
+                    elevation: 5,
+                    child: TextField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Colors.black),
+                          //<-- SEE HERE
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 2, color: Colors.indigo),
+                        ),
                         labelText: "Business Name",
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
@@ -51,19 +110,56 @@ class ProfilePage extends StatelessWidget {
                   height: 10,
                 ),
                 Card(
+                  elevation: 5,
                   child: TextFormField(
                     decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.black), //<-- SEE HERE
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.indigo),
+                      ),
                       labelText: "Contact Number",
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                     ),
                   ),
                 ),
+
+                SizedBox(
+                    height: 10,
+                  ),
+
+                Card(
+                    elevation: 5,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Colors.black), //<-- SEE HERE
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 2, color: Colors.indigo),
+                        ),
+                        labelText: "Email",
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
+                      ),
+                    ),
+                  ),
                   SizedBox(
                   height: 10,
                 ),
                 Card(
+                  elevation: 5,
                   child: TextFormField(
                     decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.black), //<-- SEE HERE
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.indigo),
+                      ),
                       labelText: "GST Number",
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                     ),
@@ -72,20 +168,39 @@ class ProfilePage extends StatelessWidget {
                   SizedBox(
                   height: 10,
                 ),
-                Card(
-                  child: TextFormField(
-                    decoration: InputDecoration(
-                      labelText: "PAN Number",
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
+
+                  Card(
+                    elevation: 5,
+                    child: TextFormField(
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                            width: 1,color: Colors.black)
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 2,color: Colors.indigo)
+                        ),
+                        labelText: "PAN Number",
+                        floatingLabelBehavior: FloatingLabelBehavior.never
+                      ),
                     ),
                   ),
-                ),
+
                   SizedBox(
                   height: 10,
                 ),
+
                 Card(
+                  elevation: 5,
                   child: TextFormField(
                     decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.black), //<-- SEE HERE
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.indigo),
+                      ),
                       labelText: "Aadhar Number",
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                     ),
@@ -95,21 +210,119 @@ class ProfilePage extends StatelessWidget {
                   height: 10,
                 ),
                 Card(
+                  elevation: 5,
                   child: TextFormField(
                     // minLines: 1,
                     maxLines: 4,
                     decoration: InputDecoration(
+                      border: OutlineInputBorder(
+                        borderSide: BorderSide(
+                            width: 1, color: Colors.black), //<-- SEE HERE
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderSide: BorderSide(width: 2, color: Colors.indigo),
+                      ),
                       labelText: "Address",
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                     ),
                   ),
                 ),
+
+                  Container(
+                      margin:
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+                      width: MediaQuery.of(context).size.width,
+                      child: buttonStyle("Save", () {
+                      }
+                      )
+                  )
                 ],
               ),
             ),
           ],
         ),
       ),
+        bottomNavigationBar: StylishBottomBar(
+          option: AnimatedBarOptions(
+            iconSize: 30,
+            barAnimation: BarAnimation.fade,
+            //barAnimation: BarAnimation.liquid,
+            iconStyle: IconStyle.simple,
+            opacity: 0.3,
+          ),
+
+          items: [
+            BottomBarItem(
+              icon: const Icon(
+                Icons.home_filled,
+              ),
+              title: const Text('Abc'),
+              backgroundColor: Colors.red,
+              selectedIcon:
+              const Icon(Icons.home_filled, color: Colors.blueAccent),
+            ),
+            BottomBarItem(
+                icon: const Icon(
+                  Icons.inventory_2_rounded,
+                ),
+                title: const Text('Safety'),
+                backgroundColor: Colors.orange,
+                selectedIcon: const Icon(Icons.inventory_2_rounded,
+                    color: Colors.blueAccent)),
+            BottomBarItem(
+                icon: const Icon(
+                  Icons.warehouse_rounded,
+                ),
+                title: const Text('Safety'),
+                selectedIcon: const Icon(Icons.warehouse_rounded,
+                    color: Colors.blueAccent)),
+            BottomBarItem(
+                icon: const Icon(
+                  Icons.person_pin,
+                ),
+                title: const Text('Cabin'),
+                backgroundColor: Colors.purple,
+                selectedIcon:
+                const Icon(Icons.person_pin, color: Colors.blueAccent)),
+          ],
+          //fabLocation: StylishBarFabLocation.center,
+          hasNotch: false,
+          currentIndex: _selected,
+          onTap: (index) {
+            setState(() {
+              if (index == 0) {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => HomePage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+              }
+              if (index == 1) {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => InventoryPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+              }
+
+              if (index == 2) {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => DealerPage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );              }
+            });
+          },
+        )
     );
 
   }

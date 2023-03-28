@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
+import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -97,10 +98,22 @@ class _InventoryPageState extends State<InventoryContent> {
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
-                );              }
+                );
+              }
+              if (index == 3) {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => ProfilePage() ,
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+              }
             });
           },
-        ));
+        )
+    );
   }
 
   Widget InventoryPageBody() {
@@ -123,8 +136,8 @@ class _InventoryPageState extends State<InventoryContent> {
                         Text("Distributor Name",
                             style: TextStyle(
                                 fontWeight: FontWeight.bold,
-                                fontSize:
-                                    MediaQuery.of(context).size.width / 16,
+                                fontSize:26,
+                                    // MediaQuery.of(context).size.width / 16,
                                 color: Colors.black)),
                         Align(
                           child: RichText(
