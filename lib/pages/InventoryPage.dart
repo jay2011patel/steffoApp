@@ -117,89 +117,124 @@ class _InventoryPageState extends State<InventoryContent> {
           Container(
             width: MediaQuery.of(context).size.width - 10,
             decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(5.0),
-              color: Colors.grey,
-            ),
+                borderRadius: BorderRadius.circular(5.0),
+                color: Colors.white,
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black,
+                    // spreadRadius: 1.0,
+                    blurStyle: BlurStyle.outer,
+                    blurRadius: 1.0,
+                  )
+                ]),
             padding: EdgeInsets.all(10.0),
             alignment: Alignment.center,
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "FE500 : ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16)),
-                      TextSpan(
-                          text: "99999999",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16)),
-                    ])),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "FE550 : ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16)),
-                      TextSpan(
-                          text: "99999999",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16)),
-                    ])),
-                  ],
+                Container(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: "FE500 : ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16)),
+                        TextSpan(
+                            text: "99",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16)),
+                      ])),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: "FE550 : ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16)),
+                        TextSpan(
+                            text: "99",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16)),
+                      ])),
+                    ],
+                  ),
+                  width: MediaQuery.of(context).size.width / 2.5,
                 ),
                 // SizedBox(
                 //   width: 20,
                 // ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "FE500D : ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16)),
-                      TextSpan(
-                          text: "99999999",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16)),
-                    ])),
-                    RichText(
-                        text: TextSpan(children: [
-                      TextSpan(
-                          text: "FE550D : ",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16)),
-                      TextSpan(
-                          text: "99999999",
-                          style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w900,
-                              fontSize: 16)),
-                    ])),
-                  ],
+                Container(
+                  height: 50,
+                  child: Row(children: [
+                    VerticalDivider(
+                      color: Colors.grey,
+                      thickness: 2,
+                      width: 5.0,
+                    ),
+                  ]),
+                ),
+
+                Container(
+                  width: MediaQuery.of(context).size.width / 2.5,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: "FE500D : ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16)),
+                        TextSpan(
+                            text: "99",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16)),
+                      ])),
+                      RichText(
+                          text: TextSpan(children: [
+                        TextSpan(
+                            text: "FE550D : ",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16)),
+                        TextSpan(
+                            text: "99",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.w900,
+                                fontSize: 16)),
+                      ])),
+                    ],
+                  ),
                 ),
               ],
             ),
+          ),
+          SizedBox(
+            height: 30,
+            child: Align(
+                child: Text(
+                  "Purchase History:",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
+                  ),
+                ),
+                alignment: Alignment.bottomCenter),
           ),
           SingleChildScrollView(
             child: Column(children: [
