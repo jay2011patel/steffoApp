@@ -99,7 +99,6 @@ class _OrdersPageState extends State<OrdersContent>{
                 Navigator.of(context).popAndPushNamed('/inventory');
               }
 
-
               if(index==2){
                 Navigator.of(context).popAndPushNamed('/dealer');              }
 
