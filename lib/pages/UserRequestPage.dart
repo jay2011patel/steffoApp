@@ -138,15 +138,16 @@ class UserRequestPage extends StatelessWidget {
                   backgroundColor: Color.fromRGBO(102, 178, 83, 1.0)
                 ),
                 onPressed: () async{
+                  var f =0;
+                  await AlertDialog();
 
-                  final res = await http.post(
-                    Uri.parse("http://urbanwebmobile.in/steffo/approveuser.php"),
-                    body: {
-                      "decision":"Approve",
-                      "id": user.id
-                    },
-
-                  );
+                  if(f ==1){
+                    final res = await http.post(
+                      Uri.parse(
+                          "http://urbanwebmobile.in/steffo/approveuser.php"),
+                      body: {"decision": "Approve", "id": user.id},
+                    );
+                  }
                 },
                 child: Text("Approve")
             ),
