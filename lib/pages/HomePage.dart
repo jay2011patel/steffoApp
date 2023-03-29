@@ -6,6 +6,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/OrderPage.dart';
+import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stefomobileapp/ui/common.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -133,7 +134,18 @@ class _HomePageState extends State<HomeContent> {
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
-                );              }
+                );
+              }
+              if (index == 3) {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) => ProfilePage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+              }
             });
           },
         ));
