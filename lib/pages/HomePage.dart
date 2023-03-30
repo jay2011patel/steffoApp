@@ -1,6 +1,8 @@
 import 'dart:convert';
 //import 'dart:ffi';
 
+import 'package:carousel_slider/carousel_slider.dart';
+import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
@@ -119,7 +121,8 @@ class _HomePageState extends State<HomeContent> {
                 Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => InventoryPage(),
+                    pageBuilder: (context, animation1, animation2) =>
+                        InventoryPage(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
@@ -130,7 +133,8 @@ class _HomePageState extends State<HomeContent> {
                 Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => DealerPage(),
+                    pageBuilder: (context, animation1, animation2) =>
+                        DealerPage(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
@@ -140,7 +144,8 @@ class _HomePageState extends State<HomeContent> {
                 Navigator.pushReplacement(
                   context,
                   PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => ProfilePage(),
+                    pageBuilder: (context, animation1, animation2) =>
+                        ProfilePage(),
                     transitionDuration: Duration.zero,
                     reverseTransitionDuration: Duration.zero,
                   ),
@@ -153,6 +158,8 @@ class _HomePageState extends State<HomeContent> {
   }
 
   String? id = "";
+  int currentIndex = 0;
+  int sizeList = 3;
 
   List<Order> requestList = [];
   List<Order> orderList = [];
@@ -209,6 +216,75 @@ class _HomePageState extends State<HomeContent> {
         child: SingleChildScrollView(
           child: Column(
             children: [
+              Container(
+                // padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: CarouselSlider(
+                  items: [
+                    //1st Image of Slider
+
+                    Container(
+                      margin: EdgeInsets.all(6.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/stefo_logo.png'),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+
+                    //2nd Image of Slider
+
+                    Container(
+                      margin: EdgeInsets.all(6.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/stefo_logo.png'),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+
+                    //3rd Image of Slider
+                    Container(
+                      margin: EdgeInsets.all(6.0),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8.0),
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/steefo_banner.jpeg'),
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    ),
+                  ],
+
+                  //Slider Container properties
+                  options: CarouselOptions(
+                    height: 150.0,
+                    enlargeCenterPage: true,
+                    autoPlay: true,
+                    aspectRatio: 16 / 9,
+                    autoPlayCurve: Curves.fastOutSlowIn,
+                    enableInfiniteScroll: true,
+                    autoPlayAnimationDuration: Duration(milliseconds: 500),
+                    viewportFraction: 0.8,
+                    onPageChanged: (index, reason) {
+                      setState(() {
+                        currentIndex = index;
+                      });
+                    },
+                  ),
+                ),
+              ),
+              DotsIndicator(
+                dotsCount: sizeList,
+                position: currentIndex.toDouble(),
+                decorator: DotsDecorator(
+                  activeColor: Colors.black,
+                  color: Colors.grey,
+                ),
+              ),
               Container(
                   //height: MediaQuery.of(context).size.height,
                   decoration: BoxDecoration(
@@ -338,9 +414,7 @@ class _HomePageState extends State<HomeContent> {
                                           id = "none";
                                           loadData();
                                           setState(() {});
-                                        }
-                                        )
-                                    );
+                                        }));
                                   },
                                 ),
                               ),
