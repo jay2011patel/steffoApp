@@ -188,19 +188,19 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         "loadingType": selectedType,
       },
     );
-       Fluttertoast.showToast(
+    Fluttertoast.showToast(
         msg: 'Your Order Is Placed',
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 1,
         backgroundColor: Colors.blueAccent,
         textColor: Colors.white);
-      Navigator.of(context).pushNamed("/home");
+    Navigator.of(context).pushNamed("/home");
 
-     var responseData = json.decode(res.body);
-     print(responseData["value"].toString());
+    var responseData = json.decode(res.body);
+    print(responseData["value"].toString());
 
-      if (responseData["status"] == '200') {
+    if (responseData["status"] == '200') {
       for (int i = 0; i < listOfColumns.length; i++) {
         http.post(
           Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
@@ -499,8 +499,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           }
                           return null;
                         },
-                      )
-                  );
+                      ));
                 } else {
                   return Container();
                 }
@@ -566,8 +565,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                 } else {
                   return Container();
                 }
-              }
-              ),
+              }),
 
               //------------------------------BasePrice--------------------------
 
@@ -774,8 +772,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         width: MediaQuery.of(context).size.width,
                         margin: const EdgeInsets.fromLTRB(5, 5, 5, 0),
                         decoration: BoxDecoration(
-                            color: Colors.white,
-                            // borderRadius: BorderRadius.circular(20)
+                          color: Colors.white,
+                          // borderRadius: BorderRadius.circular(20)
                         ),
                         child: SingleChildScrollView(
                           child: DataTable(
@@ -788,16 +786,27 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 borderRadius: BorderRadius.circular(20)),
 
                             columns: const [
-                              DataColumn(label: Text('Sr\nNo'), numeric: true),
                               DataColumn(
-                                  label: Text(
-                                'HSN/Name',
-                                textAlign: TextAlign.center,
+                                  label: Expanded(
+                                    child: Text(
+                                      'Sr\nNo',
+                                      textAlign: TextAlign.center,
+                                    ),
+                                  ),
+                                  numeric: true),
+                              DataColumn(
+                                  label: Expanded(
+                                child: Text(
+                                  'HSN/Name',
+                                  textAlign: TextAlign.center,
+                                ),
                               )),
                               DataColumn(
-                                  label: Text(
-                                'Quantity\n(Tons)',
-                                textAlign: TextAlign.center,
+                                  label: Expanded(
+                                child: Text(
+                                  'Quantity\n(Tons)',
+                                  textAlign: TextAlign.center,
+                                ),
                               )),
                               DataColumn(
                                   label: Expanded(
@@ -824,8 +833,10 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 //listOfColumns.indexWhere((element) => false);
                                 return DataRow(
                                   cells: <DataCell>[
-                                    DataCell(Text((i + 1)
-                                        .toString())), //Extracting from Map element the value
+                                    DataCell(Align(
+                                      child: Text((i + 1).toString()),
+                                      alignment: Alignment.center,
+                                    )), //Extracting from Map element the value
                                     DataCell(Text(element["Name"]!)),
                                     DataCell(Align(
                                         child: Text(element["Qty"]!),
