@@ -108,6 +108,7 @@ class _InventoryPageState extends State<InventoryContent> {
 
   Widget InventoryPageBody() {
     return Container(
+
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
@@ -115,13 +116,17 @@ class _InventoryPageState extends State<InventoryContent> {
             height: 10,
           ),
           Container(
+
             width: MediaQuery.of(context).size.width - 10,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5.0),
-                color: Colors.white,
+                // color: Colors.white,
+                // color : Color(0xffEB6440),
+                // color : Color(0xff497174),
+                color : Color(0xffF05454),
                 boxShadow: [
                   BoxShadow(
-                    color: Colors.black,
+                    color: Colors.white,
                     // spreadRadius: 1.0,
                     blurStyle: BlurStyle.outer,
                     blurRadius: 1.0,
@@ -133,40 +138,42 @@ class _InventoryPageState extends State<InventoryContent> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: "FE500 : ",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16)),
-                        TextSpan(
-                            text: "99",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16)),
-                      ])),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: "FE550 : ",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16)),
-                        TextSpan(
-                            text: "99",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16)),
-                      ])),
-                    ],
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "FE500 : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          TextSpan(
+                              text: "99",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                        ])),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "FE550 : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          TextSpan(
+                              text: "99",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                        ])),
+                      ],
+                    ),
                   ),
                   width: MediaQuery.of(context).size.width / 2.5,
                 ),
@@ -177,7 +184,7 @@ class _InventoryPageState extends State<InventoryContent> {
                   height: 50,
                   child: Row(children: [
                     VerticalDivider(
-                      color: Colors.grey,
+                      color: Colors.white,
                       thickness: 2,
                       width: 5.0,
                     ),
@@ -186,40 +193,42 @@ class _InventoryPageState extends State<InventoryContent> {
 
                 Container(
                   width: MediaQuery.of(context).size.width / 2.5,
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: "FE500D : ",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16)),
-                        TextSpan(
-                            text: "99",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16)),
-                      ])),
-                      RichText(
-                          text: TextSpan(children: [
-                        TextSpan(
-                            text: "FE550D : ",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16)),
-                        TextSpan(
-                            text: "99",
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontWeight: FontWeight.w900,
-                                fontSize: 16)),
-                      ])),
-                    ],
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "FE500D : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          TextSpan(
+                              text: "99",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                        ])),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "FE550D : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          TextSpan(
+                              text: "99",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                        ])),
+                      ],
+                    ),
                   ),
                 ),
               ],
@@ -239,11 +248,12 @@ class _InventoryPageState extends State<InventoryContent> {
           SingleChildScrollView(
             child: Column(children: [
               Card(
-                  color: Colors.white,
+                  color: Colors.white54,
+                  // color : Color(0xff006B7F),
                   elevation: 5,
                   margin: EdgeInsets.all(5.0),
                   child: Container(
-                    padding: EdgeInsets.all(5.0),
+                    padding: EdgeInsets.all(15),
                     child: Column(children: [
                       Container(
                         width: MediaQuery.of(context).size.width,
@@ -252,6 +262,7 @@ class _InventoryPageState extends State<InventoryContent> {
                           children: [
                             Text("Order no.",
                                 style: TextStyle(
+                                  fontFamily: "Cambria",
                                     fontWeight: FontWeight.bold,
                                     fontSize:
                                         MediaQuery.of(context).size.width / 17,
@@ -290,6 +301,7 @@ class _InventoryPageState extends State<InventoryContent> {
                             TextSpan(
                                 text: "Ordered On: ",
                                 style: TextStyle(
+                                    fontFamily: "Cambria",
                                     color: Colors.black,
                                     fontSize:
                                         MediaQuery.of(context).size.width / 30,

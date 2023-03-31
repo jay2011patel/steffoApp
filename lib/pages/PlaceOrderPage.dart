@@ -801,9 +801,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                               )),
                               DataColumn(
                                   label: Expanded(
-                                child: Text(
-                                  'Price',
-                                  textAlign: TextAlign.center,
+                                    child: Text(
+                                      'Price',
+                                    textAlign: TextAlign.center,
                                 ),
                               )),
                               DataColumn(label: Text(' '))
