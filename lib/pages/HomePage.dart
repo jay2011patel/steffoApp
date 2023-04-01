@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:ffi';
 //import 'dart:ffi';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
@@ -36,6 +38,7 @@ class _HomePageState extends State<HomeContent> {
   var _selected = 0;
   String? _id;
   var fabLoc;
+  bool editPrice = false;
 
   _HomePageState(int val) {
     _selected = val;
@@ -207,8 +210,10 @@ class _HomePageState extends State<HomeContent> {
     }
   }
 
+  var price = 999;
   Widget HomePageBody() {
     loadData();
+
     return Container(
         height: MediaQuery.of(context).size.height,
         decoration: const BoxDecoration(color: Colors.white),
@@ -282,6 +287,66 @@ class _HomePageState extends State<HomeContent> {
                 decorator: DotsDecorator(
                   activeColor: Colors.black,
                   color: Colors.grey,
+                ),
+              ),
+              Container(
+                height: 60,
+                margin: EdgeInsets.all(5.0),
+                child: LayoutBuilder(builder: (context, constraints) {
+                  if (editPrice == false) {
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        Expanded(
+                          flex: 1,
+                          //width: MediaQuery.of(context).size.width * 0.6,
+                          child: Text(
+                            "Base Price : $price/-",
+                            textAlign: TextAlign.center,
+                            style: TextStyle(
+                                fontSize: 25,
+                                color: Colors.white,
+                                fontWeight: FontWeight.w900),
+                          ),
+                        ),
+                        LayoutBuilder(builder: (context, constraints) {
+                          if (user_type == "Manufacturer") {
+                            return Container(
+                              width: MediaQuery.of(context).size.width * 0.2,
+                              child: IconButton(
+                                color: Colors.white,
+                                onPressed: () {
+                                  setState(() {
+                                    editPrice = true;
+                                  });
+                                },
+                                icon: Icon(Icons.edit),
+                              ),
+                            );
+                          } else {
+                            return Container();
+                          }
+                        })
+                      ],
+                    );
+                  } else {
+                    return TextFormField(
+                        initialValue: price.toString(),
+                        keyboardType: TextInputType.number,
+                        textInputAction: TextInputAction.done,
+                        onFieldSubmitted: (value) {
+                          print(value);
+                          setState(() {
+                            editPrice = false;
+                            price = int.parse(value);
+                          });
+                        });
+                  }
+                }),
+                width: MediaQuery.of(context).size.width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5),
+                  color: Colors.green,
                 ),
               ),
               Container(
