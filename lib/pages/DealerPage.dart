@@ -169,13 +169,19 @@ class _DealerPageState extends State<DealerContent>{
               return ListView.builder(
                   itemCount: child.length,
                   itemBuilder: (context, index) {
-                    return DistributorCard(child[index]);
+                    return InkWell(
+
+                        child: DistributorCard(child[index])
+                    );
                   });
             } else if (userType=="Distributor") {
               return ListView.builder(
                   itemCount: child.length,
                   itemBuilder: (context, index) {
-                    return DealerCard(child[index]);
+                    return InkWell(
+
+                        child: DealerCard(child[index])
+                    );
                   });
             } else {
               return Container();
@@ -183,7 +189,8 @@ class _DealerPageState extends State<DealerContent>{
           }),
         );
       }else{
-          return Center(child: CircularProgressIndicator(
+          return Center(
+            child: CircularProgressIndicator(
             color: Colors.grey,
           ));
         }
