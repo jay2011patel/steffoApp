@@ -177,7 +177,6 @@ class _HomePageState extends State<HomeContent> {
         body: {"id": id!},
       );
       var responseData = jsonDecode(res.body);
-      print(responseData);
 
       for (int i = 0; i < responseData["data"].length; i++) {
         Order req = Order();
