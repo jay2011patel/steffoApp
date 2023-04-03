@@ -80,8 +80,6 @@ class _ChallanPageState extends State<ChallanPage> {
         });
       }
       isDataAvailable = true;
-      print(listOfColumns);
-
       flag = 1;
       setState(() {});
     }
@@ -90,8 +88,6 @@ class _ChallanPageState extends State<ChallanPage> {
   @override
   void initState() {
     super.initState();
-    // items = GeneratedItems.getItems();
-    print("In init state");
 
   }
 
@@ -106,7 +102,6 @@ class _ChallanPageState extends State<ChallanPage> {
           if(isDataAvailable){
             return ChallanBody();
           }else{
-
             return Center( child:CircularProgressIndicator());
           }
         })

@@ -1,28 +1,22 @@
 import 'dart:convert';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/ProfilePage.dart';
+import 'package:stefomobileapp/ui/cards.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:http/http.dart' as http;
+import '../Models/user.dart';
 import '../ui/common.dart';
-
-void main(){
-  runApp(DealerPage());
-}
 
 class DealerPage extends StatelessWidget{
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home:DealerContent());
-    throw UnimplementedError();
+    return DealerContent();
   }
 
 }
@@ -37,11 +31,17 @@ class DealerContent extends StatefulWidget{
 class _DealerPageState extends State<DealerContent>{
 
   var _selected=2;
+  @override
+  void initState() {
+    // TODO: implement initState
+    loadChildData();
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: appbar("Dealer",(){
+        appBar: appbar("Buyers",(){
           Navigator.pop(context);
         }),
         body: DealerPageBody(),
@@ -122,12 +122,15 @@ class _DealerPageState extends State<DealerContent>{
           },
         )
     );
-    throw UnimplementedError();
   }
+  bool isDataReady = false;
+  var userType;
+  List<User> child = [];
   loadChildData() async {
+    child = [];
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var id = await prefs.getString('id');
-    var userType = await prefs.getString('userType');
+    userType = await prefs.getString('userType');
     String uri;
     uri = "http://urbanwebmobile.in/steffo/getchildren.php";
 
@@ -137,28 +140,61 @@ class _DealerPageState extends State<DealerContent>{
         "id":id,
       }
     );
+
     var responseData = json.decode(res.body);
-    print(responseData);
+    print(responseData['data'].length);
+    for(int i = 0 ; i < responseData['data'].length;i++){
+      User u = User();
+      u.id = responseData["data"][i]["id"];
+      u.userType = responseData["data"][i]["userType"];
+      u.orgName = responseData["data"][i]["orgName"];
+      u.address = responseData["data"][i]["address"];
+      print(u);
+      child.add(u);
+    }
+
+    isDataReady = true;
+    setState(() {});
+
   }
   Widget DealerPageBody(){
-    loadChildData();
-    return Container(
-      height: 160,
-      margin: EdgeInsets.only(top: 20),
-      child: Card(
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(20)
-        ),
-        elevation: 15,
-        child: Column(
-          children: [
-            Container(
-                padding: EdgeInsets.only(top: 5),
-                width: MediaQuery.of(context).size.width,
-                child: Text("Distributor",style: GoogleFonts.lato(),textAlign: TextAlign.left,))
-          ],
-        )
-      ),
+    //loadChildData();
+    return LayoutBuilder(
+      builder: (context,constraints) {
+        if(isDataReady){
+        return Container(
+          margin: EdgeInsets.only(top: 20),
+          child: LayoutBuilder(builder: (context,constraints) {
+            if (userType == "Manufacturer") {
+              return ListView.builder(
+                  itemCount: child.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+
+                        child: DistributorCard(child[index])
+                    );
+                  });
+            } else if (userType=="Distributor") {
+              return ListView.builder(
+                  itemCount: child.length,
+                  itemBuilder: (context, index) {
+                    return InkWell(
+
+                        child: DealerCard(child[index])
+                    );
+                  });
+            } else {
+              return Container();
+            }
+          }),
+        );
+      }else{
+          return Center(
+            child: CircularProgressIndicator(
+            color: Colors.grey,
+          ));
+        }
+    }
     );
   }
 
