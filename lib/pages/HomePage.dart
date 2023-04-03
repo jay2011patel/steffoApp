@@ -250,7 +250,7 @@ class _HomePageState extends State<HomeContent> {
                     Container(
                       margin: EdgeInsets.all(6.0),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
+                        // borderRadius: BorderRadius.circular(8.0),
                         image: DecorationImage(
                           image: AssetImage('assets/images/steefo_banner.jpeg'),
                           fit: BoxFit.contain,

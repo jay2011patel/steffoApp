@@ -137,10 +137,8 @@ class _DealerPageState extends State<DealerContent>{
         "id":id,
       }
     );
-
     var responseData = json.decode(res.body);
     print(responseData);
-
   }
   Widget DealerPageBody(){
     loadChildData();
