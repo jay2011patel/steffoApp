@@ -39,6 +39,7 @@ class _HomePageState extends State<HomeContent> {
   String? _id;
   var fabLoc;
   bool editPrice = false;
+  TextEditingController newBasePrice = TextEditingController();
 
   _HomePageState(int val) {
     _selected = val;
@@ -162,7 +163,13 @@ class _HomePageState extends State<HomeContent> {
 
   String? id = "";
   int currentIndex = 0;
-  int sizeList = 3;
+
+  final List<String> imageList = [
+    'assets/images/stefo_logo.png',
+    'assets/images/stefo_logo.png',
+    'assets/images/stefo_logo.png',
+    'assets/images/stefo_logo.png'
+  ];
 
   List<Order> requestList = [];
   List<Order> orderList = [];
@@ -221,57 +228,17 @@ class _HomePageState extends State<HomeContent> {
           child: Column(
             children: [
               Container(
-                // padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: CarouselSlider(
-                  items: [
-                    //1st Image of Slider
-
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/stefo_logo.png'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-
-                    //2nd Image of Slider
-
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/stefo_logo.png'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-
-                    //3rd Image of Slider
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/steefo_banner.jpeg'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ],
-
-                  //Slider Container properties
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: CarouselSlider.builder(
+                  itemCount: imageList.length,
                   options: CarouselOptions(
-                    height: 150.0,
+                    height: 100.0,
                     enlargeCenterPage: true,
                     autoPlay: true,
                     aspectRatio: 16 / 9,
                     autoPlayCurve: Curves.fastOutSlowIn,
-                    enableInfiniteScroll: true,
-                    autoPlayAnimationDuration: Duration(milliseconds: 500),
+                    enableInfiniteScroll: false,
+                    autoPlayAnimationDuration: Duration(milliseconds: 300),
                     viewportFraction: 0.8,
                     onPageChanged: (index, reason) {
                       setState(() {
@@ -279,10 +246,90 @@ class _HomePageState extends State<HomeContent> {
                       });
                     },
                   ),
+                  itemBuilder: (context, i, id) {
+                    //for onTap to redirect to another screen
+                    return GestureDetector(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Colors.black,
+                            )),
+                        //ClipRRect for image border radius
+                        child: ClipRRect(
+                          // borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(
+                            imageList[i],
+                            width: 500,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
+
+                // CarouselSlider(
+                //   items: [
+                //     //1st Image of Slider
+                //
+                //     Container(
+                //       margin: EdgeInsets.all(6.0),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(8.0),
+                //         image: DecorationImage(
+                //           image: AssetImage('assets/images/stefo_logo.png'),
+                //           fit: BoxFit.contain,
+                //         ),
+                //       ),
+                //     ),
+                //
+                //     //2nd Image of Slider
+                //
+                //     Container(
+                //       margin: EdgeInsets.all(6.0),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(8.0),
+                //         image: DecorationImage(
+                //           image: AssetImage('assets/images/stefo_logo.png'),
+                //           fit: BoxFit.contain,
+                //         ),
+                //       ),
+                //     ),
+                //
+                //     //3rd Image of Slider
+                //     Container(
+                //       margin: EdgeInsets.all(6.0),
+                //       decoration: BoxDecoration(
+                //         borderRadius: BorderRadius.circular(8.0),
+                //         image: DecorationImage(
+                //           image: AssetImage('assets/images/steefo_banner.jpeg'),
+                //           fit: BoxFit.contain,
+                //         ),
+                //       ),
+                //     ),
+                //   ],
+                //
+                //   //Slider Container properties
+                //   options: CarouselOptions(
+                //     height: 150.0,
+                //     enlargeCenterPage: true,
+                //     autoPlay: true,
+                //     aspectRatio: 16 / 9,
+                //     autoPlayCurve: Curves.fastOutSlowIn,
+                //     enableInfiniteScroll: true,
+                //     autoPlayAnimationDuration: Duration(milliseconds: 500),
+                //     viewportFraction: 0.8,
+                //     onPageChanged: (index, reason) {
+                //       setState(() {
+                //         currentIndex = index;
+                //       });
+                //     },
+                //   ),
+                // ),
               ),
               DotsIndicator(
-                dotsCount: sizeList,
+                dotsCount: imageList.length,
                 position: currentIndex.toDouble(),
                 decorator: DotsDecorator(
                   activeColor: Colors.black,
@@ -330,17 +377,54 @@ class _HomePageState extends State<HomeContent> {
                       ],
                     );
                   } else {
-                    return TextFormField(
-                        initialValue: price.toString(),
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (value) {
-                          print(value);
-                          setState(() {
-                            editPrice = false;
-                            price = int.parse(value);
-                          });
-                        });
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          child: TextFormField(
+                            // initialValue: price.toString(),
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.done,
+                            controller: newBasePrice,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            cursorColor: Colors.white,
+                            decoration: const InputDecoration(
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 2.0),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 2.0),
+                              ),
+                            ),
+                            // onFieldSubmitted: (value) {
+                            //   print(value);
+                            //   setState(() {
+                            //     editPrice = false;
+                            //     price = int.parse(value);
+                            //   });
+                            // }),
+                          ),
+                          width: MediaQuery.of(context).size.width / 3,
+                        ),
+                        ElevatedButton(
+                            // icon: Icon(Icons.done_outlined),
+
+                            onPressed: () {
+                              // print(newBasePrice.text);
+                              setState(() {
+                                editPrice = false;
+                                price = int.parse(newBasePrice.text);
+                              });
+                            },
+                            child: Text("Submit"),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black))
+                      ],
+                    );
                   }
                 }),
                 width: MediaQuery.of(context).size.width,
