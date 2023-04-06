@@ -196,6 +196,7 @@ class _HomePageState extends State<HomeContent> {
         req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
+        req.billing_address = responseData["data"][i]["address"];
         req.order_id = responseData["data"][i]["order_id"].toString();
         //print(req);
         if (req.status != "Denied" && req.status != "Pending") {
@@ -435,7 +436,10 @@ class _HomePageState extends State<HomeContent> {
                         ),
                       )
                     ],
-                  )),
+                  )
+              ),
+
+
               LayoutBuilder(builder: (context, constraints) {
                 if (user_type != "Dealer") {
                   return Container(

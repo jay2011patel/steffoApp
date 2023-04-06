@@ -4,7 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:stefomobileapp/pages/ChallanListPage.dart';
-import 'package:stefomobileapp/pages/GenerateChallanPage.dart';
+// import 'package:stefomobileapp/pages/GenerateChallanPage.dart';
 //import '../Models/gen_item_list.dart';
 import '../Models/order.dart';
 import '../ui/common.dart';
@@ -76,12 +76,6 @@ class _OrderPageState extends State<OrderPage> {
 
       super.initState();
     }
-
-
-
-
-
-
 
     TextEditingController status = TextEditingController();
     //status.text = widget.order.status!;
@@ -225,26 +219,39 @@ class _OrderPageState extends State<OrderPage> {
                                 child: Column(
                                   children: [
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                                       children: [
                                         const Text("Billing Address :",
                                             style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                        Text(widget.order.user_id!,
-                                            style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+
+                                      ],
+                                    ),
+
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(widget.order.billing_address!,
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: "Poppins",
+                                              )
+                                          ),
+                                        ),
                                       ],
                                     ),
                                     const SizedBox(
                                       height: 5.0,
                                     ),
                                     Row(
-                                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                                       children: [
                                         const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                        Text(widget.order.user_mob_num!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+
                                       ],
                                     ),
+                                    Row(
+                                      children: [
+                                        Text(widget.order.user_mob_num!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                      ],
+                                    )
                                   ],
                                 )),
                           ),
