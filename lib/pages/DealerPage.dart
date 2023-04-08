@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stefomobileapp/pages/DealerDetailPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/ProfilePage.dart';
@@ -24,7 +25,7 @@ class DealerPage extends StatelessWidget{
 class DealerContent extends StatefulWidget{
   const DealerContent({super.key});
   @override
-  State<DealerContent> createState()=> _DealerPageState();
+  State<DealerContent> createState() => _DealerPageState();
 }
 
 
@@ -149,6 +150,11 @@ class _DealerPageState extends State<DealerContent>{
       u.userType = responseData["data"][i]["userType"];
       u.orgName = responseData["data"][i]["orgName"];
       u.address = responseData["data"][i]["address"];
+      u.email = responseData["data"][i]["email"];
+      u.mobileNumber = responseData["data"][i]["mobileNumber"];
+      u.gstNumber = responseData["data"][i]["gstNumber"];
+      u.panNumber = responseData["data"][i]["panNumber"];
+      u.adhNumber = responseData["data"][i]["adhNumber"];
       print(u);
       child.add(u);
     }
@@ -179,7 +185,12 @@ class _DealerPageState extends State<DealerContent>{
                   itemCount: child.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => DealerDetailPage(user: child[index])
+                          )
+                          );
+                        },
                         child: DealerCard(child[index])
                     );
                   });
