@@ -33,8 +33,6 @@ class RequestContent extends StatefulWidget{
 
 class _RequestPageState extends State<RequestContent>{
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

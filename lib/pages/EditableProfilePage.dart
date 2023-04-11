@@ -9,7 +9,7 @@ import 'DealerPage.dart';
 import 'HomePage.dart';
 
 
-class ProfilePage extends StatelessWidget {
+class EditableProfilePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ProfileContent();
@@ -26,6 +26,7 @@ class ProfileContent extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfileContent>{
   var _selected = 3;
+
 // class ProfilePage extends StatelessWidget {
 //   const ProfilePage({Key? key}) : super(key: key);
 
@@ -59,7 +60,13 @@ class _ProfilePageState extends State<ProfileContent>{
               // color: Colors.orangeAccent,
               padding: EdgeInsets.only(left: 10,right: 10),
               child: Column(
-                children: [
+                children:[
+                  // IconButton(
+                  //     icon: Icon(
+                  //       Icons.edit,
+                  //       color: Color(0xFF8D8D8D),
+                  //     ),
+                  //     onPressed: null),
                   Row(
                     children: [
                       Text("Your Information",style: TextStyle(fontSize: 25,color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins_Bold")),
@@ -68,7 +75,7 @@ class _ProfilePageState extends State<ProfileContent>{
                   Padding(padding: EdgeInsets.only(bottom: 10,top: 10)),
                   Card(
                     elevation: 5,
-                    child: TextField(
+                    child: TextFormField(
                       decoration: InputDecoration(
                         border: OutlineInputBorder(
                           borderSide: BorderSide(

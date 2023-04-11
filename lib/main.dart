@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
+import 'package:stefomobileapp/pages/EditableProfilePage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/LoginPage.dart';
@@ -50,6 +51,7 @@ class MyApp extends StatelessWidget {
         //'/order': (BuildContext context) => OrderDetails(),
         // '/challan': (BuildContext context) => GeneratedChallan(),
         '/profile': (BuildContext context) => UserProfilePage(),
+        '/editprofile': (BuildContext context) => EditableProfilePage(),
         //'/request': (BuildContext context) => UserRequestPage(),
       },
     );

@@ -10,13 +10,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/OrderPage.dart';
-import 'package:stefomobileapp/pages/ProfilePage.dart';
+import 'package:stefomobileapp/pages/EditableProfilePage.dart';
 import 'package:stefomobileapp/ui/common.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:http/http.dart' as http;
 import '../Models/order.dart';
 import '../ui/cards.dart';
+import 'ProfilePage.dart';
 import 'RequestPage.dart';
 
 class HomePage extends StatelessWidget {

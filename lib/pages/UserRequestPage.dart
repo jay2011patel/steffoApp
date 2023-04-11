@@ -164,8 +164,6 @@ class UserRequestPage extends StatelessWidget {
                       },
                     );
                     Navigator.popUntil(context, ModalRoute.withName('/home'));
-
-
                   }
                 }
 
@@ -209,7 +207,7 @@ class UserRequestPage extends StatelessWidget {
   }
   var f = 0;
   List<User> distributors = [];
-  loadDistributors() async {
+    loadDistributors() async {
     if(f==0){
       final res = await http.post(
           Uri.parse("http://urbanwebmobile.in/steffo/getdistributors.php")
