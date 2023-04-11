@@ -391,18 +391,31 @@ class _HomePageState extends State<HomeContent> {
                 // width: 200,
                 height: 450,
                 child: ContainedTabBarView(
-                  // tabBarProperties: TabBarProperties(background: Container()),
+                  tabBarProperties: TabBarProperties(
+                      background: Container(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                  )),
                   tabs: [
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text('Orders', style: TextStyle(color: Colors.black)),
+                          Text(orderList.length.toString().padLeft(2, '0'),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 30)),
+                        ],
+                      ),
+                    ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        Text('Orders', style: TextStyle(color: Colors.black)),
-                        Text(orderList.length.toString(),
+                        Text('Requests', style: TextStyle(color: Colors.black)),
+                        Text(requestList.length.toString().padLeft(2, '0'),
                             style:
                                 TextStyle(color: Colors.black, fontSize: 30)),
                       ],
                     ),
-                    Text('Requests', style: TextStyle(color: Colors.black)),
                   ],
                   views: [
                     Container(
@@ -418,6 +431,7 @@ class _HomePageState extends State<HomeContent> {
                               LayoutBuilder(builder: (context, constraints) {
                                 if (user_type == "Dealer") {
                                   return Container(
+                                    height: 300,
                                     child: SingleChildScrollView(
                                       child: ListView.builder(
                                         itemCount: orderList.length > 3
@@ -508,7 +522,7 @@ class _HomePageState extends State<HomeContent> {
                                   //     const Color.fromRGBO(255, 255, 255, 0.5),
 
                                   borderRadius: BorderRadius.circular(8)),
-                              margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                              margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
                               child: Column(
                                 children: [
                                   Container(
