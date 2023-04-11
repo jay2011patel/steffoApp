@@ -221,6 +221,7 @@ class _HomePageState extends State<HomeContent> {
   }
 
   var price = 999;
+  bool light = true;
   Widget HomePageBody() {
     loadData();
 
@@ -280,103 +281,134 @@ class _HomePageState extends State<HomeContent> {
                   color: Colors.grey,
                 ),
               ),
-              Container(
-                height: 60,
-                margin: EdgeInsets.all(5.0),
-                child: LayoutBuilder(builder: (context, constraints) {
-                  if (editPrice == false) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Expanded(
-                          flex: 1,
-                          //width: MediaQuery.of(context).size.width * 0.6,
-                          child: Text(
-                            "Base Price : $price/-",
-                            textAlign: TextAlign.center,
-                            style: TextStyle(
-                                fontSize: 25,
-                                color: Colors.white,
-                                fontWeight: FontWeight.w900),
-                          ),
-                        ),
-                        LayoutBuilder(builder: (context, constraints) {
-                          if (user_type == "Manufacturer") {
-                            return Container(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                              child: IconButton(
-                                color: Colors.white,
-                                onPressed: () {
-                                  setState(() {
-                                    editPrice = true;
-                                  });
-                                },
-                                icon: Icon(Icons.edit),
-                              ),
-                            );
-                          } else {
-                            return Container();
-                          }
-                        })
-                      ],
-                    );
-                  } else {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        Container(
-                          child: TextFormField(
-                            // initialValue: price.toString(),
-                            keyboardType: TextInputType.number,
-                            textInputAction: TextInputAction.done,
-                            controller: newBasePrice,
-                            textAlign: TextAlign.center,
-                            style: TextStyle(color: Colors.white, fontSize: 20),
-                            cursorColor: Colors.white,
-                            decoration: const InputDecoration(
-                              focusedBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
-                              ),
-                              enabledBorder: UnderlineInputBorder(
-                                borderSide:
-                                    BorderSide(color: Colors.white, width: 2.0),
+              LayoutBuilder(builder: (context, constraints) {
+                if (user_type == "Manufacturer") {
+                  return Container(
+                      child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text("Enable Sales"),
+                      Switch(
+                          // This bool value toggles the switch.
+                          value: light,
+                          activeColor: Colors.green,
+                          onChanged: (bool value) {
+                            // This is called when the user toggles the switch.
+                            setState(() {
+                              light = value;
+                            });
+                          }),
+                    ],
+                  ));
+                } else {
+                  return Container();
+                }
+              }),
+              LayoutBuilder(builder: (context, constraint) {
+                if (light == true) {
+                  return Container(
+                    height: 60,
+                    margin: EdgeInsets.all(5.0),
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      if (editPrice == false) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              //width: MediaQuery.of(context).size.width * 0.6,
+                              child: Text(
+                                "Base Price : $price/-",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900),
                               ),
                             ),
-                            // onFieldSubmitted: (value) {
-                            //   print(value);
-                            //   setState(() {
-                            //     editPrice = false;
-                            //     price = int.parse(value);
-                            //   });
-                            // }),
-                          ),
-                          width: MediaQuery.of(context).size.width / 3,
-                        ),
-                        ElevatedButton(
-                            // icon: Icon(Icons.done_outlined),
+                            LayoutBuilder(builder: (context, constraints) {
+                              if (user_type == "Manufacturer") {
+                                return Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  child: IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      setState(() {
+                                        editPrice = true;
+                                      });
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  ),
+                                );
+                              } else {
+                                return Container();
+                              }
+                            })
+                          ],
+                        );
+                      } else {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              child: TextFormField(
+                                // initialValue: price.toString(),
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.done,
+                                controller: newBasePrice,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                cursorColor: Colors.white,
+                                decoration: const InputDecoration(
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
+                                  ),
+                                ),
+                                // onFieldSubmitted: (value) {
+                                //   print(value);
+                                //   setState(() {
+                                //     editPrice = false;
+                                //     price = int.parse(value);
+                                //   });
+                                // }),
+                              ),
+                              width: MediaQuery.of(context).size.width / 3,
+                            ),
+                            ElevatedButton(
+                                // icon: Icon(Icons.done_outlined),
 
-                            onPressed: () {
-                              // print(newBasePrice.text);
-                              setState(() {
-                                editPrice = false;
-                                price = int.parse(newBasePrice.text);
-                              });
-                            },
-                            child: Text("Submit"),
-                            style: ElevatedButton.styleFrom(
-                                backgroundColor: Colors.white,
-                                foregroundColor: Colors.black))
-                      ],
-                    );
-                  }
-                }),
-                width: MediaQuery.of(context).size.width,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(5),
-                  color: Colors.green,
-                ),
-              ),
+                                onPressed: () {
+                                  // print(newBasePrice.text);
+                                  setState(() {
+                                    editPrice = false;
+                                    price = int.parse(newBasePrice.text);
+                                  });
+                                },
+                                child: Text("Submit"),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.black))
+                          ],
+                        );
+                      }
+                    }),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.green,
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
               Container(
                 margin: EdgeInsets.all(10.0),
                 padding: const EdgeInsets.all(8.0),
@@ -386,7 +418,7 @@ class _HomePageState extends State<HomeContent> {
                     // border: Border.all(color: Colors.black),
                     color: Colors.white,
                     boxShadow: [
-                      BoxShadow(color: Colors.black, blurRadius: 5.0)
+                      BoxShadow(color: Colors.black, blurRadius: 2.0)
                     ]),
                 // width: 200,
                 height: 450,
@@ -463,7 +495,9 @@ class _HomePageState extends State<HomeContent> {
                                     height: 300,
                                     child: SingleChildScrollView(
                                       child: ListView.builder(
-                                        itemCount: orderList.length,
+                                        itemCount: orderList.length > 3
+                                            ? 3
+                                            : orderList.length,
                                         physics:
                                             const NeverScrollableScrollPhysics(),
                                         scrollDirection: Axis.vertical,
