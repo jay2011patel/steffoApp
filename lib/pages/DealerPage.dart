@@ -5,13 +5,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/DealerDetailPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
-import 'package:stefomobileapp/pages/ProfilePage.dart';
+import 'package:stefomobileapp/pages/EditableProfilePage.dart';
 import 'package:stefomobileapp/ui/cards.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:http/http.dart' as http;
 import '../Models/user.dart';
 import '../ui/common.dart';
+import 'ProfilePage.dart';
 
 class DealerPage extends StatelessWidget{
 

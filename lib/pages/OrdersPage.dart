@@ -130,7 +130,6 @@ class _OrdersPageState extends State<OrdersContent>{
       var responseData = jsonDecode(res.body);
       //print(responseData);
 
-
       for(int i = 0;i<responseData["data"].length;i++){
         Order req = Order();
         req.reciever_id = responseData["data"][i]["supplier_id"];
@@ -140,6 +139,7 @@ class _OrdersPageState extends State<OrdersContent>{
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];
+        req.billing_address = responseData["data"][i]["address"];
         req.party_mob_num = responseData["data"][i]["partyMobileNumber"];
         req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
@@ -284,13 +284,7 @@ class _OrdersPageState extends State<OrdersContent>{
         )
     );
   }
-
-
-
-
-
 }
-
 
 //---------------------------------SingleOrderRequestWidget---------------------
 
@@ -313,7 +307,7 @@ Widget RegistrationRequestCard(context,index){
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Text("PlaceHolder"),
-        Row(
+        Row (
           children: [
             Container(child: Text("Entity Details",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),)),
             Container(
