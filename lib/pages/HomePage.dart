@@ -10,15 +10,15 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/OrderPage.dart';
-import 'package:stefomobileapp/pages/EditableProfilePage.dart';
+import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stefomobileapp/ui/common.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:http/http.dart' as http;
 import '../Models/order.dart';
 import '../ui/cards.dart';
-import 'ProfilePage.dart';
 import 'RequestPage.dart';
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -40,6 +40,9 @@ class _HomePageState extends State<HomeContent> {
   String? _id;
   var fabLoc;
   bool editPrice = false;
+  TextEditingController newBasePrice = TextEditingController();
+
+  var homeTab;
 
   _HomePageState(int val) {
     _selected = val;
@@ -163,7 +166,13 @@ class _HomePageState extends State<HomeContent> {
 
   String? id = "";
   int currentIndex = 0;
-  int sizeList = 3;
+
+  final List<String> imageList = [
+    'assets/images/stefo_logo.png',
+    'assets/images/stefo_logo.png',
+    'assets/images/stefo_logo.png',
+    'assets/images/stefo_logo.png'
+  ];
 
   List<Order> requestList = [];
   List<Order> orderList = [];
@@ -197,7 +206,6 @@ class _HomePageState extends State<HomeContent> {
         req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
-        req.billing_address = responseData["data"][i]["address"];
         req.order_id = responseData["data"][i]["order_id"].toString();
         //print(req);
         if (req.status != "Denied" && req.status != "Pending") {
@@ -223,57 +231,17 @@ class _HomePageState extends State<HomeContent> {
           child: Column(
             children: [
               Container(
-                // padding: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: CarouselSlider(
-                  items: [
-                    //1st Image of Slider
-
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/stefo_logo.png'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-
-                    //2nd Image of Slider
-
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/stefo_logo.png'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-
-                    //3rd Image of Slider
-                    Container(
-                      margin: EdgeInsets.all(6.0),
-                      decoration: BoxDecoration(
-                        // borderRadius: BorderRadius.circular(8.0),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/steefo_banner.jpeg'),
-                          fit: BoxFit.contain,
-                        ),
-                      ),
-                    ),
-                  ],
-
-                  //Slider Container properties
+                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: CarouselSlider.builder(
+                  itemCount: imageList.length,
                   options: CarouselOptions(
-                    height: 150.0,
+                    height: 100.0,
                     enlargeCenterPage: true,
                     autoPlay: true,
                     aspectRatio: 16 / 9,
                     autoPlayCurve: Curves.fastOutSlowIn,
-                    enableInfiniteScroll: true,
-                    autoPlayAnimationDuration: Duration(milliseconds: 500),
+                    enableInfiniteScroll: false,
+                    autoPlayAnimationDuration: Duration(milliseconds: 300),
                     viewportFraction: 0.8,
                     onPageChanged: (index, reason) {
                       setState(() {
@@ -281,10 +249,31 @@ class _HomePageState extends State<HomeContent> {
                       });
                     },
                   ),
+                  itemBuilder: (context, i, id) {
+                    //for onTap to redirect to another screen
+                    return GestureDetector(
+                      child: Container(
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(15),
+                            border: Border.all(
+                              color: Colors.black,
+                            )),
+                        //ClipRRect for image border radius
+                        child: ClipRRect(
+                          // borderRadius: BorderRadius.circular(15),
+                          child: Image.asset(
+                            imageList[i],
+                            width: 500,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               DotsIndicator(
-                dotsCount: sizeList,
+                dotsCount: imageList.length,
                 position: currentIndex.toDouble(),
                 decorator: DotsDecorator(
                   activeColor: Colors.black,
@@ -332,17 +321,54 @@ class _HomePageState extends State<HomeContent> {
                       ],
                     );
                   } else {
-                    return TextFormField(
-                        initialValue: price.toString(),
-                        keyboardType: TextInputType.number,
-                        textInputAction: TextInputAction.done,
-                        onFieldSubmitted: (value) {
-                          print(value);
-                          setState(() {
-                            editPrice = false;
-                            price = int.parse(value);
-                          });
-                        });
+                    return Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        Container(
+                          child: TextFormField(
+                            // initialValue: price.toString(),
+                            keyboardType: TextInputType.number,
+                            textInputAction: TextInputAction.done,
+                            controller: newBasePrice,
+                            textAlign: TextAlign.center,
+                            style: TextStyle(color: Colors.white, fontSize: 20),
+                            cursorColor: Colors.white,
+                            decoration: const InputDecoration(
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 2.0),
+                              ),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide:
+                                    BorderSide(color: Colors.white, width: 2.0),
+                              ),
+                            ),
+                            // onFieldSubmitted: (value) {
+                            //   print(value);
+                            //   setState(() {
+                            //     editPrice = false;
+                            //     price = int.parse(value);
+                            //   });
+                            // }),
+                          ),
+                          width: MediaQuery.of(context).size.width / 3,
+                        ),
+                        ElevatedButton(
+                            // icon: Icon(Icons.done_outlined),
+
+                            onPressed: () {
+                              // print(newBasePrice.text);
+                              setState(() {
+                                editPrice = false;
+                                price = int.parse(newBasePrice.text);
+                              });
+                            },
+                            child: Text("Submit"),
+                            style: ElevatedButton.styleFrom(
+                                backgroundColor: Colors.white,
+                                foregroundColor: Colors.black))
+                      ],
+                    );
                   }
                 }),
                 width: MediaQuery.of(context).size.width,
@@ -352,164 +378,216 @@ class _HomePageState extends State<HomeContent> {
                 ),
               ),
               Container(
-                  //height: MediaQuery.of(context).size.height,
-                  decoration: BoxDecoration(
-                      color: const Color.fromRGBO(255, 255, 255, 0.5),
-                      borderRadius: BorderRadius.circular(8)),
-                  margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
-                  child: Column(
-                    children: [
-                      const Center(
-                          child: Text(
-                        "Orders",
-                        style: TextStyle(fontFamily: "Poppins_Bold"),
-                      )),
-                      LayoutBuilder(builder: (context, constraints) {
-                        if (user_type == "Dealer") {
+                margin: EdgeInsets.all(10.0),
+                padding: const EdgeInsets.all(8.0),
+
+                decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    // border: Border.all(color: Colors.black),
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(color: Colors.black, blurRadius: 5.0)
+                    ]),
+                // width: 200,
+                height: 450,
+                child: ContainedTabBarView(
+                  tabBarProperties: TabBarProperties(
+                      background: Container(
+                    width: MediaQuery.of(context).size.width / 1.5,
+                  )),
+                  tabs: [
+                    Container(
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Text('Orders', style: TextStyle(color: Colors.black)),
+                          Text(orderList.length.toString().padLeft(2, '0'),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 30)),
+                        ],
+                      ),
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Text('Requests', style: TextStyle(color: Colors.black)),
+                        Text(requestList.length.toString().padLeft(2, '0'),
+                            style:
+                                TextStyle(color: Colors.black, fontSize: 30)),
+                      ],
+                    ),
+                  ],
+                  views: [
+                    Container(
+                      color: Colors.white,
+                      child: Container(
+                          //height: MediaQuery.of(context).size.height,
+                          decoration: BoxDecoration(
+                              color: const Color.fromRGBO(255, 255, 255, 0.5),
+                              borderRadius: BorderRadius.circular(8)),
+                          margin: const EdgeInsets.fromLTRB(10, 10, 10, 10),
+                          child: Column(
+                            children: [
+                              LayoutBuilder(builder: (context, constraints) {
+                                if (user_type == "Dealer") {
+                                  return Container(
+                                    height: 300,
+                                    child: SingleChildScrollView(
+                                      child: ListView.builder(
+                                        itemCount: orderList.length > 3
+                                            ? 3
+                                            : orderList.length,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          return InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            OrderDetails(
+                                                                order: orderList[
+                                                                    index])));
+                                              },
+                                              child: orderCard(
+                                                  context, orderList[index]));
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                } else {
+                                  return Container(
+                                    height: 300,
+                                    child: SingleChildScrollView(
+                                      child: ListView.builder(
+                                        itemCount: orderList.length,
+                                        physics:
+                                            const NeverScrollableScrollPhysics(),
+                                        scrollDirection: Axis.vertical,
+                                        shrinkWrap: true,
+                                        itemBuilder: (context, index) {
+                                          return InkWell(
+                                              onTap: () {
+                                                Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                        builder: (context) =>
+                                                            OrderDetails(
+                                                                order: orderList[
+                                                                    index])));
+                                              },
+                                              child: orderCard(
+                                                  context, orderList[index]));
+                                        },
+                                      ),
+                                    ),
+                                  );
+                                }
+                              }),
+                              Align(
+                                alignment: Alignment.centerRight,
+                                child: Container(
+                                  margin: const EdgeInsets.symmetric(
+                                      horizontal: 0, vertical: 0),
+                                  width: MediaQuery.of(context).size.width / 4,
+                                  child: ElevatedButton(
+                                    child: const Align(
+                                        alignment: Alignment.center,
+                                        child: Text(
+                                          "View All",
+                                          style: TextStyle(
+                                              fontWeight: FontWeight.bold),
+                                        )),
+                                    onPressed: () {
+                                      Navigator.of(context)
+                                          .pushNamed('/orders');
+                                    },
+                                  ),
+                                ),
+                              )
+                            ],
+                          )),
+                    ),
+                    Container(
+                      color: Colors.white,
+                      child: LayoutBuilder(builder: (context, constraints) {
+                        if (user_type != "Dealer") {
                           return Container(
-                            height: MediaQuery.of(context).size.height * 0.7,
-                            child: SingleChildScrollView(
-                              child: ListView.builder(
-                                itemCount:
-                                    orderList.length > 3 ? 3 : orderList.length,
-                                physics: const NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    OrderDetails(
-                                                        order:
-                                                            orderList[index])));
-                                      },
-                                      child:
-                                          orderCard(context, orderList[index]));
-                                },
-                              ),
-                            ),
-                          );
+                              //height: MediaQuery.of(context).size.height*0.36,
+                              decoration: BoxDecoration(
+                                  // color:
+                                  //     const Color.fromRGBO(255, 255, 255, 0.5),
+
+                                  borderRadius: BorderRadius.circular(8)),
+                              margin: const EdgeInsets.fromLTRB(5, 10, 5, 10),
+                              child: Column(
+                                children: [
+                                  Container(
+                                    height: 300,
+                                    child: SingleChildScrollView(
+                                      child: Container(
+                                        child: ListView.builder(
+                                          itemCount: requestList.length,
+                                          physics:
+                                              const NeverScrollableScrollPhysics(),
+                                          scrollDirection: Axis.vertical,
+                                          shrinkWrap: true,
+                                          itemBuilder: (context, index) {
+                                            return InkWell(
+                                                onTap: () {
+                                                  Navigator.push(
+                                                      context,
+                                                      MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              OrderDetails(
+                                                                  order: requestList[
+                                                                      index])));
+                                                },
+                                                child: orderRequestCard(
+                                                    context, requestList[index],
+                                                    () {
+                                                  // orderList.add(requestList[index]);
+                                                  // requestList.removeAt(index);
+                                                  id = "none";
+                                                  loadData();
+                                                  setState(() {});
+                                                }));
+                                          },
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  Align(
+                                    alignment: Alignment.centerRight,
+                                    child: Container(
+                                      // margin:
+                                      //     EdgeInsets.symmetric(horizontal: 20),
+                                      width:
+                                          MediaQuery.of(context).size.width / 4,
+                                      child: ElevatedButton(
+                                        child: Align(
+                                            alignment: Alignment.center,
+                                            child: Text("View All")),
+                                        onPressed: () {
+                                          Navigator.of(context)
+                                              .pushNamed('/orderreq');
+                                        },
+                                      ),
+                                    ),
+                                  )
+                                ],
+                              ));
                         } else {
-                          return Container(
-                            height: MediaQuery.of(context).size.height * 0.3,
-                            child: SingleChildScrollView(
-                              child: ListView.builder(
-                                itemCount: orderList.length,
-                                physics: const NeverScrollableScrollPhysics(),
-                                scrollDirection: Axis.vertical,
-                                shrinkWrap: true,
-                                itemBuilder: (context, index) {
-                                  return InkWell(
-                                      onTap: () {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    OrderDetails(
-                                                        order:
-                                                            orderList[index])));
-                                      },
-                                      child:
-                                          orderCard(context, orderList[index]));
-                                },
-                              ),
-                            ),
-                          );
+                          return Container();
                         }
                       }),
-                      Align(
-                        alignment: Alignment.centerRight,
-                        child: Container(
-                          margin: const EdgeInsets.symmetric(
-                              horizontal: 20, vertical: 0),
-                          width: MediaQuery.of(context).size.width / 4,
-                          child: TextButton(
-                            child: const Align(
-                                alignment: Alignment.center,
-                                child: Text("View All")),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed('/orders');
-                            },
-                          ),
-                        ),
-                      )
-                    ],
-                  )
+                    )
+                  ],
+                ),
               ),
-
-
-              LayoutBuilder(builder: (context, constraints) {
-                if (user_type != "Dealer") {
-                  return Container(
-                      //height: MediaQuery.of(context).size.height*0.36,
-                      decoration: BoxDecoration(
-                          color: const Color.fromRGBO(255, 255, 255, 0.5),
-                          borderRadius: BorderRadius.circular(8)),
-                      margin: const EdgeInsets.fromLTRB(10, 20, 10, 10),
-                      child: Column(
-                        children: [
-                          const Center(
-                              child: Text(
-                            "Request",
-                            style: TextStyle(fontFamily: "Poppins_Bold"),
-                          )),
-                          Container(
-                            height: 240,
-                            child: SingleChildScrollView(
-                              child: Container(
-                                child: ListView.builder(
-                                  itemCount: requestList.length,
-                                  physics: const NeverScrollableScrollPhysics(),
-                                  scrollDirection: Axis.vertical,
-                                  shrinkWrap: true,
-                                  itemBuilder: (context, index) {
-                                    return InkWell(
-                                        onTap: () {
-                                          Navigator.push(
-                                              context,
-                                              MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      OrderDetails(
-                                                          order: requestList[
-                                                              index])));
-                                        },
-                                        child: orderRequestCard(
-                                            context, requestList[index], () {
-                                          // orderList.add(requestList[index]);
-                                          // requestList.removeAt(index);
-                                          id = "none";
-                                          loadData();
-                                          setState(() {});
-                                        }));
-                                  },
-                                ),
-                              ),
-                            ),
-                          ),
-                          Align(
-                            alignment: Alignment.centerRight,
-                            child: Container(
-                              margin: EdgeInsets.symmetric(horizontal: 20),
-                              width: MediaQuery.of(context).size.width / 4,
-                              child: TextButton(
-                                child: Align(
-                                    alignment: Alignment.center,
-                                    child: Text("View All")),
-                                onPressed: () {
-                                  Navigator.of(context).pushNamed('/orderreq');
-                                },
-                              ),
-                            ),
-                          )
-                        ],
-                      ));
-                } else {
-                  return Container();
-                }
-              }),
             ],
           ),
         ));
