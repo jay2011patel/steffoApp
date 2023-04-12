@@ -485,7 +485,7 @@ class _HomePageState extends State<HomeContent> {
                                                                     index])));
                                               },
                                               child: orderCard(
-                                                  context, orderList[index]));
+                                                  context, orderList[index], id));
                                         },
                                       ),
                                     ),
@@ -514,7 +514,7 @@ class _HomePageState extends State<HomeContent> {
                                                                     index])));
                                               },
                                               child: orderCard(
-                                                  context, orderList[index]));
+                                                  context, orderList[index] , id));
                                         },
                                       ),
                                     ),

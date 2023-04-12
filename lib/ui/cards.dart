@@ -4,15 +4,15 @@ import 'package:google_fonts/google_fonts.dart';
 import '../Models/order.dart';
 import '../Models/user.dart';
 
-Widget orderCard(BuildContext context,Order order){
+Widget orderCard(BuildContext context,Order order,String? curr_user_id){
   String org_name=" Bhagyodey Steel Corporation";
 
-
+  print(curr_user_id);
   return Card(
     elevation: 10,
     child: Container(
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: curr_user_id == order.reciever_id ? Colors.blue:Colors.green,
           borderRadius: BorderRadius.circular(20)
       ),
       padding: EdgeInsets.all(5),

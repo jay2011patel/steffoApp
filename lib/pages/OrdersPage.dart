@@ -234,7 +234,7 @@ class _OrdersPageState extends State<OrdersContent>{
                                   builder: (context) => OrderDetails(order: salesOrderList[index]))
                           );
                         },
-                        child:orderCard(context,salesOrderList[index]));
+                        child:orderCard(context,salesOrderList[index],id));
                   },
                 ),
               ),
@@ -274,7 +274,7 @@ class _OrdersPageState extends State<OrdersContent>{
                                   builder: (context) => OrderDetails(order: purchaseOrderList[index]))
                           );
                         },
-                        child:orderCard(context,purchaseOrderList[index]));
+                        child:orderCard(context,purchaseOrderList[index],id));
                   },
                 ),
               ),
