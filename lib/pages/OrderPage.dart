@@ -216,44 +216,7 @@ class _OrderPageState extends State<OrderPage> {
                                   // borderRadius: BorderRadius.circular(20),
                                   color: Colors.white,
                                 ),
-                                child: Column(
-                                  children: [
-                                    Row(
-                                      children: [
-                                        const Text("Billing Address :",
-                                            style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-
-                                      ],
-                                    ),
-
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: Text(widget.order.billing_address!,
-                                              style: const TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: "Poppins",
-                                              )
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                    const SizedBox(
-                                      height: 5.0,
-                                    ),
-                                    Row(
-                                      children: [
-                                        const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-
-                                      ],
-                                    ),
-                                    Row(
-                                      children: [
-                                        Text(widget.order.user_mob_num!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
-                                      ],
-                                    )
-                                  ],
-                                )),
+                                ),
                           ),
                           const SizedBox(
                             height: 10.0,

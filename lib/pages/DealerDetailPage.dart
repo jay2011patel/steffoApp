@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/UI/common.dart';
 import 'package:stefomobileapp/ui/cards.dart';
 import 'package:http/http.dart' as http;
@@ -44,9 +45,12 @@ class DealerDetailState extends State<DealerDetailContent>{
     );
   }
   var f = 0 ;
+  String? id;
   List<Order> orderList = [];
   loadOrderList() async {
     if(f==0){
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      id = await prefs.getString('id');
       orderList = [];
       final res = await http.post(
         Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
@@ -216,7 +220,7 @@ class DealerDetailState extends State<DealerDetailContent>{
                                                   index])));
                                 },
                                 child: orderCard(
-                                    context, orderList[index]));
+                                    context, orderList[index],id));
                           },
                         ),
                   ],
