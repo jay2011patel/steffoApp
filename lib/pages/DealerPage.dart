@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/DealerDetailPage.dart';
+import 'package:stefomobileapp/pages/DistributorDetailPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/ProfilePage.dart';
@@ -176,6 +177,12 @@ class _DealerPageState extends State<DealerContent>{
                   itemCount: child.length,
                   itemBuilder: (context, index) {
                     return InkWell(
+                        onTap: (){
+                          Navigator.push(context, MaterialPageRoute(
+                              builder: (context) => DistributorDetailPage(user: child[index])
+                          )
+                          );
+                        },
 
                         child: DistributorCard(child[index])
                     );

@@ -43,35 +43,40 @@ class DealerDetailState extends State<DealerDetailContent>{
 
     );
   }
+  var f = 0 ;
   List<Order> orderList = [];
   loadOrderList() async {
-    orderList = [];
-    final res = await http.post(
-      Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
-      body: {
-        "id": widget.user.id
-      },
-    );
-    var responseData = jsonDecode(res.body);
-    for (int i = 0; i < responseData["data"].length; i++) {
-      Order req = Order();
-      req.reciever_id = responseData["data"][i]["supplier_id"];
-      req.user_id = responseData["data"][i]["user_id"];
-      req.user_mob_num = responseData["data"][i]["mobileNumber"];
-      req.user_name = responseData["data"][i]["firstName"] + " " + responseData["data"][i]["lastName"];
-      req.status = responseData["data"][i]["orderStatus"];
-      req.party_name = responseData["data"][i]["partyName"];
-      req.party_address = responseData["data"][i]["shippingAddress"];
-      req.party_mob_num = responseData["data"][i]["partyMobileNumber"];
-      req.loading_type = responseData["data"][i]["loadingType"];
-      req.order_date = responseData["data"][i]["createdAt"];
-      req.base_price = responseData["data"][i]["basePrice"];
-      req.order_id = responseData["data"][i]["order_id"].toString();
+    if(f==0){
+      orderList = [];
+      final res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
+        body: {"id": widget.user.id},
+      );
+      var responseData = jsonDecode(res.body);
+      for (int i = 0; i < responseData["data"].length; i++) {
+        Order req = Order();
+        req.reciever_id = responseData["data"][i]["supplier_id"];
+        req.user_id = responseData["data"][i]["user_id"];
+        req.user_mob_num = responseData["data"][i]["mobileNumber"];
+        req.user_name = responseData["data"][i]["firstName"] +
+            " " +
+            responseData["data"][i]["lastName"];
+        req.status = responseData["data"][i]["orderStatus"];
+        req.party_name = responseData["data"][i]["partyName"];
+        req.party_address = responseData["data"][i]["shippingAddress"];
+        req.party_mob_num = responseData["data"][i]["partyMobileNumber"];
+        req.loading_type = responseData["data"][i]["loadingType"];
+        req.order_date = responseData["data"][i]["createdAt"];
+        req.base_price = responseData["data"][i]["basePrice"];
+        req.order_id = responseData["data"][i]["order_id"].toString();
 
-      //print(req);
-      if (req.status != "Denied" && req.status != "Pending") {
-        orderList.add(req);
+        //print(req);
+        if (req.status != "Denied" && req.status != "Pending") {
+          orderList.add(req);
+        }
       }
+      f=1;
+      setState(() {});
 
     }
   }
@@ -190,26 +195,32 @@ class DealerDetailState extends State<DealerDetailContent>{
             child: SingleChildScrollView(
               child: Container(
                 width: MediaQuery.of(context).size.width,
-                child: ListView.builder(
-                      itemCount: orderList.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          OrderDetails(
-                                              order: orderList[
-                                              index])));
-                            },
-                            child: orderCard(
-                                context, orderList[index]));
-                      },
-                    ),
+                child: Column(
+                  children: [
+                    Text("Orders",style: GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.bold)),),
+                    ListView.builder(
+                          itemCount: orderList.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            print(orderList.length);
+                            return InkWell(
+                                onTap: () {
+                                  Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                          builder: (context) =>
+                                              OrderDetails(
+                                                  order: orderList[
+                                                  index])));
+                                },
+                                child: orderCard(
+                                    context, orderList[index]));
+                          },
+                        ),
+                  ],
+                ),
                 ),
               ),
             ),

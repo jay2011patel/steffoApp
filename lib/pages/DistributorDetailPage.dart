@@ -34,7 +34,7 @@ class DistributorDetailState extends State<DistributorDetailContent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar("Dealer", () {
+      appBar: appbar("Distributor", () {
 
       }),
     );
