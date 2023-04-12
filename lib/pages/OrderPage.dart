@@ -225,19 +225,19 @@ class _OrderPageState extends State<OrderPage> {
 
                                       ],
                                     ),
-
-                                    Row(
-                                      children: [
-                                        Flexible(
-                                          child: Text(widget.order.billing_address!,
-                                              style: const TextStyle(
-                                                fontSize: 15,
-                                                fontFamily: "Poppins",
-                                              )
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                    //
+                                    // Row(
+                                    //   children: [
+                                    //     Expanded(
+                                    //       child: Text(widget.order.billing_address!,
+                                    //           style: const TextStyle(
+                                    //             fontSize: 15,
+                                    //             fontFamily: "Poppins",
+                                    //           )
+                                    //       ),
+                                    //     ),
+                                    //   ],
+                                    // ),
                                     const SizedBox(
                                       height: 5.0,
                                     ),
