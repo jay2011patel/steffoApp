@@ -33,8 +33,6 @@ class RequestContent extends StatefulWidget{
 
 class _RequestPageState extends State<RequestContent>{
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -134,6 +132,7 @@ class _RequestPageState extends State<RequestContent>{
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];
+        req.billing_address = responseData["data"][i]["address"];
         req.party_mob_num = responseData["data"][i]["partyMobileNumber"];
         req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
@@ -352,20 +351,13 @@ class _RequestPageState extends State<RequestContent>{
                     ),
                   ),
                 ),
-
               ],
             ),
           )
       ),
     );
   }
-
-
-
-
-
 }
-
 
 //---------------------------------SingleOrderRequestWidget---------------------
 
@@ -413,7 +405,7 @@ Widget orderRequestCard(context,Order order,c()){
                   },
                 );
                 c();
-              }, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
+                }, icon: Icon(Icons.thumb_down_alt_rounded,color: Colors.red,))
             ],
           ),
           Container(

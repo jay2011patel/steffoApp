@@ -475,6 +475,7 @@ class _ChallanPageState extends State<ChallanPage> {
               const SizedBox(
                 height: 10.0,
               ),
+
               Center(
                 child: Container(
                     padding: const EdgeInsets.all(10),
@@ -530,16 +531,19 @@ class _ChallanPageState extends State<ChallanPage> {
                                       DataCell(Text(element["Qty"]!)),
                                     ],
                                   )),
-                                )
+                                 )
                                     .toList(),
                               ),
                             ),
                           ),
                         ),
                       ],
-                    )),
-              )
-            ])),
+                    )
+                ),
+               )
+              ]
+            )
+        ),
       ),
     );
   }
