@@ -2,6 +2,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/UI/common.dart';
 // import 'package:stefomobileapp/pages/EditableProfilePage.dart';
@@ -32,35 +33,28 @@ class ProfileContent extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfileContent>{
 
-  // var f = 0;
-  // List<User> distributors = [];
-  // loadDistributors() async {
-  //   if(f==0){
-  //     final res = await http.post(
-  //         Uri.parse("http://urbanwebmobile.in/steffo/getdistributors.php")
-  //     );
-  //     var responseData = jsonDecode(res.body);
-  //     for (int i = 0; i < responseData["data"].length; i++) {
-  //       User u = User();
-  //       u.id = responseData['data'][i]['id'];
-  //       u.firstName = responseData['data'][i]['firstName'];
-  //       u.lastName = responseData['data'][i]['lastName'];
-  //       u.email = responseData['data'][i]['email'];
-  //       u.mobileNumber = responseData['data'][i]['mobileNumber'];
-  //       u.parentId = responseData['data'][i]['parentId'];
-  //       u.userType = responseData['data'][i]['userType'];
-  //       u.userStatus = responseData['data'][i]['userStatus'];
-  //       u.orgName = responseData['data'][i]['orgName'];
-  //       u.gstNumber = responseData['data'][i]['gstNumber'];
-  //       u.panNumber = responseData['data'][i]['panNumber'];
-  //       u.adhNumber = responseData['data'][i]['adhNumber'];
-  //       u.address = responseData['data'][i]['address'];
-  //       distributors.add(u);
-  //     }
-  //     f = 1;
-  //   }
-  // }
+  String? id,firstName,lastName,email,mobileNumber,address,orgName,adhNumber,gstNumber,panNumber;
+  var f =0 ;
+  User user = User();
+  loadData() async {
+    if(f==0){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      user.id = await prefs.getString('id');
+      user.firstName = await prefs.getString('firstName');
+      user.lastName = await prefs.getString("lastName");
+      user.email = await prefs.getString("email");
+      user.mobileNumber = await prefs.getString("mobileNumber");
+      user.orgName = await prefs.getString("orgName");
+      user.gstNumber = await prefs.getString("gstNumber");
+      user.panNumber = await prefs.getString("panNumber");
+      user.adhNumber = await prefs.getString("adhNumber");
+      user.address = await prefs.getString("address");
+      f=1;
+      setState(() {
 
+      });
+    }
+  }
 
   var _selected = 3;
   onRegister() async{
@@ -72,7 +66,7 @@ class _ProfilePageState extends State<ProfileContent>{
 
   @override
   Widget build(BuildContext context) {
-    var user;
+    loadData();
     return Scaffold(
         backgroundColor: Colors.white,
         appBar: appbar("Profile", () {
@@ -159,35 +153,35 @@ class _ProfilePageState extends State<ProfileContent>{
                               ],
                             ),
                             SizedBox(width: 20),
-                            // Column(
-                            //   crossAxisAlignment: CrossAxisAlignment.start,
-                            //   children: [
-                            //     // Padding(padding: EdgeInsets.only(top: 10,bottom: 10)),
-                            //     Text(user.firstName! + user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                            //     ),
-                            //     SizedBox(height:20),
-                            //     Text(user.mobileNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                            //     ),
-                            //     SizedBox(height:20),
-                            //     // Text("98765432",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                            //     // ),
-                            //     // SizedBox(height:20),
-                            //     Text(user.email!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                            //     ),
-                            //     SizedBox(height:20),
-                            //     Text(user.gstNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                            //     ),
-                            //     SizedBox(height:20),
-                            //     Text(user.panNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                            //     ),
-                            //     SizedBox(height:20),
-                            //     Text(user.adhNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                            //     ),
-                            //     SizedBox(height:20),
-                            //     Text("21/03/2023",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                            //     ),
-                            //   ],
-                            // ),
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                // Padding(padding: EdgeInsets.only(top: 10,bottom: 10)),
+                                Text(user.firstName! + user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                                SizedBox(height:20),
+                                Text(user.mobileNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                                SizedBox(height:20),
+                                // Text("98765432",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                // ),
+                                // SizedBox(height:20),
+                                Text(user.email!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                                SizedBox(height:20),
+                                Text(user.gstNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                                SizedBox(height:20),
+                                Text(user.panNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                                SizedBox(height:20),
+                                Text(user.adhNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                                SizedBox(height:20),
+                                Text("21/03/2023",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                              ],
+                            ),
                           ],
                         ),
                       ),
