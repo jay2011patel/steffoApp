@@ -5,14 +5,11 @@ import '../Models/order.dart';
 import '../Models/user.dart';
 
 Widget orderCard(BuildContext context,Order order,String? curr_user_id){
-  String org_name=" Bhagyoday Steel Corporation";
-
-  print(curr_user_id);
+  String org_name=" Bhagyodey Steel Corporation";
   return Card(
     elevation: 10,
     child: Container(
-      decoration: BoxDecoration( 
-          color: curr_user_id == order.reciever_id ? Colors.blue:Colors.green,
+      decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20)
       ),
       padding: EdgeInsets.all(5),
@@ -20,23 +17,35 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text("Order No:",textAlign: TextAlign.left,style: TextStyle(fontFamily: "Poppins_Bold"),),
-              Container(
-                  padding: EdgeInsets.only(left: 30),
-                  child: Text(order.order_id!,textAlign: TextAlign.left,)),
-            ],
-          ),Container(
+          Container(
             padding: EdgeInsets.only(top: 7,bottom: 5),
+
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Container(
-                  child: Text("Order From:",style: TextStyle(fontFamily: "Poppins_Bold"),),
-                ),
-                Text(order.user_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
+                Text(order.user_name!,style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20)),),
+                LayoutBuilder(builder: (context,constraints){
+                  if(curr_user_id == order.reciever_id){
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 3,vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      child:Text("Sales",)
+                    );
+                  }
+                  else{
+                    return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 3,vertical: 3),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                            borderRadius: BorderRadius.circular(20)
+                        ),
+                        child:Text("Purchase")
+                    );
+                  }
+                })
               ],
             ),
           ),
@@ -48,6 +57,7 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
                   child: Text("Org Name:",style: TextStyle(fontFamily: "Poppins_Bold"),),
                   padding: EdgeInsets.only(bottom: 5,right: 5),
                 ),
+
                 Text(order.party_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
               ],
             ),
@@ -74,13 +84,14 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
               ],
             ),
           )
+
         ],
       ),
     ),
   );
 }
 
-Widget DistributorCard(User user){
+Widget DistributorCard(User user , BuildContext context){
   return Container(
     height: 170,
     //margin: EdgeInsets.only(top: 20),
@@ -128,7 +139,7 @@ Widget DistributorCard(User user){
                     //color: Colors.green,
                     borderRadius: BorderRadius.circular(20)
                 ),
-                width: 120,
+                width: MediaQuery.of(context).size.width/4,
                 child: Image.asset("assets/images/distributor.png")
             )
           ],
@@ -137,7 +148,7 @@ Widget DistributorCard(User user){
   );
 }
 
-Widget DealerCard(User user){
+Widget DealerCard(User user , BuildContext context){
   return Container(
     height: 170,
     //margin: EdgeInsets.only(top: 20),

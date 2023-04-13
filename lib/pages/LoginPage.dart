@@ -82,6 +82,7 @@ class _loginPageState extends State<LoginContent> {
     print(responseData);
     if (responseData["status"] == "200") {
       userValid = true;
+      print(responseData);
       SharedPreferences prefs = await SharedPreferences.getInstance();
       prefs.setString('id', responseData["id"]);
       prefs.setString('firstName', responseData["firstName"]);
@@ -90,7 +91,13 @@ class _loginPageState extends State<LoginContent> {
       prefs.setString('mobileNumber', responseData["mobileNumber"]);
       prefs.setString('parentId', responseData["parentId"]);
       prefs.setString('userType', responseData["userType"]);
-      prefs.setString('userStatus', responseData["userStatus"]);
+      prefs.setString('orgName', responseData["orgName"]);
+      prefs.setString('gstNumber', responseData["gstNumber"]);
+      prefs.setString('panNumber', responseData["panNumber"]);
+      prefs.setString('adhNumber', responseData["adhNumber"]);
+      prefs.setString('address', responseData["address"]);
+
+
       if(responseData['userStatus'] == 'Approved'){
         Navigator.of(context).pushNamed("/home");
         Fluttertoast.showToast(

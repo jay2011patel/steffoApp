@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -9,6 +10,7 @@ import 'package:http/http.dart' as http;
 import '../Models/order.dart';
 import '../Models/user.dart';
 import '../ui/cards.dart';
+import 'DealerDetailPage.dart';
 import 'OrderPage.dart';
 
 class DistributorDetailPage extends StatelessWidget{
@@ -48,46 +50,74 @@ class DistributorDetailState extends State<DistributorDetailContent>{
 
   var f = 0 ;
   String? id;
+  List<User> child = [];
   List<Order> orderList = [];
-  loadOrderList() async {
-    if(f==0){
-      final SharedPreferences prefs = await SharedPreferences.getInstance();
-      id = await prefs.getString('id');
+  loadChildData() async {
+    if(f == 0){
       orderList = [];
-      final res = await http.post(
+      child = [];
+      final SharedPreferences prefs = await SharedPreferences.getInstance();
+      var id = await prefs.getString('id');
+      String uri;
+      uri = "http://urbanwebmobile.in/steffo/getchildren.php";
+
+      var res = await http.post(Uri.parse(uri), body: {
+        "id": widget.user.id,
+      });
+
+      var responseData = json.decode(res.body);
+      print(responseData['data'].length);
+      for (int i = 0; i < responseData['data'].length; i++) {
+        User u = User();
+        u.id = responseData["data"][i]["id"];
+        u.userType = responseData["data"][i]["userType"];
+        u.orgName = responseData["data"][i]["orgName"];
+        u.address = responseData["data"][i]["address"];
+        u.email = responseData["data"][i]["email"];
+        u.mobileNumber = responseData["data"][i]["mobileNumber"];
+        u.gstNumber = responseData["data"][i]["gstNumber"];
+        u.panNumber = responseData["data"][i]["panNumber"];
+        u.adhNumber = responseData["data"][i]["adhNumber"];
+        print(u);
+        child.add(u);
+      }
+
+      res = await http.post(
         Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
-        body: {"id": widget.user.id},
+
+        body: {
+          "id": widget.user.id!
+        },
       );
-      var responseData = jsonDecode(res.body);
-      for (int i = 0; i < responseData["data"].length; i++) {
+      responseData = jsonDecode(res.body);
+      //print(responseData);
+
+      for(int i = 0;i<responseData["data"].length;i++){
         Order req = Order();
         req.reciever_id = responseData["data"][i]["supplier_id"];
         req.user_id = responseData["data"][i]["user_id"];
         req.user_mob_num = responseData["data"][i]["mobileNumber"];
-        req.user_name = responseData["data"][i]["firstName"] +
-            " " +
-            responseData["data"][i]["lastName"];
+        req.user_name = responseData["data"][i]["firstName"]+" " +responseData["data"][i]["lastName"];
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];
+        req.billing_address = responseData["data"][i]["address"];
         req.party_mob_num = responseData["data"][i]["partyMobileNumber"];
         req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
         req.order_id = responseData["data"][i]["order_id"].toString();
-
-        if (req.status != "Denied" && req.status != "Pending") {
-          orderList.add(req);
-        }
+        //print(req);
+        orderList.add(req);
       }
       f=1;
       setState(() {});
-
     }
-  }
 
+
+  }
   Widget DistributorDetailPageBody(){
-    loadOrderList();
+    loadChildData();
     return Column(
       children: [
         Stack(
@@ -189,48 +219,108 @@ class DistributorDetailState extends State<DistributorDetailContent>{
             )
           ],
         ),
+
         Expanded(
           flex: 1,
-          child: Card(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(10),
-            ),
-            margin: EdgeInsets.all(5),
-            elevation: 10,
-            child: SingleChildScrollView(
-              child: Container(
-                width: MediaQuery.of(context).size.width,
+          child: ContainedTabBarView(
+            tabBarProperties: TabBarProperties(
+                background: Container(
+                  width: MediaQuery.of(context).size.width / 1.5,
+                )),
+            tabs: [
+              Container(
                 child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Text("Orders",style: GoogleFonts.poppins(textStyle: TextStyle(fontWeight: FontWeight.bold)),),
-                    ListView.builder(
-                      itemCount: orderList.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                            onTap: () {
-                              Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                      builder: (context) =>
-                                          OrderDetails(
-                                              order: orderList[
-                                              index])));
-                            },
-                            child: orderCard(
-                                context, orderList[index],id));
-                      },
-                    ),
+                    Text('Dealers', style: TextStyle(color: Colors.black)),
                   ],
                 ),
               ),
-            ),
-          ),
+              Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  Text('Orders', style: TextStyle(color: Colors.black)),
+                ],
+              ),
+            ],
+            views: [
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(5),
+                elevation: 10,
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          itemCount: child.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => DealerDetailPage(user: child[index])
+                                  )
+                                  );
+                                },
+
+                                child: DealerCard(child[index],context)
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              ),
+              Card(
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                margin: EdgeInsets.all(5),
+                elevation: 10,
+                child: SingleChildScrollView(
+                  child: Container(
+                    width: MediaQuery.of(context).size.width,
+                    child: Column(
+                      children: [
+                        ListView.builder(
+                          itemCount: orderList.length,
+                          physics: const NeverScrollableScrollPhysics(),
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                                onTap: (){
+                                  Navigator.push(context, MaterialPageRoute(
+                                      builder: (context) => OrderPage(order: orderList[index],)
+                                  )
+                                  );
+                                },
+
+                                child: orderCard(context,orderList[index],widget.user.id)
+                            );
+                          },
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+              )
+
+
+            ],
+          )
         ),
       ],
     );
+
+
   }
 
 

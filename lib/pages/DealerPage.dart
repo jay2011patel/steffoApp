@@ -185,7 +185,7 @@ class _DealerPageState extends State<DealerContent>{
                           );
                         },
 
-                        child: DistributorCard(child[index])
+                        child: DistributorCard(child[index],context)
                     );
                   });
             } else if (userType=="Distributor") {
@@ -199,7 +199,7 @@ class _DealerPageState extends State<DealerContent>{
                           )
                           );
                         },
-                        child: DealerCard(child[index])
+                        child: DealerCard(child[index],context)
                     );
                   });
             } else {
