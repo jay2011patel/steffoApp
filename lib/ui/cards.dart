@@ -5,13 +5,13 @@ import '../Models/order.dart';
 import '../Models/user.dart';
 
 Widget orderCard(BuildContext context,Order order,String? curr_user_id){
-  String org_name=" Bhagyodey Steel Corporation";
+  String org_name=" Bhagyoday Steel Corporation";
 
   print(curr_user_id);
   return Card(
     elevation: 10,
     child: Container(
-      decoration: BoxDecoration(
+      decoration: BoxDecoration( 
           color: curr_user_id == order.reciever_id ? Colors.blue:Colors.green,
           borderRadius: BorderRadius.circular(20)
       ),
@@ -30,16 +30,12 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
             ],
           ),Container(
             padding: EdgeInsets.only(top: 7,bottom: 5),
-
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 Container(
                   child: Text("Order From:",style: TextStyle(fontFamily: "Poppins_Bold"),),
-
                 ),
-
                 Text(order.user_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
               ],
             ),
@@ -52,7 +48,6 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
                   child: Text("Org Name:",style: TextStyle(fontFamily: "Poppins_Bold"),),
                   padding: EdgeInsets.only(bottom: 5,right: 5),
                 ),
-
                 Text(order.party_name!,overflow: TextOverflow.ellipsis,maxLines: 3,)
               ],
             ),
@@ -79,7 +74,6 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
               ],
             ),
           )
-
         ],
       ),
     ),

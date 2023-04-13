@@ -6,9 +6,11 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/EditableProfilePage.dart';
+import 'package:stefomobileapp/pages/ForgetPassPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/LoginPage.dart';
+import 'package:stefomobileapp/pages/OTPPage.dart';
 import 'package:stefomobileapp/pages/OrdersPage.dart';
 import 'package:stefomobileapp/pages/RegistrationPage.dart';
 import 'package:stefomobileapp/pages/RequestPage.dart';
@@ -34,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)),
       title: 'Flutter Demo',
-      home: SplashScreen(),
+      home: ForgetPassPage(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lrpage': (BuildContext context) => LRPage(),
@@ -52,6 +54,9 @@ class MyApp extends StatelessWidget {
         // '/challan': (BuildContext context) => GeneratedChallan(),
         '/profile': (BuildContext context) => UserProfilePage(),
         '/editprofile': (BuildContext context) => EditableProfilePage(),
+        '/forgetPass': (BuildContext context) => ForgetPassPage(),
+        '/OTP': (BuildContext context) => OTPPage(),
+
         //'/request': (BuildContext context) => UserRequestPage(),
       },
     );

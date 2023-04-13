@@ -41,15 +41,15 @@ class _OrdersPageState extends State<OrdersContent>{
           Navigator.pop(context);
         }),
         body: OrdersPageBody(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: (){
-
-            Navigator.of(context).popAndPushNamed('/challanlist');
-
-          },
-          child: Icon(Icons.add),
-          backgroundColor: Colors.red,
-        ),
+        // floatingActionButton: FloatingActionButton(
+        //   onPressed: (){
+        //
+        //     Navigator.of(context).popAndPushNamed('/challanlist');
+        //
+        //   },
+        //   child: Icon(Icons.add),
+        //   backgroundColor: Colors.red,
+        // ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(
