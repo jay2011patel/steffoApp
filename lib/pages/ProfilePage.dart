@@ -157,7 +157,10 @@ class _ProfilePageState extends State<ProfileContent>{
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 // Padding(padding: EdgeInsets.only(top: 10,bottom: 10)),
-                                Text(user.firstName! + user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                Text(user.firstName! +" "+ user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                                SizedBox(height:20),
+                                Text(user.orgName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
                                 ),
                                 SizedBox(height:20),
                                 Text(user.mobileNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
@@ -176,6 +179,9 @@ class _ProfilePageState extends State<ProfileContent>{
                                 ),
                                 SizedBox(height:20),
                                 Text(user.adhNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+                                ),
+                                SizedBox(height:20),
+                                Text(user.address!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
                                 ),
                                 SizedBox(height:20),
                                 Text("21/03/2023",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
