@@ -220,7 +220,7 @@ class DealerDetailState extends State<DealerDetailContent>{
                                                   index])));
                                 },
                                 child: orderCard(
-                                    context, orderList[index],id));
+                                    context, orderList[index],widget.user.id));
                           },
                         ),
                   ],
