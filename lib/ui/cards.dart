@@ -10,7 +10,6 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
     elevation: 10,
     child: Container(
       decoration: BoxDecoration(
-          color: curr_user_id == order.reciever_id ? Colors.blue:Colors.green,
           borderRadius: BorderRadius.circular(20)
       ),
       padding: EdgeInsets.all(5),
@@ -24,7 +23,29 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                Text(order.user_name!,style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20)),)
+                Text(order.user_name!,style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.black,fontWeight: FontWeight.bold,fontSize: 20)),),
+                LayoutBuilder(builder: (context,constraints){
+                  if(curr_user_id == order.reciever_id){
+                    return Container(
+                      padding: EdgeInsets.symmetric(horizontal: 3,vertical: 3),
+                      decoration: BoxDecoration(
+                        color: Colors.blue,
+                        borderRadius: BorderRadius.circular(20)
+                      ),
+                      child:Text("Sales",)
+                    );
+                  }
+                  else{
+                    return Container(
+                        padding: EdgeInsets.symmetric(horizontal: 3,vertical: 3),
+                        decoration: BoxDecoration(
+                          color: Colors.green,
+                            borderRadius: BorderRadius.circular(20)
+                        ),
+                        child:Text("Purchase")
+                    );
+                  }
+                })
               ],
             ),
           ),
@@ -127,7 +148,7 @@ Widget DistributorCard(User user , BuildContext context){
   );
 }
 
-Widget DealerCard(User user){
+Widget DealerCard(User user , BuildContext context){
   return Container(
     height: 170,
     //margin: EdgeInsets.only(top: 20),

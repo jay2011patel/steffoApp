@@ -199,7 +199,7 @@ class _DealerPageState extends State<DealerContent>{
                           )
                           );
                         },
-                        child: DealerCard(child[index])
+                        child: DealerCard(child[index],context)
                     );
                   });
             } else {
