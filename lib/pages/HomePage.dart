@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:ffi';
-//import 'dart:ffi';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
@@ -433,9 +431,13 @@ class _HomePageState extends State<HomeContent> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text('Orders', style: TextStyle(color: Colors.black)),
-                          Text(orderList.length.toString().padLeft(2, '0'),
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 30)),
+                          Container(
+                            height: 35,
+                            child: Text(
+                                orderList.length.toString().padLeft(2, '0'),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 30)),
+                          ),
                         ],
                       ),
                     ),
@@ -443,9 +445,13 @@ class _HomePageState extends State<HomeContent> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text('Requests', style: TextStyle(color: Colors.black)),
-                        Text(requestList.length.toString().padLeft(2, '0'),
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 30)),
+                        Container(
+                          height: 35,
+                          child: Text(
+                              requestList.length.toString().padLeft(2, '0'),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 30)),
+                        ),
                       ],
                     ),
                   ],
@@ -484,8 +490,8 @@ class _HomePageState extends State<HomeContent> {
                                                                 order: orderList[
                                                                     index])));
                                               },
-                                              child: orderCard(
-                                                  context, orderList[index], id));
+                                              child: orderCard(context,
+                                                  orderList[index], id));
                                         },
                                       ),
                                     ),
@@ -513,8 +519,8 @@ class _HomePageState extends State<HomeContent> {
                                                                 order: orderList[
                                                                     index])));
                                               },
-                                              child: orderCard(
-                                                  context, orderList[index] , id));
+                                              child: orderCard(context,
+                                                  orderList[index], id));
                                         },
                                       ),
                                     ),
