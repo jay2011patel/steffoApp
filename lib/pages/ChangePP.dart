@@ -19,6 +19,7 @@ class ChangePerPage extends StatefulWidget {
 
 class _ChangePerPage extends State<ChangePerPage> {
   Map<String, TextEditingController> _controllerMap = Map();
+  Map<String, TextEditingController> _controllerMapSize = Map();
   List<String> _dataGrade = [
     "FE500",
     "FE500D",
@@ -205,7 +206,7 @@ class _ChangePerPage extends State<ChangePerPage> {
           itemCount: data.length,
           padding: EdgeInsets.all(5),
           itemBuilder: (BuildContext context, int index) {
-            final controller = _getControllerOf(_dataSize[index]);
+            final controller = _getSizeControllerOf(_dataSize[index]);
 
             final text = Row(
               children: [
@@ -261,7 +262,7 @@ class _ChangePerPage extends State<ChangePerPage> {
       mainAxisSize: MainAxisSize.max,
       mainAxisAlignment: MainAxisAlignment.spaceAround,
       children: [
-        _cancelButton(),
+        _cancelButtonSize(),
         _okButtonSize(),
       ],
     );
@@ -272,6 +273,19 @@ class _ChangePerPage extends State<ChangePerPage> {
       onPressed: () {
         setState(() {
           _controllerMap.forEach((key, controller) {
+            controller.text = key;
+          });
+        });
+      },
+      child: Text("Cancel"),
+    );
+  }
+
+  Widget _cancelButtonSize() {
+    return ElevatedButton(
+      onPressed: () {
+        setState(() {
+          _controllerMapSize.forEach((key, controller) {
             controller.text = key;
           });
         });
@@ -304,18 +318,19 @@ class _ChangePerPage extends State<ChangePerPage> {
   Widget _okButtonSize() {
     return ElevatedButton(
       onPressed: () async {
-        String text = _controllerMap.values
+        String text = _controllerMapSize.values
             .where((element) => element.text != "")
             .fold("", (acc, element) => acc += "${element.text}\n");
 
         setState(() {
-          _controllerMap.forEach((key, controller) {
+          _controllerMapSize.forEach((key, controller) {
             // get the index of original text
-            int index = _controllerMap.keys.toList().indexOf(key);
+            int index = _controllerMapSize.keys.toList().indexOf(key);
             key = controller.text;
             _percSize[index] = controller.text;
           });
         });
+        print(_percSize);
       },
       child: Text("OK"),
     );
@@ -326,6 +341,16 @@ class _ChangePerPage extends State<ChangePerPage> {
     if (controller == null) {
       controller = TextEditingController(text: "0");
       _controllerMap[name] = controller;
+    }
+
+    return controller;
+  }
+
+  TextEditingController _getSizeControllerOf(String name) {
+    var controller = _controllerMapSize[name];
+    if (controller == null) {
+      controller = TextEditingController(text: "0");
+      _controllerMapSize[name] = controller;
     }
 
     return controller;
