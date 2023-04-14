@@ -1,12 +1,11 @@
 import 'dart:convert';
-import 'dart:ffi';
-//import 'dart:ffi';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stefomobileapp/pages/ChangePP.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/OrderPage.dart';
@@ -283,127 +282,153 @@ class _HomePageState extends State<HomeContent> {
               ),
               LayoutBuilder(builder: (context, constraints) {
                 if (user_type == "Manufacturer") {
-                  return Container(
-                      child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                  return Column(
                     children: [
-                      Text("Enable Sales"),
-                      Switch(
-                          // This bool value toggles the switch.
-                          value: light,
-                          activeColor: Colors.green,
-                          onChanged: (bool value) {
-                            // This is called when the user toggles the switch.
-                            setState(() {
-                              light = value;
-                            });
-                          }),
-                    ],
-                  ));
-                } else {
-                  return Container();
-                }
-              }),
-              LayoutBuilder(builder: (context, constraint) {
-                if (light == true) {
-                  return Container(
-                    height: 60,
-                    margin: EdgeInsets.all(5.0),
-                    child: LayoutBuilder(builder: (context, constraints) {
-                      if (editPrice == false) {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
-                          children: [
-                            Expanded(
-                              flex: 1,
-                              //width: MediaQuery.of(context).size.width * 0.6,
-                              child: Text(
-                                "Base Price : $price/-",
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    fontSize: 25,
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w900),
-                              ),
-                            ),
-                            LayoutBuilder(builder: (context, constraints) {
-                              if (user_type == "Manufacturer") {
-                                return Container(
-                                  width:
-                                      MediaQuery.of(context).size.width * 0.2,
-                                  child: IconButton(
-                                    color: Colors.white,
-                                    onPressed: () {
-                                      setState(() {
-                                        editPrice = true;
-                                      });
-                                    },
-                                    icon: Icon(Icons.edit),
-                                  ),
+                      Container(
+                          child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          Container(
+                              child: Row(
+                            children: [
+                              Text("Enable Sales"),
+                              Switch(
+                                  // This bool value toggles the switch.
+                                  value: light,
+                                  activeColor: Colors.green,
+                                  onChanged: (bool value) {
+                                    // This is called when the user toggles the switch.
+                                    setState(() {
+                                      light = value;
+                                    });
+                                  })
+                            ],
+                          )),
+                          ElevatedButton(
+                              onPressed: () {
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => ChangePerPage()));
+                              },
+                              child: Text("Change Price Percentage"))
+                        ],
+                      )),
+                      LayoutBuilder(builder: (context, constraint) {
+                        if (light == true) {
+                          return Container(
+                            height: 60,
+                            margin: EdgeInsets.all(5.0),
+                            child:
+                                LayoutBuilder(builder: (context, constraints) {
+                              if (editPrice == false) {
+                                return Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    Expanded(
+                                      flex: 1,
+                                      //width: MediaQuery.of(context).size.width * 0.6,
+                                      child: Text(
+                                        "Base Price : $price/-",
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            fontSize: 25,
+                                            color: Colors.white,
+                                            fontWeight: FontWeight.w900),
+                                      ),
+                                    ),
+                                    LayoutBuilder(
+                                        builder: (context, constraints) {
+                                      if (user_type == "Manufacturer") {
+                                        return Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.2,
+                                          child: IconButton(
+                                            color: Colors.white,
+                                            onPressed: () {
+                                              setState(() {
+                                                editPrice = true;
+                                              });
+                                            },
+                                            icon: Icon(Icons.edit),
+                                          ),
+                                        );
+                                      } else {
+                                        return Container();
+                                      }
+                                    })
+                                  ],
                                 );
                               } else {
-                                return Container();
-                              }
-                            })
-                          ],
-                        );
-                      } else {
-                        return Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            Container(
-                              child: TextFormField(
-                                // initialValue: price.toString(),
-                                keyboardType: TextInputType.number,
-                                textInputAction: TextInputAction.done,
-                                controller: newBasePrice,
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                    color: Colors.white, fontSize: 20),
-                                cursorColor: Colors.white,
-                                decoration: const InputDecoration(
-                                  focusedBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white, width: 2.0),
-                                  ),
-                                  enabledBorder: UnderlineInputBorder(
-                                    borderSide: BorderSide(
-                                        color: Colors.white, width: 2.0),
-                                  ),
-                                ),
-                                // onFieldSubmitted: (value) {
-                                //   print(value);
-                                //   setState(() {
-                                //     editPrice = false;
-                                //     price = int.parse(value);
-                                //   });
-                                // }),
-                              ),
-                              width: MediaQuery.of(context).size.width / 3,
-                            ),
-                            ElevatedButton(
-                                // icon: Icon(Icons.done_outlined),
+                                return Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    Container(
+                                      child: TextFormField(
+                                        // initialValue: price.toString(),
+                                        keyboardType: TextInputType.number,
+                                        textInputAction: TextInputAction.done,
+                                        controller: newBasePrice,
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                            color: Colors.white, fontSize: 20),
+                                        cursorColor: Colors.white,
+                                        decoration: const InputDecoration(
+                                          focusedBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.white,
+                                                width: 2.0),
+                                          ),
+                                          enabledBorder: UnderlineInputBorder(
+                                            borderSide: BorderSide(
+                                                color: Colors.white,
+                                                width: 2.0),
+                                          ),
+                                        ),
+                                        // onFieldSubmitted: (value) {
+                                        //   print(value);
+                                        //   setState(() {
+                                        //     editPrice = false;
+                                        //     price = int.parse(value);
+                                        //   });
+                                        // }),
+                                      ),
+                                      width:
+                                          MediaQuery.of(context).size.width / 3,
+                                    ),
+                                    ElevatedButton(
+                                        // icon: Icon(Icons.done_outlined),
 
-                                onPressed: () {
-                                  // print(newBasePrice.text);
-                                  setState(() {
-                                    editPrice = false;
-                                    price = int.parse(newBasePrice.text);
-                                  });
-                                },
-                                child: Text("Submit"),
-                                style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.white,
-                                    foregroundColor: Colors.black))
-                          ],
-                        );
-                      }
-                    }),
-                    width: MediaQuery.of(context).size.width,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(5),
-                      color: Colors.green,
-                    ),
+                                        onPressed: () {
+                                          // print(newBasePrice.text);
+                                          setState(() {
+                                            editPrice = false;
+                                            price =
+                                                int.parse(newBasePrice.text);
+                                          });
+                                        },
+                                        child: Text("Submit"),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.white,
+                                            foregroundColor: Colors.black))
+                                  ],
+                                );
+                              }
+                            }),
+                            width: MediaQuery.of(context).size.width,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(5),
+                              color: Colors.green,
+                            ),
+                          );
+                        } else {
+                          return Container();
+                        }
+                      }),
+                    ],
                   );
                 } else {
                   return Container();
@@ -433,9 +458,13 @@ class _HomePageState extends State<HomeContent> {
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Text('Orders', style: TextStyle(color: Colors.black)),
-                          Text(orderList.length.toString().padLeft(2, '0'),
-                              style:
-                                  TextStyle(color: Colors.black, fontSize: 30)),
+                          Container(
+                            height: 35,
+                            child: Text(
+                                orderList.length.toString().padLeft(2, '0'),
+                                style: TextStyle(
+                                    color: Colors.black, fontSize: 30)),
+                          ),
                         ],
                       ),
                     ),
@@ -443,9 +472,13 @@ class _HomePageState extends State<HomeContent> {
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
                         Text('Requests', style: TextStyle(color: Colors.black)),
-                        Text(requestList.length.toString().padLeft(2, '0'),
-                            style:
-                                TextStyle(color: Colors.black, fontSize: 30)),
+                        Container(
+                          height: 35,
+                          child: Text(
+                              requestList.length.toString().padLeft(2, '0'),
+                              style:
+                                  TextStyle(color: Colors.black, fontSize: 30)),
+                        ),
                       ],
                     ),
                   ],
@@ -484,8 +517,8 @@ class _HomePageState extends State<HomeContent> {
                                                                 order: orderList[
                                                                     index])));
                                               },
-                                              child: orderCard(
-                                                  context, orderList[index], id));
+                                              child: orderCard(context,
+                                                  orderList[index], id));
                                         },
                                       ),
                                     ),
@@ -513,8 +546,8 @@ class _HomePageState extends State<HomeContent> {
                                                                 order: orderList[
                                                                     index])));
                                               },
-                                              child: orderCard(
-                                                  context, orderList[index] , id));
+                                              child: orderCard(context,
+                                                  orderList[index], id));
                                         },
                                       ),
                                     ),
