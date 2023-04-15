@@ -6,6 +6,8 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Models/grade.dart';
+import '../Models/size.dart';
 import '../ui/common.dart';
 
 class PlaceOrderPage extends StatelessWidget {
@@ -163,14 +165,47 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   }
 
   // List items = ["TMT"];
-  List grades = ["FE500", "FE550", "FE500D", "FE550D"];
-  List sizes = ["10mm", "20mm", "30mm", "40mm", "50mm"];
+  List grades = [];
+  List sizes = [];
+  List<Grade> gradeList = [];
+  List<ItemSize> sizeList = [];
+  var f = 0;
+  loadItemData() async {
+    if(f==0){
+      f=1;
+      var res = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getsize.php"));
+      var responseData = jsonDecode(res.body);
+      for(int i  = 0 ; i < responseData['data'].length;i++){
+        sizes.add(responseData['data'][i]["sizeValue"].toString());
+        ItemSize s = ItemSize();
+        s.price = responseData['data'][i]["sizePrice"];
+        s.value = responseData['data'][i]["sizeValue"];
+        sizeList.add(s);
+      }
+
+      var res1 = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getgrade.php"));
+      var responseData1 = jsonDecode(res1.body);
+      for(int i  = 0 ; i < responseData1['data'].length;i++){
+        print(responseData1['data'][i]);
+        grades.add(responseData1['data'][i]["gradeName"]);
+        Grade s = Grade();
+        s.price = responseData1['data'][i]["gradePrice"];
+        s.value = responseData1['data'][i]["gradeName"];
+        gradeList.add(s);
+      }
+
+
+    }
+  }
+  
+  
   List type = ["Loose", "Bhari"];
   List transType = ["CIF", "FOB"];
   List orderType = ["Lump-sum", "With Size"];
 
   int itemNum = 1;
   int totalQuantity = 0;
+  
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() async {
     var res = await http.post(
@@ -216,6 +251,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   }
 
   Widget PlaceOrderBody() {
+    loadItemData();
     // List<DropdownMenuItem<String>> dropdownItems = [];
     List<DropdownMenuItem<String>> dropdownGrades = [];
     List<DropdownMenuItem<String>> dropdownSize = [];
@@ -535,7 +571,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
               //--------------------------Shipping Type--------------------------
 
               LayoutBuilder(builder: (context, constraints) {
-                if (user_type == "Distributor") {
+                if (user_type == "Distributor" || user_type == "Dealer") {
                   return Container(
                       padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
                       child: DropdownButtonFormField(
@@ -720,12 +756,25 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 side: BorderSide.none),
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
+                          var grdpct,szpct;
                           if (
                               // selectedValue != null &&
                               selectedGrade != null &&
                                   selectedSize != null &&
-                                  qty.text != "") {
+                                  qty.text != "" && base_price.text != "") {
+
+                            for(int i  = 0 ; i  < gradeList.length;i++){
+                              if( gradeList[i].value == selectedGrade){
+                                grdpct = int.parse(gradeList[i].price!);
+                              }
+                            }
+                            for(int i  = 0 ; i  < sizeList.length;i++){
+                              if( sizeList[i].value == selectedSize){
+                                szpct = int.parse(sizeList[i].price!);
+                              }
+                            }
                             setState(() {
+
                               isItem = " ";
                               int f = 0;
                               for (int i = 0; i < listOfColumns.length; i++) {
@@ -735,8 +784,12 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   int quty = int.parse(
                                       listOfColumns.elementAt(i)["Qty"]!);
                                   quty = quty + int.parse(qty.text);
+                                  num p = (int.parse(base_price.text) + (int.parse(base_price.text)*(grdpct/100)) + (int.parse(base_price.text)*(szpct/100))) * quty;
+
                                   listOfColumns.elementAt(i)["Qty"] =
                                       quty.toString();
+                                  listOfColumns.elementAt(i)["Price"] =
+                                      p.toString();
                                   f = 1;
                                 }
                               }
@@ -745,6 +798,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   "Sr_no": itemNum.toString(),
                                   "Name": "$selectedGrade $selectedSize",
                                   "Qty": qty.text,
+                                  "Price": ((int.parse(base_price.text) + (int.parse(base_price.text)*(grdpct/100)) + (int.parse(base_price.text)*(szpct/100))) * int.parse(qty.text)).toString()
                                 });
                                 itemNum = itemNum + 1;
                               }
@@ -843,7 +897,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                         alignment: Alignment.center)),
                                     DataCell(Align(
                                         child: Container(
-                                          child: Text('99999999'),
+                                          child: Text(element["Price"]!),
                                           width: 70,
                                         ),
                                         alignment: Alignment.center)),
