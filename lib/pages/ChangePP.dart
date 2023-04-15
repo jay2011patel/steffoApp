@@ -75,58 +75,63 @@ class _ChangePerPage extends State<ChangePerPage> {
 
   Widget ChangePriceBody() {
     return Container(
+      margin: EdgeInsets.all(10.0),
+      // padding: const EdgeInsets.all(8.0),
+
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10.0),
+          // border: Border.all(color: Colors.black),
+          color: Colors.white,
+          boxShadow: [BoxShadow(color: Colors.black, blurRadius: 2.0)]),
+      // width: 200,
+      // height: MediaQuery.of(context).size.height / 1.2 + 10,
       child: Column(
         children: [
-          SingleChildScrollView(
-            child: Column(children: [
-              // children: [
-              Container(
-                height: MediaQuery.of(context).size.height / 2,
-                padding: EdgeInsets.only(top: 5),
-                child: ContainedTabBarView(
-                  tabBarProperties: TabBarProperties(
-                      background: Container(
-                    height: 500,
-                    width: MediaQuery.of(context).size.width / 2,
-                  )),
-                  tabs: [
-                    Container(
-                      child:
-                          Text('Grade', style: TextStyle(color: Colors.black)),
-                      height: 50,
-                      alignment: Alignment.center,
-                    ),
-                    Container(
-                      child:
-                          Text('Size', style: TextStyle(color: Colors.black)),
-                      height: 50,
-                      alignment: Alignment.center,
-                    ),
-                  ],
-                  views: [
-                    Container(
-                        margin: EdgeInsets.only(top: 15),
-                        child: Column(
-                          children: [
-                            Expanded(child: _futureBuilder()),
-                            _cancelOkButton(),
-                          ],
-                        )),
+          Expanded(
+            flex: 1,
+            child: Container(
+              // height: MediaQuery.of(context).size.height / 1.2,
 
-                    //--------------------------Sizes-------------------------------//
-                    Container(
-                        margin: EdgeInsets.only(top: 15),
-                        child: Column(
-                          children: [
-                            Expanded(child: _futureBuilderSize()),
-                            _cancelOkButtonSize(),
-                          ],
-                        )),
-                  ],
-                ),
+              // padding: EdgeInsets.only(top: 5),
+              child: ContainedTabBarView(
+                tabBarProperties: TabBarProperties(
+                    background: Container(
+                  width: MediaQuery.of(context).size.width / 2,
+                )),
+                tabs: [
+                  Container(
+                    child: Text('Grade', style: TextStyle(color: Colors.black)),
+                    height: 50,
+                    alignment: Alignment.center,
+                  ),
+                  Container(
+                    child: Text('Size', style: TextStyle(color: Colors.black)),
+                    height: 50,
+                    alignment: Alignment.center,
+                  ),
+                ],
+                views: [
+                  Container(
+                      margin: EdgeInsets.only(top: 15),
+                      child: Column(
+                        children: [
+                          Expanded(child: _futureBuilder()),
+                          _cancelOkButton(),
+                        ],
+                      )),
+
+                  //--------------------------Sizes-------------------------------//
+                  Container(
+                      margin: EdgeInsets.only(top: 15),
+                      child: Column(
+                        children: [
+                          Expanded(child: _futureBuilderSize()),
+                          _cancelOkButtonSize(),
+                        ],
+                      )),
+                ],
               ),
-              // ],
-            ]),
+            ),
           ),
         ],
       ),
@@ -247,24 +252,30 @@ class _ChangePerPage extends State<ChangePerPage> {
   }
 
   Widget _cancelOkButton() {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _cancelButton(),
-        _okButton(),
-      ],
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _cancelButton(),
+          _okButton(),
+        ],
+      ),
     );
   }
 
   Widget _cancelOkButtonSize() {
-    return Row(
-      mainAxisSize: MainAxisSize.max,
-      mainAxisAlignment: MainAxisAlignment.spaceAround,
-      children: [
-        _cancelButtonSize(),
-        _okButtonSize(),
-      ],
+    return Container(
+      margin: EdgeInsets.all(10.0),
+      child: Row(
+        mainAxisSize: MainAxisSize.max,
+        mainAxisAlignment: MainAxisAlignment.spaceAround,
+        children: [
+          _cancelButtonSize(),
+          _okButtonSize(),
+        ],
+      ),
     );
   }
 
