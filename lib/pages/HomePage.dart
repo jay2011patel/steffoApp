@@ -285,20 +285,20 @@ class _HomePageState extends State<HomeContent> {
                 if (user_type == "Manufacturer") {
                   return Container(
                       child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text("Enable Sales"),
-                      Switch(
-                          // This bool value toggles the switch.
-                          value: light,
-                          activeColor: Colors.green,
-                          onChanged: (bool value) {
-                            // This is called when the user toggles the switch.
-                            setState(() {
-                              light = value;
-                            });
-                          }),
-                    ],
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Enable Sales"),
+                          Switch(
+                              // This bool value toggles the switch.
+                              value: light,
+                              activeColor: Colors.green,
+                              onChanged: (bool value) {
+                                // This is called when the user toggles the switch.
+                                setState(() {
+                                  light = value;
+                              });
+                            }),
+                        ],
                   ));
                 } else {
                   return Container();
@@ -344,7 +344,8 @@ class _HomePageState extends State<HomeContent> {
                               } else {
                                 return Container();
                               }
-                            })
+                            }
+                            )
                           ],
                         );
                       } else {

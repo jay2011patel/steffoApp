@@ -1,10 +1,12 @@
 
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/UI/common.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
+import '../Models/user.dart';
 import 'DealerPage.dart';
 import 'HomePage.dart';
 
@@ -25,6 +27,33 @@ class ProfileContent extends StatefulWidget {
 }
 
 class _ProfilePageState extends State<ProfileContent>{
+
+  String? id,firstName,lastName,email,mobileNumber,address,orgName,adhNumber,gstNumber,panNumber;
+  var f =0 ;
+  User user = User();
+  loadData() async {
+    if(f==0){
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      user.id = await prefs.getString('id');
+      user.firstName = await prefs.getString('firstName');
+      user.lastName = await prefs.getString("lastName");
+      user.email = await prefs.getString("email");
+      user.mobileNumber = await prefs.getString("mobileNumber");
+      user.orgName = await prefs.getString("orgName");
+      user.gstNumber = await prefs.getString("gstNumber");
+      user.panNumber = await prefs.getString("panNumber");
+      user.adhNumber = await prefs.getString("adhNumber");
+      user.address = await prefs.getString("address");
+      f=1;
+      setState(() {
+
+      });
+    }
+  }
+
+  final myController = TextEditingController();
+
+
   var _selected = 3;
 
 // class ProfilePage extends StatelessWidget {
@@ -73,6 +102,13 @@ class _ProfilePageState extends State<ProfileContent>{
                     ],
                   ),
                   Padding(padding: EdgeInsets.only(bottom: 10,top: 10)),
+
+                  Card(
+                    child: TextField(
+                      controller: myController,
+                    )
+                  ),
+
                   Card(
                     elevation: 5,
                     child: TextFormField(

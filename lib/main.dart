@@ -36,7 +36,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
           textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)),
       title: 'Flutter Demo',
-      home: ForgetPassPage(),
+      home: SplashScreen(),
       debugShowCheckedModeBanner: false,
       routes: <String, WidgetBuilder>{
         '/lrpage': (BuildContext context) => LRPage(),
