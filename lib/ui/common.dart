@@ -86,3 +86,35 @@ AppBar appbar(String txt, void c()) {
         )),
   );
 }
+
+Widget buttonWhite(String str, void c()) {
+  return DecoratedBox(
+      decoration: const BoxDecoration(
+          color: Colors.white,
+          // borderRadius: BorderRadius.circular(30),
+          boxShadow: <BoxShadow>[
+            BoxShadow(
+                color: Color.fromRGBO(0, 0, 0, 0.57),
+                //shadow for button
+                blurRadius: 5) //blur radius of shadow
+          ]),
+      child: ElevatedButton(
+          style: ElevatedButton.styleFrom(
+            primary: Colors.transparent,
+            onSurface: Colors.transparent,
+            shadowColor: Colors.transparent,
+            //make color or elevated button transparent
+          ),
+          onPressed: c,
+          child: Padding(
+            padding: const EdgeInsets.only(
+              top: 18,
+              bottom: 18,
+            ),
+            child: Text(
+              str,
+              style: const TextStyle(
+                  fontFamily: 'Poppins_Bold', color: Colors.black),
+            ),
+          )));
+}

@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
+import '../ui/common.dart';
 import 'LoginPage.dart';
-import '../UI/common.dart';
+// import '../UI/common.dart';
 
 class LRPage extends StatelessWidget {
   @override
@@ -32,7 +33,7 @@ class FirstScreen extends StatelessWidget {
                   margin: EdgeInsets.only(top: 150),
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   width: MediaQuery.of(context).size.width,
-                  child: buttonStyle("Login",
+                  child: buttonWhite("Login",
                       () => {Navigator.of(context).pushNamed('/login')})),
             ),
             Container(
@@ -41,7 +42,7 @@ class FirstScreen extends StatelessWidget {
               child: Container(
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   width: MediaQuery.of(context).size.width,
-                  child: buttonStyle("Register",
+                  child: buttonWhite("Register",
                       () => Navigator.of(context).pushNamed('/register'))),
             )
           ],
