@@ -210,17 +210,30 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   onPlaceOrder() async {
     var res = await http.post(
       Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
-      body: {
+      body: selectedOrderType == "Lump-sum"?{
         "userId": id!,
         "supplierId": supplier_id!,
         "shippingAddress": party_address.text,
         "partyName": party_name.text,
-        // "party_address": party_address.text,
+        "gstNumber": party_pan_no.text,
+        "mobileNumber": party_mob_num.text,
+        "basePrice": base_price.text,
+        "status": "Pending",
+        "loadingType": "None",
+        "transportationType" : "None",
+        "orderType": selectedOrderType
+      }:{
+        "userId": id!,
+        "supplierId": supplier_id!,
+        "shippingAddress": party_address.text,
+        "partyName": party_name.text,
         "gstNumber": party_pan_no.text,
         "mobileNumber": party_mob_num.text,
         "basePrice": base_price.text,
         "status": "Pending",
         "loadingType": selectedType,
+        "orderType": selectedOrderType,
+        "transportationType" : selectedTransType
       },
     );
     Fluttertoast.showToast(
@@ -235,14 +248,27 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
     var responseData = json.decode(res.body);
     print(responseData["value"].toString());
 
-    if (responseData["status"] == '200') {
+    if (responseData["status"] == '200' && selectedOrderType == "With Size") {
       for (int i = 0; i < listOfColumns.length; i++) {
         http.post(
           Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
           body: {
             "order_id": responseData["value"].toString(),
             "name": listOfColumns[i]["Name"],
-            "qty": listOfColumns[i]["Qty"]
+            "qty": listOfColumns[i]["Qty"],
+            "price": listOfColumns[i]["Price"]
+          },
+        );
+      }
+    }else{
+      for (int i = 0; i < listOfColumns.length; i++) {
+        http.post(
+          Uri.parse("http://urbanwebmobile.in/steffo/addlumpsum.php"),
+          body: {
+            "order_id": responseData["value"].toString(),
+            "name": listOfColumns[i]["Name"],
+            "qty": listOfColumns[i]["Qty"],
+            "price": listOfColumns[i]["Price"]
           },
         );
       }
@@ -468,7 +494,6 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                       filled: true,
                       fillColor: Color.fromRGBO(233, 236, 239,
                           0.792156862745098) // Color.fromRGBO(233, 236, 239, 0.792156862745098)
-
                       ),
                 ),
               ),
@@ -509,33 +534,64 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
               //--------------------------Loading Type--------------------------
 
               LayoutBuilder(builder: (context, constraints) {
-                if (selectedOrderType != "Lump-sum") {
-                  return Container(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      child: DropdownButtonFormField(
-                        decoration: const InputDecoration(
-                            hintText: "Select Loading Type",
-                            filled: true,
-                            fillColor: Color.fromRGBO(
-                                233, 236, 239, 0.792156862745098),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              // borderRadius: BorderRadius.circular(20)
-                            )),
-                        value: selectedType,
-                        items: getType(),
-                        onChanged: (String? newValue) {
-                          selectedType = newValue;
-                        },
-                        key: field5Key,
-                        focusNode: focusNode5,
-                        validator: (selectedValue) {
-                          if (selectedValue == null) {
-                            // return 'Please select a value.';
-                          }
-                          return null;
-                        },
-                      ));
+                if (selectedOrderType != "Lump-sum" && (user_type == "Dealer" || user_type == "Distributor")) {
+                  return Column(
+                    children: [
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          child: DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                hintText: "Select Loading Type",
+                                filled: true,
+                                fillColor: Color.fromRGBO(
+                                    233, 236, 239, 0.792156862745098),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  // borderRadius: BorderRadius.circular(20)
+                                )),
+                            value: selectedType,
+                            items: getType(),
+                            onChanged: (String? newValue) {
+                              selectedType = newValue;
+                            },
+                            key: field5Key,
+                            focusNode: focusNode5,
+                            validator: (selectedValue) {
+                              if (selectedValue == null) {
+                                // return 'Please select a value.';
+                              }
+                              return null;
+                            },
+                          )),
+                      Container(
+                          padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                          child: DropdownButtonFormField(
+                            decoration: const InputDecoration(
+                                hintText: "Select Transportation Type",
+                                filled: true,
+                                fillColor: Color.fromRGBO(
+                                    233, 236, 239, 0.792156862745098),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide.none,
+                                  // borderRadius: BorderRadius.circular(20)
+                                )),
+                            value: selectedTransType,
+                            items: getTransType(),
+                            onChanged: (String? newValue) {
+                              selectedTransType = newValue;
+                            },
+                            // key: field5Key,
+                            // focusNode: focusNode5,
+                            validator: (selectedValue) {
+                              if (selectedValue == null) {
+                                return 'Please select a value.';
+                              }
+                              return null;
+                            },
+                          ))
+
+                    ],
+                  );
                 } else {
                   return Container();
                 }
@@ -567,41 +623,6 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
               //         ),
               //   ),
               // ),
-
-              //--------------------------Shipping Type--------------------------
-
-              LayoutBuilder(builder: (context, constraints) {
-                if (user_type == "Distributor" || user_type == "Dealer") {
-                  return Container(
-                      padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
-                      child: DropdownButtonFormField(
-                        decoration: const InputDecoration(
-                            hintText: "Select Transportation Type",
-                            filled: true,
-                            fillColor: Color.fromRGBO(
-                                233, 236, 239, 0.792156862745098),
-                            border: OutlineInputBorder(
-                              borderSide: BorderSide.none,
-                              // borderRadius: BorderRadius.circular(20)
-                            )),
-                        value: selectedTransType,
-                        items: getTransType(),
-                        onChanged: (String? newValue) {
-                          selectedTransType = newValue;
-                        },
-                        // key: field5Key,
-                        // focusNode: focusNode5,
-                        validator: (selectedValue) {
-                          if (selectedValue == null) {
-                            return 'Please select a value.';
-                          }
-                          return null;
-                        },
-                      ));
-                } else {
-                  return Container();
-                }
-              }),
 
               //------------------------------BasePrice--------------------------
 
@@ -756,7 +777,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 side: BorderSide.none),
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
-                          var grdpct,szpct;
+                          var grdpct,szpct = 0;
                           if (
                               // selectedValue != null &&
                               selectedGrade != null &&
