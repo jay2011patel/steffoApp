@@ -1,11 +1,5 @@
-
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stefomobileapp/UI/common.dart';
-// import 'package:stefomobileapp/pages/EditableProfilePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
@@ -69,304 +63,680 @@ class _ProfilePageState extends State<ProfileContent>{
     loadData();
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: appbar("Profile", () {
-          print("Back Pressed");
-          Navigator.pop(context);
-        }),
+        appBar: AppBar(
+          actions: [
+            // IconButton(
+            //     onPressed: () {},
+            //     icon: const Icon(
+            //       Icons.check,
+            //       color: Colors.black,
+            //       size: 30,
+            //     )
+            // )
+          ],
+          title: Center(
+              child: Text("Profile",
+                // textAlign: TextAlign.center,
+                style: const TextStyle(
+                    color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
+              )),
+          backgroundColor: Colors.white,
+          leading: IconButton(
+              onPressed: (){
+
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios_new,
+                color: Colors.black,
+              )),
+        ),
 
         body: SingleChildScrollView(
-          child: Container(
-            child: Column(
-              children:[
-              Align(alignment: Alignment.centerRight,
-                child: Container(
-                  padding: EdgeInsets.only(right: 10),
-                    margin: const EdgeInsets.only(top: 20),
-                    alignment: Alignment.topLeft,
-                    width: 100,
-                    child: ElevatedButton(onPressed: () {
-                        onRegister();
-                      },
-                      child: Text("Edit"),)),
-              ),
-              // ElevatedButton(
-              //     onPressed: () { EditableProfilePage(); },
-              //     child: const Text("Edit")),
-              Text("Your Information",style: TextStyle(fontSize: 25,color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins_Bold")),
-              Padding(padding: EdgeInsets.only(left: 30,top: 20)),
+          child: Column(
+            children:[
+              // Padding(padding: EdgeInsets.only(left: 20,bottom: 30)),
+            Align(alignment: Alignment.centerRight,
+              child: Container(
+                padding: EdgeInsets.only(right: 10),
+                  margin: const EdgeInsets.only(top: 20),
+                  alignment: Alignment.topLeft,
+                  width: 100,
+                  child: ElevatedButton(onPressed: () {
+                      onRegister();
+                    },
+                    child: Icon(Icons.edit))),
+            ),
+            // ElevatedButton(
+            //     onPressed: () { EditableProfilePage(); },
+            //     child: const Text("Edit")),
+            // Text("Your Information",style: TextStyle(fontSize: 25,color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins_Bold")),
+            //   Container(
+            //     color: Colors.grey,
+            //     width: 300,
+            //     // padding: EdgeInsets.only(right: 200),
+            //     child: Text(user.firstName! +" "+ user.lastName!,style: TextStyle(fontFamily: "Poppins_bold", fontSize: 25,color:Color.fromRGBO(19, 59, 78, 1.0))
+            //     ),
+            //   ),
+            // Padding(padding: EdgeInsets.only(left: 30,top: 20)),
+            // Container(
+            //   color: Colors.white,
+            //   padding: EdgeInsets.only(left: 10,top: 20,bottom: 20),
+            //   // height: 100,
+            //   width: 500,
+            //   child: Column(
+            //     children: [
+            //
+            //       imageProfile(context),
+            //     ],
+            //   ),
+            // ),
 
-              // Container(
-              //   color: Colors.white,
-              //   padding: EdgeInsets.only(left: 10,top: 20,bottom: 20),
-              //   // height: 100,
-              //   width: 500,
-              //   child: Column(
-              //     children: [
-              //
-              //       imageProfile(context),
-              //     ],
-              //   ),
-              // ),
+
               Container(
-                alignment: Alignment.topLeft,
-                // color: Colors.orangeAccent,
-                padding: EdgeInsets.only(left: 10,right: 10),
-                child: Column(
-                  children:[
-                    Align(alignment: Alignment.topLeft,),
-                    Card(
-                      child: Container(
-                        width: 500,
-                        padding: EdgeInsets.only(top: 20,bottom: 20,left: 20),
-                        child: Row(
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Padding(padding: EdgeInsets.only(top: 10,bottom: 10)),
-                                Text("Name:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                                SizedBox(height:20),
-                                Text("business Name:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                                SizedBox(height:20),
-                                Text("Contact Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                                SizedBox(height:20),
-                                Text("Email:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                                SizedBox(height:20),
-                                Text("GST Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                                SizedBox(height:20),
-                                Text("PAN Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                                SizedBox(height:20),
-                                Text("Aadhar Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                                SizedBox(height:20),
-                                Text("Address:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                                SizedBox(height:20),
-                                Text("Registered date:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
-                                ),
-                              ],
-                            ),
-                            SizedBox(width: 20),
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                // Padding(padding: EdgeInsets.only(top: 10,bottom: 10)),
-                                Text(user.firstName! +" "+ user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                                SizedBox(height:20),
-                                Text(user.orgName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                                SizedBox(height:20),
-                                Text(user.mobileNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                                SizedBox(height:20),
-                                // Text("98765432",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                // ),
-                                // SizedBox(height:20),
-                                Text(user.email!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                                SizedBox(height:20),
-                                Text(user.gstNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                                SizedBox(height:20),
-                                Text(user.panNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                                SizedBox(height:20),
-                                Text(user.adhNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                                SizedBox(height:20),
-                                Text(user.address!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                                SizedBox(height:20),
-                                Text("21/03/2023",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(padding: EdgeInsets.only(right: 20,)),
+                    Column(
+                      children: [
+                        // Padding(padding: EdgeInsets.only(right: 30)),
+                        Image(image: AssetImage('assets/images/profile.png',),height: 50,)
+                      ],
                     ),
-
-                    // IconButton(
-                    //     icon: Icon(
-                    //       Icons.edit,
-                    //       color: Color(0xFF8D8D8D),
-                    //     ),
-                    //     onPressed: null),
-                    // Row(
-                    //   children: [
-                    //     Text("Your Information",style: TextStyle(fontSize: 25,color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins_Bold")),
-                    //   ],
-                    // ),
-                    // Padding(padding: EdgeInsets.only(bottom: 10,top: 10)),
-                    // Card(
-                    //   elevation: 5,
-                    //   child: Text("Name"
-                    //   ),
-                    // ),
-                    //
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    //
-                    // Card(
-                    //   elevation: 5,
-                    //   child: TextField(
-                    //     decoration: InputDecoration(
-                    //       border: OutlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //             width: 1, color: Colors.black),
-                    //         //<-- SEE HERE
-                    //       ),
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(width: 2, color: Colors.indigo),
-                    //       ),
-                    //       labelText: "Business Name",
-                    //       floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    // Card(
-                    //   elevation: 5,
-                    //   child: TextFormField(
-                    //     decoration: InputDecoration(
-                    //       border: OutlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //             width: 1, color: Colors.black), //<-- SEE HERE
-                    //       ),
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(width: 2, color: Colors.indigo),
-                    //       ),
-                    //       labelText: "Contact Number",
-                    //       floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //     ),
-                    //   ),
-                    // ),
-                    //
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    //
-                    // Card(
-                    //   elevation: 5,
-                    //   child: TextFormField(
-                    //     decoration: InputDecoration(
-                    //       border: OutlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //             width: 1, color: Colors.black), //<-- SEE HERE
-                    //       ),
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(width: 2, color: Colors.indigo),
-                    //       ),
-                    //       labelText: "Email",
-                    //       floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    // Card(
-                    //   elevation: 5,
-                    //   child: TextFormField(
-                    //     decoration: InputDecoration(
-                    //       border: OutlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //             width: 1, color: Colors.black), //<-- SEE HERE
-                    //       ),
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(width: 2, color: Colors.indigo),
-                    //       ),
-                    //       labelText: "GST Number",
-                    //       floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    //
-                    // Card(
-                    //   elevation: 5,
-                    //   child: TextFormField(
-                    //     decoration: InputDecoration(
-                    //         border: OutlineInputBorder(
-                    //             borderSide: BorderSide(
-                    //                 width: 1,color: Colors.black)
-                    //         ),
-                    //         focusedBorder: OutlineInputBorder(
-                    //             borderSide: BorderSide(width: 2,color: Colors.indigo)
-                    //         ),
-                    //         labelText: "PAN Number",
-                    //         floatingLabelBehavior: FloatingLabelBehavior.never
-                    //     ),
-                    //   ),
-                    // ),
-                    //
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    //
-                    // Card(
-                    //   elevation: 5,
-                    //   child: TextFormField(
-                    //     decoration: InputDecoration(
-                    //       border: OutlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //             width: 1, color: Colors.black), //<-- SEE HERE
-                    //       ),
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(width: 2, color: Colors.indigo),
-                    //       ),
-                    //       labelText: "Aadhar Number",
-                    //       floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //     ),
-                    //   ),
-                    // ),
-                    // SizedBox(
-                    //   height: 10,
-                    // ),
-                    // Card(
-                    //   elevation: 5,
-                    //   child: TextFormField(
-                    //     // minLines: 1,
-                    //     maxLines: 4,
-                    //     decoration: InputDecoration(
-                    //       border: OutlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //             width: 1, color: Colors.black), //<-- SEE HERE
-                    //       ),
-                    //       focusedBorder: OutlineInputBorder(
-                    //         borderSide: BorderSide(width: 2, color: Colors.indigo),
-                    //       ),
-                    //       labelText: "Address",
-                    //       floatingLabelBehavior: FloatingLabelBehavior.never,
-                    //     ),
-                    //   ),
-                    // ),
-
-                    Container(
-                        margin:
-                        const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
-                        width: MediaQuery.of(context).size.width,
-                        child: buttonStyle("Save", () {
-                        }
-                        )
+                    SizedBox(width: 60,),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(user.firstName! +" "+ user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 18,)
+                        ),
+                      ],
                     )
                   ],
                 ),
               ),
-          ]
-            ),
+              Divider(
+                color: Colors.grey,
+                endIndent: 20,
+                indent: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.only(right: 20)),
+                  Column(
+                    children: [
+                      // Padding(padding: EdgeInsets.only(right: 30)),
+                      Image(image: AssetImage('assets/images/organization.png',),height: 50,)
+                    ],
+                  ),
+                  SizedBox(width: 60,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(user.orgName!,style: TextStyle(fontFamily: "Poppins", fontSize: 18)
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Divider(
+                color: Colors.grey,
+                endIndent: 20,
+                indent: 20,
+              ),
+
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.only(right: 20)),
+                  Column(
+                    children: [
+                      // Padding(padding: EdgeInsets.only(right: 30)),
+                      Image(image: AssetImage('assets/images/call.png',),height: 50,)
+                    ],
+                  ),
+                  SizedBox(width: 60,),
+                  Column(
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(user.mobileNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 18)
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Divider(
+                color: Colors.grey,
+                endIndent: 20,
+                indent: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.only(right: 20)),
+                  Column(
+                    children: [
+                      // Padding(padding: EdgeInsets.only(right: 30)),
+                      Image(image: AssetImage('assets/images/email.png',),height: 50,)
+                    ],
+                  ),
+                  SizedBox(width: 60,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(user.email!,style: TextStyle(fontFamily: "Poppins", fontSize: 18)
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Divider(
+                color: Colors.grey,
+                endIndent: 20,
+                indent: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.only(right: 20)),
+                  Column(
+                    children: [
+                      // Padding(padding: EdgeInsets.only(right: 30)),
+                      Image(image: AssetImage('assets/images/gst.png',),height: 50,)
+                    ],
+                  ),
+                  SizedBox(width: 60,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(user.gstNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 18)
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Divider(
+                color: Colors.grey,
+                endIndent: 20,
+                indent: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.only(right: 20)),
+                  Column(
+                    children: [
+                      // Padding(padding: EdgeInsets.only(right: 30)),
+                      Image(image: AssetImage('assets/images/pan.png',),height: 50,),
+                      Text("PAN")
+                    ],
+                  ),
+                  SizedBox(width: 60,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(user.panNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 18)
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Divider(
+                color: Colors.grey,
+                endIndent: 20,
+                indent: 20,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.start,
+                children: [
+                  Padding(padding: EdgeInsets.only(right: 20)),
+                  Column(
+                    children: [
+                      // Padding(padding: EdgeInsets.only(right: 30)),
+                      Image(image: AssetImage('assets/images/aadhar.png',),height: 50,),
+                      Text("aadhar")
+                    ],
+                  ),
+                  SizedBox(width: 60,),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(user.adhNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 18)
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Divider(
+                color: Colors.grey,
+                endIndent: 20,
+                indent: 20,
+              ),
+              Container(
+                padding: EdgeInsets.only(right: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Padding(padding: EdgeInsets.only(right: 20,bottom: 30)),
+                    Column(
+                      children: [
+                        // Padding(padding: EdgeInsets.only(right: 30)),
+                        Image(image: AssetImage('assets/images/address.png',),height: 50,),
+                      ],
+                    ),
+                    SizedBox(width: 60,),
+                    Expanded(
+                      child: Column(
+                        // mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Padding(padding: EdgeInsets.only(left: 20)),
+                          Text(user.address!,style: TextStyle(fontFamily: "Poppins", fontSize: 18),maxLines: 10,softWrap: true,
+                          ),
+                        ],
+                      ),
+                    )
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: 30,
+              )
+
+
+
+            //   Column(
+            //   children:[
+            //
+            //
+            //     Padding(padding: EdgeInsets.only(right: 20,left: 40)),
+            //     // Column
+            //     //   children: [
+            //     //     Container(
+            //     //       padding: EdgeInsets.only(bottom: 20),
+            //     //       child: Row(
+            //     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //         children: [
+            //     //           Text("Name:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //           ),
+            //     //           Text(user.firstName! +" "+ user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15,)
+            //     //           ),
+            //     //         ],
+            //     //       ),
+            //     //     ),
+            //     //
+            //     //     Container(
+            //     //       padding: EdgeInsets.only(bottom: 20),
+            //     //       child: Row(
+            //     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //         children: [
+            //     //           Text("business Name:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //           ),
+            //     //           Text(user.orgName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15)
+            //     //           ),
+            //     //         ],
+            //     //       ),
+            //     //     ),
+            //     //
+            //     //     Container(
+            //     //       padding: EdgeInsets.only(bottom: 20),
+            //     //       child: Row(
+            //     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //         children: [
+            //     //           Text("Contact Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //           ),
+            //     //           Text(user.mobileNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15)
+            //     //           ),
+            //     //         ],
+            //     //       ),
+            //     //     ),
+            //     //
+            //     //     Container(
+            //     //       padding: EdgeInsets.only(bottom: 20),
+            //     //       child: Row(
+            //     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //         children: [
+            //     //           Text("Email:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //           ),
+            //     //           Text(user.email!,style: TextStyle(fontFamily: "Poppins", fontSize: 15)
+            //     //       ),
+            //     //         ],
+            //     //       ),
+            //     //     ),
+            //     //
+            //     //     Container(
+            //     //       padding: EdgeInsets.only(bottom: 20),
+            //     //       child: Row(
+            //     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //         children: [
+            //     //           Text("GST Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //           ),
+            //     //           Text(user.gstNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15)
+            //     //           ),
+            //     //         ],
+            //     //       ),
+            //     //     ),
+            //     //
+            //     //     Container(
+            //     //       padding: EdgeInsets.only(bottom: 20),
+            //     //       child: Row(
+            //     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //         children: [
+            //     //           Text("PAN Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //           ),
+            //     //           Text(user.panNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15)
+            //     //           ),
+            //     //         ],
+            //     //       ),
+            //     //     ),
+            //     //
+            //     //     Container(
+            //     //       padding: EdgeInsets.only(bottom: 20),
+            //     //       child: Row(
+            //     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //         children: [
+            //     //           Text("Aadhar Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //           ),
+            //     //           Text(user.adhNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15)
+            //     //           ),
+            //     //         ],
+            //     //       ),
+            //     //     ),
+            //     //
+            //     //     Container(
+            //     //       padding: EdgeInsets.only(bottom: 20),
+            //     //       child: Column(
+            //     //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //         children: [
+            //     //           Row(
+            //     //             children: [
+            //     //               Text("Address:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //               ),
+            //     //             ],
+            //     //           ),
+            //     //           Row(
+            //     //             children: [
+            //     //               Flexible(
+            //     //                 child: Text(user.address!,style: TextStyle(fontFamily: "Poppins", fontSize: 15)
+            //     //                 ),
+            //     //               ),
+            //     //             ],
+            //     //           ),
+            //     //         ],
+            //     //       ),
+            //     //     ),
+            //     //
+            //     //     // Container(
+            //     //     //   padding: EdgeInsets.only(bottom: 20),
+            //     //     //   child: Row(
+            //     //     //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            //     //     //     children: [
+            //     //     //       Text("Registered date:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //     //       ),
+            //     //     //       Text("21/03/2023",style: TextStyle(fontFamily: "Poppins", fontSize: 15)
+            //     //     //       ),
+            //     //     //     ],
+            //     //     //   ),
+            //     //     // ),
+            //     //
+            //     //   ],
+            //     // ),
+            //
+            //     // Align(alignment: Alignment.topLeft,),
+            //     // Card(
+            //     //   color: Colors.white54,
+            //     //   child: Container(
+            //     //     width: 500,
+            //     //     padding: EdgeInsets.only(top: 20,bottom: 20,right: 20),
+            //     //     child: Row(
+            //     //       children: [
+            //     //         Column(
+            //     //           crossAxisAlignment: CrossAxisAlignment.center,
+            //     //           children: [
+            //     //             Icon(Icons.person),
+            //     //             // Padding(padding: EdgeInsets.only(top: 10,bottom: 10)),
+            //     //             // Text("Name:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             // ),
+            //     //             SizedBox(height:20),
+            //     //             Text("business Name:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text("Contact Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text("Email:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text("GST Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text("PAN Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text("Aadhar Number:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text("Address:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text("Registered date:",style: TextStyle(fontFamily: "Poppins_Bold", fontSize: 15, color: Color.fromRGBO(19, 59, 78, 1))
+            //     //             ),
+            //     //           ],
+            //     //         ),
+            //     //         SizedBox(width: 20),
+            //     //         Column(
+            //     //           crossAxisAlignment: CrossAxisAlignment.start,
+            //     //           children: [
+            //     //             // Padding(padding: EdgeInsets.only(top: 10,bottom: 10)),
+            //     //             Text(user.firstName! +" "+ user.lastName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text(user.orgName!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text(user.mobileNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             // Text("98765432",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             // ),
+            //     //             // SizedBox(height:20),
+            //     //             Text(user.email!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text(user.gstNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text(user.panNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text(user.adhNumber!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text(user.address!,style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey,),softWrap: true,maxLines: 5,
+            //     //             ),
+            //     //             SizedBox(height:20),
+            //     //             Text("21/03/2023",style: TextStyle(fontFamily: "Poppins", fontSize: 15, color: Colors.grey)
+            //     //             ),
+            //     //           ],
+            //     //         ),
+            //     //       ],
+            //     //     ),
+            //     //   ),
+            //     // ),
+            //
+            //     // IconButton(
+            //     //     icon: Icon(
+            //     //       Icons.edit,
+            //     //       color: Color(0xFF8D8D8D),
+            //     //     ),
+            //     //     onPressed: null),
+            //     // Row(
+            //     //   children: [
+            //     //     Text("Your Information",style: TextStyle(fontSize: 25,color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins_Bold")),
+            //     //   ],
+            //     // ),
+            //     // Padding(padding: EdgeInsets.only(bottom: 10,top: 10)),
+            //     // Card(
+            //     //   elevation: 5,
+            //     //   child: Text("Name"
+            //     //   ),
+            //     // ),
+            //     //
+            //     // SizedBox(
+            //     //   height: 10,
+            //     // ),
+            //     //
+            //     // Card(
+            //     //   elevation: 5,
+            //     //   child: TextField(
+            //     //     decoration: InputDecoration(
+            //     //       border: OutlineInputBorder(
+            //     //         borderSide: BorderSide(
+            //     //             width: 1, color: Colors.black),
+            //     //         //<-- SEE HERE
+            //     //       ),
+            //     //       focusedBorder: OutlineInputBorder(
+            //     //         borderSide: BorderSide(width: 2, color: Colors.indigo),
+            //     //       ),
+            //     //       labelText: "Business Name",
+            //     //       floatingLabelBehavior: FloatingLabelBehavior.never,
+            //     //     ),
+            //     //   ),
+            //     // ),
+            //     // SizedBox(
+            //     //   height: 10,
+            //     // ),
+            //     // Card(
+            //     //   elevation: 5,
+            //     //   child: TextFormField(
+            //     //     decoration: InputDecoration(
+            //     //       border: OutlineInputBorder(
+            //     //         borderSide: BorderSide(
+            //     //             width: 1, color: Colors.black), //<-- SEE HERE
+            //     //       ),
+            //     //       focusedBorder: OutlineInputBorder(
+            //     //         borderSide: BorderSide(width: 2, color: Colors.indigo),
+            //     //       ),
+            //     //       labelText: "Contact Number",
+            //     //       floatingLabelBehavior: FloatingLabelBehavior.never,
+            //     //     ),
+            //     //   ),
+            //     // ),
+            //     //
+            //     // SizedBox(
+            //     //   height: 10,
+            //     // ),
+            //     //
+            //     // Card(
+            //     //   elevation: 5,
+            //     //   child: TextFormField(
+            //     //     decoration: InputDecoration(
+            //     //       border: OutlineInputBorder(
+            //     //         borderSide: BorderSide(
+            //     //             width: 1, color: Colors.black), //<-- SEE HERE
+            //     //       ),
+            //     //       focusedBorder: OutlineInputBorder(
+            //     //         borderSide: BorderSide(width: 2, color: Colors.indigo),
+            //     //       ),
+            //     //       labelText: "Email",
+            //     //       floatingLabelBehavior: FloatingLabelBehavior.never,
+            //     //     ),
+            //     //   ),
+            //     // ),
+            //     // SizedBox(
+            //     //   height: 10,
+            //     // ),
+            //     // Card(
+            //     //   elevation: 5,
+            //     //   child: TextFormField(
+            //     //     decoration: InputDecoration(
+            //     //       border: OutlineInputBorder(
+            //     //         borderSide: BorderSide(
+            //     //             width: 1, color: Colors.black), //<-- SEE HERE
+            //     //       ),
+            //     //       focusedBorder: OutlineInputBorder(
+            //     //         borderSide: BorderSide(width: 2, color: Colors.indigo),
+            //     //       ),
+            //     //       labelText: "GST Number",
+            //     //       floatingLabelBehavior: FloatingLabelBehavior.never,
+            //     //     ),
+            //     //   ),
+            //     // ),
+            //     // SizedBox(
+            //     //   height: 10,
+            //     // ),
+            //     //
+            //     // Card(
+            //     //   elevation: 5,
+            //     //   child: TextFormField(
+            //     //     decoration: InputDecoration(
+            //     //         border: OutlineInputBorder(
+            //     //             borderSide: BorderSide(
+            //     //                 width: 1,color: Colors.black)
+            //     //         ),
+            //     //         focusedBorder: OutlineInputBorder(
+            //     //             borderSide: BorderSide(width: 2,color: Colors.indigo)
+            //     //         ),
+            //     //         labelText: "PAN Number",
+            //     //         floatingLabelBehavior: FloatingLabelBehavior.never
+            //     //     ),
+            //     //   ),
+            //     // ),
+            //     //
+            //     // SizedBox(
+            //     //   height: 10,
+            //     // ),
+            //     //
+            //     // Card(
+            //     //   elevation: 5,
+            //     //   child: TextFormField(
+            //     //     decoration: InputDecoration(
+            //     //       border: OutlineInputBorder(
+            //     //         borderSide: BorderSide(
+            //     //             width: 1, color: Colors.black), //<-- SEE HERE
+            //     //       ),
+            //     //       focusedBorder: OutlineInputBorder(
+            //     //         borderSide: BorderSide(width: 2, color: Colors.indigo),
+            //     //       ),
+            //     //       labelText: "Aadhar Number",
+            //     //       floatingLabelBehavior: FloatingLabelBehavior.never,
+            //     //     ),
+            //     //   ),
+            //     // ),
+            //     // SizedBox(
+            //     //   height: 10,
+            //     // ),
+            //     // Card(
+            //     //   elevation: 5,
+            //     //   child: TextFormField(
+            //     //     // minLines: 1,
+            //     //     maxLines: 4,
+            //     //     decoration: InputDecoration(
+            //     //       border: OutlineInputBorder(
+            //     //         borderSide: BorderSide(
+            //     //             width: 1, color: Colors.black), //<-- SEE HERE
+            //     //       ),
+            //     //       focusedBorder: OutlineInputBorder(
+            //     //         borderSide: BorderSide(width: 2, color: Colors.indigo),
+            //     //       ),
+            //     //       labelText: "Address",
+            //     //       floatingLabelBehavior: FloatingLabelBehavior.never,
+            //     //     ),
+            //     //   ),
+            //     // ),
+            //
+            //     // Container(
+            //     //     margin:
+            //     //     const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+            //     //     width: MediaQuery.of(context).size.width,
+            //     //     child: buttonStyle("Save", () {
+            //     //     }
+            //     //     )
+            //     // )
+            //   ],
+            // ),
+
+
+            ]
           ),
         ),
         bottomNavigationBar: StylishBottomBar(

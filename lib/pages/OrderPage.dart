@@ -141,7 +141,6 @@ class _OrderPageState extends State<OrderPage> {
                                   ),
                                   child: Row(
                                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
                                     children: [
                                       const Text("Order From:",
                                           style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
