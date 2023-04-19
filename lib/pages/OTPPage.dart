@@ -45,7 +45,7 @@ class _OTPPageState extends State<OTPContent>{
           )
         ],
         title: Center(
-          child: Text("Verify Your Email",style: TextStyle(color: Colors.grey,fontFamily: "Poppins-bold",fontSize: 24),),
+          child: Text("Verify Your Email",style: TextStyle(color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins-bold",fontSize: 24),),
         ),
         backgroundColor: Colors.white,
         automaticallyImplyLeading: true,

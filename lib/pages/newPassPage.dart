@@ -3,21 +3,23 @@ import 'package:email_otp/email_otp.dart';
 import 'package:form_field_validator/form_field_validator.dart';
 
 
-class ForgetPassPage extends StatelessWidget{
+class NewPassPage extends StatelessWidget{
   @override
   Widget build(BuildContext context) {
-    return ForgetPasscontent();
+    return NewPasscontent();
   }
 }
 
-class ForgetPasscontent extends StatefulWidget {
-  ForgetPasscontent({super.key});
+class NewPasscontent extends StatefulWidget {
+  NewPasscontent({super.key});
   final selected = 0;
   @override
-  State<ForgetPasscontent> createState() => _ForgetPassPageState();
+  State<NewPasscontent> createState() => _NewPassPageState();
 }
 
-class _ForgetPassPageState extends State<ForgetPasscontent>{
+class _NewPassPageState extends State<NewPasscontent>{
+  bool _isPWVisible = false;
+  bool _isPWVisible1 = false;
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,7 +33,7 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
         )
       ],
         title: Center(
-          child: Text("Forgot Password",style: TextStyle(color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins-bold",fontSize: 24),),
+          child: Text("Create New Password",style: TextStyle(color: Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins-bold",fontSize: 24),),
         ),
         backgroundColor: Colors.white,
         automaticallyImplyLeading: true,
@@ -55,11 +57,19 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
                       SizedBox(
                         width: 200,
                         height: 200,
-                        child: Image.asset("assets/images/wrong-password.png"),
+                        child: Image.asset("assets/images/newPassword1.png"),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 10,
                       ),
+                      // Text(
+                      //   "Por favor, informe o E-mail associado a sua conta que enviaremos um link para o mesmo com as instruções para restauração de sua senha.",
+                      //   style: TextStyle(
+                      //     fontSize: 16,
+                      //     fontWeight: FontWeight.w400,
+                      //   ),
+                      //   textAlign: TextAlign.center,
+                      // )
                     ],
                   ),
                 ),
@@ -69,16 +79,57 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
                     children: <Widget>[
                       TextFormField(
                         keyboardType: TextInputType.emailAddress,
+                        obscureText: _isPWVisible,
                         decoration: InputDecoration(
+                          labelText: "Enter Password",
                           border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)
+                              borderRadius: BorderRadius.circular(5)
                           ),
-                          labelText: "E-mail",
                           labelStyle: TextStyle(
-                            color: Colors.black,
+                            color: Colors.grey,
                             fontWeight: FontWeight.w400,
                             fontSize: 20,
                           ),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              setState(() {
+                                _isPWVisible = !_isPWVisible;
+                              });
+                            },
+                            icon: Icon(_isPWVisible
+                                ? Icons.visibility
+                                : Icons.visibility_off),
+                          ),
+                        ),
+                        validator: EmailValidator(errorText: "Not Valid"),
+                        style: TextStyle(fontSize: 20),
+                      ),
+                      SizedBox(
+                        height: 20,
+                      ),
+                      TextFormField(
+                        keyboardType: TextInputType.emailAddress,
+                        obscureText: _isPWVisible1,
+                        decoration: InputDecoration(
+                          labelText: "Confirm Password",
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(5)
+                          ),
+                          labelStyle: TextStyle(
+                            color: Colors.grey,
+                            fontWeight: FontWeight.w400,
+                            fontSize: 20,
+                          ),
+                        suffixIcon: IconButton(
+                          onPressed: () {
+                            setState(() {
+                              _isPWVisible1 = !_isPWVisible1;
+                            });
+                          },
+                          icon: Icon(_isPWVisible1
+                              ? Icons.visibility
+                              : Icons.visibility_off),
+                        ),
                         ),
                         validator: EmailValidator(errorText: "Not Valid"),
                         style: TextStyle(fontSize: 20),
@@ -87,13 +138,14 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
                         height: 40,
                       ),
 
+
                       Container(
                         width: 250,
                         height: 50,
                         child: ElevatedButton(onPressed: (){
                           Navigator.of(context).pushNamed("/OTP");
                         },style: ButtonStyle(),
-                            child: Text("Send Code",style: TextStyle(fontSize: 20),)),
+                            child: Text("Save",style: TextStyle(fontSize: 20),)),
                       ),
                       // Container(
                       //   height: 60,
