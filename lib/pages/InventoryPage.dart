@@ -1,9 +1,17 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stefomobileapp/Models/lumpsum.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
+import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
+import '../Models/grade.dart';
+import '../Models/item.dart';
 import '../ui/common.dart';
 
 class InventoryPage extends StatelessWidget {
@@ -22,6 +30,61 @@ class InventoryContent extends StatefulWidget {
 
 class _InventoryPageState extends State<InventoryContent> {
   var _selected = 1;
+  bool isDataLoaded = false;
+  List<Lumpsum> lumpsums =[];
+  List<Grade> gradeList = [];
+  loadData()async{
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user_id = await prefs.getString('id');
+
+    var res1 = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getgrade.php"));
+    var responseData1 = jsonDecode(res1.body);
+    for(int i  = 0 ; i < responseData1['data'].length;i++){
+      print(responseData1['data'][i]);
+      Grade g = Grade();
+      g.value = responseData1['data'][i]['gradeName'];
+      g.qty = 0;
+      gradeList.add(g);
+    }
+
+    var res = await http.post(
+     Uri.parse("http://urbanwebmobile.in/steffo/getinventory.php"),
+     body: {
+      "user_id":user_id,
+     }
+    );
+
+    var responseData = jsonDecode(res.body);
+    var orders = [];
+
+    print(responseData);
+    for(int i = 0 ; i < responseData["data"].length; i++) {
+      print(responseData['data'][i]['name']);
+      var ind = gradeList.indexWhere((element) => element.value?.trim() == responseData['data'][i]['name'].trim());
+      gradeList[ind].qty = gradeList[ind].qty! + int.parse(responseData['data'][i]['qty_left']);
+      print(gradeList[ind].value! + " " + gradeList[ind].qty.toString());
+      Lumpsum l = Lumpsum();
+      l.orderId = responseData["data"][i]["order_id"];
+      l.name = responseData["data"][i]["name"];
+      l.qty = responseData["data"][i]["qty_left"];
+      l.price = responseData["data"][i]["price"];
+      l.status = responseData["data"][i]["status"];
+      l.date = responseData["data"][i]["createdAt"];
+      lumpsums.add(l);
+    }
+    isDataLoaded = true;
+    setState(() {
+
+    });
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    loadData();
+
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +92,22 @@ class _InventoryPageState extends State<InventoryContent> {
         appBar: appbar("Inventory", () {
           Navigator.pop(context);
         }),
-        body: InventoryPageBody(),
+        body: LayoutBuilder(
+          builder: (context,constraints) {
+            if(isDataLoaded){
+              return InventoryPageBody();
+            }
+            else{
+              return Center(child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  Text("Loading Inventory")
+                ],
+              ));
+            }
+        }
+        ),
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(
             iconSize: 30,
@@ -101,6 +179,19 @@ class _InventoryPageState extends State<InventoryContent> {
                   ),
                 );
               }
+
+              if (index == 3) {
+                Navigator.pushReplacement(
+                  context,
+                  PageRouteBuilder(
+                    pageBuilder: (context, animation1, animation2) =>
+                        ProfilePage(),
+                    transitionDuration: Duration.zero,
+                    reverseTransitionDuration: Duration.zero,
+                  ),
+                );
+              }
+
             });
           },
         ));
@@ -260,7 +351,7 @@ class _InventoryPageState extends State<InventoryContent> {
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text("Order no.",
+                            Text(lumpsums[0].orderId.toString(),
                                 style: TextStyle(
                                   fontFamily: "Cambria",
                                     fontWeight: FontWeight.bold,
@@ -280,7 +371,7 @@ class _InventoryPageState extends State<InventoryContent> {
                                                   .width /
                                               30)),
                                   TextSpan(
-                                      text: "9999999",
+                                      text: lumpsums[0].qty,
                                       style: TextStyle(
                                         color: Colors.blueAccent,
                                         fontWeight: FontWeight.w900,
@@ -341,8 +432,8 @@ class _InventoryPageState extends State<InventoryContent> {
                                   DataCell(Text(
                                       "1")), //Extracting from Map element the value
 
-                                  DataCell(Text("FE500")),
-                                  DataCell(Text("999"))
+                                  DataCell(Text(lumpsums[0].name!)),
+                                  DataCell(Text(lumpsums[0].qty!))
                                 ],
                               )
                             ]),
