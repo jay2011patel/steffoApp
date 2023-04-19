@@ -53,6 +53,8 @@ dependencies:
   email_otp: ^2.0.1
   email_auth:
   pinput: ^2.2.31
+  marquee: ^2.2.3
+
 
 
 
