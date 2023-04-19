@@ -42,6 +42,7 @@ class _OrderPageState extends State<OrderPage> {
   int flag =0;
   var listOfColumns =[];
   var id;
+  num tot_price = 0;
   loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     id = prefs.getString('id');
@@ -57,6 +58,7 @@ class _OrderPageState extends State<OrderPage> {
         var responseData = jsonDecode(res.body);
         //print(responseData);
         listOfColumns = [];
+
         for (int i = 0; i < responseData["data"].length; i++) {
           listOfColumns.add({
             "Sr_no": (i + 1).toString(),
@@ -64,6 +66,7 @@ class _OrderPageState extends State<OrderPage> {
             "Qty": responseData["data"][i]["qty"],
             "Price": responseData["data"][i]["price"]
           });
+          tot_price = tot_price + int.parse(responseData["data"][i]["price"]);
         }
       }else{
         final res = await http.post(
@@ -82,8 +85,17 @@ class _OrderPageState extends State<OrderPage> {
             "Qty": responseData["data"][i]["qty"],
             "Price": responseData["data"][i]["price"]
           });
+          tot_price = tot_price + int.parse(responseData["data"][i]["price"]);
         }
+
+        listOfColumns.add({
+          "Sr_no": " ",
+          "Name": " ",
+          "Qty": "Total:",
+          "Price": tot_price.toString()
+        });
       }
+      print(tot_price);
       flag = 1;
       setState(() {});
     }
@@ -337,11 +349,12 @@ class _OrderPageState extends State<OrderPage> {
                                         headingTextStyle: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                             color: Colors.black),
+                                        columnSpacing: 0,
                                         columns: const [
                                           DataColumn(label: Text("Sr\nNo")),
                                           DataColumn(label: Text("Item name")),
                                           DataColumn(label: Text("Quantity\n(Tons)")),
-                                          //DataColumn(label: Text("Price"))
+                                          DataColumn(label: Text("Price"))
 
                                         ],
                                         rows: listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
@@ -351,7 +364,7 @@ class _OrderPageState extends State<OrderPage> {
                                               DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
                                               DataCell(Text(element["Name"]!)),
                                               DataCell(Text(element["Qty"]!)),
-                                              //DataCell(Text(element["Price"]!)),
+                                              DataCell(Text(element["Price"]!)),
                                             ],
                                           )),
                                         )
