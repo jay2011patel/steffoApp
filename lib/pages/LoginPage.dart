@@ -165,7 +165,9 @@ class _loginPageState extends State<LoginContent> {
                     ),
 
                     Container(
-                      child: logo(context),
+                      child:
+                      // Image.asset("assets/images/userlogin1.png",height: 300,)
+                      logo(context),
                     ),
                     SizedBox(
                       height: MediaQuery.of(context).size.height / 8,
@@ -200,10 +202,10 @@ class _loginPageState extends State<LoginContent> {
 
                     //------------------------------Password-----------------------------
 
-                    Container(
-                      width: width,
-                      padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
-                      child: TextFormField(
+                        Container(
+                          width: width,
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                          child: TextFormField(
                           key: field2Key,
                           focusNode: focusNode2,
                           validator: (value) {
@@ -243,69 +245,67 @@ class _loginPageState extends State<LoginContent> {
                             ),
                           )),
                     ),
-                    LayoutBuilder(builder: (context, constraints) {
-                      if (!userValid) {
-                        return const Text(
-                          "Incorrect Username or Password",
-                          style: TextStyle(color: Colors.red),
-                        );
-                      } else {
-                        return const Text("");
-                      }
-                    }),
+                          LayoutBuilder(builder: (context, constraints) {
+                            if (!userValid) {
+                              return const Text(
+                                "Incorrect Username or Password",
+                                style: TextStyle(color: Colors.red),
+                              );
+                            } else {
+                              return const Text("");
+                             }
+                        }),
 
                     //------------------------------LoginButton-----------------------------
 
-                    Container(
-                        alignment: Alignment.bottomCenter,
-                        child: Container(
-                            margin: const EdgeInsets.only(top: 20),
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            width: MediaQuery.of(context).size.width,
-                            child: buttonWhite(
-                                "Login",
-                                () => {
-                                      if (_formKey.currentState!.validate())
-                                        {onLogin(email.text, pw.text)}
-                                    }))),
-                    //-----------------------------Register Now-------------------------
-                    Container(
-                      //margin: EdgeInsets.fromLTRB(20, 0,20,0),
+                        Container(
+                            alignment: Alignment.bottomCenter,
+                            child: Container(
+                                margin: const EdgeInsets.only(top: 20),
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                width: MediaQuery.of(context).size.width,
+                                child: buttonWhite(
+                                    "Login",
+                                    () => {
+                                          if (_formKey.currentState!.validate())
+                                            {onLogin(email.text, pw.text)}
+                                        }))),
 
-                      width: MediaQuery.of(context).size.width,
-                      padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Container(
-                              child: TextButton(
-                                  onPressed: () {
-                                    // Navigator.push(
-                                    //     context,
-                                    //     MaterialPageRoute(builder: (context) => )
-                                    // );
-                                  },
-                                  child: const Text(
-                                    "Forgot Password ?",
-                                    style: TextStyle(color: Colors.white),
-                                  ))),
-                          Container(
-                            child: const Text(
-                              "|",
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                          Container(
-                              child: TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context)
-                                        .pushNamed('/register');
-                                  },
-                                  child: Text(
-                                    "Register Now",
-                                    style: TextStyle(color: Colors.white),
-                                  )))
-                        ],
+                        //-----------------------------Register Now-------------------------
+                        Container(
+                          //margin: EdgeInsets.fromLTRB(20, 0,20,0),
+
+                          width: MediaQuery.of(context).size.width,
+                          padding: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                  child: TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context).pushNamed("/forgetPass");
+                                      },
+                                      child: const Text(
+                                        "Forgot Password ?",
+                                        style: TextStyle(color: Colors.white),
+                                      ))),
+                              Container(
+                                child: const Text(
+                                  "|",
+                                  style: TextStyle(color: Colors.white),
+                                ),
+                              ),
+                              Container(
+                                  child: TextButton(
+                                      onPressed: () {
+                                        Navigator.of(context)
+                                            .pushNamed('/register');
+                                      },
+                                      child: Text(
+                                        "Register Now",
+                                        style: TextStyle(color: Colors.white),
+                                      )))
+                            ],
                       ),
                     )
                   ]))

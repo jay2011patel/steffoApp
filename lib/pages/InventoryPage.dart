@@ -7,7 +7,6 @@ import 'package:stefomobileapp/Models/lumpsum.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/HomePage.dart';
 import 'package:stefomobileapp/pages/ProfilePage.dart';
-import 'package:stefomobileapp/ui/cards.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
@@ -32,53 +31,37 @@ class InventoryContent extends StatefulWidget {
 class _InventoryPageState extends State<InventoryContent> {
   var _selected = 1;
   bool isDataLoaded = false;
-  List<Lumpsum> lumpsums = [];
+  List<Lumpsum> lumpsums =[];
   List<Grade> gradeList = [];
-  List<Grade> gradeList1 = [];
-  List<Grade> gradeList2 = [];
-  loadData() async {
+  loadData()async{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final user_id = await prefs.getString('id');
 
-    var res1 = await http
-        .post(Uri.parse("http://urbanwebmobile.in/steffo/getgrade.php"));
+    var res1 = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getgrade.php"));
     var responseData1 = jsonDecode(res1.body);
-    for (int i = 0; i < responseData1['data'].length; i++) {
+    for(int i  = 0 ; i < responseData1['data'].length;i++){
       print(responseData1['data'][i]);
       Grade g = Grade();
       g.value = responseData1['data'][i]['gradeName'];
       g.qty = 0;
       gradeList.add(g);
-
-      int middleIndex = (gradeList.length / 2).round();
-      gradeList1.clear();
-      gradeList2.clear();
-      for (int i = 0; i < gradeList.length; i++) {
-        if (i < middleIndex) {
-          print("Add");
-          gradeList1.add(gradeList[i]);
-        } else {
-          gradeList2.add(gradeList[i]);
-        }
-      }
     }
 
     var res = await http.post(
-        Uri.parse("http://urbanwebmobile.in/steffo/getinventory.php"),
-        body: {
-          "user_id": user_id,
-        });
+     Uri.parse("http://urbanwebmobile.in/steffo/getinventory.php"),
+     body: {
+      "user_id":user_id,
+     }
+    );
 
     var responseData = jsonDecode(res.body);
     var orders = [];
 
     print(responseData);
-    for (int i = 0; i < responseData["data"].length; i++) {
+    for(int i = 0 ; i < responseData["data"].length; i++) {
       print(responseData['data'][i]['name']);
-      var ind = gradeList.indexWhere((element) =>
-          element.value?.trim() == responseData['data'][i]['name'].trim());
-      gradeList[ind].qty =
-          gradeList[ind].qty! + int.parse(responseData['data'][i]['qty_left']);
+      var ind = gradeList.indexWhere((element) => element.value?.trim() == responseData['data'][i]['name'].trim());
+      gradeList[ind].qty = gradeList[ind].qty! + int.parse(responseData['data'][i]['qty_left']);
       print(gradeList[ind].value! + " " + gradeList[ind].qty.toString());
       Lumpsum l = Lumpsum();
       l.orderId = responseData["data"][i]["order_id"];
@@ -90,13 +73,16 @@ class _InventoryPageState extends State<InventoryContent> {
       lumpsums.add(l);
     }
     isDataLoaded = true;
-    setState(() {});
+    setState(() {
+
+    });
   }
 
   @override
   void initState() {
     // TODO: implement initState
     loadData();
+
     super.initState();
   }
 
@@ -106,20 +92,22 @@ class _InventoryPageState extends State<InventoryContent> {
         appBar: appbar("Inventory", () {
           Navigator.pop(context);
         }),
-        body: LayoutBuilder(builder: (context, constraints) {
-          if (isDataLoaded) {
-            return InventoryPageBody();
-          } else {
-            return Center(
-                child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                Text("Loading Inventory")
-              ],
-            ));
-          }
-        }),
+        body: LayoutBuilder(
+          builder: (context,constraints) {
+            if(isDataLoaded){
+              return InventoryPageBody();
+            }
+            else{
+              return Center(child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  Text("Loading Inventory")
+                ],
+              ));
+            }
+        }
+        ),
         bottomNavigationBar: StylishBottomBar(
           option: AnimatedBarOptions(
             iconSize: 30,
@@ -203,6 +191,7 @@ class _InventoryPageState extends State<InventoryContent> {
                   ),
                 );
               }
+
             });
           },
         ));
@@ -210,6 +199,7 @@ class _InventoryPageState extends State<InventoryContent> {
 
   Widget InventoryPageBody() {
     return Container(
+
       width: MediaQuery.of(context).size.width,
       child: Column(
         children: [
@@ -217,131 +207,241 @@ class _InventoryPageState extends State<InventoryContent> {
             height: 10,
           ),
           Container(
+
             width: MediaQuery.of(context).size.width - 10,
             decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(5.0),
                 // color: Colors.white,
                 // color : Color(0xffEB6440),
                 // color : Color(0xff497174),
-                color: Color.fromRGBO(13, 53, 69, 0.99),
+                color : Color(0xffF05454),
                 boxShadow: [
                   BoxShadow(
-                    color: Color.fromRGBO(13, 53, 69, 0.99),
+                    color: Colors.white,
                     // spreadRadius: 1.0,
                     blurStyle: BlurStyle.outer,
                     blurRadius: 1.0,
                   )
                 ]),
             padding: EdgeInsets.all(10.0),
+            alignment: Alignment.center,
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Container(
-                  // width: MediaQuery.of(context).size.width / 2.5,
-                  child: Flexible(
-                    child: ListView.builder(
-                      itemCount: gradeList1.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, ind) {
-                        return Container(
-                            child: Column(
-                          children: [
-                            LumpSumTotal(context, gradeList1[ind]),
-                          ],
-                        ));
-                      },
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "FE500 : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          TextSpan(
+                              text: "99",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                        ])),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "FE550 : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          TextSpan(
+                              text: "99",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                        ])),
+                      ],
                     ),
                   ),
+                  width: MediaQuery.of(context).size.width / 2.5,
                 ),
+                // SizedBox(
+                //   width: 20,
+                // ),
                 Container(
-                  height: 110,
-                  child: Row(
-                    children: [
-                      VerticalDivider(
-                        color: Colors.white,
-                        thickness: 2.0,
-                        width: 20,
-                      ),
-                    ],
+                  height: 50,
+                  child: Row(children: [
+                    VerticalDivider(
+                      color: Colors.white,
+                      thickness: 2,
+                      width: 5.0,
+                    ),
+                    ]
                   ),
                 ),
-                Expanded(
-                  flex: 1,
-                  child: Container(
-                    child: ListView.builder(
-                      itemCount: gradeList2.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, ind) {
-                        return Container(
-                            alignment: Alignment.topLeft,
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                LumpSumTotal(context, gradeList2[ind]),
-                              ],
-                            ));
-                      },
+
+                Container(
+                  width: MediaQuery.of(context).size.width / 2.5,
+                  child: Center(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "FE500D : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          TextSpan(
+                              text: "99",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                        ])),
+                        RichText(
+                            text: TextSpan(children: [
+                          TextSpan(
+                              text: "FE550D : ",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                          TextSpan(
+                              text: "99",
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w900,
+                                  fontSize: 16)),
+                        ])),
+                      ],
                     ),
                   ),
                 ),
               ],
             ),
           ),
-          Container(
-            height: 40,
-            padding: EdgeInsets.only(top: 20),
-            child: Text(
-              "Purchase History :",
-              style: TextStyle(
-                fontWeight: FontWeight.w900,
-                fontSize: 15,
-              ),
-            ),
-          ),
-          Expanded(
-            flex: 1,
-            child: SingleChildScrollView(
-              child: Column(children: [
-                Column(children: [
-                  Container(
-                    child: ListView.builder(
-                      itemCount: lumpsums.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                            onTap: () {
-                              // Navigator.push(context,
-                              //     MaterialPageRoute(
-                              //         builder: (context) => OrderDetails(order: salesOrderList[index]))
-                              // );
-                            },
-                            child: Container(
-                                margin: EdgeInsets.all(10.0),
-                                padding: const EdgeInsets.all(8.0),
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(10.0),
-                                    // border: Border.all(color: Colors.black),
-                                    color: Colors.white,
-                                    boxShadow: [
-                                      BoxShadow(
-                                          color: Colors.black, blurRadius: 2.0)
-                                    ]),
-                                // width: 200,
-                                child:
-                                    InventoryCard(context, lumpsums[index])));
-                      },
-                    ),
+          SizedBox(
+            height: 30,
+            child: Align(
+                child: Text(
+                  "Purchase History:",
+                  style: TextStyle(
+                    fontWeight: FontWeight.w900,
                   ),
-                ]),
-              ]),
-            ),
+                ),
+                alignment: Alignment.bottomCenter),
+          ),
+          SingleChildScrollView(
+            child: Column(children: [
+              Card(
+                  color: Colors.white54,
+                  // color : Color(0xff006B7F),
+                  elevation: 5,
+                  margin: EdgeInsets.all(5.0),
+                  child: Container(
+                    padding: EdgeInsets.all(15),
+                    child: Column(children: [
+                      Container(
+                        width: MediaQuery.of(context).size.width,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(lumpsums[0].orderId.toString(),
+                                style: TextStyle(
+                                  fontFamily: "Cambria",
+                                    fontWeight: FontWeight.bold,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 17,
+                                    color: Colors.black)),
+                            Align(
+                              child: RichText(
+                                text: TextSpan(style: TextStyle(), children: [
+                                  TextSpan(
+                                      text: "Total Quantity: ",
+                                      style: TextStyle(
+                                          color: Colors.blueAccent,
+                                          fontWeight: FontWeight.w900,
+                                          fontSize: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              30)),
+                                  TextSpan(
+                                      text: lumpsums[0].qty,
+                                      style: TextStyle(
+                                        color: Colors.blueAccent,
+                                        fontWeight: FontWeight.w900,
+                                        fontSize:
+                                            MediaQuery.of(context).size.width /
+                                                30,
+                                      ))
+                                ]),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      Align(
+                        alignment: Alignment.centerLeft,
+                        child: RichText(
+                          text: TextSpan(children: [
+                            TextSpan(
+                                text: "Ordered On: ",
+                                style: TextStyle(
+                                    fontFamily: "Cambria",
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 30,
+                                    fontWeight: FontWeight.bold)),
+                            TextSpan(
+                                text: "21/10/2021",
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize:
+                                        MediaQuery.of(context).size.width / 30))
+                          ]),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 10.0,
+                      ),
+                      Container(
+                        width: MediaQuery.of(context).size.width - 20,
+                        padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+                        child: DataTable(
+                            columnSpacing: double.minPositive,
+                            headingTextStyle: const TextStyle(
+                                fontWeight: FontWeight.bold,
+                                color: Colors.black),
+                            columns: const [
+                              DataColumn(
+                                  label: Text(
+                                "Sr No",
+                                textAlign: TextAlign.center,
+                              )),
+                              DataColumn(label: Text("Item name")),
+                              DataColumn(label: Text("Quantity\n(Tons)"))
+                            ],
+                            rows: [
+                              DataRow(
+                                cells: <DataCell>[
+                                  DataCell(Text(
+                                      "1")), //Extracting from Map element the value
+
+                                  DataCell(Text(lumpsums[0].name!)),
+                                  DataCell(Text(lumpsums[0].qty!))
+                                ],
+                              )
+                            ]),
+                      )
+                    ]),
+                  )),
+            ]),
           ),
         ],
       ),

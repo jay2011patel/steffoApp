@@ -21,7 +21,18 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
+      appBar: AppBar(actions: [
+        IconButton(
+            onPressed: () {},
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+            )
+        )
+      ],
+        title: Center(
+          child: Text("Forgot Password",style: TextStyle(color: Colors.grey,fontFamily: "Poppins-bold",fontSize: 24),),
+        ),
         backgroundColor: Colors.white,
         automaticallyImplyLeading: true,
         leading: IconButton(
@@ -48,16 +59,6 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
                       ),
                       SizedBox(
                         height: 20,
-                      ),
-                      Text(
-                        "Forgot Password",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
                       ),
                       // Text(
                       //   "Por favor, informe o E-mail associado a sua conta que enviaremos um link para o mesmo com as instruções para restauração de sua senha.",
@@ -93,11 +94,11 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
 
                       Container(
                         width: 250,
-                        height: 40,
+                        height: 50,
                         child: ElevatedButton(onPressed: (){
                           Navigator.of(context).pushNamed("/OTP");
                         },style: ButtonStyle(),
-                            child: Text("Send Code")),
+                            child: Text("Send Code",style: TextStyle(fontSize: 20),)),
                       ),
                       // Container(
                       //   height: 60,
