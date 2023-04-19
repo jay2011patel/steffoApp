@@ -279,7 +279,8 @@ class _InventoryPageState extends State<InventoryContent> {
                       thickness: 2,
                       width: 5.0,
                     ),
-                  ]),
+                    ]
+                  ),
                 ),
 
                 Container(
