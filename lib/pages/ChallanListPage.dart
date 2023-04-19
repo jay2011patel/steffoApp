@@ -107,11 +107,13 @@ class _ChallanListPageState extends State<ChallanListContent> {
   }
   int flag =0;
   String? id;
+  String? userType;
   List<Challan> challanList = [];
   loadChallanList() async{
     final SharedPreferences prefs = await SharedPreferences.getInstance();
 
     id = await prefs.getString('id');
+    userType = await prefs.getString('userType');
     if(flag == 0){
       final res = await http.post(
         Uri.parse("http://urbanwebmobile.in/steffo/getchallanlist.php"),
@@ -218,7 +220,7 @@ class _ChallanListPageState extends State<ChallanListContent> {
               ),
               Container(
                   child:LayoutBuilder(builder: (context, constraints) {
-                    if(id == widget.order.reciever_id){
+                    if(id == 0){
                       return Container(
                           margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
                           width: MediaQuery.of(context).size.width,

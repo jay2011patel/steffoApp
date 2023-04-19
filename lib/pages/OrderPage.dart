@@ -41,22 +41,44 @@ class _OrderPageState extends State<OrderPage> {
   int flag =0;
   var listOfColumns =[];
   loadData() async {
+    print(widget.order.orderType);
     if(flag == 0){
-      final res = await http.post(
-        Uri.parse("http://urbanwebmobile.in/steffo/getorderdetails.php"),
-        body: {
-          "order_id": widget.order.order_id,
-        },
-      );
-      var responseData = jsonDecode(res.body);
-      //print(responseData);
-      listOfColumns = [];
-      for (int i = 0; i < responseData["data"].length; i++) {
-        listOfColumns.add({
-          "Sr_no": (i + 1).toString(),
-          "Name": responseData["data"][i]["name"],
-          "Qty": responseData["data"][i]["qty"],
-        });
+      if(widget.order.orderType != "Lump-sum"){
+        final res = await http.post(
+          Uri.parse("http://urbanwebmobile.in/steffo/getorderdetails.php"),
+          body: {
+            "order_id": widget.order.order_id,
+          },
+        );
+        var responseData = jsonDecode(res.body);
+        //print(responseData);
+        listOfColumns = [];
+        for (int i = 0; i < responseData["data"].length; i++) {
+          listOfColumns.add({
+            "Sr_no": (i + 1).toString(),
+            "Name": responseData["data"][i]["name"],
+            "Qty": responseData["data"][i]["qty"],
+            "Price": responseData["data"][i]["price"]
+          });
+        }
+      }else{
+        final res = await http.post(
+          Uri.parse("http://urbanwebmobile.in/steffo/getlumpsumorder.php"),
+          body: {
+            "order_id": widget.order.order_id,
+          },
+        );
+        var responseData = jsonDecode(res.body);
+        //print(responseData);
+        listOfColumns = [];
+        for (int i = 0; i < responseData["data"].length; i++) {
+          listOfColumns.add({
+            "Sr_no": (i + 1).toString(),
+            "Name": responseData["data"][i]["name"],
+            "Qty": responseData["data"][i]["qty"],
+            "Price": responseData["data"][i]["price"]
+          });
+        }
       }
       flag = 1;
       setState(() {});
@@ -315,7 +337,9 @@ class _OrderPageState extends State<OrderPage> {
                                         columns: const [
                                           DataColumn(label: Text("Sr\nNo")),
                                           DataColumn(label: Text("Item name")),
-                                          DataColumn(label: Text("Quantity\n(Tons)"))
+                                          DataColumn(label: Text("Quantity\n(Tons)")),
+                                          //DataColumn(label: Text("Price"))
+
                                         ],
                                         rows: listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
                                             .map(
@@ -324,6 +348,7 @@ class _OrderPageState extends State<OrderPage> {
                                               DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
                                               DataCell(Text(element["Name"]!)),
                                               DataCell(Text(element["Qty"]!)),
+                                              //DataCell(Text(element["Price"]!)),
                                             ],
                                           )),
                                         )

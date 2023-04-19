@@ -144,6 +144,7 @@ class _OrdersPageState extends State<OrdersContent>{
         req.loading_type = responseData["data"][i]["loadingType"];
         req.order_date = responseData["data"][i]["createdAt"];
         req.base_price = responseData["data"][i]["basePrice"];
+        req.orderType = responseData["data"][i]["orderType"];
         req.order_id = responseData["data"][i]["order_id"].toString();
         //print(req);
         if(req.status!="Rejected")  {
