@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/ChallanListPage.dart';
 // import 'package:stefomobileapp/pages/GenerateChallanPage.dart';
 //import '../Models/gen_item_list.dart';
@@ -40,7 +41,10 @@ class OrderPage extends StatefulWidget {
 class _OrderPageState extends State<OrderPage> {
   int flag =0;
   var listOfColumns =[];
+  var id;
   loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    id = prefs.getString('id');
     print(widget.order.orderType);
     if(flag == 0){
       if(widget.order.orderType != "Lump-sum"){
@@ -361,7 +365,7 @@ class _OrderPageState extends State<OrderPage> {
                     ),
                   ),
                   LayoutBuilder(builder: (context, constraints) {
-                    if(widget.order.status == "Pending"){
+                    if(widget.order.status == "Pending" && id == widget.order.reciever_id){
                       return Container(
                         padding: const EdgeInsets.symmetric(horizontal: 20),
                         width: MediaQuery.of(context).size.width,
