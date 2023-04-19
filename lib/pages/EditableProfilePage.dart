@@ -104,12 +104,6 @@ class _ProfilePageState extends State<ProfileContent>{
                   Padding(padding: EdgeInsets.only(bottom: 10,top: 10)),
 
                   Card(
-                    child: TextField(
-                      controller: myController,
-                    )
-                  ),
-
-                  Card(
                     elevation: 5,
                     child: TextFormField(
                       decoration: InputDecoration(

@@ -1,11 +1,5 @@
-
-import 'dart:convert';
-import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
-import 'package:stefomobileapp/UI/common.dart';
-// import 'package:stefomobileapp/pages/EditableProfilePage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';

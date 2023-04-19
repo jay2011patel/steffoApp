@@ -245,14 +245,15 @@ class DistributorDetailState extends State<DistributorDetailContent>{
             ],
             views: [
               Card(
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
+                // shape: RoundedRectangleBorder(
+                //   borderRadius: BorderRadius.circular(10),
+                // ),
                 margin: EdgeInsets.all(5),
                 elevation: 10,
                 child: SingleChildScrollView(
                   child: Container(
-                    width: MediaQuery.of(context).size.width,
+                    width: 500,
+                    // width: MediaQuery.of(context).size.width,
                     child: Column(
                       children: [
                         ListView.builder(

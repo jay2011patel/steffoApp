@@ -1,24 +1,28 @@
 import 'package:flutter/material.dart';
 import 'package:email_otp/email_otp.dart';
+import 'package:flutter/services.dart';
+import 'package:stefomobileapp/pages/ForgetPassPage.dart';
+import 'package:pinput/pinput.dart';
 
 class OTPPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return OTPPage();
+    return OTPContent();
   }
 }
 
 class OTPContent extends StatefulWidget {
-  OTPContent({super.key});
-  final selected = 0;
+
   @override
   State<OTPContent> createState() => _OTPPageState();
 }
 
 
 class _OTPPageState extends State<OTPContent>{
+  final _pinPutController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
@@ -29,7 +33,9 @@ class _OTPPageState extends State<OTPContent>{
           onPressed: () => Navigator.pop(context, false),
         ),
       ),
-      body: Container(
+      body:
+
+      Container(
         padding: EdgeInsets.only(top: 60, left: 40, right: 40),
         color: Colors.white,
         child: ListView(
@@ -43,18 +49,18 @@ class _OTPPageState extends State<OTPContent>{
                       SizedBox(
                         width: 200,
                         height: 200,
-                        child: Image.asset("assets/images/wrong-password.png"),
+                        child: Image.asset("assets/images/otp.png"),
                       ),
                       SizedBox(
                         height: 20,
                       ),
-                      Text(
-                        "Forget Password",
-                        style: TextStyle(
-                          fontSize: 32,
-                          fontWeight: FontWeight.w500,
-                        ),
-                      ),
+                      // Text(
+                      //   "Forget Password",
+                      //   style: TextStyle(
+                      //     fontSize: 32,
+                      //     fontWeight: FontWeight.w500,
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 10,
                       ),
@@ -74,9 +80,9 @@ class _OTPPageState extends State<OTPContent>{
                   child: Column(
                     children: <Widget>[
                       TextFormField(
-                        keyboardType: TextInputType.emailAddress,
+                        keyboardType: TextInputType.number,
                         decoration: InputDecoration(
-                          labelText: "E-mail",
+                          labelText: "Enter a Code",
                           labelStyle: TextStyle(
                             color: Colors.black,
                             fontWeight: FontWeight.w400,
@@ -88,6 +94,10 @@ class _OTPPageState extends State<OTPContent>{
                       SizedBox(
                         height: 20,
                       ),
+
+                      // Container(
+                      //   child: darkRoundedPinPut(),
+                      // ),
                       Container(
                         height: 60,
                         alignment: Alignment.centerLeft,
@@ -108,7 +118,7 @@ class _OTPPageState extends State<OTPContent>{
                         child: SizedBox.expand(
                           child: ElevatedButton(
                             child: Text(
-                              "Send Code",
+                              "Verify",
                               style: TextStyle(
                                 fontWeight: FontWeight.bold,
                                 color: Colors.white,
@@ -133,4 +143,5 @@ class _OTPPageState extends State<OTPContent>{
       ),
     );
   }
+
 }

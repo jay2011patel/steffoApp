@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:email_otp/email_otp.dart';
+import 'package:form_field_validator/form_field_validator.dart';
 
 
 class ForgetPassPage extends StatelessWidget{
@@ -49,7 +50,7 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
                         height: 20,
                       ),
                       Text(
-                        "Forget Password",
+                        "Forgot Password",
                         style: TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.w500,
@@ -83,46 +84,55 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
                             fontSize: 20,
                           ),
                         ),
+                        validator: EmailValidator(errorText: "Not Valid"),
                         style: TextStyle(fontSize: 20),
                       ),
                       SizedBox(
-                        height: 20,
+                        height: 40,
                       ),
-                      Container(
-                        height: 60,
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [0.3, 1],
-                            colors: [
-                              Color(0xFFF58524),
-                              Color(0XFFF92B7F),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
-                          ),
-                        ),
-                        child: SizedBox.expand(
-                          child: ElevatedButton(
-                            child: Text(
-                              "Send Code",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {
-                              Navigator.of(context).pushNamed("/OTP");
 
-                            },
-                          ),
-                        ),
+                      Container(
+                        width: 250,
+                        height: 40,
+                        child: ElevatedButton(onPressed: (){
+                          Navigator.of(context).pushNamed("/OTP");
+                        },style: ButtonStyle(),
+                            child: Text("Send Code")),
                       ),
+                      // Container(
+                      //   height: 60,
+                      //   alignment: Alignment.centerLeft,
+                      //   decoration: BoxDecoration(
+                      //     gradient: LinearGradient(
+                      //       begin: Alignment.topLeft,
+                      //       end: Alignment.bottomRight,
+                      //       stops: [0.3, 1],
+                      //       colors: [
+                      //         Color(0xFFF58524),
+                      //         Color(0XFFF92B7F),
+                      //       ],
+                      //     ),
+                      //     borderRadius: BorderRadius.all(
+                      //       Radius.circular(5),
+                      //     ),
+                      //   ),
+                      //   child: SizedBox.expand(
+                      //     child: ElevatedButton(
+                      //       child: Text(
+                      //         "Send Code",
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.bold,
+                      //           color: Colors.white,
+                      //           fontSize: 20,
+                      //         ),
+                      //         textAlign: TextAlign.center,
+                      //       ),
+                      //       onPressed: () {
+                      //         Navigator.of(context).pushNamed("/OTP");
+                      //       },
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 20,
                       ),

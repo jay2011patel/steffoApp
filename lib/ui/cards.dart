@@ -93,7 +93,8 @@ Widget orderCard(BuildContext context,Order order,String? curr_user_id){
 
 Widget DistributorCard(User user , BuildContext context){
   return Container(
-    height: 170,
+    padding: EdgeInsets.only(left: 5,right: 5),
+    height: 160,
     //margin: EdgeInsets.only(top: 20),
     child: Card(
         shape: RoundedRectangleBorder(
@@ -123,8 +124,7 @@ Widget DistributorCard(User user , BuildContext context){
                 Expanded(
                   flex: 1,
                   child: Container(
-                      width: 250,
-
+                      width: 300,
                       padding: EdgeInsets.only(top: 10,left: 5),
                       child: Text(user.address!,style: GoogleFonts.raleway(textStyle: TextStyle(fontSize: 15)),textAlign: TextAlign.left,overflow: TextOverflow.visible,maxLines: 4,)
                   ),
@@ -139,7 +139,7 @@ Widget DistributorCard(User user , BuildContext context){
                     //color: Colors.green,
                     borderRadius: BorderRadius.circular(20)
                 ),
-                width: MediaQuery.of(context).size.width/4,
+                width: 82,
                 child: Image.asset("assets/images/distributor.png")
             )
           ],
@@ -150,12 +150,13 @@ Widget DistributorCard(User user , BuildContext context){
 
 Widget DealerCard(User user , BuildContext context){
   return Container(
-    height: 170,
-    //margin: EdgeInsets.only(top: 20),
+    width: 400,
+    height: 160,
+    // margin: EdgeInsets.only(top: 20,),
     child: Card(
-        shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20)
-        ),
+        // shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(20)
+        // ),
         elevation: 15,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -170,7 +171,7 @@ Widget DealerCard(User user , BuildContext context){
                 Expanded(
                   flex: 0,
                   child: Container(
-                      width: 250,
+                      width: 200,
                       padding: EdgeInsets.only(left: 5),
                       child: Text(user.orgName!,style: GoogleFonts.raleway(textStyle: TextStyle(fontSize: 18,fontWeight: FontWeight.bold)),textAlign: TextAlign.left,overflow: TextOverflow.visible,)
                   ),
@@ -194,7 +195,7 @@ Widget DealerCard(User user , BuildContext context){
                   //color: Colors.green,
                     borderRadius: BorderRadius.circular(20)
                 ),
-                width: 120,
+                width: 70,
                 child: Image.asset("assets/images/dealer.png")
             )
           ],
