@@ -19,12 +19,34 @@ class OTPContent extends StatefulWidget {
 
 
 class _OTPPageState extends State<OTPContent>{
-  final _pinPutController = TextEditingController();
-  @override
+  // final _pinPutController = TextEditingController();
+  final defaultPinTheme = PinTheme(
+    width: 56,
+    height: 56,
+    textStyle: TextStyle(fontSize: 20, color: Color.fromRGBO(30, 60, 87, 1), fontWeight: FontWeight.w600),
+    decoration: BoxDecoration(
+      border: Border.all(color: Color.fromRGBO(234, 239, 243, 1)),
+      borderRadius: BorderRadius.circular(20),
+    ),
+  );
+
   Widget build(BuildContext context) {
 
     return Scaffold(
       appBar: AppBar(
+
+        actions: [
+          IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.white,
+              )
+          )
+        ],
+        title: Center(
+          child: Text("Verify Your Email",style: TextStyle(color:Color.fromRGBO(19, 59, 78, 1.0),fontFamily: "Poppins-bold",fontSize: 24),),
+        ),
         backgroundColor: Colors.white,
         automaticallyImplyLeading: true,
         leading: IconButton(
@@ -36,7 +58,7 @@ class _OTPPageState extends State<OTPContent>{
       body:
 
       Container(
-        padding: EdgeInsets.only(top: 60, left: 40, right: 40),
+        padding: EdgeInsets.only(top: 60),
         color: Colors.white,
         child: ListView(
           children: <Widget>[
@@ -75,61 +97,85 @@ class _OTPPageState extends State<OTPContent>{
                     ],
                   ),
                 ),
+
                 Container(
                   width: double.infinity,
                   child: Column(
                     children: <Widget>[
-                      TextFormField(
-                        keyboardType: TextInputType.number,
-                        decoration: InputDecoration(
-                          labelText: "Enter a Code",
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
-                        ),
-                        style: TextStyle(fontSize: 20),
-                      ),
+                      // defaultPinTheme(),
                       SizedBox(
-                        height: 20,
+                        child: Pinput(
+                          length: 4,
+                          animationDuration: Duration.zero,
+                          defaultPinTheme: PinTheme(
+                            height: 60,
+                            width: 50,
+                            textStyle: TextStyle(
+                              fontSize: 25,
+                              fontFamily: "Poppins"
+                            ),
+                            decoration: BoxDecoration(
+                              shape: BoxShape.rectangle,
+                              color: Colors.grey.withOpacity(0.10),
+                              borderRadius: BorderRadius.circular(8),
+                              border: Border.all(
+                                color: Colors.black .withOpacity(0.30)
+                              )
+                            )
+                          ),
+
+                        ),
                       ),
+
+                      SizedBox(
+                        height: 40,
+                      ),
+
+
 
                       // Container(
                       //   child: darkRoundedPinPut(),
                       // ),
                       Container(
-                        height: 60,
-                        alignment: Alignment.centerLeft,
-                        decoration: BoxDecoration(
-                          gradient: LinearGradient(
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight,
-                            stops: [0.3, 1],
-                            colors: [
-                              Color(0xFFF58524),
-                              Color(0XFFF92B7F),
-                            ],
-                          ),
-                          borderRadius: BorderRadius.all(
-                            Radius.circular(5),
-                          ),
-                        ),
-                        child: SizedBox.expand(
-                          child: ElevatedButton(
-                            child: Text(
-                              "Verify",
-                              style: TextStyle(
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white,
-                                fontSize: 20,
-                              ),
-                              textAlign: TextAlign.center,
-                            ),
-                            onPressed: () {},
-                          ),
-                        ),
+                        width: 250,
+                        height: 50,
+                        child: ElevatedButton(onPressed: (){
+                          Navigator.of(context).pushNamed("/newPass");
+                        },style: ButtonStyle(),
+                            child: Text("Verify",style: TextStyle(fontSize: 20),)),
                       ),
+                      // Container(
+                      //   height: 60,
+                      //   alignment: Alignment.centerLeft,
+                      //   decoration: BoxDecoration(
+                      //     gradient: LinearGradient(
+                      //       begin: Alignment.topLeft,
+                      //       end: Alignment.bottomRight,
+                      //       stops: [0.3, 1],
+                      //       colors: [
+                      //         Color(0xFFF58524),
+                      //         Color(0XFFF92B7F),
+                      //       ],
+                      //     ),
+                      //     borderRadius: BorderRadius.all(
+                      //       Radius.circular(5),
+                      //     ),
+                      //   ),
+                      //   child: SizedBox.expand(
+                      //     child: ElevatedButton(
+                      //       child: Text(
+                      //         "Verify",
+                      //         style: TextStyle(
+                      //           fontWeight: FontWeight.bold,
+                      //           color: Colors.white,
+                      //           fontSize: 20,
+                      //         ),
+                      //         textAlign: TextAlign.center,
+                      //       ),
+                      //       onPressed: () {},
+                      //     ),
+                      //   ),
+                      // ),
                       SizedBox(
                         height: 20,
                       ),

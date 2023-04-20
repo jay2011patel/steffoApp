@@ -315,121 +315,112 @@ class _HomePageState extends State<HomeContent> {
                               child: Text("Change Price Percentage"))
                         ],
                       )),
-                      LayoutBuilder(builder: (context, constraint) {
-                        if (light == true) {
-                          return Container(
-                            height: 60,
-                            margin: EdgeInsets.all(5.0),
-                            child:
-                                LayoutBuilder(builder: (context, constraints) {
-                              if (editPrice == false) {
-                                return Row(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  children: [
-                                    Expanded(
-                                      flex: 1,
-                                      //width: MediaQuery.of(context).size.width * 0.6,
-                                      child: Text(
-                                        "Base Price : $price/-",
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            fontSize: 25,
-                                            color: Colors.white,
-                                            fontWeight: FontWeight.w900),
-                                      ),
-                                    ),
-                                    LayoutBuilder(
-                                        builder: (context, constraints) {
-                                      if (user_type == "Manufacturer") {
-                                        return Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width *
-                                              0.2,
-                                          child: IconButton(
-                                            color: Colors.white,
-                                            onPressed: () {
-                                              setState(() {
-                                                editPrice = true;
-                                              });
-                                            },
-                                            icon: Icon(Icons.edit),
-                                          ),
-                                        );
-                                      } else {
-                                        return Container();
-                                      }
-                                    })
-                                  ],
+                    ],
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+              LayoutBuilder(builder: (context, constraint) {
+                if (light == true) {
+                  return Container(
+                    height: 60,
+                    margin: EdgeInsets.all(5.0),
+                    child: LayoutBuilder(builder: (context, constraints) {
+                      if (editPrice == false) {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Expanded(
+                              flex: 1,
+                              //width: MediaQuery.of(context).size.width * 0.6,
+                              child: Text(
+                                "Base Price : $price/-",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    fontSize: 25,
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w900),
+                              ),
+                            ),
+                            LayoutBuilder(builder: (context, constraints) {
+                              if (user_type == "Manufacturer") {
+                                return Container(
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.2,
+                                  child: IconButton(
+                                    color: Colors.white,
+                                    onPressed: () {
+                                      setState(() {
+                                        editPrice = true;
+                                      });
+                                    },
+                                    icon: Icon(Icons.edit),
+                                  ),
                                 );
                               } else {
-                                return Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceEvenly,
-                                  children: [
-                                    Container(
-                                      child: TextFormField(
-                                        // initialValue: price.toString(),
-                                        keyboardType: TextInputType.number,
-                                        textInputAction: TextInputAction.done,
-                                        controller: newBasePrice,
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(
-                                            color: Colors.white, fontSize: 20),
-                                        cursorColor: Colors.white,
-                                        decoration: const InputDecoration(
-                                          focusedBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 2.0),
-                                          ),
-                                          enabledBorder: UnderlineInputBorder(
-                                            borderSide: BorderSide(
-                                                color: Colors.white,
-                                                width: 2.0),
-                                          ),
-                                        ),
-                                        // onFieldSubmitted: (value) {
-                                        //   print(value);
-                                        //   setState(() {
-                                        //     editPrice = false;
-                                        //     price = int.parse(value);
-                                        //   });
-                                        // }),
-                                      ),
-                                      width:
-                                          MediaQuery.of(context).size.width / 3,
-                                    ),
-                                    ElevatedButton(
-                                        // icon: Icon(Icons.done_outlined),
-
-                                        onPressed: () {
-                                          // print(newBasePrice.text);
-                                          setState(() {
-                                            editPrice = false;
-                                            price =
-                                                int.parse(newBasePrice.text);
-                                          });
-                                        },
-                                        child: Text("Submit"),
-                                        style: ElevatedButton.styleFrom(
-                                            backgroundColor: Colors.white,
-                                            foregroundColor: Colors.black))
-                                  ],
-                                );
+                                return Container();
                               }
-                            }),
-                            width: MediaQuery.of(context).size.width,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(5),
-                              color: Colors.green,
+                            })
+                          ],
+                        );
+                      } else {
+                        return Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          children: [
+                            Container(
+                              child: TextFormField(
+                                // initialValue: price.toString(),
+                                keyboardType: TextInputType.number,
+                                textInputAction: TextInputAction.done,
+                                controller: newBasePrice,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 20),
+                                cursorColor: Colors.white,
+                                decoration: const InputDecoration(
+                                  focusedBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
+                                  ),
+                                  enabledBorder: UnderlineInputBorder(
+                                    borderSide: BorderSide(
+                                        color: Colors.white, width: 2.0),
+                                  ),
+                                ),
+                                // onFieldSubmitted: (value) {
+                                //   print(value);
+                                //   setState(() {
+                                //     editPrice = false;
+                                //     price = int.parse(value);
+                                //   });
+                                // }),
+                              ),
+                              width: MediaQuery.of(context).size.width / 3,
                             ),
-                          );
-                        } else {
-                          return Container();
-                        }
-                      }),
-                    ],
+                            ElevatedButton(
+                                // icon: Icon(Icons.done_outlined),
+
+                                onPressed: () {
+                                  // print(newBasePrice.text);
+                                  setState(() {
+                                    editPrice = false;
+                                    price = int.parse(newBasePrice.text);
+                                  });
+                                },
+                                child: Text("Submit"),
+                                style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.white,
+                                    foregroundColor: Colors.black))
+                          ],
+                        );
+                      }
+                    }),
+                    width: MediaQuery.of(context).size.width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5),
+                      color: Colors.green,
+                    ),
                   );
                 } else {
                   return Container();
