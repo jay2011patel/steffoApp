@@ -805,7 +805,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   int quty = int.parse(
                                       listOfColumns.elementAt(i)["Qty"]!);
                                   quty = quty + int.parse(qty.text);
-                                  num p = (int.parse(base_price.text) + (int.parse(base_price.text)*(grdpct/100)) + (int.parse(base_price.text)*(szpct/100))) * quty;
+                                  num p = (int.parse(base_price.text) + grdpct + (int.parse(base_price.text)*(szpct/100))) * quty;
 
                                   listOfColumns.elementAt(i)["Qty"] =
                                       quty.toString();
