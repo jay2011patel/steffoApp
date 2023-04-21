@@ -7,6 +7,7 @@ import 'package:form_field_validator/form_field_validator.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 import '../Models/grade.dart';
+import '../Models/region.dart';
 import '../Models/size.dart';
 import '../ui/common.dart';
 
@@ -81,6 +82,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
       selectedSize,
       selectedGrade,
       selectedType,
+      selectedRegion,
       selectedTransType,
       selectedOrderType;
   TextEditingController qty = TextEditingController();
@@ -93,6 +95,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
 
   @override
   void initState() {
+
     super.initState();
     focusNode1 = FocusNode();
     focusNode2 = FocusNode();
@@ -167,7 +170,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   // List items = ["TMT"];
   List grades = [];
   List sizes = [];
+  List regions = [];
   List<Grade> gradeList = [];
+  List<Region> regionList = [];
   List<ItemSize> sizeList = [];
   var f = 0;
   loadItemData() async {
@@ -194,7 +199,19 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         gradeList.add(s);
       }
 
-
+      var res2 = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getregions.php"));
+      var responseData2 = jsonDecode(res2.body);
+      for(int i  = 0 ; i < responseData2['data'].length;i++){
+        print(responseData2['data'][i]);
+        regions.add(responseData2['data'][i]["regionName"]);
+        Region r = Region();
+        r.name = responseData2['data'][i]["regionName"];
+        r.cost = responseData2['data'][i]["tCost"];
+        regionList.add(r);
+      }
+      setState(() {
+        
+      });
     }
   }
   
@@ -275,13 +292,14 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
     }
     // print(listOfColumns[0]['Name']);
   }
-
+  num tCost = 0;
   Widget PlaceOrderBody() {
     loadItemData();
     // List<DropdownMenuItem<String>> dropdownItems = [];
     List<DropdownMenuItem<String>> dropdownGrades = [];
     List<DropdownMenuItem<String>> dropdownSize = [];
     List<DropdownMenuItem<String>> dropdownType = [];
+    List<DropdownMenuItem<String>> dropdownRegion = [];
     List<DropdownMenuItem<String>> dropdownTransType = [];
     List<DropdownMenuItem<String>> dropdownOrderType = [];
     // List<DropdownMenuItem<String>> getItems() {
@@ -316,6 +334,17 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         dropdownSize.add(it);
       }
       return dropdownSize;
+    }
+
+    List<DropdownMenuItem<String>> getRegion() {
+      for (int i = 0; i < regions.length; i++) {
+        DropdownMenuItem<String> it = DropdownMenuItem(
+          value: regions[i],
+          child: Text(regions[i]),
+        );
+        dropdownRegion.add(it);
+      }
+      return dropdownRegion;
     }
 
     List<DropdownMenuItem<String>> getType() {
@@ -427,6 +456,35 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                       ),
                 ),
               ),
+              //-------------------------------Region---------------------------
+
+              Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                        hintText: "Select Region of Delivery",
+                        filled: true,
+                        fillColor: Color.fromRGBO(
+                            233, 236, 239, 0.792156862745098),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          // borderRadius: BorderRadius.circular(20)
+                        )),
+                    value: selectedRegion,
+                    items: getRegion(),
+                    onChanged: (String? newValue) {
+                      selectedRegion = newValue;
+                      var ind = regions.indexOf(selectedRegion);
+                      tCost = int.parse(regionList[ind].cost!);
+                    },
+                    validator: (selectedValue) {
+                      if (selectedValue == null) {
+                        // return 'Please select a value.';
+                      }
+                      return null;
+                    },
+                  )),
+
 
               //-----------------------------Pan Number-------------------------
 
@@ -558,7 +616,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             focusNode: focusNode5,
                             validator: (selectedValue) {
                               if (selectedValue == null) {
-                                // return 'Please select a value.';
+                                //return 'Please select a value.';
                               }
                               return null;
                             },
@@ -819,7 +877,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   "Sr_no": itemNum.toString(),
                                   "Name": "$selectedGrade $selectedSize",
                                   "Qty": qty.text,
-                                  "Price": ((int.parse(base_price.text) + (int.parse(base_price.text)*(grdpct/100)) + (int.parse(base_price.text)*(szpct/100))) * int.parse(qty.text)).toString()
+                                  "Price": selectedTransType=="CIF" && selectedOrderType != "Lump-sum" ?((int.parse(base_price.text) + grdpct + szpct + tCost) * int.parse(qty.text)).toString():((int.parse(base_price.text) + grdpct + szpct + 0) * int.parse(qty.text)).toString()
                                 });
                                 itemNum = itemNum + 1;
                               }
@@ -831,10 +889,17 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             setState(() {});
                           }
                         },
-                        child: const Text("Add Item"))
+                        child: const Text("Add Item")
+                    ),
                   ],
                 ),
               ),
+              LayoutBuilder(
+                builder: (context,constraints) {
+                  return Text("*Transportaion Cost Are Included",style: TextStyle(color: Colors.red),);
+                }
+              ),
+
 
               //-----------------------DataTable--------------------------------
 

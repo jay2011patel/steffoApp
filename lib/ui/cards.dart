@@ -349,17 +349,17 @@ Widget LumpSumTotal(BuildContext context, Grade g) {
       Expanded(
         flex: 6,
         child: Text(g.value.toString(),
-            style: TextStyle(fontSize: 18, color: Colors.white)),
+            style: TextStyle(fontSize: 15, color: Colors.white)),
       ),
       Expanded(
         flex: 1,
-        child: Text(":", style: TextStyle(fontSize: 18, color: Colors.white)),
+        child: Text(":", style: TextStyle(fontSize: 15, color: Colors.white)),
       ),
       Expanded(
         flex: 2,
         child: Center(
             child: Text(g.qty.toString(),
-                style: TextStyle(fontSize: 18, color: Colors.white))),
+                style: TextStyle(fontSize: 15, color: Colors.white))),
       ),
     ],
     mainAxisAlignment: MainAxisAlignment.spaceAround,
