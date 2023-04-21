@@ -626,6 +626,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                         items: getOrderType(),
                         onChanged: (String? newValue) {
                           selectedOrderType = newValue;
+                          if(selectedOrderType == "Lump-sum"){
+                            selectedTransType = "None";
+                          }
                         },
                         // key: field5Key,
                         // focusNode: focusNode5,
