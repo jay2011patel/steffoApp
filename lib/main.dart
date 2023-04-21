@@ -17,6 +17,7 @@ import 'package:stefomobileapp/pages/RegistrationPage.dart';
 import 'package:stefomobileapp/pages/RequestPage.dart';
 import 'package:stefomobileapp/pages/PlaceOrderPage.dart';
 import 'package:stefomobileapp/pages/UserProfilePage.dart';
+import 'package:stefomobileapp/pages/addItem.dart';
 import 'package:stefomobileapp/pages/newPassPage.dart';
 import 'pages/LRPage.dart';
 import 'UI/common.dart';
