@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:stefomobileapp/pages/ChangePP.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
@@ -35,7 +36,7 @@ class MyApp extends StatelessWidget {
       DeviceOrientation.portraitUp,
       DeviceOrientation.portraitDown,
     ]);
-    return MaterialApp(
+    return GetMaterialApp(
       theme: ThemeData(
           textTheme: GoogleFonts.latoTextTheme(Theme.of(context).textTheme)),
       title: 'Flutter Demo',

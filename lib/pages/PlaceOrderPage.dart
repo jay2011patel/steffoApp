@@ -95,7 +95,6 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
 
   @override
   void initState() {
-
     super.initState();
     focusNode1 = FocusNode();
     focusNode2 = FocusNode();
@@ -176,11 +175,12 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   List<ItemSize> sizeList = [];
   var f = 0;
   loadItemData() async {
-    if(f==0){
-      f=1;
-      var res = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getsize.php"));
+    if (f == 0) {
+      f = 1;
+      var res = await http
+          .post(Uri.parse("http://urbanwebmobile.in/steffo/getsize.php"));
       var responseData = jsonDecode(res.body);
-      for(int i  = 0 ; i < responseData['data'].length;i++){
+      for (int i = 0; i < responseData['data'].length; i++) {
         sizes.add(responseData['data'][i]["sizeValue"].toString());
         ItemSize s = ItemSize();
         s.price = responseData['data'][i]["sizePrice"];
@@ -188,9 +188,10 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         sizeList.add(s);
       }
 
-      var res1 = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getgrade.php"));
+      var res1 = await http
+          .post(Uri.parse("http://urbanwebmobile.in/steffo/getgrade.php"));
       var responseData1 = jsonDecode(res1.body);
-      for(int i  = 0 ; i < responseData1['data'].length;i++){
+      for (int i = 0; i < responseData1['data'].length; i++) {
         print(responseData1['data'][i]);
         grades.add(responseData1['data'][i]["gradeName"]);
         Grade s = Grade();
@@ -199,9 +200,10 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         gradeList.add(s);
       }
 
-      var res2 = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getregions.php"));
+      var res2 = await http
+          .post(Uri.parse("http://urbanwebmobile.in/steffo/getregions.php"));
       var responseData2 = jsonDecode(res2.body);
-      for(int i  = 0 ; i < responseData2['data'].length;i++){
+      for (int i = 0; i < responseData2['data'].length; i++) {
         print(responseData2['data'][i]);
         regions.add(responseData2['data'][i]["regionName"]);
         Region r = Region();
@@ -209,23 +211,20 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         r.cost = responseData2['data'][i]["tCost"];
         regionList.add(r);
       }
-      setState(() {
-        
-      });
+      setState(() {});
     }
   }
-  
-  
+
   List type = ["Loose", "Bhari"];
   List transType = ["CIF", "FOB"];
-  List orderType = ["Lump-sum", "With Size","Use Lumpsum"];
+  List orderType = ["Lump-sum", "With Size", "Use Lumpsum"];
 
   int itemNum = 1;
   int totalQuantity = 0;
-  
+
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() async {
-    if(selectedOrderType != "Use Lumpsum"){
+    if (selectedOrderType != "Use Lumpsum") {
       var res = await http.post(
         Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
         body: selectedOrderType == "Lump-sum"
@@ -294,7 +293,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         }
       }
       // print(listOfColumns[0]['Name']);
-    }else{
+    } else {
       print("Select From Lumpsum Type Order Selected");
     }
   }
@@ -471,8 +470,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                     decoration: const InputDecoration(
                         hintText: "Select Region of Delivery",
                         filled: true,
-                        fillColor: Color.fromRGBO(
-                            233, 236, 239, 0.792156862745098),
+                        fillColor:
+                            Color.fromRGBO(233, 236, 239, 0.792156862745098),
                         border: OutlineInputBorder(
                           borderSide: BorderSide.none,
                           // borderRadius: BorderRadius.circular(20)
@@ -491,7 +490,6 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                       return null;
                     },
                   )),
-
 
               //-----------------------------Pan Number-------------------------
 
@@ -599,7 +597,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
               //--------------------------Loading Type--------------------------
 
               LayoutBuilder(builder: (context, constraints) {
-                if (selectedOrderType != "Lump-sum" && (user_type == "Dealer" || user_type == "Distributor")) {
+                if (selectedOrderType != "Lump-sum" &&
+                    (user_type == "Dealer" || user_type == "Distributor")) {
                   return Column(
                     children: [
                       Container(
@@ -654,7 +653,6 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                               return null;
                             },
                           ))
-
                     ],
                   );
                 } else {
@@ -842,25 +840,26 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 side: BorderSide.none),
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
-                          var grdpct,szpct = 0;
+                          var grdpct, szpct = 0;
                           if (
                               // selectedValue != null &&
                               selectedGrade != null &&
                                   selectedSize != null &&
-                                  qty.text != "" && base_price.text != "" && selectedRegion != null && selectedTransType != null) {
-
-                            for(int i  = 0 ; i  < gradeList.length;i++){
-                              if( gradeList[i].value == selectedGrade){
+                                  qty.text != "" &&
+                                  base_price.text != "" &&
+                                  selectedRegion != null &&
+                                  selectedTransType != null) {
+                            for (int i = 0; i < gradeList.length; i++) {
+                              if (gradeList[i].value == selectedGrade) {
                                 grdpct = int.parse(gradeList[i].price!);
                               }
                             }
-                            for(int i  = 0 ; i  < sizeList.length;i++){
-                              if( sizeList[i].value == selectedSize){
+                            for (int i = 0; i < sizeList.length; i++) {
+                              if (sizeList[i].value == selectedSize) {
                                 szpct = int.parse(sizeList[i].price!);
                               }
                             }
                             setState(() {
-
                               isItem = " ";
                               int f = 0;
                               for (int i = 0; i < listOfColumns.length; i++) {
@@ -870,7 +869,18 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   int quty = int.parse(
                                       listOfColumns.elementAt(i)["Qty"]!);
                                   quty = quty + int.parse(qty.text);
-                                  num p = selectedTransType=="CIF" && selectedOrderType != "Lump-sum" ?(int.parse(base_price.text) + grdpct + szpct +tCost) * quty :(int.parse(base_price.text) + grdpct + szpct +0) * quty;
+                                  num p = selectedTransType == "CIF" &&
+                                          selectedOrderType != "Lump-sum"
+                                      ? (int.parse(base_price.text) +
+                                              grdpct +
+                                              szpct +
+                                              tCost) *
+                                          quty
+                                      : (int.parse(base_price.text) +
+                                              grdpct +
+                                              szpct +
+                                              0) *
+                                          quty;
 
                                   listOfColumns.elementAt(i)["Qty"] =
                                       quty.toString();
@@ -884,7 +894,20 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   "Sr_no": itemNum.toString(),
                                   "Name": "$selectedGrade $selectedSize",
                                   "Qty": qty.text,
-                                  "Price": selectedTransType=="CIF" && selectedOrderType != "Lump-sum" ?((int.parse(base_price.text) + grdpct + szpct + tCost) * int.parse(qty.text)).toString():((int.parse(base_price.text) + grdpct + szpct + 0) * int.parse(qty.text)).toString()
+                                  "Price": selectedTransType == "CIF" &&
+                                          selectedOrderType != "Lump-sum"
+                                      ? ((int.parse(base_price.text) +
+                                                  grdpct +
+                                                  szpct +
+                                                  tCost) *
+                                              int.parse(qty.text))
+                                          .toString()
+                                      : ((int.parse(base_price.text) +
+                                                  grdpct +
+                                                  szpct +
+                                                  0) *
+                                              int.parse(qty.text))
+                                          .toString()
                                 });
                                 itemNum = itemNum + 1;
                               }
@@ -896,17 +919,16 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             setState(() {});
                           }
                         },
-                        child: const Text("Add Item")
-                    ),
+                        child: const Text("Add Item")),
                   ],
                 ),
               ),
-              LayoutBuilder(
-                builder: (context,constraints) {
-                  return Text("*Transportaion Cost Are Included",style: TextStyle(color: Colors.red),);
-                }
-              ),
-
+              LayoutBuilder(builder: (context, constraints) {
+                return Text(
+                  "*Transportaion Cost Are Included",
+                  style: TextStyle(color: Colors.red),
+                );
+              }),
 
               //-----------------------DataTable--------------------------------
 
@@ -957,9 +979,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                               )),
                               DataColumn(
                                   label: Expanded(
-                                    child: Text(
-                                      'Price',
-                                    textAlign: TextAlign.center,
+                                child: Text(
+                                  'Price',
+                                  textAlign: TextAlign.center,
                                 ),
                               )),
                               DataColumn(label: Text(' '))

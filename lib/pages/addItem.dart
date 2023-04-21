@@ -7,6 +7,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 import '../Models/grade.dart';
+import '../Models/region.dart';
 import '../Models/size.dart';
 import '../UI/common.dart';
 import '../ui/cards.dart';
@@ -31,6 +32,9 @@ class _AddItemPageState extends State<AddItemContent> {
 
   List sizes = [];
   List<ItemSize> sizeList = [];
+
+  List regions = [];
+  List<Region> regionList = [];
 
   var isEnabled = false;
 
@@ -57,6 +61,18 @@ class _AddItemPageState extends State<AddItemContent> {
       s.price = responseData2['data'][i]["sizePrice"];
       s.value = responseData2['data'][i]["sizeValue"];
       sizeList.add(s);
+    }
+
+    var res3 = await http
+        .post(Uri.parse("http://urbanwebmobile.in/steffo/getregions.php"));
+    var responseData3 = jsonDecode(res3.body);
+    for (int i = 0; i < responseData3['data'].length; i++) {
+      print(responseData3['data'][i]);
+      regions.add(responseData3['data'][i]["regionName"]);
+      Region r = Region();
+      r.name = responseData3['data'][i]["regionName"];
+      r.cost = responseData3['data'][i]["tCost"];
+      regionList.add(r);
     }
 
     var res = await http.post(
@@ -245,7 +261,7 @@ class _AddItemPageState extends State<AddItemContent> {
                                       maxLines: 1,
                                       keyboardType: TextInputType.number,
                                       decoration: const InputDecoration(
-                                        labelText: "Add new Grade",
+                                        labelText: "Add new Size",
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.never,
                                         border: OutlineInputBorder(
@@ -291,10 +307,77 @@ class _AddItemPageState extends State<AddItemContent> {
                       )),
                   Container(
                       margin: EdgeInsets.only(top: 15),
-                      child: Column(
-                        children: [
-                          Container(),
-                        ],
+                      child: SingleChildScrollView(
+                        child: Column(
+                          children: [
+                            Container(
+                              child: ListView.builder(
+                                itemCount: regionList.length,
+                                physics: const NeverScrollableScrollPhysics(),
+                                scrollDirection: Axis.vertical,
+                                shrinkWrap: true,
+                                itemBuilder: (context, ind) {
+                                  return Center(
+                                    child: AddNewRegion(
+                                        context, regionList[ind], () {
+                                      regionList.removeAt(ind);
+                                      setState(() {});
+                                    }),
+                                  );
+                                },
+                              ),
+                            ),
+                            LayoutBuilder(builder: (context, constraints) {
+                              if (isEnabled == true) {
+                                return Column(
+                                  children: [
+                                    TextFormField(
+                                      maxLines: 1,
+                                      keyboardType: TextInputType.number,
+                                      decoration: const InputDecoration(
+                                        labelText: "Add new Region",
+                                        floatingLabelBehavior:
+                                            FloatingLabelBehavior.never,
+                                        border: OutlineInputBorder(
+                                            // borderRadius: BorderRadius.circular(20),
+                                            borderSide: BorderSide.none),
+                                        filled: true,
+                                        fillColor: Color.fromRGBO(233, 236, 239,
+                                            0.792156862745098), //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                                      ),
+                                    ),
+                                    ElevatedButton(
+                                        // icon: Icon(Icons.done_outlined),
+
+                                        onPressed: () {
+                                          // print(newBasePrice.text);
+                                          setState(() {
+                                            isEnabled = false;
+                                          });
+                                        },
+                                        child: Text("Submit"),
+                                        style: ElevatedButton.styleFrom(
+                                            backgroundColor: Colors.blueAccent,
+                                            foregroundColor: Colors.white))
+                                  ],
+                                );
+                              } else {
+                                return ElevatedButton(
+                                  onPressed: () {
+                                    setState(() {
+                                      isEnabled = true;
+                                    });
+                                  },
+                                  child: Text('Add New Region'),
+                                  // icon: Icon(
+                                  //   Icons.add_circle_outline_outlined,
+                                  //   color: Colors.white,
+                                  // ), // <-- Text
+                                );
+                              }
+                            }),
+                          ],
+                        ),
                       )),
                 ],
               ),
