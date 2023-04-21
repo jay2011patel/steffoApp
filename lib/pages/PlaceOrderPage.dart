@@ -218,80 +218,87 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   
   List type = ["Loose", "Bhari"];
   List transType = ["CIF", "FOB"];
-  List orderType = ["Lump-sum", "With Size"];
+  List orderType = ["Lump-sum", "With Size","Use Lumpsum"];
 
   int itemNum = 1;
   int totalQuantity = 0;
   
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() async {
-    var res = await http.post(
-      Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
-      body: selectedOrderType == "Lump-sum"?{
-        "userId": id!,
-        "supplierId": supplier_id!,
-        "shippingAddress": party_address.text,
-        "partyName": party_name.text,
-        "gstNumber": party_pan_no.text,
-        "mobileNumber": party_mob_num.text,
-        "basePrice": base_price.text,
-        "status": "Pending",
-        "loadingType": "None",
-        "transportationType" : "None",
-        "orderType": selectedOrderType
-      }:{
-        "userId": id!,
-        "supplierId": supplier_id!,
-        "shippingAddress": party_address.text,
-        "partyName": party_name.text,
-        "gstNumber": party_pan_no.text,
-        "mobileNumber": party_mob_num.text,
-        "basePrice": base_price.text,
-        "status": "Pending",
-        "loadingType": selectedType,
-        "orderType": selectedOrderType,
-        "transportationType" : selectedTransType
-      },
-    );
-    Fluttertoast.showToast(
-        msg: 'Your Order Is Placed',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.blueAccent,
-        textColor: Colors.white);
-    Navigator.of(context).pushNamed("/home");
+    if(selectedOrderType != "Use Lumpsum"){
+      var res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
+        body: selectedOrderType == "Lump-sum"
+            ? {
+                "userId": id!,
+                "supplierId": supplier_id!,
+                "shippingAddress": party_address.text,
+                "partyName": party_name.text,
+                "gstNumber": party_pan_no.text,
+                "mobileNumber": party_mob_num.text,
+                "basePrice": base_price.text,
+                "status": "Pending",
+                "loadingType": "None",
+                "transportationType": "None",
+                "orderType": selectedOrderType
+              }
+            : {
+                "userId": id!,
+                "supplierId": supplier_id!,
+                "shippingAddress": party_address.text,
+                "partyName": party_name.text,
+                "gstNumber": party_pan_no.text,
+                "mobileNumber": party_mob_num.text,
+                "basePrice": base_price.text,
+                "status": "Pending",
+                "loadingType": selectedType,
+                "orderType": selectedOrderType,
+                "transportationType": selectedTransType
+              },
+      );
+      Fluttertoast.showToast(
+          msg: 'Your Order Is Placed',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blueAccent,
+          textColor: Colors.white);
+      Navigator.of(context).pushNamed("/home");
 
-    var responseData = json.decode(res.body);
-    print(responseData["value"].toString());
+      var responseData = json.decode(res.body);
+      print(responseData["value"].toString());
 
-    if (responseData["status"] == '200' && selectedOrderType == "With Size") {
-      for (int i = 0; i < listOfColumns.length; i++) {
-        http.post(
-          Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
-          body: {
-            "order_id": responseData["value"].toString(),
-            "name": listOfColumns[i]["Name"],
-            "qty": listOfColumns[i]["Qty"],
-            "price": listOfColumns[i]["Price"]
-          },
-        );
+      if (responseData["status"] == '200' && selectedOrderType == "With Size") {
+        for (int i = 0; i < listOfColumns.length; i++) {
+          http.post(
+            Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
+            body: {
+              "order_id": responseData["value"].toString(),
+              "name": listOfColumns[i]["Name"],
+              "qty": listOfColumns[i]["Qty"],
+              "price": listOfColumns[i]["Price"]
+            },
+          );
+        }
+      } else {
+        for (int i = 0; i < listOfColumns.length; i++) {
+          http.post(
+            Uri.parse("http://urbanwebmobile.in/steffo/addlumpsum.php"),
+            body: {
+              "order_id": responseData["value"].toString(),
+              "name": listOfColumns[i]["Name"],
+              "qty": listOfColumns[i]["Qty"],
+              "price": listOfColumns[i]["Price"]
+            },
+          );
+        }
       }
+      // print(listOfColumns[0]['Name']);
     }else{
-      for (int i = 0; i < listOfColumns.length; i++) {
-        http.post(
-          Uri.parse("http://urbanwebmobile.in/steffo/addlumpsum.php"),
-          body: {
-            "order_id": responseData["value"].toString(),
-            "name": listOfColumns[i]["Name"],
-            "qty": listOfColumns[i]["Qty"],
-            "price": listOfColumns[i]["Price"]
-          },
-        );
-      }
+      print("Select From Lumpsum Type Order Selected");
     }
-    // print(listOfColumns[0]['Name']);
   }
+
   num tCost = 0;
   Widget PlaceOrderBody() {
     loadItemData();
@@ -840,7 +847,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                               // selectedValue != null &&
                               selectedGrade != null &&
                                   selectedSize != null &&
-                                  qty.text != "" && base_price.text != "") {
+                                  qty.text != "" && base_price.text != "" && selectedRegion != null && selectedTransType != null) {
 
                             for(int i  = 0 ; i  < gradeList.length;i++){
                               if( gradeList[i].value == selectedGrade){
@@ -863,7 +870,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   int quty = int.parse(
                                       listOfColumns.elementAt(i)["Qty"]!);
                                   quty = quty + int.parse(qty.text);
-                                  num p = (int.parse(base_price.text) + grdpct + (int.parse(base_price.text)*(szpct/100))) * quty;
+                                  num p = selectedTransType=="CIF" && selectedOrderType != "Lump-sum" ?(int.parse(base_price.text) + grdpct + szpct +tCost) * quty :(int.parse(base_price.text) + grdpct + szpct +0) * quty;
 
                                   listOfColumns.elementAt(i)["Qty"] =
                                       quty.toString();
@@ -885,7 +892,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             totalQuantity = totalQuantity + int.parse(qty.text);
                             //print(totalQuantity);
                           } else {
-                            isItem = "Please Enter Item";
+                            isItem = "Please Enter All of the above fields";
                             setState(() {});
                           }
                         },
