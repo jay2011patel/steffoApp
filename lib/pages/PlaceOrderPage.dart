@@ -171,11 +171,12 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   List<ItemSize> sizeList = [];
   var f = 0;
   loadItemData() async {
-    if(f==0){
-      f=1;
-      var res = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getsize.php"));
+    if (f == 0) {
+      f = 1;
+      var res = await http
+          .post(Uri.parse("http://urbanwebmobile.in/steffo/getsize.php"));
       var responseData = jsonDecode(res.body);
-      for(int i  = 0 ; i < responseData['data'].length;i++){
+      for (int i = 0; i < responseData['data'].length; i++) {
         sizes.add(responseData['data'][i]["sizeValue"].toString());
         ItemSize s = ItemSize();
         s.price = responseData['data'][i]["sizePrice"];
@@ -183,9 +184,10 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         sizeList.add(s);
       }
 
-      var res1 = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getgrade.php"));
+      var res1 = await http
+          .post(Uri.parse("http://urbanwebmobile.in/steffo/getgrade.php"));
       var responseData1 = jsonDecode(res1.body);
-      for(int i  = 0 ; i < responseData1['data'].length;i++){
+      for (int i = 0; i < responseData1['data'].length; i++) {
         print(responseData1['data'][i]);
         grades.add(responseData1['data'][i]["gradeName"]);
         Grade s = Grade();
@@ -193,48 +195,47 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         s.value = responseData1['data'][i]["gradeName"];
         gradeList.add(s);
       }
-
-
     }
   }
-  
-  
+
   List type = ["Loose", "Bhari"];
   List transType = ["CIF", "FOB"];
   List orderType = ["Lump-sum", "With Size"];
 
   int itemNum = 1;
   int totalQuantity = 0;
-  
+
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() async {
     var res = await http.post(
       Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
-      body: selectedOrderType == "Lump-sum"?{
-        "userId": id!,
-        "supplierId": supplier_id!,
-        "shippingAddress": party_address.text,
-        "partyName": party_name.text,
-        "gstNumber": party_pan_no.text,
-        "mobileNumber": party_mob_num.text,
-        "basePrice": base_price.text,
-        "status": "Pending",
-        "loadingType": "None",
-        "transportationType" : "None",
-        "orderType": selectedOrderType
-      }:{
-        "userId": id!,
-        "supplierId": supplier_id!,
-        "shippingAddress": party_address.text,
-        "partyName": party_name.text,
-        "gstNumber": party_pan_no.text,
-        "mobileNumber": party_mob_num.text,
-        "basePrice": base_price.text,
-        "status": "Pending",
-        "loadingType": selectedType,
-        "orderType": selectedOrderType,
-        "transportationType" : selectedTransType
-      },
+      body: selectedOrderType == "Lump-sum"
+          ? {
+              "userId": id!,
+              "supplierId": supplier_id!,
+              "shippingAddress": party_address.text,
+              "partyName": party_name.text,
+              "gstNumber": party_pan_no.text,
+              "mobileNumber": party_mob_num.text,
+              "basePrice": base_price.text,
+              "status": "Pending",
+              "loadingType": "None",
+              "transportationType": "None",
+              "orderType": selectedOrderType
+            }
+          : {
+              "userId": id!,
+              "supplierId": supplier_id!,
+              "shippingAddress": party_address.text,
+              "partyName": party_name.text,
+              "gstNumber": party_pan_no.text,
+              "mobileNumber": party_mob_num.text,
+              "basePrice": base_price.text,
+              "status": "Pending",
+              "loadingType": selectedType,
+              "orderType": selectedOrderType,
+              "transportationType": selectedTransType
+            },
     );
     Fluttertoast.showToast(
         msg: 'Your Order Is Placed',
@@ -260,7 +261,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
           },
         );
       }
-    }else{
+    } else {
       for (int i = 0; i < listOfColumns.length; i++) {
         http.post(
           Uri.parse("http://urbanwebmobile.in/steffo/addlumpsum.php"),
@@ -534,7 +535,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
               //--------------------------Loading Type--------------------------
 
               LayoutBuilder(builder: (context, constraints) {
-                if (selectedOrderType != "Lump-sum" && (user_type == "Dealer" || user_type == "Distributor")) {
+                if (selectedOrderType != "Lump-sum" &&
+                    (user_type == "Dealer" || user_type == "Distributor")) {
                   return Column(
                     children: [
                       Container(
@@ -589,7 +591,6 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                               return null;
                             },
                           ))
-
                     ],
                   );
                 } else {
@@ -777,25 +778,24 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                 side: BorderSide.none),
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
-                          var grdpct,szpct = 0;
+                          var grdpct, szpct = 0;
                           if (
                               // selectedValue != null &&
                               selectedGrade != null &&
                                   selectedSize != null &&
-                                  qty.text != "" && base_price.text != "") {
-
-                            for(int i  = 0 ; i  < gradeList.length;i++){
-                              if( gradeList[i].value == selectedGrade){
+                                  qty.text != "" &&
+                                  base_price.text != "") {
+                            for (int i = 0; i < gradeList.length; i++) {
+                              if (gradeList[i].value == selectedGrade) {
                                 grdpct = int.parse(gradeList[i].price!);
                               }
                             }
-                            for(int i  = 0 ; i  < sizeList.length;i++){
-                              if( sizeList[i].value == selectedSize){
+                            for (int i = 0; i < sizeList.length; i++) {
+                              if (sizeList[i].value == selectedSize) {
                                 szpct = int.parse(sizeList[i].price!);
                               }
                             }
                             setState(() {
-
                               isItem = " ";
                               int f = 0;
                               for (int i = 0; i < listOfColumns.length; i++) {
@@ -805,7 +805,12 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   int quty = int.parse(
                                       listOfColumns.elementAt(i)["Qty"]!);
                                   quty = quty + int.parse(qty.text);
-                                  num p = (int.parse(base_price.text) + (int.parse(base_price.text)*(grdpct/100)) + (int.parse(base_price.text)*(szpct/100))) * quty;
+                                  num p = (int.parse(base_price.text) +
+                                          (int.parse(base_price.text) *
+                                              (grdpct / 100)) +
+                                          (int.parse(base_price.text) *
+                                              (szpct / 100))) *
+                                      quty;
 
                                   listOfColumns.elementAt(i)["Qty"] =
                                       quty.toString();
@@ -819,7 +824,13 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                                   "Sr_no": itemNum.toString(),
                                   "Name": "$selectedGrade $selectedSize",
                                   "Qty": qty.text,
-                                  "Price": ((int.parse(base_price.text) + (int.parse(base_price.text)*(grdpct/100)) + (int.parse(base_price.text)*(szpct/100))) * int.parse(qty.text)).toString()
+                                  "Price": ((int.parse(base_price.text) +
+                                              (int.parse(base_price.text) *
+                                                  (grdpct / 100)) +
+                                              (int.parse(base_price.text) *
+                                                  (szpct / 100))) *
+                                          int.parse(qty.text))
+                                      .toString()
                                 });
                                 itemNum = itemNum + 1;
                               }
@@ -885,9 +896,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                               )),
                               DataColumn(
                                   label: Expanded(
-                                    child: Text(
-                                      'Price',
-                                    textAlign: TextAlign.center,
+                                child: Text(
+                                  'Price',
+                                  textAlign: TextAlign.center,
                                 ),
                               )),
                               DataColumn(label: Text(' '))

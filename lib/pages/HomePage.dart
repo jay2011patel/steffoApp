@@ -19,6 +19,8 @@ import '../ui/cards.dart';
 import 'RequestPage.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 
+import 'addItem.dart';
+
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
@@ -310,9 +312,9 @@ class _HomePageState extends State<HomeContent> {
                                 Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                        builder: (context) => ChangePerPage()));
+                                        builder: (context) => AddItemPage()));
                               },
-                              child: Text("Change Price Percentage"))
+                              child: Text("Admin Controls"))
                         ],
                       )),
                     ],
