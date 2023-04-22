@@ -436,6 +436,7 @@ class _HomePageState extends State<HomeContent> {
                                           "basePrice" : newBasePrice.text.toString()
                                         }
                                       );
+                                      basePrice = newBasePrice.text;
                                     }
                                   });
                                 },
