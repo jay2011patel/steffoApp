@@ -6,6 +6,7 @@ import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 // import '../Models/order.dart';
 import '../Models/user.dart';
+import '../UI/common.dart';
 import 'DealerPage.dart';
 import 'HomePage.dart';
 
@@ -65,33 +66,36 @@ class _ProfilePageState extends State<ProfileContent>{
     loadData();
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          actions: [
-            // IconButton(
-            //     onPressed: () {},
-            //     icon: const Icon(
-            //       Icons.check,
-            //       color: Colors.black,
-            //       size: 30,
-            //     )
-            // )
-          ],
-          title: Center(
-              child: Text("Profile",
-                // textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
-              )),
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              onPressed: (){
-
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: Colors.black,
-              )),
-        ),
+        appBar: appbar("Profile", () {
+          Navigator.pop(context);
+        }),
+        // appBar: AppBar(
+        //   actions: [
+        //     // IconButton(
+        //     //     onPressed: () {},
+        //     //     icon: const Icon(
+        //     //       Icons.check,
+        //     //       color: Colors.black,
+        //     //       size: 30,
+        //     //     )
+        //     // )
+        //   ],
+        //   title: Center(
+        //       child: Text("Profile",
+        //         // textAlign: TextAlign.center,
+        //         style: const TextStyle(
+        //             color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
+        //       )),
+        //   backgroundColor: Colors.white,
+        //   leading: IconButton(
+        //       onPressed: (){
+        //
+        //       },
+        //       icon: const Icon(
+        //         Icons.arrow_back_ios_new,
+        //         color: Colors.black,
+        //       )),
+        // ),
 
         body: LayoutBuilder(
           builder: (context,constraints) {
@@ -157,7 +161,7 @@ class _ProfilePageState extends State<ProfileContent>{
                         ],
                       ),
                       SizedBox(
-                        width: 60,
+                        width: 30,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -193,7 +197,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -227,7 +231,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       // mainAxisAlignment: MainAxisAlignment.center,
@@ -260,14 +264,14 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Text(user.email!,
                             style:
-                                TextStyle(fontFamily: "Poppins", fontSize: 18)),
+                                TextStyle(fontFamily: "Poppins", fontSize: 16)),
                       ],
                     )
                   ],
@@ -293,7 +297,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -327,7 +331,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -361,7 +365,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -396,13 +400,13 @@ class _ProfilePageState extends State<ProfileContent>{
                         ],
                       ),
                       SizedBox(
-                        width: 60,
+                        width: 30,
                       ),
                       Expanded(
                         child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(padding: EdgeInsets.only(left: 20)),
+                            // Padding(padding: EdgeInsets.only(left: 20)),
                             Text(
                               user.address!,
                               style: TextStyle(

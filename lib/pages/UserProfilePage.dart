@@ -72,7 +72,6 @@ class _ProfileFormState extends State<ProfileForm> {
   bool _isPWVisible = true;
 
   String? userType,firstName,lastName;
-
   loadData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
      userType = await prefs.getString('userType');
@@ -81,8 +80,8 @@ class _ProfileFormState extends State<ProfileForm> {
     setState(() {
 
     });
-
   }
+
   @override
   void initState() {
     loadData();
