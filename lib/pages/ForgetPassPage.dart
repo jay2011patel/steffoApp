@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:email_auth/email_auth.dart';
+import 'package:stefomobileapp/UI/common.dart';
+import 'package:stefomobileapp/pages/OTPPage.dart';
 
 
 class ForgetPassPage extends StatelessWidget{
@@ -12,12 +15,69 @@ class ForgetPassPage extends StatelessWidget{
 
 class ForgetPasscontent extends StatefulWidget {
   ForgetPasscontent({super.key});
-  final selected = 0;
+  // final selected = 0;
   @override
   State<ForgetPasscontent> createState() => _ForgetPassPageState();
 }
 
 class _ForgetPassPageState extends State<ForgetPasscontent>{
+  bool submitValid = false;
+
+  final TextEditingController email = TextEditingController();
+  final TextEditingController otp = TextEditingController();
+  EmailOTP myauth = EmailOTP();
+  
+  EmailAuth emailAuth =EmailAuth(sessionName: "sessionName");
+  // void verify() {
+  //   print(emailAuth.validateOtp(
+  //       recipientMail: email.value.text,
+  //       userOtp: otp.value.text));
+  // }
+  @override
+  void initState() {
+    super.initState();
+    // Initialize the package
+    emailAuth = new EmailAuth(
+      sessionName: "Sample session",
+    );
+
+    /// Configuring the remote server
+    // emailAuth.config(remoteServerConfiguration);
+  }
+
+  void sendOtp() async {
+    bool result = await emailAuth.sendOtp(
+        recipientMail: email.toString(), otpLength: 4);
+    if (result) {
+      setState(() {
+        submitValid = true;
+      });
+    }
+  }
+
+
+  // final TextEditingController _otpController = TextEditingController();
+
+  // void sendOTP()async{
+  //   EmailAuth.sessionName="Test Session";
+  //   var res = await EmailAuth.sendOtp(recipientMail: _emailController.text);
+  //   if(res){
+  //     print("OTP Sent");
+  //   }else{
+  //     print("We could not sent the otp");
+  //   }
+  //
+  // }
+  //
+  // void verifyOTP(async){
+  //   var res = EmailAuth.validate(recieverMail: _emailController.text,userOTP:_otpController.text);
+  //   if(res){
+  //     print("OTP verified");
+  //   }else {
+  //     print("Invalid OTP");
+  //   }
+  // }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,101 +101,127 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
           onPressed: () => Navigator.pop(context, false),
         ),
       ),
-      body: Container(
-        padding: EdgeInsets.only(top: 60, left: 40, right: 40),
-        color: Colors.white,
+      body: Center(
         child: ListView(
           children: <Widget>[
-            Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: <Widget>[
-                Container(
-                  child: Column(
-                    children: <Widget>[
-                      SizedBox(
-                        width: 200,
-                        height: 200,
-                        child: Image.asset("assets/images/wrong-password.png"),
-                      ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
-                  ),
-                ),
-                Container(
-                  width: double.infinity,
-                  child: Column(
-                    children: <Widget>[
-                      TextFormField(
-                        keyboardType: TextInputType.emailAddress,
-                        decoration: InputDecoration(
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(5)
-                          ),
-                          labelText: "E-mail",
-                          labelStyle: TextStyle(
-                            color: Colors.black,
-                            fontWeight: FontWeight.w400,
-                            fontSize: 20,
-                          ),
+            SingleChildScrollView(
+              child: Column(
+                // mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  Container(
+                    child: Column(
+                      children: <Widget>[
+                        Padding(padding: EdgeInsets.only(top: 60)),
+                        SizedBox(
+                          width: 200,
+                          height: 200,
+                          child: Image.asset("assets/images/wrong-password.png"),
                         ),
-                        validator: EmailValidator(errorText: "Not Valid"),
-                        style: TextStyle(fontSize: 20),
-                      ),
-                      SizedBox(
-                        height: 40,
-                      ),
-
-                      Container(
-                        width: 250,
-                        height: 50,
-                        child: ElevatedButton(onPressed: (){
-                          Navigator.of(context).pushNamed("/OTP");
-                        },style: ButtonStyle(),
-                            child: Text("Send Code",style: TextStyle(fontSize: 20),)),
-                      ),
-                      // Container(
-                      //   height: 60,
-                      //   alignment: Alignment.centerLeft,
-                      //   decoration: BoxDecoration(
-                      //     gradient: LinearGradient(
-                      //       begin: Alignment.topLeft,
-                      //       end: Alignment.bottomRight,
-                      //       stops: [0.3, 1],
-                      //       colors: [
-                      //         Color(0xFFF58524),
-                      //         Color(0XFFF92B7F),
-                      //       ],
-                      //     ),
-                      //     borderRadius: BorderRadius.all(
-                      //       Radius.circular(5),
-                      //     ),
-                      //   ),
-                      //   child: SizedBox.expand(
-                      //     child: ElevatedButton(
-                      //       child: Text(
-                      //         "Send Code",
-                      //         style: TextStyle(
-                      //           fontWeight: FontWeight.bold,
-                      //           color: Colors.white,
-                      //           fontSize: 20,
-                      //         ),
-                      //         textAlign: TextAlign.center,
-                      //       ),
-                      //       onPressed: () {
-                      //         Navigator.of(context).pushNamed("/OTP");
-                      //       },
-                      //     ),
-                      //   ),
-                      // ),
-                      SizedBox(
-                        height: 20,
-                      ),
-                    ],
+                        SizedBox(
+                          height: 50,
+                        ),
+                      ],
+                    ),
                   ),
-                )
-              ],
+                  Container(
+                    padding: EdgeInsets.only(right: 20,left: 20),
+                    // width: double.infinity,
+                    child: Column(
+                      children: <Widget>[
+                        TextFormField(
+
+                          controller: email,
+                          keyboardType: TextInputType.emailAddress,
+                          decoration: InputDecoration(
+                            // suffixIcon: TextButton(
+                            //   child: Text("Send OTP"),
+                            //   onPressed: ()=>sendOTP(),
+                            // ),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(color: Colors.grey),
+
+                            ),
+                            // border: OutlineInputBorder(
+                            //   borderRadius: BorderRadius.circular(5)
+                            // ),
+                            labelText: "E-mail",
+                            prefixIcon: Icon(Icons.person,size: 30),
+                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                            filled: true,
+                            labelStyle: TextStyle(
+                              color: Colors.black,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 20,
+                            ),
+                          ),
+                          validator: EmailValidator(errorText: "Not Valid"),
+                          style: TextStyle(fontSize: 20),
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+
+                        // TextFormField(
+                        //   // controller: _otpController,
+                        //   keyboardType: TextInputType.emailAddress,
+                        //   decoration: InputDecoration(
+                        //     // border: OutlineInputBorder(
+                        //     //   borderRadius: BorderRadius.circular(5)
+                        //     // ),
+                        //     labelText: "OTP",
+                        //     labelStyle: TextStyle(
+                        //       color: Colors.black,
+                        //       fontWeight: FontWeight.w400,
+                        //       fontSize: 20,
+                        //     ),
+                        //   ),
+                        //   validator: EmailValidator(errorText: "Not Valid"),
+                        //   style: TextStyle(fontSize: 20),
+                        // ),
+
+                        SizedBox(
+                          height: 40,
+                        ),
+
+                        Container(
+                            width: MediaQuery.of(context).size.width,
+                            padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+                          // height: 60,
+                          child:  buttonStyle("Send Code", () async{
+                              myauth.setConfig(
+                              appEmail: "contact@gmail.com",
+                              appName: "Email",
+                              userEmail: email.text,
+                              otpLength: 4,
+                              otpType: OTPType.digitsOnly);
+                              if(await myauth.sendOTP()==true){
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(
+                              content: Text("OTP has been sent")
+                              ));
+                              Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context)=> OTPPage())
+                              );
+                              }
+                              else{
+                              ScaffoldMessenger.of(context)
+                                  .showSnackBar(const SnackBar(content: Text("Oops, OTP sent fails, Please enter an email")
+                              )
+                              );
+                              }
+    // Navigator.of(context).pushNamed("/OTP");
+                            },
+                          )
+                        ),
+                        SizedBox(
+                          height: 20,
+                        ),
+                      ],
+                    ),
+                  )
+                ],
+              ),
             )
           ],
         ),

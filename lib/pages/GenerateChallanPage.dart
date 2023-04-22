@@ -501,7 +501,8 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                     if (_formKey.currentState!.validate()){
                     onSubmit();
                     }
-                  }))
+                  })
+              )
             ],
           ),
         ),
