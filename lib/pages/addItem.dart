@@ -33,6 +33,11 @@ class _AddItemPageState extends State<AddItemContent> {
   List<ItemSize> sizeList = [];
 
   var isEnabled = false;
+  TextEditingController newPrice = TextEditingController();
+
+  TextEditingController newGrade = TextEditingController();
+
+  TextEditingController newSize = TextEditingController();
 
   loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -67,7 +72,7 @@ class _AddItemPageState extends State<AddItemContent> {
 
     var responseData = jsonDecode(res.body);
 
-    print(responseData);
+    //print(responseData);
     for (int i = 0; i < responseData["data"].length; i++) {
       print(responseData['data'][i]['name']);
       var ind = gradeList.indexWhere((element) =>
@@ -153,10 +158,76 @@ class _AddItemPageState extends State<AddItemContent> {
                                 itemBuilder: (context, ind) {
                                   return Center(
                                     child: AddNewGrade(context, gradeList[ind],
-                                        () {
-                                      gradeList.removeAt(ind);
-                                      setState(() {});
-                                    }),
+                                        //--------------------------OnRemove---------------------------------
+                                        () async {
+
+                                          await http.post(
+                                            Uri.parse("http://urbanwebmobile.in/steffo/deletegrade.php"),
+                                            body: {
+                                              "gradeName" : gradeList[ind].value.toString(),
+                                            }
+                                          );
+                                          gradeList.removeAt(ind);
+                                          setState(() {});
+                                        },
+                                        //-------------------------OnUpdate-----------------------------------
+                                        (){
+                                          showDialog(context: context, builder: (context){
+                                            return Container(
+                                              child: Dialog(
+                                                child: Container(
+                                                  height: 150,
+                                                  child: Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+                                                      Padding(
+                                                        padding: const EdgeInsets.all(10),
+                                                        child: TextFormField(
+                                                          maxLines: 1,
+                                                          controller: newPrice,
+                                                          keyboardType: TextInputType.number,
+                                                          decoration: const InputDecoration(
+                                                            labelText: "New Price",
+                                                            floatingLabelBehavior: FloatingLabelBehavior.never,
+                                                            border: OutlineInputBorder(
+                                                              // borderRadius: BorderRadius.circular(20),
+                                                                borderSide: BorderSide.none),
+                                                            filled: true,
+                                                            fillColor: Color.fromRGBO(233, 236, 239,
+                                                                0.792156862745098), //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      ElevatedButton(
+                                                          onPressed: (){
+                                                            final numericRegex = RegExp(r'^[0-9]*$');
+                                                            if(numericRegex.hasMatch(newPrice.text) && newPrice.text.trim() != ""){
+                                                              gradeList[ind]
+                                                                      .price =
+                                                                  newPrice.text;
+                                                              http.post(
+                                                                  Uri.parse(
+                                                                      "http://urbanwebmobile.in/steffo/updategrade.php"),
+                                                                  body: {
+                                                                    "gradeName":
+                                                                        gradeList[ind]
+                                                                            .value,
+                                                                    "price":
+                                                                        newPrice
+                                                                            .text
+                                                                  });
+                                                            }
+                                                            Navigator.pop(context);
+                                                          },
+                                                          child: Text("Submit"))
+                                                    ],
+                                                  ),
+                                                ),
+                                              ),
+                                            );
+                                          });
+                                        }
+                                   ),
                                   );
                                 },
                               ),
@@ -166,8 +237,9 @@ class _AddItemPageState extends State<AddItemContent> {
                                 return Column(
                                   children: [
                                     TextFormField(
+                                      controller: newGrade,
                                       maxLines: 1,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: TextInputType.text,
                                       decoration: const InputDecoration(
                                         labelText: "Add new Grade",
                                         floatingLabelBehavior:
@@ -183,8 +255,15 @@ class _AddItemPageState extends State<AddItemContent> {
                                     ElevatedButton(
                                         // icon: Icon(Icons.done_outlined),
 
-                                        onPressed: () {
+                                        onPressed: () async {
                                           // print(newBasePrice.text);
+                                          await http.post(
+                                            Uri.parse("http://urbanwebmobile.in/steffo/addgrade.php"),
+                                            body: {
+                                              "gradeName": newGrade.text
+                                            }
+                                          );
+                                          Navigator.pop(context);
                                           setState(() {
                                             isEnabled = false;
                                           });
@@ -229,10 +308,73 @@ class _AddItemPageState extends State<AddItemContent> {
                                 itemBuilder: (context, ind) {
                                   return Center(
                                     child:
-                                        AddNewSize(context, sizeList[ind], () {
-                                      sizeList.removeAt(ind);
-                                      setState(() {});
-                                    }),
+                                        AddNewSize(context, sizeList[ind],
+                                            () async {
+                                              await http.post(
+                                                  Uri.parse("http://urbanwebmobile.in/steffo/deletesize.php"),
+                                                  body: {
+                                                    "sizeName" : sizeList[ind].value.toString(),
+                                                  }
+                                              );
+                                              sizeList.removeAt(ind);
+                                              setState(() {});
+                                            },
+                                            (){
+                                              showDialog(context: context, builder: (context){
+                                                return Container(
+                                                  child: Dialog(
+                                                    child: Container(
+                                                      height: 150,
+                                                      child: Column(
+                                                        mainAxisAlignment: MainAxisAlignment.center,
+                                                        children: [
+                                                          Padding(
+                                                            padding: const EdgeInsets.all(10),
+                                                            child: TextFormField(
+                                                              maxLines: 1,
+                                                              controller: newPrice,
+                                                              keyboardType: TextInputType.number,
+                                                              decoration: const InputDecoration(
+                                                                labelText: "New Price",
+                                                                floatingLabelBehavior: FloatingLabelBehavior.never,
+                                                                border: OutlineInputBorder(
+                                                                  // borderRadius: BorderRadius.circular(20),
+                                                                    borderSide: BorderSide.none),
+                                                                filled: true,
+                                                                fillColor: Color.fromRGBO(233, 236, 239,
+                                                                    0.792156862745098), //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                                                              ),
+                                                            ),
+                                                          ),
+                                                          ElevatedButton(
+                                                              onPressed: (){
+                                                                final numericRegex = RegExp(r'^[0-9]*$');
+                                                                if(numericRegex.hasMatch(newPrice.text) && newPrice.text.trim() != ""){
+                                                                  sizeList[ind]
+                                                                      .price =
+                                                                      newPrice.text;
+                                                                  http.post(
+                                                                      Uri.parse(
+                                                                          "http://urbanwebmobile.in/steffo/updatesize.php"),
+                                                                      body: {
+                                                                        "sizeName":
+                                                                        sizeList[ind]
+                                                                            .value,
+                                                                        "price":
+                                                                        newPrice
+                                                                            .text
+                                                                      });
+                                                                }
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: Text("Submit"))
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                                );
+                                              });
+                                            }),
                                   );
                                 },
                               ),
@@ -243,9 +385,10 @@ class _AddItemPageState extends State<AddItemContent> {
                                   children: [
                                     TextFormField(
                                       maxLines: 1,
+                                      controller: newSize,
                                       keyboardType: TextInputType.number,
                                       decoration: const InputDecoration(
-                                        labelText: "Add new Grade",
+                                        labelText: "Add new Size (Along with mm)",
                                         floatingLabelBehavior:
                                             FloatingLabelBehavior.never,
                                         border: OutlineInputBorder(
@@ -259,7 +402,18 @@ class _AddItemPageState extends State<AddItemContent> {
                                     ElevatedButton(
                                         // icon: Icon(Icons.done_outlined),
 
-                                        onPressed: () {
+                                        onPressed: () async {
+
+                                          await http.post(
+                                              Uri.parse("http://urbanwebmobile.in/steffo/addsize.php"),
+                                              body: {
+                                                "sizeName": newSize.text
+                                              }
+                                          );
+                                          Navigator.pop(context);
+                                          setState(() {
+                                            isEnabled = false;
+                                          });
                                           // print(newBasePrice.text);
                                           setState(() {
                                             isEnabled = false;

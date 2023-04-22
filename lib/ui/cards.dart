@@ -368,7 +368,7 @@ Widget LumpSumTotal(BuildContext context, Grade g) {
   ));
 }
 
-Widget AddNewGrade(BuildContext context, Grade g, c()) {
+Widget AddNewGrade(BuildContext context, Grade g, remove() , update()) {
   return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -391,7 +391,7 @@ Widget AddNewGrade(BuildContext context, Grade g, c()) {
                 flex: 1,
                 child: IconButton(
                     onPressed: () => {
-                          print("Edit button pressed"),
+                          update()
                         },
                     icon: Icon(
                       Icons.edit,
@@ -402,7 +402,7 @@ Widget AddNewGrade(BuildContext context, Grade g, c()) {
                 flex: 1,
                 child: IconButton(
                     onPressed: () => {
-                          c(),
+                          remove(),
                           print("Delete button pressed"),
                         },
                     icon: Icon(
@@ -417,7 +417,7 @@ Widget AddNewGrade(BuildContext context, Grade g, c()) {
       ));
 }
 
-Widget AddNewSize(BuildContext context, ItemSize s, c()) {
+Widget AddNewSize(BuildContext context, ItemSize s, remove() , update()) {
   return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -440,7 +440,7 @@ Widget AddNewSize(BuildContext context, ItemSize s, c()) {
                 flex: 1,
                 child: IconButton(
                     onPressed: () => {
-                          print("Edit button pressed"),
+                          update()
                         },
                     icon: Icon(
                       Icons.edit,
@@ -451,7 +451,7 @@ Widget AddNewSize(BuildContext context, ItemSize s, c()) {
                 flex: 1,
                 child: IconButton(
                     onPressed: () => {
-                          c(),
+                          remove(),
                           print("Delete button pressed"),
                         },
                     icon: Icon(

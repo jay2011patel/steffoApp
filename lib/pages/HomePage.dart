@@ -64,7 +64,7 @@ class _HomePageState extends State<HomeContent> {
         }),
         body: HomePageBody(),
         floatingActionButton: LayoutBuilder(builder: (context, constraints) {
-          if (user_type != "Manufacturer") {
+          if (user_type != "Manufacturer" && isSalesEnabled == "true" ) {
             //fabLoc = FloatingActionButtonLocation.centerDocked;
             return FloatingActionButton(
               onPressed: () {
@@ -177,7 +177,7 @@ class _HomePageState extends State<HomeContent> {
 
   List<Order> requestList = [];
   List<Order> orderList = [];
-
+  String? isSalesEnabled = "false",basePrice = "0";
   Future<void> loadData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var m = id;
@@ -186,6 +186,16 @@ class _HomePageState extends State<HomeContent> {
     if (m != id) {
       requestList = [];
       orderList = [];
+      final res1 = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/getsystemdata.php")
+      );
+
+      var responseData1 = jsonDecode(res1.body);
+
+      isSalesEnabled = responseData1['data'][0]['value'];
+      basePrice = responseData1['data'][1]['value'];
+      print(" $isSalesEnabled and $basePrice");
+
       final res = await http.post(
         Uri.parse("http://urbanwebmobile.in/steffo/vieworder.php"),
         body: {"id": id!},
@@ -299,11 +309,21 @@ class _HomePageState extends State<HomeContent> {
                                   // This bool value toggles the switch.
                                   value: light,
                                   activeColor: Colors.green,
-                                  onChanged: (bool value) {
+                                  onChanged: (bool value) async {
                                     // This is called when the user toggles the switch.
+                                    //print(value);
+                                    light = value;
                                     setState(() {
-                                      light = value;
+
                                     });
+                                    var res = await http.post(
+
+                                      Uri.parse("http://urbanwebmobile.in/steffo/setsale.php"),
+                                      body: {
+                                        "status":value.toString()
+                                      }
+                                    );
+
                                   })
                             ],
                           )),
@@ -337,7 +357,7 @@ class _HomePageState extends State<HomeContent> {
                               flex: 1,
                               //width: MediaQuery.of(context).size.width * 0.6,
                               child: Text(
-                                "Base Price : $price/-",
+                                "Base Price : $basePrice/-",
                                 textAlign: TextAlign.center,
                                 style: TextStyle(
                                     fontSize: 25,
@@ -407,7 +427,17 @@ class _HomePageState extends State<HomeContent> {
                                   // print(newBasePrice.text);
                                   setState(() {
                                     editPrice = false;
-                                    price = int.parse(newBasePrice.text);
+                                    final numericRegex = RegExp(r'^[0-9]*$');
+                                    if(numericRegex.hasMatch(newBasePrice.text) && newBasePrice.text.trim() != "" ){
+                                      price = int.parse(newBasePrice.text);
+                                      http.post(
+                                        Uri.parse("http://urbanwebmobile.in/steffo/setbaseprice.php"),
+                                        body:{
+                                          "basePrice" : newBasePrice.text.toString()
+                                        }
+                                      );
+                                      basePrice = newBasePrice.text;
+                                    }
                                   });
                                 },
                                 child: Text("Submit"),
