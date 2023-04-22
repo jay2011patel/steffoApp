@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:stefomobileapp/Models/size.dart';
 
 import '../Models/grade.dart';
 import '../Models/lumpsum.dart';
@@ -349,36 +350,118 @@ Widget LumpSumTotal(BuildContext context, Grade g) {
       Expanded(
         flex: 6,
         child: Text(g.value.toString(),
-            style: TextStyle(fontSize: 18, color: Colors.white)),
+            style: TextStyle(fontSize: 15, color: Colors.white)),
       ),
       Expanded(
         flex: 1,
-        child: Text(":", style: TextStyle(fontSize: 18, color: Colors.white)),
+        child: Text(":", style: TextStyle(fontSize: 15, color: Colors.white)),
       ),
       Expanded(
         flex: 2,
         child: Center(
             child: Text(g.qty.toString(),
-                style: TextStyle(fontSize: 18, color: Colors.white))),
+                style: TextStyle(fontSize: 15, color: Colors.white))),
       ),
     ],
     mainAxisAlignment: MainAxisAlignment.spaceAround,
     crossAxisAlignment: CrossAxisAlignment.start,
-  )
-      // RichText(
-      //     text: TextSpan(children: [
-      //   TextSpan(
-      //       text: g.value,
-      //       style: TextStyle(
-      //           color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
-      //   TextSpan(
-      //       text: ":",
-      //       style: TextStyle(
-      //           color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
-      //   TextSpan(
-      //       text: g.qty.toString(),
-      //       style: TextStyle(
-      //           color: Colors.white, fontWeight: FontWeight.w900, fontSize: 16)),
-      // ])),
-      );
+  ));
+}
+
+Widget AddNewGrade(BuildContext context, Grade g, c()) {
+  return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Text(g.value.toString(),
+                    style: TextStyle(fontSize: 18, color: Colors.black)),
+              ),
+              Expanded(
+                flex: 1,
+                child: Text('\u{20B9}' + g.price.toString(),
+                    style: TextStyle(fontSize: 18, color: Colors.black)),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                    onPressed: () => {
+                          print("Edit button pressed"),
+                        },
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.blueAccent,
+                    )),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                    onPressed: () => {
+                          c(),
+                          print("Delete button pressed"),
+                        },
+                    icon: Icon(
+                      Icons.delete_rounded,
+                      color: Colors.red,
+                    )),
+              ),
+            ],
+          ),
+          Divider(color: Colors.black54),
+        ],
+      ));
+}
+
+Widget AddNewSize(BuildContext context, ItemSize s, c()) {
+  return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Text(s.value.toString(),
+                    style: TextStyle(fontSize: 18, color: Colors.black)),
+              ),
+              Expanded(
+                flex: 1,
+                child: Text('\u{20B9}' + s.price.toString(),
+                    style: TextStyle(fontSize: 18, color: Colors.black)),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                    onPressed: () => {
+                          print("Edit button pressed"),
+                        },
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.blueAccent,
+                    )),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                    onPressed: () => {
+                          c(),
+                          print("Delete button pressed"),
+                        },
+                    icon: Icon(
+                      Icons.delete_rounded,
+                      color: Colors.red,
+                    )),
+              ),
+            ],
+          ),
+          Divider(color: Colors.black54),
+        ],
+      ));
 }

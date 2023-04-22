@@ -4,9 +4,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:form_field_validator/form_field_validator.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:stefomobileapp/ui/cards.dart';
 import '../Models/grade.dart';
+import '../Models/lumpsum.dart';
+import '../Models/region.dart';
 import '../Models/size.dart';
 import '../ui/common.dart';
 
@@ -81,6 +85,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
       selectedSize,
       selectedGrade,
       selectedType,
+      selectedRegion,
       selectedTransType,
       selectedOrderType;
   TextEditingController qty = TextEditingController();
@@ -90,9 +95,43 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   TextEditingController party_mob_num = TextEditingController();
   TextEditingController loading_type = TextEditingController();
   TextEditingController base_price = TextEditingController();
+  List<Lumpsum> lumpsumList = [];
+  bool isInventoryDataLoaded= false;
+  loadLumpsumData() async {
+    print("inLoadLumpsumData");
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    final user_id = await prefs.getString('id');
+
+    var res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/getinventory.php"),
+        body: {
+          "user_id": user_id,
+        });
+
+    var responseData = jsonDecode(res.body);
+    var orders = [];
+
+    print(responseData);
+    for (int i = 0; i < responseData["data"].length; i++) {
+      print(responseData['data'][i]['name']);
+      Lumpsum l = Lumpsum();
+      l.orderId = responseData["data"][i]["order_id"];
+      l.name = responseData["data"][i]["name"];
+      l.qty = responseData["data"][i]["qty_left"];
+      l.price = responseData["data"][i]["price"];
+      l.status = responseData["data"][i]["status"];
+      l.id = responseData['data'][i]["ls_id"];
+      l.date = responseData["data"][i]["createdAt"];
+      lumpsumList.add(l);
+    }
+    isInventoryDataLoaded = true;
+    setState(() {});
+  }
+
 
   @override
   void initState() {
+    loadLumpsumData();
     super.initState();
     focusNode1 = FocusNode();
     focusNode2 = FocusNode();
@@ -167,7 +206,9 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
   // List items = ["TMT"];
   List grades = [];
   List sizes = [];
+  List regions = [];
   List<Grade> gradeList = [];
+  List<Region> regionList = [];
   List<ItemSize> sizeList = [];
   var f = 0;
   loadItemData() async {
@@ -194,94 +235,123 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         gradeList.add(s);
       }
 
-
+      var res2 = await http.post(Uri.parse("http://urbanwebmobile.in/steffo/getregions.php"));
+      var responseData2 = jsonDecode(res2.body);
+      for(int i  = 0 ; i < responseData2['data'].length;i++){
+        print(responseData2['data'][i]);
+        regions.add(responseData2['data'][i]["regionName"]);
+        Region r = Region();
+        r.name = responseData2['data'][i]["regionName"];
+        r.cost = responseData2['data'][i]["tCost"];
+        regionList.add(r);
+      }
+      setState(() {
+        
+      });
     }
   }
   
   
   List type = ["Loose", "Bhari"];
   List transType = ["CIF", "FOB"];
-  List orderType = ["Lump-sum", "With Size"];
+  List orderType = ["Lump-sum", "With Size","Use Lumpsum"];
 
   int itemNum = 1;
   int totalQuantity = 0;
   
   final List<Map<String, String>> listOfColumns = [];
   onPlaceOrder() async {
-    var res = await http.post(
-      Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
-      body: selectedOrderType == "Lump-sum"?{
-        "userId": id!,
-        "supplierId": supplier_id!,
-        "shippingAddress": party_address.text,
-        "partyName": party_name.text,
-        "gstNumber": party_pan_no.text,
-        "mobileNumber": party_mob_num.text,
-        "basePrice": base_price.text,
-        "status": "Pending",
-        "loadingType": "None",
-        "transportationType" : "None",
-        "orderType": selectedOrderType
-      }:{
-        "userId": id!,
-        "supplierId": supplier_id!,
-        "shippingAddress": party_address.text,
-        "partyName": party_name.text,
-        "gstNumber": party_pan_no.text,
-        "mobileNumber": party_mob_num.text,
-        "basePrice": base_price.text,
-        "status": "Pending",
-        "loadingType": selectedType,
-        "orderType": selectedOrderType,
-        "transportationType" : selectedTransType
-      },
-    );
-    Fluttertoast.showToast(
-        msg: 'Your Order Is Placed',
-        toastLength: Toast.LENGTH_SHORT,
-        gravity: ToastGravity.BOTTOM,
-        timeInSecForIosWeb: 1,
-        backgroundColor: Colors.blueAccent,
-        textColor: Colors.white);
-    Navigator.of(context).pushNamed("/home");
-
-    var responseData = json.decode(res.body);
-    print(responseData["value"].toString());
-
-    if (responseData["status"] == '200' && selectedOrderType == "With Size") {
-      for (int i = 0; i < listOfColumns.length; i++) {
-        http.post(
-          Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
-          body: {
-            "order_id": responseData["value"].toString(),
-            "name": listOfColumns[i]["Name"],
-            "qty": listOfColumns[i]["Qty"],
-            "price": listOfColumns[i]["Price"]
-          },
-        );
-      }
-    }else{
-      for (int i = 0; i < listOfColumns.length; i++) {
-        http.post(
-          Uri.parse("http://urbanwebmobile.in/steffo/addlumpsum.php"),
-          body: {
-            "order_id": responseData["value"].toString(),
-            "name": listOfColumns[i]["Name"],
-            "qty": listOfColumns[i]["Qty"],
-            "price": listOfColumns[i]["Price"]
-          },
+    if(selectedOrderType == "Use Lumpsum"){
+      for(int  i = 0 ; i < reductionData.length ; i++){
+        var res = await http.post(
+            Uri.parse("http://urbanwebmobile.in/steffo/updateinventory.php"),
+            body: {
+              "id": reductionData[i]["id"],
+              "qty": reductionData[i]["qty"]
+            }
         );
       }
     }
-    // print(listOfColumns[0]['Name']);
+      var res = await http.post(
+        Uri.parse("http://urbanwebmobile.in/steffo/placeorder.php"),
+        body: selectedOrderType == "Lump-sum"
+            ? {
+                "userId": id!,
+                "supplierId": supplier_id!,
+                "shippingAddress": party_address.text,
+                "partyName": party_name.text,
+                "gstNumber": party_pan_no.text,
+                "mobileNumber": party_mob_num.text,
+                "basePrice": base_price.text,
+                "status": "Pending",
+                "loadingType": "None",
+                "transportationType": "None",
+                "orderType": selectedOrderType
+              }
+            : {
+                "userId": id!,
+                "supplierId": supplier_id!,
+                "shippingAddress": party_address.text,
+                "partyName": party_name.text,
+                "gstNumber": party_pan_no.text,
+                "mobileNumber": party_mob_num.text,
+                "basePrice": base_price.text,
+                "status": "Pending",
+                "loadingType": selectedType,
+                "orderType": selectedOrderType,
+                "transportationType": selectedTransType
+              },
+      );
+      Fluttertoast.showToast(
+          msg: 'Your Order Is Placed',
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.BOTTOM,
+          timeInSecForIosWeb: 1,
+          backgroundColor: Colors.blueAccent,
+          textColor: Colors.white);
+      Navigator.of(context).pushNamed("/home");
+
+      var responseData = json.decode(res.body);
+      print(responseData["value"].toString());
+
+      if (responseData["status"] == '200' && selectedOrderType != "Lump-sum") {
+        for (int i = 0; i < listOfColumns.length; i++) {
+          http.post(
+            Uri.parse("http://urbanwebmobile.in/steffo/setorder.php"),
+            body: {
+              "order_id": responseData["value"].toString(),
+              "name": listOfColumns[i]["Name"],
+              "qty": listOfColumns[i]["Qty"],
+              "price": listOfColumns[i]["Price"]
+            },
+          );
+        }
+      } else {
+        for (int i = 0; i < listOfColumns.length; i++) {
+          http.post(
+            Uri.parse("http://urbanwebmobile.in/steffo/addlumpsum.php"),
+            body: {
+              "order_id": responseData["value"].toString(),
+              "name": listOfColumns[i]["Name"],
+              "qty": listOfColumns[i]["Qty"],
+              "price": listOfColumns[i]["Price"]
+            },
+          );
+        }
+      }
+      // print(listOfColumns[0]['Name']);
+
   }
 
+  num tCost = 0;
+  var reductionData =[];
   Widget PlaceOrderBody() {
     loadItemData();
     // List<DropdownMenuItem<String>> dropdownItems = [];
     List<DropdownMenuItem<String>> dropdownGrades = [];
     List<DropdownMenuItem<String>> dropdownSize = [];
     List<DropdownMenuItem<String>> dropdownType = [];
+    List<DropdownMenuItem<String>> dropdownRegion = [];
     List<DropdownMenuItem<String>> dropdownTransType = [];
     List<DropdownMenuItem<String>> dropdownOrderType = [];
     // List<DropdownMenuItem<String>> getItems() {
@@ -316,6 +386,17 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
         dropdownSize.add(it);
       }
       return dropdownSize;
+    }
+
+    List<DropdownMenuItem<String>> getRegion() {
+      for (int i = 0; i < regions.length; i++) {
+        DropdownMenuItem<String> it = DropdownMenuItem(
+          value: regions[i],
+          child: Text(regions[i]),
+        );
+        dropdownRegion.add(it);
+      }
+      return dropdownRegion;
     }
 
     List<DropdownMenuItem<String>> getType() {
@@ -427,6 +508,35 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                       ),
                 ),
               ),
+              //-------------------------------Region---------------------------
+
+              Container(
+                  padding: const EdgeInsets.fromLTRB(10, 10, 10, 0),
+                  child: DropdownButtonFormField(
+                    decoration: const InputDecoration(
+                        hintText: "Select Region of Delivery",
+                        filled: true,
+                        fillColor: Color.fromRGBO(
+                            233, 236, 239, 0.792156862745098),
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide.none,
+                          // borderRadius: BorderRadius.circular(20)
+                        )),
+                    value: selectedRegion,
+                    items: getRegion(),
+                    onChanged: (String? newValue) {
+                      selectedRegion = newValue;
+                      var ind = regions.indexOf(selectedRegion);
+                      tCost = int.parse(regionList[ind].cost!);
+                    },
+                    validator: (selectedValue) {
+                      if (selectedValue == null) {
+                        // return 'Please select a value.';
+                      }
+                      return null;
+                    },
+                  )),
+
 
               //-----------------------------Pan Number-------------------------
 
@@ -558,7 +668,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             focusNode: focusNode5,
                             validator: (selectedValue) {
                               if (selectedValue == null) {
-                                // return 'Please select a value.';
+                                //return 'Please select a value.';
                               }
                               return null;
                             },
@@ -778,63 +888,168 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                             minimumSize: const Size(190, 40)),
                         onPressed: () {
                           var grdpct,szpct = 0;
-                          if (
-                              // selectedValue != null &&
-                              selectedGrade != null &&
-                                  selectedSize != null &&
-                                  qty.text != "" && base_price.text != "") {
-
-                            for(int i  = 0 ; i  < gradeList.length;i++){
-                              if( gradeList[i].value == selectedGrade){
-                                grdpct = int.parse(gradeList[i].price!);
-                              }
-                            }
-                            for(int i  = 0 ; i  < sizeList.length;i++){
-                              if( sizeList[i].value == selectedSize){
-                                szpct = int.parse(sizeList[i].price!);
-                              }
-                            }
-                            setState(() {
-
-                              isItem = " ";
-                              int f = 0;
-                              for (int i = 0; i < listOfColumns.length; i++) {
-                                if (listOfColumns.elementAt(i)["Name"]! ==
-                                    // "$selectedValue"
-                                    "$selectedGrade $selectedSize") {
-                                  int quty = int.parse(
-                                      listOfColumns.elementAt(i)["Qty"]!);
-                                  quty = quty + int.parse(qty.text);
-                                  num p = (int.parse(base_price.text) + (int.parse(base_price.text)*(grdpct/100)) + (int.parse(base_price.text)*(szpct/100))) * quty;
-
-                                  listOfColumns.elementAt(i)["Qty"] =
-                                      quty.toString();
-                                  listOfColumns.elementAt(i)["Price"] =
-                                      p.toString();
-                                  f = 1;
+                          if(selectedOrderType != "Use Lumpsum"){
+                            if (selectedGrade != null &&
+                                selectedSize != null &&
+                                qty.text != "" &&
+                                base_price.text != "" &&
+                                selectedRegion != null &&
+                                selectedTransType != null) {
+                              for (int i = 0; i < gradeList.length; i++) {
+                                if (gradeList[i].value == selectedGrade) {
+                                  grdpct = int.parse(gradeList[i].price!);
                                 }
                               }
-                              if (f == 0) {
-                                listOfColumns.add({
-                                  "Sr_no": itemNum.toString(),
-                                  "Name": "$selectedGrade $selectedSize",
-                                  "Qty": qty.text,
-                                  "Price": ((int.parse(base_price.text) + (int.parse(base_price.text)*(grdpct/100)) + (int.parse(base_price.text)*(szpct/100))) * int.parse(qty.text)).toString()
-                                });
-                                itemNum = itemNum + 1;
+                              for (int i = 0; i < sizeList.length; i++) {
+                                if (sizeList[i].value == selectedSize) {
+                                  szpct = int.parse(sizeList[i].price!);
+                                }
                               }
-                            });
-                            totalQuantity = totalQuantity + int.parse(qty.text);
-                            //print(totalQuantity);
-                          } else {
-                            isItem = "Please Enter Item";
-                            setState(() {});
+                              setState(() {
+                                isItem = " ";
+                                int f = 0;
+                                for (int i = 0; i < listOfColumns.length; i++) {
+                                  if (listOfColumns.elementAt(i)["Name"]! ==
+                                      // "$selectedValue"
+                                      "$selectedGrade $selectedSize") {
+                                    int quty = int.parse(
+                                        listOfColumns.elementAt(i)["Qty"]!);
+                                    quty = quty + int.parse(qty.text);
+                                    num p = selectedTransType == "CIF" &&
+                                            selectedOrderType != "Lump-sum"
+                                        ? (int.parse(base_price.text) +
+                                                grdpct +
+                                                szpct +
+                                                tCost) *
+                                            quty
+                                        : (int.parse(base_price.text) +
+                                                grdpct +
+                                                szpct +
+                                                0) *
+                                            quty;
+
+                                    listOfColumns.elementAt(i)["Qty"] =
+                                        quty.toString();
+                                    listOfColumns.elementAt(i)["Price"] =
+                                        p.toString();
+                                    f = 1;
+                                  }
+                                }
+                                if (f == 0) {
+                                  listOfColumns.add({
+                                    "Sr_no": itemNum.toString(),
+                                    "Name": "$selectedGrade $selectedSize",
+                                    "Qty": qty.text,
+                                    "Price": selectedTransType == "CIF" &&
+                                            selectedOrderType != "Lump-sum"
+                                        ? ((int.parse(base_price.text) +
+                                                    grdpct +
+                                                    szpct +
+                                                    tCost) *
+                                                int.parse(qty.text))
+                                            .toString()
+                                        : ((int.parse(base_price.text) +
+                                                    grdpct +
+                                                    szpct +
+                                                    0) *
+                                                int.parse(qty.text))
+                                            .toString()
+                                  });
+                                  itemNum = itemNum + 1;
+                                }
+                              });
+                              totalQuantity =
+                                  totalQuantity + int.parse(qty.text);
+                              //print(totalQuantity);
+                            } else {
+                              isItem = "Please Enter All of the above fields";
+                              setState(() {});
+                            }
+                          }else{
+                            showDialog (
+                              context: context,
+                              builder: (context) {
+                                return Dialog(
+                                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                                  elevation: 16,
+                                  child: Container(
+                                    width: MediaQuery.of(context).size.width,
+                                    //height: 400,
+                                    child: Column(
+                                      children: [
+                                        Container(child: Text("Select The Lumpsum",style: GoogleFonts.poppins(textStyle: TextStyle()))),
+                                        SingleChildScrollView(
+                                          child: Container(
+                                            height: MediaQuery.of(context).size.height/2,
+                                            child: ListView.builder(
+                                                itemCount: lumpsumList.length,
+                                                itemBuilder: (context,index){
+                                                  return LayoutBuilder(
+                                                    builder: (context,constraints) {
+                                                      if(lumpsumList[index].name == "$selectedGrade $selectedSize" && int.parse(lumpsumList[index].qty!) > int.parse(qty.text)){
+                                                        return Container(
+                                                          margin: EdgeInsets.only(top: 10),
+                                                            child: InkWell(
+                                                              onTap: (){
+                                                                listOfColumns.add({
+                                                                  "Sr_no": itemNum.toString(),
+                                                                  "Name": lumpsumList[index].name!,
+                                                                  "Qty": qty.text,
+                                                                  "Price": selectedTransType == "CIF" &&
+                                                                      selectedOrderType != "Lump-sum"
+                                                                      ? ((int.parse(lumpsumList[index].price!)+tCost) *
+                                                                      int.parse(qty.text))
+                                                                      .toString()
+                                                                      : ((int.parse(lumpsumList[index].price!)) *
+                                                                      int.parse(qty.text))
+                                                                      .toString()
+                                                                });
+                                                                lumpsumList[index].qty = (int.parse(lumpsumList[index].qty!) - int.parse(qty.text)).toString();
+
+                                                                reductionData.add({
+                                                                  "id": lumpsumList[index].id,
+                                                                  "qty": lumpsumList[index].qty
+                                                                });
+                                                                itemNum = itemNum + 1;
+                                                                setState(() {
+
+                                                                });
+                                                                Navigator.pop(context);
+                                                              },
+                                                              child: Card(
+                                                                elevation: 15,
+                                                                child: InventoryCard(
+                                                                    context,
+                                                                    lumpsumList[index]),
+                                                              ),
+                                                            ));
+                                                      }else{
+                                                        return Container();
+                                                      }
+                                                    }
+                                                  );
+                                                }),
+                                          ),
+                                        )
+                                      ],
+                                    )
+                                  ),
+                                );
+                              },
+                            );
                           }
                         },
-                        child: const Text("Add Item"))
+                        child: const Text("Add Item")
+                    ),
                   ],
                 ),
               ),
+              LayoutBuilder(
+                builder: (context,constraints) {
+                  return Text("*Transportaion Cost Are Included",style: TextStyle(color: Colors.red),);
+                }
+              ),
+
 
               //-----------------------DataTable--------------------------------
 
