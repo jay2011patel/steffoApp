@@ -243,18 +243,18 @@ class _OrderPageState extends State<OrderPage> {
                                 ),
                               ),
 
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Card(
-                            child: Container(
-                                padding:const  EdgeInsets.all(10),
-                                decoration: const BoxDecoration(
-                                  // borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                                ),
-                          ),
+                          // const SizedBox(
+                          //   height: 10.0,
+                          // ),
+                          // Card(
+                          //   child: Container(
+                          //       padding:const  EdgeInsets.all(10),
+                          //       decoration: const BoxDecoration(
+                          //         // borderRadius: BorderRadius.circular(20),
+                          //         color: Colors.white,
+                          //       ),
+                          //       ),
+                          // ),
                           const SizedBox(
                             height: 10.0,
                           ),

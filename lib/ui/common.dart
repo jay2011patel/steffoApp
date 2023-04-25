@@ -67,7 +67,7 @@ AppBar appbar(String txt, void c()) {
           onPressed: () {},
           icon: const Icon(
             Icons.menu,
-            color: Colors.black,
+            color: Colors.white,
           ))
     ],
     title: Center(

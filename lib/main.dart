@@ -15,6 +15,7 @@ import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stefomobileapp/pages/LoginPage.dart';
 import 'package:stefomobileapp/pages/OTPPage.dart';
 import 'package:stefomobileapp/pages/OrdersPage.dart';
+import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stefomobileapp/pages/RegistrationPage.dart';
 import 'package:stefomobileapp/pages/RequestPage.dart';
 import 'package:stefomobileapp/pages/PlaceOrderPage.dart';
@@ -62,6 +63,7 @@ class MyApp extends StatelessWidget {
         '/forgetPass': (BuildContext context) => ForgetPassPage(),
         '/OTP': (BuildContext context) => OTPPage(),
         '/newPass': (BuildContext context) => NewPassPage(),
+        '/profilePage': (BuildContext context) => ProfilePage(),
 
         //'/request': (BuildContext context) => UserRequestPage(),
       },

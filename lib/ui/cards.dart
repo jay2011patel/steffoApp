@@ -145,7 +145,7 @@ Widget DistributorCard(User user, BuildContext context) {
                 Expanded(
                   flex: 1,
                   child: Container(
-                      width: 300,
+                      width: 200,
                       padding: EdgeInsets.only(top: 10, left: 5),
                       child: Text(
                         user.address!,
