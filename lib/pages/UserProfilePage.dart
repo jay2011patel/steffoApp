@@ -1,5 +1,10 @@
 // import 'dart:html';
 
+
+
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -60,6 +65,8 @@ class _ProfileFormState extends State<ProfileForm> {
   final field8Key = GlobalKey<FormFieldState>();
   final field9Key = GlobalKey<FormFieldState>();
   final field10Key = GlobalKey<FormFieldState>();
+
+  late File file;
 
   String? selectedValue;
   TextEditingController first_name = TextEditingController();
@@ -580,6 +587,23 @@ class _ProfileFormState extends State<ProfileForm> {
                 ),
               ),
             ),
+            Container(
+              width: width,
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
+              child: ElevatedButton(
+                onPressed: () async {
+                  FilePickerResult? result = await FilePicker.platform.pickFiles();
+
+                  if (result != null) {
+                    print(result.files.single.path);
+                    file = File(result.files.single.path!);
+                  } else {
+                    // User canceled the picker
+                  }
+                },
+                child: Text("Upload"),
+              ),
+            )
           ],
         ),
       ),
@@ -587,4 +611,3 @@ class _ProfileFormState extends State<ProfileForm> {
   }
 }
 
-class _profilePicFile {}
