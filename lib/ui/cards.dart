@@ -5,6 +5,7 @@ import 'package:stefomobileapp/Models/size.dart';
 import '../Models/grade.dart';
 import '../Models/lumpsum.dart';
 import '../Models/order.dart';
+import '../Models/region.dart';
 import '../Models/user.dart';
 
 Widget orderCard(BuildContext context, Order order, String? curr_user_id) {
@@ -105,11 +106,12 @@ Widget orderCard(BuildContext context, Order order, String? curr_user_id) {
 
 Widget DistributorCard(User user, BuildContext context) {
   return Container(
-    padding: EdgeInsets.only(left: 5, right: 5),
     height: 160,
-    //margin: EdgeInsets.only(top: 20),
+    // margin: EdgeInsets.only(top: 20,),
     child: Card(
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(20)),
+        // shape: RoundedRectangleBorder(
+        //     borderRadius: BorderRadius.circular(20)
+        // ),
         elevation: 15,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,24 +130,20 @@ Widget DistributorCard(User user, BuildContext context) {
                               color: Colors.green)),
                       textAlign: TextAlign.left,
                     )),
-                Expanded(
-                  flex: 0,
-                  child: Container(
-                      width: 250,
-                      padding: EdgeInsets.only(left: 5),
-                      child: Text(
-                        user.orgName!,
-                        style: GoogleFonts.raleway(
-                            textStyle: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.visible,
-                      )),
-                ),
+                Container(
+                    padding: EdgeInsets.only(left: 5),
+                    child: Text(
+                      user.orgName!,
+                      style: GoogleFonts.raleway(
+                          textStyle: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.visible,
+                    )),
                 Expanded(
                   flex: 1,
                   child: Container(
-                      width: 200,
+                      width: MediaQuery.of(context).size.width / 1.5,
                       padding: EdgeInsets.only(top: 10, left: 5),
                       child: Text(
                         user.address!,
@@ -158,13 +156,10 @@ Widget DistributorCard(User user, BuildContext context) {
                 ),
               ],
             ),
-            Container(
-                margin: EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                    //color: Colors.green,
-                    borderRadius: BorderRadius.circular(20)),
-                width: 82,
-                child: Image.asset("assets/images/distributor.png"))
+            Expanded(
+                child: Container(
+                    margin: EdgeInsets.only(right: 10),
+                    child: Image.asset("assets/images/distributor.png")))
           ],
         )),
   );
@@ -172,7 +167,7 @@ Widget DistributorCard(User user, BuildContext context) {
 
 Widget DealerCard(User user, BuildContext context) {
   return Container(
-    width: 400,
+    // width: 400,
     height: 160,
     // margin: EdgeInsets.only(top: 20,),
     child: Card(
@@ -197,24 +192,20 @@ Widget DealerCard(User user, BuildContext context) {
                               color: Colors.lightBlue)),
                       textAlign: TextAlign.left,
                     )),
-                Expanded(
-                  flex: 0,
-                  child: Container(
-                      width: 200,
-                      padding: EdgeInsets.only(left: 5),
-                      child: Text(
-                        user.orgName!,
-                        style: GoogleFonts.raleway(
-                            textStyle: TextStyle(
-                                fontSize: 18, fontWeight: FontWeight.bold)),
-                        textAlign: TextAlign.left,
-                        overflow: TextOverflow.visible,
-                      )),
-                ),
+                Container(
+                    padding: EdgeInsets.only(left: 5),
+                    child: Text(
+                      user.orgName!,
+                      style: GoogleFonts.raleway(
+                          textStyle: TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold)),
+                      textAlign: TextAlign.left,
+                      overflow: TextOverflow.visible,
+                    )),
                 Expanded(
                   flex: 1,
                   child: Container(
-                      width: 250,
+                      width: MediaQuery.of(context).size.width / 1.5,
                       padding: EdgeInsets.only(top: 10, left: 5),
                       child: Text(
                         user.address!,
@@ -227,13 +218,15 @@ Widget DealerCard(User user, BuildContext context) {
                 ),
               ],
             ),
-            Container(
-                margin: EdgeInsets.only(right: 10),
-                decoration: BoxDecoration(
-                    //color: Colors.green,
-                    borderRadius: BorderRadius.circular(20)),
-                width: 70,
-                child: Image.asset("assets/images/dealer.png"))
+            Expanded(
+              child: Container(
+                  margin: EdgeInsets.only(right: 10),
+                  // decoration: BoxDecoration(
+                  //     //color: Colors.green,
+                  //     borderRadius: BorderRadius.circular(20)),
+                  // width: 70,
+                  child: Image.asset("assets/images/dealer.png")),
+            )
           ],
         )),
   );
@@ -368,7 +361,7 @@ Widget LumpSumTotal(BuildContext context, Grade g) {
   ));
 }
 
-Widget AddNewGrade(BuildContext context, Grade g, remove() , update()) {
+Widget AddNewGrade(BuildContext context, Grade g, remove(), update()) {
   return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -390,9 +383,7 @@ Widget AddNewGrade(BuildContext context, Grade g, remove() , update()) {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                    onPressed: () => {
-                          update()
-                        },
+                    onPressed: () => {update()},
                     icon: Icon(
                       Icons.edit,
                       color: Colors.blueAccent,
@@ -417,7 +408,7 @@ Widget AddNewGrade(BuildContext context, Grade g, remove() , update()) {
       ));
 }
 
-Widget AddNewSize(BuildContext context, ItemSize s, remove() , update()) {
+Widget AddNewSize(BuildContext context, ItemSize s, remove(), update()) {
   return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -439,9 +430,7 @@ Widget AddNewSize(BuildContext context, ItemSize s, remove() , update()) {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                    onPressed: () => {
-                          update()
-                        },
+                    onPressed: () => {update()},
                     icon: Icon(
                       Icons.edit,
                       color: Colors.blueAccent,
@@ -452,6 +441,55 @@ Widget AddNewSize(BuildContext context, ItemSize s, remove() , update()) {
                 child: IconButton(
                     onPressed: () => {
                           remove(),
+                          print("Delete button pressed"),
+                        },
+                    icon: Icon(
+                      Icons.delete_rounded,
+                      color: Colors.red,
+                    )),
+              ),
+            ],
+          ),
+          Divider(color: Colors.black54),
+        ],
+      ));
+}
+
+Widget AddNewRegion(BuildContext context, Region r, c()) {
+  return Container(
+      width: MediaQuery.of(context).size.width,
+      padding: EdgeInsets.only(left: 20.0, right: 20.0),
+      child: Column(
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                flex: 2,
+                child: Text(r.name.toString(),
+                    style: TextStyle(fontSize: 18, color: Colors.black)),
+              ),
+              Expanded(
+                flex: 1,
+                child: Text('\u{20B9}' + r.cost.toString(),
+                    style: TextStyle(fontSize: 18, color: Colors.black)),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                    onPressed: () => {
+                          print("Edit button pressed"),
+                        },
+                    icon: Icon(
+                      Icons.edit,
+                      color: Colors.blueAccent,
+                    )),
+              ),
+              Expanded(
+                flex: 1,
+                child: IconButton(
+                    onPressed: () => {
+                          c(),
                           print("Delete button pressed"),
                         },
                     icon: Icon(

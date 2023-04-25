@@ -54,6 +54,8 @@ dependencies:
   email_auth: ^1.0.0
   pinput: ^2.2.31
   marquee: ^2.2.3
+  get:
+  image_picker: ^0.8.7+3
   path: ^1.8.2
   file_picker: ^5.2.10
 

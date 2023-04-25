@@ -1,9 +1,11 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/ChangePP.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
@@ -18,7 +20,7 @@ import '../Models/order.dart';
 import '../ui/cards.dart';
 import 'RequestPage.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
-
+import 'package:image_picker/image_picker.dart';
 import 'addItem.dart';
 
 class HomePage extends StatelessWidget {
@@ -48,6 +50,8 @@ class _HomePageState extends State<HomeContent> {
   _HomePageState(int val) {
     _selected = val;
   }
+  File? pickedImage;
+
   var user_type;
   void loadusertype() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -167,7 +171,6 @@ class _HomePageState extends State<HomeContent> {
 
   String? id = "";
   int currentIndex = 0;
-
   final List<String> imageList = [
     'assets/images/stefo_logo.png',
     'assets/images/stefo_logo.png',
@@ -248,7 +251,7 @@ class _HomePageState extends State<HomeContent> {
                 child: CarouselSlider.builder(
                   itemCount: imageList.length,
                   options: CarouselOptions(
-                    height: 100.0,
+                    height: 150.0,
                     enlargeCenterPage: true,
                     autoPlay: true,
                     aspectRatio: 16 / 9,
@@ -273,12 +276,18 @@ class _HomePageState extends State<HomeContent> {
                             )),
                         //ClipRRect for image border radius
                         child: ClipRRect(
-                          // borderRadius: BorderRadius.circular(15),
-                          child: Image.asset(
-                            imageList[i],
-                            width: 500,
-                            fit: BoxFit.contain,
-                          ),
+                          borderRadius: BorderRadius.circular(15),
+                          child: pickedImage != null
+                              ? Image.file(
+                                  pickedImage!,
+                                  width: 500,
+                                  fit: BoxFit.fill,
+                                )
+                              : Image.asset(
+                                  imageList[i],
+                                  width: 500,
+                                  fit: BoxFit.fill,
+                                ),
                         ),
                       ),
                     );
@@ -329,10 +338,11 @@ class _HomePageState extends State<HomeContent> {
                           )),
                           ElevatedButton(
                               onPressed: () {
-                                Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => AddItemPage()));
+                                imagePickerOption();
+                                // Navigator.push(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => AddItemPage()));
                               },
                               child: Text("Admin Controls"))
                         ],
@@ -682,5 +692,78 @@ class _HomePageState extends State<HomeContent> {
             ],
           ),
         ));
+  }
+
+  void imagePickerOption() {
+    Get.bottomSheet(
+      SingleChildScrollView(
+        child: ClipRRect(
+          borderRadius: const BorderRadius.only(
+            topLeft: Radius.circular(10.0),
+            topRight: Radius.circular(10.0),
+          ),
+          child: Container(
+            color: Colors.white,
+            height: 250,
+            child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const Text(
+                    "Pic Image From",
+                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      pickImage(ImageSource.camera);
+                      print("Camera upload");
+                    },
+                    icon: const Icon(Icons.camera),
+                    label: const Text("CAMERA"),
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      pickImage(ImageSource.gallery);
+                    },
+                    icon: const Icon(Icons.image),
+                    label: const Text("GALLERY"),
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  ElevatedButton.icon(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.close),
+                    label: const Text("CANCEL"),
+                  ),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  pickImage(ImageSource imageType) async {
+    try {
+      final photo = await ImagePicker().pickImage(source: imageType);
+      if (photo == null) return;
+      final tempImage = File(photo.path);
+      setState(() {
+        pickedImage = tempImage;
+      });
+
+      Get.back();
+    } catch (error) {
+      debugPrint(error.toString());
+    }
   }
 }
