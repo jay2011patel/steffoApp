@@ -39,7 +39,9 @@ class DealerDetailState extends State<DealerDetailContent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar("Dealer Info", () { }),
+      appBar: appbar("Dealer Info", () {
+        Navigator.pop(context);
+      }),
       body: DealerDetailPageBody(),
 
     );

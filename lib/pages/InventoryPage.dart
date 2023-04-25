@@ -112,10 +112,10 @@ class _InventoryPageState extends State<InventoryContent> {
           } else {
             return Center(
                 child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                CircularProgressIndicator(),
-                Text("Loading Inventory")
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(),
+                    Text("Loading Inventory")
               ],
             ));
           }
@@ -248,10 +248,11 @@ class _InventoryPageState extends State<InventoryContent> {
                       itemBuilder: (context, ind) {
                         return Container(
                             child: Column(
-                          children: [
-                            LumpSumTotal(context, gradeList1[ind]),
-                          ],
-                        ));
+                            children: [
+                              LumpSumTotal(context, gradeList1[ind]),
+                              ],
+                            )
+                        );
                       },
                     ),
                   ),
@@ -284,7 +285,8 @@ class _InventoryPageState extends State<InventoryContent> {
                               children: [
                                 LumpSumTotal(context, gradeList2[ind]),
                               ],
-                            ));
+                            )
+                        );
                       },
                     ),
                   ),

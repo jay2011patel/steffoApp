@@ -6,6 +6,7 @@ import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 
 // import '../Models/order.dart';
 import '../Models/user.dart';
+import '../UI/common.dart';
 import 'DealerPage.dart';
 import 'HomePage.dart';
 
@@ -65,40 +66,44 @@ class _ProfilePageState extends State<ProfileContent>{
     loadData();
     return Scaffold(
         backgroundColor: Colors.white,
-        appBar: AppBar(
-          actions: [
-            // IconButton(
-            //     onPressed: () {},
-            //     icon: const Icon(
-            //       Icons.check,
-            //       color: Colors.black,
-            //       size: 30,
-            //     )
-            // )
-          ],
-          title: Center(
-              child: Text("Profile",
-                // textAlign: TextAlign.center,
-                style: const TextStyle(
-                    color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
-              )),
-          backgroundColor: Colors.white,
-          leading: IconButton(
-              onPressed: (){
-
-              },
-              icon: const Icon(
-                Icons.arrow_back_ios_new,
-                color: Colors.black,
-              )),
-        ),
+        appBar: appbar("Profile", () {
+          Navigator.pop(context);
+        }),
+        // appBar: AppBar(
+        //   actions: [
+        //     // IconButton(
+        //     //     onPressed: () {},
+        //     //     icon: const Icon(
+        //     //       Icons.check,
+        //     //       color: Colors.black,
+        //     //       size: 30,
+        //     //     )
+        //     // )
+        //   ],
+        //   title: Center(
+        //       child: Text("Profile",
+        //         // textAlign: TextAlign.center,
+        //         style: const TextStyle(
+        //             color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
+        //       )),
+        //   backgroundColor: Colors.white,
+        //   leading: IconButton(
+        //       onPressed: (){
+        //
+        //       },
+        //       icon: const Icon(
+        //         Icons.arrow_back_ios_new,
+        //         color: Colors.black,
+        //       )),
+        // ),
 
         body: LayoutBuilder(
           builder: (context,constraints) {
             if(isDataLoaded){
             return SingleChildScrollView(
-              child: Column(children: [
-                // Padding(padding: EdgeInsets.only(left: 20,bottom: 30)),
+              child: Column(
+                  children: [
+                // Padding(padding: EdgeInsets.only(left: 20,right: 20)),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(
@@ -157,7 +162,7 @@ class _ProfilePageState extends State<ProfileContent>{
                         ],
                       ),
                       SizedBox(
-                        width: 60,
+                        width: 30,
                       ),
                       Column(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -193,7 +198,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -227,7 +232,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       // mainAxisAlignment: MainAxisAlignment.center,
@@ -244,33 +249,38 @@ class _ProfilePageState extends State<ProfileContent>{
                   endIndent: 20,
                   indent: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(padding: EdgeInsets.only(right: 20)),
-                    Column(
-                      children: [
-                        // Padding(padding: EdgeInsets.only(right: 30)),
-                        Image(
-                          image: AssetImage(
-                            'assets/images/email.png',
-                          ),
-                          height: 50,
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 60,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(user.email!,
-                            style:
-                                TextStyle(fontFamily: "Poppins", fontSize: 18)),
-                      ],
-                    )
-                  ],
+                Container(
+                  padding: EdgeInsets.only(right: 10),
+                  child: Row(
+                    children: [
+                      Padding(padding: EdgeInsets.only(left: 20)),
+                      Column(
+                        children: [
+                          // Padding(padding: EdgeInsets.only(right: 30)),
+                          Image(
+                            image: AssetImage(
+                              'assets/images/email.png',
+                            ),
+                            height: 50,
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            // Padding(padding: EdgeInsets.only(right: 20)),
+                            Text(user.email!,
+                                style: TextStyle(fontFamily: "Poppins", fontSize: 20)),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Divider(
                   color: Colors.grey,
@@ -293,7 +303,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -327,7 +337,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -361,7 +371,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       ],
                     ),
                     SizedBox(
-                      width: 60,
+                      width: 30,
                     ),
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -379,7 +389,7 @@ class _ProfilePageState extends State<ProfileContent>{
                   indent: 20,
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 20),
+                  // padding: EdgeInsets.only(right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
@@ -396,13 +406,13 @@ class _ProfilePageState extends State<ProfileContent>{
                         ],
                       ),
                       SizedBox(
-                        width: 60,
+                        width: 30,
                       ),
                       Expanded(
                         child: Column(
-                          // mainAxisAlignment: MainAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.start,
                           children: [
-                            Padding(padding: EdgeInsets.only(left: 20)),
+                            // Padding(padding: EdgeInsets.only(left: 20)),
                             Text(
                               user.address!,
                               style: TextStyle(

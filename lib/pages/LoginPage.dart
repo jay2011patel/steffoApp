@@ -74,7 +74,7 @@ class _loginPageState extends State<LoginContent> {
         "password": pw,
       },
     );
-    //Navigator.of(context).pushNamed("/home");
+    Navigator.of(context).pushNamed("/home");
 
     var responseData = json.decode(test.body);
 
@@ -179,11 +179,11 @@ class _loginPageState extends State<LoginContent> {
                           key: field1Key,
                           focusNode: focusNode1,
                           validator: (value) {
-                            if (value!.isEmpty || value == null) {
-                              return 'Please enter an email.';
-                            }
-                            return null;
-                          },
+                        if (value!.isEmpty || value == null) {
+                          return 'Please enter an email.';
+                        }
+                        return null;
+                      },
                           controller: email,
                           textAlign: TextAlign.left,
                           decoration: const InputDecoration(
@@ -195,7 +195,7 @@ class _loginPageState extends State<LoginContent> {
                             // hintText: "Email",
                             border: OutlineInputBorder(
                               borderSide: BorderSide.none,
-                              //borderRadius: BorderRadius.circular(20.0)
+
                             ),
                           )),
                     ),

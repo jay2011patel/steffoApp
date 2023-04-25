@@ -42,7 +42,9 @@ class DistributorDetailState extends State<DistributorDetailContent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar("Distributor Info", () { }),
+      appBar: appbar("Distributor Info", () {
+        Navigator.pop(context);
+      }),
       body: DistributorDetailPageBody(),
 
     );
@@ -122,13 +124,16 @@ class DistributorDetailState extends State<DistributorDetailContent>{
       children: [
         Stack(
           children: [
+            // Padding(padding: EdgeInsets.only(bottom: 10)),
             Card(
+              // margin: EdgeInsets.only(bottom: 10),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(10),
                 ),
                 elevation: 15,
                 child:Column(
                   children: [
+                    Padding(padding: EdgeInsets.only(bottom: 10)),
                     Container(
                         width: MediaQuery.of(context).size.width,
                         padding: EdgeInsets.only(left: 20,right: 20,top: 20),
@@ -199,6 +204,7 @@ class DistributorDetailState extends State<DistributorDetailContent>{
                         ],
                       ),
                     ),
+                    SizedBox(height: 10,)
 
 
                   ],
