@@ -42,7 +42,9 @@ class DistributorDetailState extends State<DistributorDetailContent>{
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: appbar("Distributor Info", () { }),
+      appBar: appbar("Distributor Info", () {
+        Navigator.pop(context);
+      }),
       body: DistributorDetailPageBody(),
 
     );

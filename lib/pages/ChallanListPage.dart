@@ -41,68 +41,69 @@ class _ChallanListPageState extends State<ChallanListContent> {
           Navigator.pop(context);
         }),
         body: ChallanListBody(),
-        bottomNavigationBar: StylishBottomBar(
-          option: AnimatedBarOptions(
-            iconSize: 30,
-            //barAnimation: BarAnimation.liquid,
-            iconStyle: IconStyle.simple,
-            opacity: 0.3,
-          ),
-
-          items: [
-            BottomBarItem(
-              icon: const Icon(
-                Icons.home_filled,
-              ),
-              title: const Text('Abc'),
-              backgroundColor: Colors.red,
-              selectedIcon:
-                  const Icon(Icons.home_filled, color: Colors.blueAccent),
-            ),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.inventory_2_rounded,
-                ),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.inventory_2_rounded,
-                    color: Colors.blueAccent)),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.warehouse_rounded,
-                ),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.warehouse_rounded,
-                    color: Colors.blueAccent)),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.person_pin,
-                ),
-                title: const Text('Cabin'),
-                backgroundColor: Colors.purple,
-                selectedIcon:
-                    const Icon(Icons.person_pin, color: Colors.blueAccent)),
-          ],
-          //fabLocation: StylishBarFabLocation.center,
-          hasNotch: false,
-          currentIndex: _selected,
-          onTap: (index) {
-            setState(() {
-              if (index == 0) {
-                Navigator.of(context).popAndPushNamed('/home');
-              }
-
-              if (index == 1) {
-                Navigator.of(context).popAndPushNamed('/inventory');
-              }
-
-              if (index == 2) {
-                Navigator.of(context).popAndPushNamed('/dealer');
-              }
-            });
-          },
-        ));
+        // bottomNavigationBar: StylishBottomBar(
+        //   option: AnimatedBarOptions(
+        //     iconSize: 30,
+        //     //barAnimation: BarAnimation.liquid,
+        //     iconStyle: IconStyle.simple,
+        //     opacity: 0.3,
+        //   ),
+        //
+        //   items: [
+        //     BottomBarItem(
+        //       icon: const Icon(
+        //         Icons.home_filled,
+        //       ),
+        //       title: const Text('Abc'),
+        //       backgroundColor: Colors.red,
+        //       selectedIcon:
+        //           const Icon(Icons.home_filled, color: Colors.blueAccent),
+        //     ),
+        //     BottomBarItem(
+        //         icon: const Icon(
+        //           Icons.inventory_2_rounded,
+        //         ),
+        //         title: const Text('Safety'),
+        //         backgroundColor: Colors.orange,
+        //         selectedIcon: const Icon(Icons.inventory_2_rounded,
+        //             color: Colors.blueAccent)),
+        //     BottomBarItem(
+        //         icon: const Icon(
+        //           Icons.warehouse_rounded,
+        //         ),
+        //         title: const Text('Safety'),
+        //         backgroundColor: Colors.orange,
+        //         selectedIcon: const Icon(Icons.warehouse_rounded,
+        //             color: Colors.blueAccent)),
+        //     BottomBarItem(
+        //         icon: const Icon(
+        //           Icons.person_pin,
+        //         ),
+        //         title: const Text('Cabin'),
+        //         backgroundColor: Colors.purple,
+        //         selectedIcon:
+        //             const Icon(Icons.person_pin, color: Colors.blueAccent)),
+        //   ],
+        //   //fabLocation: StylishBarFabLocation.center,
+        //   hasNotch: false,
+        //   currentIndex: _selected,
+        //   onTap: (index) {
+        //     setState(() {
+        //       if (index == 0) {
+        //         Navigator.of(context).popAndPushNamed('/home');
+        //       }
+        //
+        //       if (index == 1) {
+        //         Navigator.of(context).popAndPushNamed('/inventory');
+        //       }
+        //
+        //       if (index == 2) {
+        //         Navigator.of(context).popAndPushNamed('/dealer');
+        //       }
+        //     });
+        //   },
+        // )
+    );
     throw UnimplementedError();
   }
   int flag =0;
@@ -221,7 +222,8 @@ class _ChallanListPageState extends State<ChallanListContent> {
                   child:LayoutBuilder(builder: (context, constraints) {
                     if(id == "0"){
                       return Container(
-                          margin: EdgeInsets.only(left: 20, right: 20, bottom: 20),
+
+                          margin: EdgeInsets.only(left: 20, right: 20,top: 10),
                           width: MediaQuery.of(context).size.width,
                           child: buttonStyle("Generate Challan", () {
                             Navigator.push(

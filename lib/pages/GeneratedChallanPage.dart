@@ -410,7 +410,7 @@ class _ChallanPageState extends State<ChallanPage> {
                                         fontSize: 15,
                                         // fontWeight: FontWeight.bold
                                     )),
-                                Text(ch.challan_id!,
+                                Text(ch.lr_number!,
                                     style: TextStyle(fontSize: 15,fontFamily: "Poppins"))
                               ],
                             )),

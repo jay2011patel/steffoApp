@@ -6,8 +6,6 @@ import 'package:stefomobileapp/pages/InventoryPage.dart';
 import 'package:stylish_bottom_bar/model/bar_items.dart';
 import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:http/http.dart' as http;
-import '../Models/user.dart';
-import '../validator/validations.dart';
 import 'DealerPage.dart';
 import 'HomePage.dart';
 
@@ -154,7 +152,6 @@ class _ProfilePageState extends State<ProfileContent>{
     Navigator.of(context).pushNamed("/profilePage");
   }
 
-
 // class ProfilePage extends StatelessWidget {
 //   const ProfilePage({Key? key}) : super(key: key);
 
@@ -205,9 +202,12 @@ class _ProfilePageState extends State<ProfileContent>{
                     Padding(padding: EdgeInsets.only(bottom: 10,top: 10)),
 
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        // Padding(padding: EdgeInsets.only(right: 10,)),
                         Container(
-                          width: 165,
+                          width: MediaQuery.of(context).size.width/2.3,
+                          // width: 165,
                           // padding: EdgeInsets.only(left: 5),
                           child: TextFormField(
                             controller: firstName,
@@ -227,19 +227,21 @@ class _ProfilePageState extends State<ProfileContent>{
                               floatingLabelBehavior: FloatingLabelBehavior.never,
                             ),
                               validator: (value) {
-                                if (value!.isEmpty || value == null) {
+                                if (value!.isEmpty) {
                                   return 'Please enter a First Name.';
                                 }
                                 return null;
                               },
                           ),
-                        ),SizedBox(width: 10,),
+                        ),
+                        SizedBox(width: 10,),
                         Container(
-                          width: 165,
-                          // padding: EdgeInsets.only(top: 20,),
+                          width: MediaQuery.of(context).size.width/2.3,
+                          // width: 165,
+                          // padding: EdgeInsets.only(right: 5),
                           child: Column(
                             // mainAxisAlignment: MainAxisAlignment.start,
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                            // crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               TextFormField(
                                 controller: lastName,
@@ -259,7 +261,7 @@ class _ProfilePageState extends State<ProfileContent>{
                                   floatingLabelBehavior: FloatingLabelBehavior.never,
                                 ),
                                 validator: (value) {
-                                  if (value!.isEmpty || value == null) {
+                                  if (value!.isEmpty) {
                                     return 'Please enter a Last Name.';
                                   }
                                   return null;
@@ -312,7 +314,7 @@ class _ProfilePageState extends State<ProfileContent>{
                         floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
                       validator: (value) {
-                        if (value!.isEmpty || value == null) {
+                        if (value!.isEmpty) {
                           return 'Please enter a Business Name';
                         }
                         return null;
@@ -322,62 +324,64 @@ class _ProfilePageState extends State<ProfileContent>{
                     height: 10,
                   ),
 
-                  TextFormField(
-                    controller: mobileNumber,
-                    key: field4Key,
-                    focusNode: focusNode4,
-                    maxLength: 10,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 1, color: Colors.black), //<-- SEE HERE
+                    TextFormField(
+                      controller: email,
+                      key: field5Key,
+                      focusNode: focusNode5,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Colors.black), //<-- SEE HERE
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1, color: Colors.black),
+                        ),
+                        labelText: "Email",
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                      ),
-                      labelText: "Contact Number",
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter an address';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter a Mobile Number.';
-                      }
-                      if (value.length != 10) {
-                        return 'Mobile number should contain 10 digits';
-                      }
-                      return null;
-                    },
-                  ),
 
                   SizedBox(
                       height: 10,
                     ),
 
-                  TextFormField(
-                    controller: email,
-                    key: field5Key,
-                    focusNode: focusNode5,
-                    decoration: InputDecoration(
-                      border: OutlineInputBorder(
-                        borderSide: BorderSide(
-                            width: 1, color: Colors.black), //<-- SEE HERE
+                    TextFormField(
+                      controller: mobileNumber,
+                      key: field4Key,
+                      focusNode: focusNode4,
+                      maxLength: 10,
+                      decoration: InputDecoration(
+                        border: OutlineInputBorder(
+                          borderSide: BorderSide(
+                              width: 1, color: Colors.black), //<-- SEE HERE
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide: BorderSide(width: 1, color: Colors.black),
+                        ),
+                        labelText: "Contact Number",
+                        floatingLabelBehavior: FloatingLabelBehavior.never,
                       ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide: BorderSide(width: 1, color: Colors.black),
-                      ),
-                      labelText: "Email",
-                      floatingLabelBehavior: FloatingLabelBehavior.never,
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'Please enter a Mobile Number.';
+                        }
+                        if (value.length != 10) {
+                          return 'Mobile number should contain 10 digits';
+                        }
+                        return null;
+                      },
                     ),
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return 'Please enter an address';
-                      }
-                      return null;
-                    },
-                  ),
+
                     SizedBox(
                     height: 10,
                   ),
+
                   TextFormField(
                     controller: gstNumber,
                     maxLength: 15,
@@ -457,7 +461,7 @@ class _ProfilePageState extends State<ProfileContent>{
                       focusedBorder: OutlineInputBorder(
                         borderSide: BorderSide(width: 1, color: Colors.black),
                       ),
-                      labelText: "Aadhar Number",
+                      labelText: "Aadhaar Number",
                       floatingLabelBehavior: FloatingLabelBehavior.never,
                     ),
                     validator: (value) {

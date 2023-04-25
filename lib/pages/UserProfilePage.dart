@@ -197,32 +197,27 @@ class _ProfileFormState extends State<ProfileForm> {
   Widget build(BuildContext context) {
 
     return Center(
-        child: Card(
-          elevation: 20,
-          margin: const EdgeInsets.fromLTRB(10, 40, 10, 20),
-          color:  Colors.white,
-          child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
-            // logo(context),
+        child: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
+          // logo(context),
 
-            //-----------------------FormDetails--------------------------
+          //-----------------------FormDetails--------------------------
 
-            SingleChildScrollView(
-                child: Container(
-                  child: FormDetails(),
-            )),
+          SingleChildScrollView(
+              child: Container(
+                child: FormDetails(),
+          )),
 
         //----------------------------Submit--------------------------------
 
-             Container(
-              margin: const EdgeInsets.only(top: 20),
-              width: MediaQuery.of(context).size.width,
-              child: buttonStyle("Submit", () {
-                if (_formKey.currentState!.validate()) {
-                  onRegister();
-                }
-            })),
-      ]),
-    )
+           Container(
+            margin:const EdgeInsets.symmetric(horizontal: 30, vertical: 30),
+               width: MediaQuery.of(context).size.width,
+            child: buttonStyle("Submit", () {
+              if (_formKey.currentState!.validate()) {
+                onRegister();
+              }
+          })),
+      ])
     );
   }
 
@@ -335,10 +330,13 @@ class _ProfileFormState extends State<ProfileForm> {
             ),
 
             Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+
                 Container(
-                  width: 160,
-                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                  width: MediaQuery.of(context).size.width/2.1,
+                  // width: 160,
+                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                   child: Column(
                     children: [
                       TextFormField(
@@ -348,10 +346,10 @@ class _ProfileFormState extends State<ProfileForm> {
                         keyboardType: TextInputType.number,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter a Mobile Number.';
+                            return 'Enter a Mobile Number.';
                           }
                           if (value.length != 10) {
-                            return 'Mobile number should contain 10 digits';
+                            return 'Number should contain 10 digits';
                           }
                           return null;
                         },
@@ -371,19 +369,21 @@ class _ProfileFormState extends State<ProfileForm> {
                   ),
                 ),
                 SizedBox(
-                  width: 20,
+                  width: 10,
                 ),
                 Container(
-                  width: 160,
-                  padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+                  width: MediaQuery.of(context).size.width/2.1,
+                  // width: 160,
+                  padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
                   child: Column(
                     children: [
                       TextFormField(
                         key: field2Key,
                         focusNode: focusNode2,
+                        keyboardType: TextInputType.datetime,
                         validator: (value) {
                           if (value!.isEmpty) {
-                            return 'Please enter a Mobile Number.';
+                            return 'Enter a Date';
                           }
                           return null;
                         },
@@ -411,12 +411,11 @@ class _ProfileFormState extends State<ProfileForm> {
 
             Container(
               width: width,
-              padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: TextFormField(
                 controller: orgName,
                 key: field3Key,
                 focusNode: focusNode3,
-                maxLength: 15,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter Organization Name';
@@ -440,12 +439,12 @@ class _ProfileFormState extends State<ProfileForm> {
 
             Container(
               width: width,
-              padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: TextFormField(
                 key: field7Key,
                 focusNode: focusNode7,
-                maxLength: 15,
                 controller: gstNumber,
+                maxLength: 15,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a GST Number.';
@@ -460,7 +459,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 // controller: mob_num,
                 // textAlign: TextAlign.left,
                 decoration: const InputDecoration(
-                  counterText: "",
+                  // counterText: ""
                   // prefixIcon: Icon(Icons.location_on),
                   labelText: "GST Number",
                   filled: true,
@@ -477,7 +476,7 @@ class _ProfileFormState extends State<ProfileForm> {
 
             Container(
               width: width,
-              padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: TextFormField(
                 key: field8Key,
                 focusNode: focusNode8,
@@ -497,7 +496,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 // controller: mob_num,
                 // textAlign: TextAlign.left,
                 decoration: const InputDecoration(
-                  counterText: "",
+                  // counterText: "",
                   // prefixIcon: Icon(Icons.location_on),
                   labelText: "PAN Number",
                   filled: true,
@@ -514,12 +513,13 @@ class _ProfileFormState extends State<ProfileForm> {
 
             Container(
               width: width,
-              padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: TextFormField(
                 key: field9Key,
                 controller: adhNumber,
                 focusNode: focusNode9,
                 maxLength: 12,
+                keyboardType: TextInputType.number,
                 validator: (value) {
                   if (value!.isEmpty) {
                     return 'Please enter a Aadhar Number.';
@@ -534,7 +534,7 @@ class _ProfileFormState extends State<ProfileForm> {
                 // controller: mob_num,
                 // textAlign: TextAlign.left,
                 decoration: const InputDecoration(
-                  counterText: "",
+                  // counterText: "",
                   // prefixIcon: Icon(Icons.location_on),
                   labelText: "Aadhar Number",
                   filled: true,
@@ -551,7 +551,7 @@ class _ProfileFormState extends State<ProfileForm> {
 
             Container(
               width: width,
-              padding: const EdgeInsets.fromLTRB(5, 5, 5, 5),
+              padding: const EdgeInsets.fromLTRB(10, 5, 10, 5),
               child: TextFormField(
                 style: TextStyle(fontFamily: "Poppins"),
                 key: field6Key,

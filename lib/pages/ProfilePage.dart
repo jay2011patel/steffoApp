@@ -101,8 +101,9 @@ class _ProfilePageState extends State<ProfileContent>{
           builder: (context,constraints) {
             if(isDataLoaded){
             return SingleChildScrollView(
-              child: Column(children: [
-                // Padding(padding: EdgeInsets.only(left: 20,bottom: 30)),
+              child: Column(
+                  children: [
+                // Padding(padding: EdgeInsets.only(left: 20,right: 20)),
                 Align(
                   alignment: Alignment.centerRight,
                   child: Container(
@@ -248,33 +249,38 @@ class _ProfilePageState extends State<ProfileContent>{
                   endIndent: 20,
                   indent: 20,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  children: [
-                    Padding(padding: EdgeInsets.only(right: 20)),
-                    Column(
-                      children: [
-                        // Padding(padding: EdgeInsets.only(right: 30)),
-                        Image(
-                          image: AssetImage(
-                            'assets/images/email.png',
-                          ),
-                          height: 50,
-                        )
-                      ],
-                    ),
-                    SizedBox(
-                      width: 30,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Text(user.email!,
-                            style:
-                                TextStyle(fontFamily: "Poppins", fontSize: 16)),
-                      ],
-                    )
-                  ],
+                Container(
+                  padding: EdgeInsets.only(right: 10),
+                  child: Row(
+                    children: [
+                      Padding(padding: EdgeInsets.only(left: 20)),
+                      Column(
+                        children: [
+                          // Padding(padding: EdgeInsets.only(right: 30)),
+                          Image(
+                            image: AssetImage(
+                              'assets/images/email.png',
+                            ),
+                            height: 50,
+                          )
+                        ],
+                      ),
+                      SizedBox(
+                        width: 30,
+                      ),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          // mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            // Padding(padding: EdgeInsets.only(right: 20)),
+                            Text(user.email!,
+                                style: TextStyle(fontFamily: "Poppins", fontSize: 20)),
+                          ],
+                        ),
+                      )
+                    ],
+                  ),
                 ),
                 Divider(
                   color: Colors.grey,
@@ -383,7 +389,7 @@ class _ProfilePageState extends State<ProfileContent>{
                   indent: 20,
                 ),
                 Container(
-                  padding: EdgeInsets.only(right: 20),
+                  // padding: EdgeInsets.only(right: 20),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [

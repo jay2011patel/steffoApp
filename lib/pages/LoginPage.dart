@@ -74,7 +74,7 @@ class _loginPageState extends State<LoginContent> {
         "password": pw,
       },
     );
-    //Navigator.of(context).pushNamed("/home");
+    Navigator.of(context).pushNamed("/home");
 
     var responseData = json.decode(test.body);
 
