@@ -361,7 +361,7 @@ Widget LumpSumTotal(BuildContext context, Grade g) {
   ));
 }
 
-Widget AddNewGrade(BuildContext context, Grade g, remove() , update()) {
+Widget AddNewGrade(BuildContext context, Grade g, remove(), update()) {
   return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -383,9 +383,7 @@ Widget AddNewGrade(BuildContext context, Grade g, remove() , update()) {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                    onPressed: () => {
-                          update()
-                        },
+                    onPressed: () => {update()},
                     icon: Icon(
                       Icons.edit,
                       color: Colors.blueAccent,
@@ -410,7 +408,7 @@ Widget AddNewGrade(BuildContext context, Grade g, remove() , update()) {
       ));
 }
 
-Widget AddNewSize(BuildContext context, ItemSize s, remove() , update()) {
+Widget AddNewSize(BuildContext context, ItemSize s, remove(), update()) {
   return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -432,9 +430,7 @@ Widget AddNewSize(BuildContext context, ItemSize s, remove() , update()) {
               Expanded(
                 flex: 1,
                 child: IconButton(
-                    onPressed: () => {
-                          update()
-                        },
+                    onPressed: () => {update()},
                     icon: Icon(
                       Icons.edit,
                       color: Colors.blueAccent,
