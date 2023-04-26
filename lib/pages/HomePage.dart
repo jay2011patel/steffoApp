@@ -757,10 +757,19 @@ class _HomePageState extends State<HomeContent> {
       final photo = await ImagePicker().pickImage(source: imageType);
       if (photo == null) return;
       final tempImage = File(photo.path);
+      var imgBytes = tempImage.readAsBytesSync();
+      String baseImage = base64Encode(imgBytes);
+      var res = await http.post(
+        Uri.parse("http://www.urbanwebmobile.in/steffo/setcarousel.php"),
+        body: {
+          "name":"Carousel1",
+          "value":baseImage
+        }
+      );
+      print(res.body);
       setState(() {
         pickedImage = tempImage;
       });
-
       Get.back();
     } catch (error) {
       debugPrint(error.toString());

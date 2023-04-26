@@ -195,7 +195,6 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
         items.add(responseData["data"][i]["name"]);
       }
       flag = 1;
-      print("Heloooooooo");
         setState(() {
 
         });
@@ -245,9 +244,6 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
     loadOrderData();
     getItems()  {
-      print("*****************************************************************");
-      print(items);
-      print("*****************************************************************");
       dropdownItems=[];
       for (int i = 0; i < items.length; i++) {
         DropdownMenuItem<String> item = DropdownMenuItem<String>(
