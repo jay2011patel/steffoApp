@@ -22,6 +22,7 @@ import 'RequestPage.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:image_picker/image_picker.dart';
 import 'addItem.dart';
+import 'package:flutter_picker/flutter_picker.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -51,6 +52,7 @@ class _HomePageState extends State<HomeContent> {
     _selected = val;
   }
   File? pickedImage;
+  List<File>? imagesFiles = [];
 
   var user_type;
   void loadusertype() async {
@@ -68,7 +70,7 @@ class _HomePageState extends State<HomeContent> {
         }),
         body: HomePageBody(),
         floatingActionButton: LayoutBuilder(builder: (context, constraints) {
-          if (user_type != "Manufacturer" && isSalesEnabled == "true" ) {
+          if (user_type != "Manufacturer" && isSalesEnabled == "true") {
             //fabLoc = FloatingActionButtonLocation.centerDocked;
             return FloatingActionButton(
               onPressed: () {
@@ -180,7 +182,7 @@ class _HomePageState extends State<HomeContent> {
 
   List<Order> requestList = [];
   List<Order> orderList = [];
-  String? isSalesEnabled = "false",basePrice = "0";
+  String? isSalesEnabled = "false", basePrice = "0";
   Future<void> loadData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
     var m = id;
@@ -189,9 +191,8 @@ class _HomePageState extends State<HomeContent> {
     if (m != id) {
       requestList = [];
       orderList = [];
-      final res1 = await http.post(
-        Uri.parse("http://urbanwebmobile.in/steffo/getsystemdata.php")
-      );
+      final res1 = await http
+          .post(Uri.parse("http://urbanwebmobile.in/steffo/getsystemdata.php"));
 
       var responseData1 = jsonDecode(res1.body);
 
@@ -246,62 +247,137 @@ class _HomePageState extends State<HomeContent> {
         child: SingleChildScrollView(
           child: Column(
             children: [
-              Container(
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: CarouselSlider.builder(
-                  itemCount: imageList.length,
-                  options: CarouselOptions(
-                    height: 150.0,
-                    enlargeCenterPage: true,
-                    autoPlay: true,
-                    aspectRatio: 16 / 9,
-                    autoPlayCurve: Curves.fastOutSlowIn,
-                    enableInfiniteScroll: false,
-                    autoPlayAnimationDuration: Duration(milliseconds: 300),
-                    viewportFraction: 0.8,
-                    onPageChanged: (index, reason) {
-                      setState(() {
-                        currentIndex = index;
-                      });
-                    },
-                  ),
-                  itemBuilder: (context, i, id) {
-                    //for onTap to redirect to another screen
-                    return GestureDetector(
-                      child: Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(15),
-                            border: Border.all(
-                              color: Colors.black,
-                            )),
-                        //ClipRRect for image border radius
-                        child: ClipRRect(
-                          borderRadius: BorderRadius.circular(15),
-                          child: pickedImage != null
-                              ? Image.file(
-                                  pickedImage!,
-                                  width: 500,
-                                  fit: BoxFit.fill,
-                                )
-                              : Image.asset(
-                                  imageList[i],
-                                  width: 500,
-                                  fit: BoxFit.fill,
-                                ),
-                        ),
+              LayoutBuilder(builder: (context, constraints) {
+                if (imagesFiles!.length > 0) {
+                  return Container(
+                    margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                    child: CarouselSlider.builder(
+                      itemCount: imagesFiles?.length,
+                      options: CarouselOptions(
+                        height: 150.0,
+                        enlargeCenterPage: true,
+                        autoPlay: true,
+                        aspectRatio: 16 / 9,
+                        autoPlayCurve: Curves.fastOutSlowIn,
+                        enableInfiniteScroll: false,
+                        autoPlayAnimationDuration: Duration(milliseconds: 300),
+                        viewportFraction: 0.8,
+                        onPageChanged: (index, reason) {
+                          setState(() {
+                            currentIndex = index;
+                          });
+                        },
                       ),
-                    );
-                  },
-                ),
-              ),
-              DotsIndicator(
-                dotsCount: imageList.length,
-                position: currentIndex.toDouble(),
-                decorator: DotsDecorator(
-                  activeColor: Colors.black,
-                  color: Colors.grey,
-                ),
-              ),
+                      itemBuilder: (context, i, id) {
+                        //for onTap to redirect to another screen
+                        return GestureDetector(
+                          // onLongPress: () {
+                          //   imagePickerOption();
+                          // },
+                          child: Stack(children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(15),
+                                  border: Border.all(
+                                    color: Colors.black,
+                                  )),
+                              //ClipRRect for image border radius
+                              child: ClipRRect(
+                                  borderRadius: BorderRadius.circular(14),
+                                  child: Image.file(
+                                    imagesFiles![i],
+                                    width: 500,
+                                    fit: BoxFit.fill,
+                                  )),
+                            ),
+                            LayoutBuilder(builder: (context, constraints) {
+                              if (user_type == "Manufacturer") {
+                                return Align(
+                                  child: Container(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          setState(() {
+                                            imagesFiles!.removeAt(i);
+                                          });
+                                        },
+                                        icon: Icon(Icons.delete),
+                                        color: Colors.white),
+                                    margin: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.red,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  alignment: Alignment.bottomRight,
+                                );
+                              } else {
+                                return Container();
+                              }
+                            }),
+                            LayoutBuilder(builder: (context, constraints) {
+                              if (user_type == "Manufacturer") {
+                                return Align(
+                                  child: Container(
+                                    child: IconButton(
+                                        onPressed: () {
+                                          pickMultipleImage(
+                                              ImageSource.gallery);
+                                        },
+                                        icon: Icon(Icons.add),
+                                        color: Colors.white),
+                                    margin: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                      color: Colors.blueAccent,
+                                      shape: BoxShape.circle,
+                                    ),
+                                  ),
+                                  alignment: Alignment.bottomLeft,
+                                );
+                              } else {
+                                return Container();
+                              }
+                            })
+                          ]),
+                        );
+                      },
+                    ),
+                  );
+                } else if (imagesFiles!.length == 0 &&
+                    user_type == "Manufacturer") {
+                  return Container(
+                    margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                    height: 150,
+                    width: 500,
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(15),
+                        border: Border.all(
+                          color: Colors.black,
+                        )),
+                    child: IconButton(
+                      onPressed: () {
+                        pickMultipleImage(ImageSource.gallery);
+                      },
+                      icon: Icon(Icons.add_circle_outline_rounded),
+                    ),
+                  );
+                } else {
+                  return Container();
+                }
+              }),
+              // LayoutBuilder(builder: (context, constraints) {
+              //   if (imagesFiles!.length > 0) {
+              //     return DotsIndicator(
+              //       dotsCount: imagesFiles!.length,
+              //       position: currentIndex.toDouble(),
+              //       decorator: DotsDecorator(
+              //         activeColor: Colors.black,
+              //         color: Colors.grey,
+              //       ),
+              //     );
+              //   } else {
+              //     return Container();
+              //   }
+              // }),
               LayoutBuilder(builder: (context, constraints) {
                 if (user_type == "Manufacturer") {
                   return Column(
@@ -322,27 +398,20 @@ class _HomePageState extends State<HomeContent> {
                                     // This is called when the user toggles the switch.
                                     //print(value);
                                     light = value;
-                                    setState(() {
-
-                                    });
+                                    setState(() {});
                                     var res = await http.post(
-
-                                      Uri.parse("http://urbanwebmobile.in/steffo/setsale.php"),
-                                      body: {
-                                        "status":value.toString()
-                                      }
-                                    );
-
+                                        Uri.parse(
+                                            "http://urbanwebmobile.in/steffo/setsale.php"),
+                                        body: {"status": value.toString()});
                                   })
                             ],
                           )),
                           ElevatedButton(
                               onPressed: () {
-                                imagePickerOption();
-                                // Navigator.push(
-                                //     context,
-                                //     MaterialPageRoute(
-                                //         builder: (context) => AddItemPage()));
+                                Navigator.push(
+                                    context,
+                                    MaterialPageRoute(
+                                        builder: (context) => AddItemPage()));
                               },
                               child: Text("Admin Controls"))
                         ],
@@ -438,14 +507,17 @@ class _HomePageState extends State<HomeContent> {
                                   setState(() {
                                     editPrice = false;
                                     final numericRegex = RegExp(r'^[0-9]*$');
-                                    if(numericRegex.hasMatch(newBasePrice.text) && newBasePrice.text.trim() != "" ){
+                                    if (numericRegex
+                                            .hasMatch(newBasePrice.text) &&
+                                        newBasePrice.text.trim() != "") {
                                       price = int.parse(newBasePrice.text);
                                       http.post(
-                                        Uri.parse("http://urbanwebmobile.in/steffo/setbaseprice.php"),
-                                        body:{
-                                          "basePrice" : newBasePrice.text.toString()
-                                        }
-                                      );
+                                          Uri.parse(
+                                              "http://urbanwebmobile.in/steffo/setbaseprice.php"),
+                                          body: {
+                                            "basePrice":
+                                                newBasePrice.text.toString()
+                                          });
                                       basePrice = newBasePrice.text;
                                     }
                                   });
@@ -694,85 +766,98 @@ class _HomePageState extends State<HomeContent> {
         ));
   }
 
-  void imagePickerOption() {
-    Get.bottomSheet(
-      SingleChildScrollView(
-        child: ClipRRect(
-          borderRadius: const BorderRadius.only(
-            topLeft: Radius.circular(10.0),
-            topRight: Radius.circular(10.0),
-          ),
-          child: Container(
-            color: Colors.white,
-            height: 250,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  const Text(
-                    "Pic Image From",
-                    style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-                    textAlign: TextAlign.center,
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      pickImage(ImageSource.camera);
-                      print("Camera upload");
-                    },
-                    icon: const Icon(Icons.camera),
-                    label: const Text("CAMERA"),
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      pickImage(ImageSource.gallery);
-                    },
-                    icon: const Icon(Icons.image),
-                    label: const Text("GALLERY"),
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  ElevatedButton.icon(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    icon: const Icon(Icons.close),
-                    label: const Text("CANCEL"),
-                  ),
-                ],
-              ),
-            ),
-          ),
-        ),
-      ),
-    );
-  }
+  // void imagePickerOption() {
+  //   Get.bottomSheet(
+  //     SingleChildScrollView(
+  //       child: ClipRRect(
+  //         borderRadius: const BorderRadius.only(
+  //           topLeft: Radius.circular(10.0),
+  //           topRight: Radius.circular(10.0),
+  //         ),
+  //         child: Container(
+  //           color: Colors.white,
+  //           height: MediaQuery.of(context).size.height / 4,
+  //           child: Padding(
+  //             padding: const EdgeInsets.all(8.0),
+  //             child: Column(
+  //               crossAxisAlignment: CrossAxisAlignment.stretch,
+  //               children: [
+  //                 const Text(
+  //                   "Pic Image From",
+  //                   style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+  //                   textAlign: TextAlign.center,
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 10,
+  //                 ),
+  //                 // ElevatedButton.icon(
+  //                 //   onPressed: () {
+  //                 //     pickImage(ImageSource.camera);
+  //                 //     Get.back();
+  //                 //     print("Camera upload");
+  //                 //   },
+  //                 //   icon: const Icon(Icons.camera),
+  //                 //   label: const Text("CAMERA"),
+  //                 // ),
+  //                 ElevatedButton.icon(
+  //                   onPressed: () {
+  //                     pickMultipleImage(ImageSource.gallery);
+  //                     Get.back();
+  //                     // pickImage(ImageSource.gallery);
+  //                   },
+  //                   icon: const Icon(Icons.image),
+  //                   label: const Text("GALLERY"),
+  //                 ),
+  //                 const SizedBox(
+  //                   height: 10,
+  //                 ),
+  //                 ElevatedButton.icon(
+  //                   onPressed: () {
+  //                     Get.back();
+  //                   },
+  //                   icon: const Icon(Icons.close),
+  //                   label: const Text("CANCEL"),
+  //                 ),
+  //               ],
+  //             ),
+  //           ),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
-  pickImage(ImageSource imageType) async {
+  // pickImage(ImageSource imageType) async {
+  //   try {
+  //     final photo = await ImagePicker().pickImage(source: imageType);
+  //     if (photo == null) return;
+  //     final tempImage = File(photo.path);
+  //     var imgBytes = tempImage.readAsBytesSync();
+  //     String baseImage = base64Encode(imgBytes);
+  //     var res = await http.post(
+  //         Uri.parse("http://www.urbanwebmobile.in/steffo/setcarousel.php"),
+  //         body: {"name": "Carousel1", "value": baseImage});
+  //     print(res.body);
+  //
+  //     imagesFiles!.add(tempImage);
+  //     setState(() {});
+  //   } catch (error) {
+  //     debugPrint(error.toString());
+  //   }
+  // }
+
+  pickMultipleImage(ImageSource source) async {
     try {
-      final photo = await ImagePicker().pickImage(source: imageType);
-      if (photo == null) return;
-      final tempImage = File(photo.path);
-      var imgBytes = tempImage.readAsBytesSync();
-      String baseImage = base64Encode(imgBytes);
-      var res = await http.post(
-        Uri.parse("http://www.urbanwebmobile.in/steffo/setcarousel.php"),
-        body: {
-          "name":"Carousel1",
-          "value":baseImage
-        }
-      );
-      print(res.body);
-      setState(() {
-        pickedImage = tempImage;
-      });
-      Get.back();
-    } catch (error) {
-      debugPrint(error.toString());
+      final images = await ImagePicker().pickMultiImage();
+      if (images == null) return;
+      for (XFile image in images) {
+        var imagesTemporary = File(image.path);
+        imagesFiles!.add(imagesTemporary);
+      }
+
+      setState(() {});
+    } catch (e) {
+      print("Image Error");
     }
   }
 }
