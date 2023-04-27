@@ -26,24 +26,24 @@ class _OTPPageState extends State<OTPContent>{
   final TextEditingController otp  = new TextEditingController();
   final TextEditingController email  = new TextEditingController();
   EmailOTP myAuth = EmailOTP();
-  late EmailAuth emailAuth;
 
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the package
-    emailAuth = new EmailAuth(
-      sessionName: "Sample session",
-    );
-    /// Configuring the remote server
-    // emailAuth.config(remoteServerConfiguration);
-  }
-  void verify() {
-    print(emailAuth.validateOtp(
-        recipientMail: email.toString(),
-        userOtp: otp.toString()));
-  }
-
+  // late EmailAuth emailAuth;
+  // EmailAuth emailAuth =EmailAuth(sessionName: "sessionName");
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Initialize the package
+  //   emailAuth = new EmailAuth(
+  //     sessionName: "Sample session",
+  //   );
+  //   /// Configuring the remote server
+  //   // emailAuth.config(remoteServerConfiguration);
+  // }
+  // void verify() {
+  //   print(emailAuth.validateOtp(
+  //       recipientMail: email.toString(),
+  //       userOtp: otp.text));
+  // }
 
   // final _pinPutController = TextEditingController();
   final defaultPinTheme = PinTheme(
@@ -123,6 +123,7 @@ class _OTPPageState extends State<OTPContent>{
                     child: Column(
                       children: <Widget>[
                         TextFormField(
+                          maxLength: 4,
                           controller: otp,
                           keyboardType: TextInputType.number,
                           decoration: InputDecoration(
@@ -173,7 +174,7 @@ class _OTPPageState extends State<OTPContent>{
                             // height: 60,
                             child:  buttonStyle("Verify", () async{
                               print(otp.text);
-                              if (await myAuth.verifyOTP(otp: otp) != true) {
+                              if (await myAuth.verifyOTP(otp: otp.toString()) == true) {
                                 ScaffoldMessenger.of(context)
                                     .showSnackBar(const SnackBar(
                                   content: Text("OTP is verified"),

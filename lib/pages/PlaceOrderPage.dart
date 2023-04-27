@@ -761,7 +761,8 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           borderSide: BorderSide.none),
                       filled: true,
                       fillColor:
-                          Color.fromRGBO(233, 236, 239, 0.792156862745098)),
+                          Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                  ),
                 ),
               ),
 

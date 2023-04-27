@@ -280,7 +280,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                 //margin: EdgeInsets.fromLTRB(20, 20,20,0),
 
                 width: width,
-                padding: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                padding: EdgeInsets.fromLTRB(10, 30, 10, 0),
                 child: TextFormField(
                   controller: transporter_name,
                     textAlign: TextAlign.left,

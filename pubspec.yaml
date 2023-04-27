@@ -54,8 +54,7 @@ dependencies:
   email_auth: ^1.0.0
   pinput: ^2.2.31
   marquee: ^2.2.3
-
-
+#  sms_autofill: ^2.3.0
 
 
 
