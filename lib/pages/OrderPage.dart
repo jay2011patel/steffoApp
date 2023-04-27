@@ -119,7 +119,6 @@ class _OrderPageState extends State<OrderPage> {
     //status.text = widget.order.status!;
 
     return Scaffold(
-
         appBar: appbar("Order",(){
           Navigator.pop(context);
         }),
@@ -137,7 +136,7 @@ class _OrderPageState extends State<OrderPage> {
             child: SingleChildScrollView(
                 child: Column(
                     children: [
-                      const Padding(padding: EdgeInsets.all(10)),
+                      // const Padding(padding: EdgeInsets.all(10)),
 
                   Container(
                       padding: const EdgeInsets.all(10),
@@ -148,30 +147,26 @@ class _OrderPageState extends State<OrderPage> {
                       // ),
                       child: Column(
                           children: [
-                            Card(
-                              elevation: 10,
-                              child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: const BoxDecoration(
-                                  color: Colors.white,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text("Order From:",
-                                        style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.user_name!,
-                                        style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
-                                  ],
-                                ),
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(topLeft:Radius.circular(30),topRight: Radius.circular(30)),
+                                color: Colors.lightBlueAccent,
                               ),
-
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const Text("Order From:",
+                                      style: TextStyle(fontSize: 20,fontFamily: "Poppins_Bold")),
+                                  Text(widget.order.user_name!,
+                                      style: const TextStyle(fontSize: 20,fontFamily: "Poppins_bold",color: Colors.white))
+                                ],
+                              ),
                             ),
 
                             SizedBox(
                               height: 10,
                             ),
-
 
                             Card(
                               elevation: 10,
