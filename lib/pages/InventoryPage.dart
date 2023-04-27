@@ -102,110 +102,129 @@ class _InventoryPageState extends State<InventoryContent> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: appbar("Inventory", () {
-          Navigator.pop(context);
-        }),
-        body: LayoutBuilder(builder: (context, constraints) {
-          if (isDataLoaded) {
-            return InventoryPageBody();
-          } else {
-            return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    CircularProgressIndicator(),
-                    Text("Loading Inventory")
-              ],
-            ));
-          }
-        }),
-        bottomNavigationBar: StylishBottomBar(
-          option: AnimatedBarOptions(
-            iconSize: 30,
-            barAnimation: BarAnimation.fade,
-            //barAnimation: BarAnimation.liquid,
-            iconStyle: IconStyle.simple,
-            opacity: 0.3,
-          ),
-
-          items: [
-            BottomBarItem(
-              icon: const Icon(
-                Icons.home_filled,
-              ),
-              title: const Text('Abc'),
-              backgroundColor: Colors.red,
-              selectedIcon:
-                  const Icon(Icons.home_filled, color: Colors.blueAccent),
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selected == 0) {
+          return true;
+        }
+        setState(() {
+          _selected = 0;
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => HomePage(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
             ),
-            BottomBarItem(
+          );
+        });
+        return false;
+      },
+      child: Scaffold(
+          appBar: appbar("Inventory", () {
+            Navigator.pop(context);
+          }),
+          body: LayoutBuilder(builder: (context, constraints) {
+            if (isDataLoaded) {
+              return InventoryPageBody();
+            } else {
+              return Center(
+                  child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  CircularProgressIndicator(),
+                  Text("Loading Inventory")
+                ],
+              ));
+            }
+          }),
+          bottomNavigationBar: StylishBottomBar(
+            option: AnimatedBarOptions(
+              iconSize: 30,
+              barAnimation: BarAnimation.fade,
+              //barAnimation: BarAnimation.liquid,
+              iconStyle: IconStyle.simple,
+              opacity: 0.3,
+            ),
+
+            items: [
+              BottomBarItem(
                 icon: const Icon(
-                  Icons.inventory_2_rounded,
+                  Icons.home_filled,
                 ),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.inventory_2_rounded,
-                    color: Colors.blueAccent)),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.warehouse_rounded,
-                ),
-                title: const Text('Safety'),
-                selectedIcon: const Icon(Icons.warehouse_rounded,
-                    color: Colors.blueAccent)),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.person_pin,
-                ),
-                title: const Text('Cabin'),
-                backgroundColor: Colors.purple,
+                title: const Text('Abc'),
+                backgroundColor: Colors.red,
                 selectedIcon:
-                    const Icon(Icons.person_pin, color: Colors.blueAccent)),
-          ],
-          //fabLocation: StylishBarFabLocation.center,
-          hasNotch: false,
-          currentIndex: _selected,
-          onTap: (index) {
-            setState(() {
-              if (index == 0) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        HomePage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
+                    const Icon(Icons.home_filled, color: Colors.blueAccent),
+              ),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.inventory_2_rounded,
                   ),
-                );
-              }
+                  title: const Text('Safety'),
+                  backgroundColor: Colors.orange,
+                  selectedIcon: const Icon(Icons.inventory_2_rounded,
+                      color: Colors.blueAccent)),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.warehouse_rounded,
+                  ),
+                  title: const Text('Safety'),
+                  selectedIcon: const Icon(Icons.warehouse_rounded,
+                      color: Colors.blueAccent)),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.person_pin,
+                  ),
+                  title: const Text('Cabin'),
+                  backgroundColor: Colors.purple,
+                  selectedIcon:
+                      const Icon(Icons.person_pin, color: Colors.blueAccent)),
+            ],
+            //fabLocation: StylishBarFabLocation.center,
+            hasNotch: false,
+            currentIndex: _selected,
+            onTap: (index) {
+              setState(() {
+                if (index == 0) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          HomePage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
 
-              if (index == 2) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        DealerPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
+                if (index == 2) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          DealerPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
 
-              if (index == 3) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        ProfilePage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
-            });
-          },
-        ));
+                if (index == 3) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          ProfilePage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
+              });
+            },
+          )),
+    );
   }
 
   Widget InventoryPageBody() {
@@ -248,11 +267,10 @@ class _InventoryPageState extends State<InventoryContent> {
                       itemBuilder: (context, ind) {
                         return Container(
                             child: Column(
-                            children: [
-                              LumpSumTotal(context, gradeList1[ind]),
-                              ],
-                            )
-                        );
+                          children: [
+                            LumpSumTotal(context, gradeList1[ind]),
+                          ],
+                        ));
                       },
                     ),
                   ),
@@ -285,8 +303,7 @@ class _InventoryPageState extends State<InventoryContent> {
                               children: [
                                 LumpSumTotal(context, gradeList2[ind]),
                               ],
-                            )
-                        );
+                            ));
                       },
                     ),
                   ),

@@ -15,25 +15,21 @@ import '../Models/user.dart';
 import '../ui/common.dart';
 import 'ProfilePage.dart';
 
-class DealerPage extends StatelessWidget{
-
+class DealerPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DealerContent();
   }
-
 }
 
-class DealerContent extends StatefulWidget{
+class DealerContent extends StatefulWidget {
   const DealerContent({super.key});
   @override
   State<DealerContent> createState() => _DealerPageState();
 }
 
-
-class _DealerPageState extends State<DealerContent>{
-
-  var _selected=2;
+class _DealerPageState extends State<DealerContent> {
+  var _selected = 2;
   @override
   void initState() {
     // TODO: implement initState
@@ -43,89 +39,116 @@ class _DealerPageState extends State<DealerContent>{
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: appbar("Buyers",(){
-          Navigator.pop(context);
-        }),
-        body: DealerPageBody(),
-        bottomNavigationBar: StylishBottomBar(
-          option: AnimatedBarOptions(
-            iconSize: 30,
-            //barAnimation: BarAnimation.liquid,
-            iconStyle: IconStyle.simple,
-            opacity: 0.3,
-          ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selected == 0) {
+          return true;
+        }
+        setState(() {
+          _selected = 0;
+          Navigator.pushReplacement(
+            context,
+            PageRouteBuilder(
+              pageBuilder: (context, animation1, animation2) => HomePage(),
+              transitionDuration: Duration.zero,
+              reverseTransitionDuration: Duration.zero,
+            ),
+          );
+        });
+        return false;
+      },
+      child: Scaffold(
+          appBar: appbar("Buyers", () {
+            Navigator.pop(context);
+          }),
+          body: DealerPageBody(),
+          bottomNavigationBar: StylishBottomBar(
+            option: AnimatedBarOptions(
+              iconSize: 30,
+              //barAnimation: BarAnimation.liquid,
+              iconStyle: IconStyle.simple,
+              opacity: 0.3,
+            ),
 
-          items: [
-            BottomBarItem(
-              icon: const Icon(Icons.home_filled,),
-              title: const Text('Abc'),
-              backgroundColor: Colors.red,
-              selectedIcon: const Icon(Icons.home_filled,color:Colors.blueAccent),
-            ),
-            BottomBarItem(
-                icon: const Icon(Icons.inventory_2_rounded),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.inventory_2_rounded,color:Colors.blueAccent)
-            ),
-            BottomBarItem(
-                icon: const Icon(Icons.warehouse_rounded,),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.warehouse_rounded,color:Colors.blueAccent)
-            ),
-            BottomBarItem(
-                icon: const Icon(Icons.person_pin,),
-                title: const Text('Cabin'),
-                backgroundColor: Colors.purple,
-                selectedIcon: const Icon(Icons.person_pin,color:Colors.blueAccent)
-            ),
-          ],
-          //fabLocation: StylishBarFabLocation.center,
-          hasNotch: false,
-          currentIndex: _selected,
-          onTap: (index) {
-            setState(() {
-
-              if(index==0){
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => HomePage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
+            items: [
+              BottomBarItem(
+                icon: const Icon(
+                  Icons.home_filled,
+                ),
+                title: const Text('Abc'),
+                backgroundColor: Colors.red,
+                selectedIcon:
+                    const Icon(Icons.home_filled, color: Colors.blueAccent),
+              ),
+              BottomBarItem(
+                  icon: const Icon(Icons.inventory_2_rounded),
+                  title: const Text('Safety'),
+                  backgroundColor: Colors.orange,
+                  selectedIcon: const Icon(Icons.inventory_2_rounded,
+                      color: Colors.blueAccent)),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.warehouse_rounded,
                   ),
-                );
-              }
-
-              if(index==1){
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => InventoryPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
+                  title: const Text('Safety'),
+                  backgroundColor: Colors.orange,
+                  selectedIcon: const Icon(Icons.warehouse_rounded,
+                      color: Colors.blueAccent)),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.person_pin,
                   ),
-                );
-              }
+                  title: const Text('Cabin'),
+                  backgroundColor: Colors.purple,
+                  selectedIcon:
+                      const Icon(Icons.person_pin, color: Colors.blueAccent)),
+            ],
+            //fabLocation: StylishBarFabLocation.center,
+            hasNotch: false,
+            currentIndex: _selected,
+            onTap: (index) {
+              setState(() {
+                if (index == 0) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          HomePage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
 
-              if(index==3){
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) => ProfilePage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
+                if (index == 1) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          InventoryPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
 
-            });
-          },
-        )
+                if (index == 3) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          ProfilePage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
+              });
+            },
+          )),
     );
   }
+
   bool isDataReady = false;
   var userType;
   List<User> child = [];
@@ -137,16 +160,13 @@ class _DealerPageState extends State<DealerContent>{
     String uri;
     uri = "http://urbanwebmobile.in/steffo/getchildren.php";
 
-    var res = await http.post(
-      Uri.parse(uri),
-      body: {
-        "id":id,
-      }
-    );
+    var res = await http.post(Uri.parse(uri), body: {
+      "id": id,
+    });
 
     var responseData = json.decode(res.body);
     print(responseData['data'].length);
-    for(int i = 0 ; i < responseData['data'].length;i++){
+    for (int i = 0; i < responseData['data'].length; i++) {
       User u = User();
       u.id = responseData["data"][i]["id"];
       u.userType = responseData["data"][i]["userType"];
@@ -163,58 +183,54 @@ class _DealerPageState extends State<DealerContent>{
 
     isDataReady = true;
     setState(() {});
-
   }
-  Widget DealerPageBody(){
+
+  Widget DealerPageBody() {
     //loadChildData();
-    return LayoutBuilder(
-      builder: (context,constraints) {
-        if(isDataReady){
+    return LayoutBuilder(builder: (context, constraints) {
+      if (isDataReady) {
         return Container(
           margin: EdgeInsets.only(top: 20),
-          child: LayoutBuilder(builder: (context,constraints) {
+          child: LayoutBuilder(builder: (context, constraints) {
             if (userType == "Manufacturer") {
               return ListView.builder(
                   itemCount: child.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => DistributorDetailPage(user: child[index])
-                          )
-                          );
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) => DistributorDetailPage(
+                                      user: child[index])));
                         },
-
-                        child: DistributorCard(child[index],context)
-                    );
+                        child: DistributorCard(child[index], context));
                   });
-            } else if (userType=="Distributor") {
+            } else if (userType == "Distributor") {
               return ListView.builder(
                   itemCount: child.length,
                   itemBuilder: (context, index) {
                     return InkWell(
-                        onTap: (){
-                          Navigator.push(context, MaterialPageRoute(
-                              builder: (context) => DealerDetailPage(user: child[index])
-                          )
-                          );
+                        onTap: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                  builder: (context) =>
+                                      DealerDetailPage(user: child[index])));
                         },
-                        child: DealerCard(child[index],context)
-                    );
+                        child: DealerCard(child[index], context));
                   });
             } else {
               return Container();
             }
           }),
         );
-      }else{
-          return Center(
+      } else {
+        return Center(
             child: CircularProgressIndicator(
-            color: Colors.grey,
-          ));
-        }
-    }
-    );
+          color: Colors.grey,
+        ));
+      }
+    });
   }
-
 }

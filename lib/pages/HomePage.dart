@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/ChangePP.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
+import 'package:stefomobileapp/pages/LRPage.dart';
 import 'package:stefomobileapp/pages/OrderPage.dart';
 import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stefomobileapp/ui/common.dart';
@@ -63,111 +67,132 @@ class _HomePageState extends State<HomeContent> {
   @override
   Widget build(BuildContext context) {
     loadusertype();
-    return Scaffold(
-        appBar: appbar("Home", () {
-          print("Back Pressed");
-          Navigator.pop(context);
-        }),
-        body: HomePageBody(),
-        floatingActionButton: LayoutBuilder(builder: (context, constraints) {
-          if (user_type != "Manufacturer" && isSalesEnabled == "true") {
-            //fabLoc = FloatingActionButtonLocation.centerDocked;
-            return FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/placeorder');
-              },
-              child: Icon(Icons.add),
-              backgroundColor: Colors.red,
-            );
-          } else {
-            return Container();
-          }
-        }),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: StylishBottomBar(
-          option: AnimatedBarOptions(
-            iconSize: 30,
-            //barAnimation: BarAnimation.liquid,
-            iconStyle: IconStyle.simple,
-            opacity: 0.3,
-          ),
-          items: [
-            BottomBarItem(
-              icon: const Icon(
-                Icons.home_filled,
-              ),
-              title: const Text('Abc'),
-              backgroundColor: Colors.red,
-              selectedIcon:
-                  const Icon(Icons.home_filled, color: Colors.blueAccent),
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selected == 0) {
+          // LogoutAlert();
+        }
+        setState(() {
+          LogoutAlert();
+          // _selected = 0;
+          // Navigator.pushReplacement(
+          //   context,
+          //   PageRouteBuilder(
+          //     pageBuilder: (context, animation1, animation2) => HomePage(),
+          //     transitionDuration: Duration.zero,
+          //     reverseTransitionDuration: Duration.zero,
+          //   ),
+          // );
+        });
+        return false;
+      },
+      child: Scaffold(
+          appBar: appbar("Home", () {
+            print("Back Pressed");
+            Navigator.pop(context);
+          }),
+          body: HomePageBody(),
+          floatingActionButton: LayoutBuilder(builder: (context, constraints) {
+            if (user_type != "Manufacturer" && isSalesEnabled == "true") {
+              //fabLoc = FloatingActionButtonLocation.centerDocked;
+              return FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/placeorder');
+                },
+                child: Icon(Icons.add),
+                backgroundColor: Colors.red,
+              );
+            } else {
+              return Container();
+            }
+          }),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: StylishBottomBar(
+            option: AnimatedBarOptions(
+              iconSize: 30,
+              //barAnimation: BarAnimation.liquid,
+              iconStyle: IconStyle.simple,
+              opacity: 0.3,
             ),
-            BottomBarItem(
+            items: [
+              BottomBarItem(
                 icon: const Icon(
-                  Icons.inventory_2_rounded,
+                  Icons.home_filled,
                 ),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.inventory_2_rounded,
-                    color: Colors.blueAccent)),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.warehouse_rounded,
-                ),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.warehouse_rounded,
-                    color: Colors.blueAccent)),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.person_pin,
-                ),
-                title: const Text('Cabin'),
-                backgroundColor: Colors.purple,
+                title: const Text('Abc'),
+                backgroundColor: Colors.red,
                 selectedIcon:
-                    const Icon(Icons.person_pin, color: Colors.blueAccent)),
-          ],
-          //fabLocation: StylishBarFabLocation.center,
-          hasNotch: false,
-          currentIndex: _selected,
-          onTap: (index) {
-            setState(() {
-              if (index == 1) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        InventoryPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
+                    const Icon(Icons.home_filled, color: Colors.blueAccent),
+              ),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.inventory_2_rounded,
                   ),
-                );
-              }
+                  title: const Text('Safety'),
+                  backgroundColor: Colors.orange,
+                  selectedIcon: const Icon(Icons.inventory_2_rounded,
+                      color: Colors.blueAccent)),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.warehouse_rounded,
+                  ),
+                  title: const Text('Safety'),
+                  backgroundColor: Colors.orange,
+                  selectedIcon: const Icon(Icons.warehouse_rounded,
+                      color: Colors.blueAccent)),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.person_pin,
+                  ),
+                  title: const Text('Cabin'),
+                  backgroundColor: Colors.purple,
+                  selectedIcon:
+                      const Icon(Icons.person_pin, color: Colors.blueAccent)),
+            ],
+            //fabLocation: StylishBarFabLocation.center,
+            hasNotch: false,
+            currentIndex: _selected,
+            onTap: (index) {
+              setState(() {
+                if (index == 1) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          InventoryPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
 
-              if (index == 2) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        DealerPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
-              if (index == 3) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        ProfilePage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
-            });
-          },
-        ));
+                if (index == 2) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          DealerPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
+                if (index == 3) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          ProfilePage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
+              });
+            },
+          )),
+    );
     throw UnimplementedError();
   }
 
@@ -859,5 +884,92 @@ class _HomePageState extends State<HomeContent> {
     } catch (e) {
       print("Image Error");
     }
+  }
+
+  LogoutAlert() {
+    // QuickAlert.show(
+    //     context: context,
+    //     type: QuickAlertType.custom,
+    //     title: "Logout?",
+    //     text: "Are you sure?");
+
+    QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        barrierDismissible: true,
+        cancelBtnText: 'Cancel',
+        confirmBtnText: 'Yes',
+        title: 'Are you sure?',
+        text: 'Logout',
+        textColor: Colors.red,
+
+        // customAsset: Icon(Icons.login_outlined),
+        onConfirmBtnTap: () async {
+          Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) => LRPage(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ));
+        },
+        onCancelBtnTap: () {
+          Get.back();
+        });
+
+    // showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return Dialog(
+    //         child: Container(
+    //           height: 150,
+    //           child: Center(
+    //             child: Column(
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               children: [
+    //                 Text(
+    //                   "Logout?",
+    //                   style: GoogleFonts.lato(
+    //                       fontSize: 25, fontWeight: FontWeight.bold),
+    //                 ),
+    //                 SizedBox(
+    //                   height: 30,
+    //                 ),
+    //                 Row(
+    //                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //                   children: [
+    //                     ElevatedButton(
+    //                         onPressed: () {
+    //                           Navigator.pushReplacement(
+    //                             context,
+    //                             PageRouteBuilder(
+    //                               pageBuilder:
+    //                                   (context, animation1, animation2) =>
+    //                                       LRPage(),
+    //                               transitionDuration: Duration.zero,
+    //                               reverseTransitionDuration: Duration.zero,
+    //                             ),
+    //                           );
+    //                         },
+    //                         child: Text(
+    //                           "Yes",
+    //                           style: GoogleFonts.lato(fontSize: 20),
+    //                         )),
+    //                     ElevatedButton(
+    //                         onPressed: () {
+    //                           Get.back();
+    //                         },
+    //                         child: Text(
+    //                           "Cancel",
+    //                           style: GoogleFonts.lato(fontSize: 20),
+    //                         )),
+    //                   ],
+    //                 )
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     });
   }
 }
