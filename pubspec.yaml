@@ -59,6 +59,7 @@ dependencies:
   path: ^1.8.2
   file_picker: ^5.2.10
   flutter_picker: ^2.1.0
+  quickalert: ^1.0.1
 
 
 

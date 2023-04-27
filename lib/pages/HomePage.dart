@@ -1,15 +1,19 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:math';
 
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:dots_indicator/dots_indicator.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:quickalert/quickalert.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/ChangePP.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/InventoryPage.dart';
+import 'package:stefomobileapp/pages/LRPage.dart';
 import 'package:stefomobileapp/pages/OrderPage.dart';
 import 'package:stefomobileapp/pages/ProfilePage.dart';
 import 'package:stefomobileapp/ui/common.dart';
@@ -63,129 +67,147 @@ class _HomePageState extends State<HomeContent> {
   @override
   Widget build(BuildContext context) {
     loadusertype();
-    return Scaffold(
-        appBar: appbar("Home", () {
-          print("Back Pressed");
-          Navigator.pop(context);
-        }),
-        body: HomePageBody(),
-        floatingActionButton: LayoutBuilder(builder: (context, constraints) {
-          if (user_type != "Manufacturer" && isSalesEnabled == "true") {
-            //fabLoc = FloatingActionButtonLocation.centerDocked;
-            return FloatingActionButton(
-              onPressed: () {
-                Navigator.of(context).pushNamed('/placeorder');
-              },
-              child: Icon(Icons.add),
-              backgroundColor: Colors.red,
-            );
-          } else {
-            return Container();
-          }
-        }),
-        floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-        bottomNavigationBar: StylishBottomBar(
-          option: AnimatedBarOptions(
-            iconSize: 30,
-            //barAnimation: BarAnimation.liquid,
-            iconStyle: IconStyle.simple,
-            opacity: 0.3,
-          ),
-          items: [
-            BottomBarItem(
-              icon: const Icon(
-                Icons.home_filled,
-              ),
-              title: const Text('Abc'),
-              backgroundColor: Colors.red,
-              selectedIcon:
-                  const Icon(Icons.home_filled, color: Colors.blueAccent),
+    return WillPopScope(
+      onWillPop: () async {
+        if (_selected == 0) {
+          // LogoutAlert();
+        }
+        setState(() {
+          LogoutAlert();
+          // _selected = 0;
+          // Navigator.pushReplacement(
+          //   context,
+          //   PageRouteBuilder(
+          //     pageBuilder: (context, animation1, animation2) => HomePage(),
+          //     transitionDuration: Duration.zero,
+          //     reverseTransitionDuration: Duration.zero,
+          //   ),
+          // );
+        });
+        return false;
+      },
+      child: Scaffold(
+          appBar: appbar("Home", () {
+            print("Back Pressed");
+            Navigator.pop(context);
+          }),
+          body: HomePageBody(),
+          floatingActionButton: LayoutBuilder(builder: (context, constraints) {
+            if (user_type != "Manufacturer" && isSalesEnabled == "true") {
+              //fabLoc = FloatingActionButtonLocation.centerDocked;
+              return FloatingActionButton(
+                onPressed: () {
+                  Navigator.of(context).pushNamed('/placeorder');
+                },
+                child: Icon(Icons.add),
+                backgroundColor: Colors.red,
+              );
+            } else {
+              return Container();
+            }
+          }),
+          floatingActionButtonLocation:
+              FloatingActionButtonLocation.centerDocked,
+          bottomNavigationBar: StylishBottomBar(
+            option: AnimatedBarOptions(
+              iconSize: 30,
+              //barAnimation: BarAnimation.liquid,
+              iconStyle: IconStyle.simple,
+              opacity: 0.3,
             ),
-            BottomBarItem(
+            items: [
+              BottomBarItem(
                 icon: const Icon(
-                  Icons.inventory_2_rounded,
+                  Icons.home_filled,
                 ),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.inventory_2_rounded,
-                    color: Colors.blueAccent)),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.warehouse_rounded,
-                ),
-                title: const Text('Safety'),
-                backgroundColor: Colors.orange,
-                selectedIcon: const Icon(Icons.warehouse_rounded,
-                    color: Colors.blueAccent)),
-            BottomBarItem(
-                icon: const Icon(
-                  Icons.person_pin,
-                ),
-                title: const Text('Cabin'),
-                backgroundColor: Colors.purple,
+                title: const Text('Abc'),
+                backgroundColor: Colors.red,
                 selectedIcon:
-                    const Icon(Icons.person_pin, color: Colors.blueAccent)),
-          ],
-          //fabLocation: StylishBarFabLocation.center,
-          hasNotch: false,
-          currentIndex: _selected,
-          onTap: (index) {
-            setState(() {
-              if (index == 1) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        InventoryPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
+                    const Icon(Icons.home_filled, color: Colors.blueAccent),
+              ),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.inventory_2_rounded,
                   ),
-                );
-              }
+                  title: const Text('Safety'),
+                  backgroundColor: Colors.orange,
+                  selectedIcon: const Icon(Icons.inventory_2_rounded,
+                      color: Colors.blueAccent)),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.warehouse_rounded,
+                  ),
+                  title: const Text('Safety'),
+                  backgroundColor: Colors.orange,
+                  selectedIcon: const Icon(Icons.warehouse_rounded,
+                      color: Colors.blueAccent)),
+              BottomBarItem(
+                  icon: const Icon(
+                    Icons.person_pin,
+                  ),
+                  title: const Text('Cabin'),
+                  backgroundColor: Colors.purple,
+                  selectedIcon:
+                      const Icon(Icons.person_pin, color: Colors.blueAccent)),
+            ],
+            //fabLocation: StylishBarFabLocation.center,
+            hasNotch: false,
+            currentIndex: _selected,
+            onTap: (index) {
+              setState(() {
+                if (index == 1) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          InventoryPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
 
-              if (index == 2) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        DealerPage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
-              if (index == 3) {
-                Navigator.pushReplacement(
-                  context,
-                  PageRouteBuilder(
-                    pageBuilder: (context, animation1, animation2) =>
-                        ProfilePage(),
-                    transitionDuration: Duration.zero,
-                    reverseTransitionDuration: Duration.zero,
-                  ),
-                );
-              }
-            });
-          },
-        ));
+                if (index == 2) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          DealerPage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
+                if (index == 3) {
+                  Navigator.pushReplacement(
+                    context,
+                    PageRouteBuilder(
+                      pageBuilder: (context, animation1, animation2) =>
+                          ProfilePage(),
+                      transitionDuration: Duration.zero,
+                      reverseTransitionDuration: Duration.zero,
+                    ),
+                  );
+                }
+              });
+            },
+          )),
+    );
     throw UnimplementedError();
   }
 
   String? id = "";
   int currentIndex = 0;
-  final List<String> imageList = [
-    'assets/images/stefo_logo.png',
-    'assets/images/stefo_logo.png',
-    'assets/images/stefo_logo.png',
-    'assets/images/stefo_logo.png'
-  ];
-
+  bool isRes1Loaded = false;
+  final List<String> imageList = [];
+  var responseData1;
   List<Order> requestList = [];
   List<Order> orderList = [];
   String? isSalesEnabled = "false", basePrice = "0";
+  var m;
   Future<void> loadData() async {
     final SharedPreferences prefs = await SharedPreferences.getInstance();
-    var m = id;
+    m = id;
     id = await prefs.getString('id');
 
     if (m != id) {
@@ -193,8 +215,8 @@ class _HomePageState extends State<HomeContent> {
       orderList = [];
       final res1 = await http
           .post(Uri.parse("http://urbanwebmobile.in/steffo/getsystemdata.php"));
-
-      var responseData1 = jsonDecode(res1.body);
+      isRes1Loaded = true;
+      responseData1 = jsonDecode(res1.body);
 
       isSalesEnabled = responseData1['data'][0]['value'];
       basePrice = responseData1['data'][1]['value'];
@@ -211,9 +233,7 @@ class _HomePageState extends State<HomeContent> {
         req.reciever_id = responseData["data"][i]["supplier_id"];
         req.user_id = responseData["data"][i]["user_id"];
         req.user_mob_num = responseData["data"][i]["mobileNumber"];
-        req.user_name = responseData["data"][i]["firstName"] +
-            " " +
-            responseData["data"][i]["lastName"];
+        req.user_name = responseData["data"][i]["firstName"] + " " + responseData["data"][i]["lastName"];
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];
@@ -248,119 +268,143 @@ class _HomePageState extends State<HomeContent> {
           child: Column(
             children: [
               LayoutBuilder(builder: (context, constraints) {
-                if (imagesFiles!.length > 0) {
-                  return Container(
-                    margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
-                    child: CarouselSlider.builder(
-                      itemCount: imagesFiles?.length,
-                      options: CarouselOptions(
-                        height: 150.0,
-                        enlargeCenterPage: true,
-                        autoPlay: true,
-                        aspectRatio: 16 / 9,
-                        autoPlayCurve: Curves.fastOutSlowIn,
-                        enableInfiniteScroll: false,
-                        autoPlayAnimationDuration: Duration(milliseconds: 300),
-                        viewportFraction: 0.8,
-                        onPageChanged: (index, reason) {
-                          setState(() {
-                            currentIndex = index;
-                          });
+                if(isRes1Loaded){
+                  if (responseData1['images'].length > 0) {
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: CarouselSlider.builder(
+                        itemCount: responseData1['images'].length,
+                        options: CarouselOptions(
+                          height: 150.0,
+                          enlargeCenterPage: true,
+                          autoPlay: true,
+                          aspectRatio: 16 / 9,
+                          autoPlayCurve: Curves.fastOutSlowIn,
+                          enableInfiniteScroll: false,
+                          autoPlayAnimationDuration:
+                              Duration(milliseconds: 300),
+                          viewportFraction: 0.8,
+                          onPageChanged: (index, reason) {
+                            setState(() {
+                              currentIndex = index;
+                            });
+                          },
+                        ),
+                        itemBuilder: (context, i, id) {
+                          //for onTap to redirect to another screen
+                          return GestureDetector(
+                            // onLongPress: () {
+                            //   imagePickerOption();
+                            // },
+                            child: Stack(children: [
+                              Container(
+                                decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(15),
+                                    border: Border.all(
+                                      color: Colors.black,
+                                    )),
+                                //ClipRRect for image border radius
+                                child: ClipRRect(
+                                    borderRadius: BorderRadius.circular(14),
+                                    child: Center(
+                                      child: Image.network(
+                                          "http://urbanwebmobile.in/steffo/carousel/" +
+                                              responseData1['images'][i]
+                                                  ['name']),
+                                    )),
+                              ),
+                              LayoutBuilder(builder: (context, constraints) {
+                                if (user_type == "Manufacturer") {
+                                  return Align(
+                                    child: Container(
+                                      child: IconButton(
+                                          onPressed: () async {
+                                            var res1 = await http.post(
+                                              Uri.parse("http://urbanwebmobile.in/steffo/delcar.php"),
+                                              body: {
+                                                "id"  : responseData1['images'][i]['id'].toString(),
+                                                "name"  : responseData1['images'][i]['name'],
+                                              }
+                                            );
+
+                                              responseData1['images']
+                                                  .removeAt(i);
+
+                                            setState(() {
+                                            });
+                                          },
+                                          icon: Icon(Icons.delete),
+                                          color: Colors.white),
+                                      margin: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.red,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    alignment: Alignment.bottomRight,
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              }),
+                              LayoutBuilder(builder: (context, constraints) {
+                                if (user_type == "Manufacturer") {
+                                  return Align(
+                                    child: Container(
+                                      child: IconButton(
+                                          onPressed: () async {
+                                            await pickMultipleImage(
+                                                ImageSource.gallery
+                                            );
+
+                                            setState(() {
+                                              m=id;
+                                            });
+                                          },
+                                          icon: Icon(Icons.add),
+                                          color: Colors.white),
+                                      margin: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                        color: Colors.blueAccent,
+                                        shape: BoxShape.circle,
+                                      ),
+                                    ),
+                                    alignment: Alignment.bottomLeft,
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              })
+                            ]),
+                          );
                         },
                       ),
-                      itemBuilder: (context, i, id) {
-                        //for onTap to redirect to another screen
-                        return GestureDetector(
-                          // onLongPress: () {
-                          //   imagePickerOption();
-                          // },
-                          child: Stack(children: [
-                            Container(
-                              decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(15),
-                                  border: Border.all(
-                                    color: Colors.black,
-                                  )),
-                              //ClipRRect for image border radius
-                              child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(14),
-                                  child: Image.file(
-                                    imagesFiles![i],
-                                    width: 500,
-                                    fit: BoxFit.fill,
-                                  )),
-                            ),
-                            LayoutBuilder(builder: (context, constraints) {
-                              if (user_type == "Manufacturer") {
-                                return Align(
-                                  child: Container(
-                                    child: IconButton(
-                                        onPressed: () {
-                                          setState(() {
-                                            imagesFiles!.removeAt(i);
-                                          });
-                                        },
-                                        icon: Icon(Icons.delete),
-                                        color: Colors.white),
-                                    margin: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.red,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  alignment: Alignment.bottomRight,
-                                );
-                              } else {
-                                return Container();
-                              }
-                            }),
-                            LayoutBuilder(builder: (context, constraints) {
-                              if (user_type == "Manufacturer") {
-                                return Align(
-                                  child: Container(
-                                    child: IconButton(
-                                        onPressed: () {
-                                          pickMultipleImage(
-                                              ImageSource.gallery);
-                                        },
-                                        icon: Icon(Icons.add),
-                                        color: Colors.white),
-                                    margin: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                      color: Colors.blueAccent,
-                                      shape: BoxShape.circle,
-                                    ),
-                                  ),
-                                  alignment: Alignment.bottomLeft,
-                                );
-                              } else {
-                                return Container();
-                              }
-                            })
-                          ]),
-                        );
-                      },
-                    ),
-                  );
-                } else if (imagesFiles!.length == 0 &&
-                    user_type == "Manufacturer") {
-                  return Container(
-                    margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
-                    height: 150,
-                    width: 500,
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(15),
-                        border: Border.all(
-                          color: Colors.black,
-                        )),
-                    child: IconButton(
-                      onPressed: () {
-                        pickMultipleImage(ImageSource.gallery);
-                      },
-                      icon: Icon(Icons.add_circle_outline_rounded),
-                    ),
-                  );
-                } else {
+                    );
+                  } else if (responseData1['images'].length == 0 &&
+                      user_type == "Manufacturer") {
+                    return Container(
+                      margin: EdgeInsets.fromLTRB(10, 10, 10, 0),
+                      height: 150,
+                      width: 500,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(15),
+                          border: Border.all(
+                            color: Colors.black,
+                          )),
+                      child: IconButton(
+                        onPressed: () {
+                          pickMultipleImage(ImageSource.gallery);
+                          setState(() {
+
+                          });
+                        },
+                        icon: Icon(Icons.add_circle_outline_rounded),
+                      ),
+                    );
+                  } else {
+                    return Container();
+                  }
+                }else{
                   return Container();
                 }
               }),
@@ -853,11 +897,107 @@ class _HomePageState extends State<HomeContent> {
       for (XFile image in images) {
         var imagesTemporary = File(image.path);
         imagesFiles!.add(imagesTemporary);
-      }
+        var imgBytes = imagesTemporary.readAsBytesSync();
+        String baseImage = base64Encode(imgBytes);
+        var res = await http.post(
+            Uri.parse("http://www.urbanwebmobile.in/steffo/setcarousel.php"),
+            body: {"name": image.name, "value": baseImage}
+        );
 
+        var picUpRes = jsonDecode(res.body);
+
+        responseData1['images'].add({"id": picUpRes['data'],"name": image.name});
+      }
       setState(() {});
     } catch (e) {
       print("Image Error");
     }
+  }
+
+  LogoutAlert() {
+    // QuickAlert.show(
+    //     context: context,
+    //     type: QuickAlertType.custom,
+    //     title: "Logout?",
+    //     text: "Are you sure?");
+
+    QuickAlert.show(
+        context: context,
+        type: QuickAlertType.error,
+        barrierDismissible: true,
+        cancelBtnText: 'Cancel',
+        confirmBtnText: 'Yes',
+        title: 'Are you sure?',
+        text: 'Logout',
+        textColor: Colors.red,
+
+        // customAsset: Icon(Icons.login_outlined),
+        onConfirmBtnTap: () async {
+          Navigator.pushReplacement(
+              context,
+              PageRouteBuilder(
+                pageBuilder: (context, animation1, animation2) => LRPage(),
+                transitionDuration: Duration.zero,
+                reverseTransitionDuration: Duration.zero,
+              ));
+        },
+        onCancelBtnTap: () {
+          Get.back();
+        });
+
+    // showDialog(
+    //     context: context,
+    //     builder: (context) {
+    //       return Dialog(
+    //         child: Container(
+    //           height: 150,
+    //           child: Center(
+    //             child: Column(
+    //               mainAxisAlignment: MainAxisAlignment.center,
+    //               children: [
+    //                 Text(
+    //                   "Logout?",
+    //                   style: GoogleFonts.lato(
+    //                       fontSize: 25, fontWeight: FontWeight.bold),
+    //                 ),
+    //                 SizedBox(
+    //                   height: 30,
+    //                 ),
+    //                 Row(
+    //                   mainAxisAlignment: MainAxisAlignment.spaceAround,
+    //                   children: [
+    //                     ElevatedButton(
+    //                         onPressed: () {
+    //                           Navigator.pushReplacement(
+    //                             context,
+    //                             PageRouteBuilder(
+    //                               pageBuilder:
+    //                                   (context, animation1, animation2) =>
+    //                                       LRPage(),
+    //                               transitionDuration: Duration.zero,
+    //                               reverseTransitionDuration: Duration.zero,
+    //                             ),
+    //                           );
+    //                         },
+    //                         child: Text(
+    //                           "Yes",
+    //                           style: GoogleFonts.lato(fontSize: 20),
+    //                         )),
+    //                     ElevatedButton(
+    //                         onPressed: () {
+    //                           Get.back();
+    //                         },
+    //                         child: Text(
+    //                           "Cancel",
+    //                           style: GoogleFonts.lato(fontSize: 20),
+    //                         )),
+    //                   ],
+    //                 )
+    //               ],
+    //             ),
+    //           ),
+    //         ),
+    //       );
+    //     });
   }
 }
