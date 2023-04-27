@@ -99,6 +99,7 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
   var _selected = 0;
   List listOfColumns = [];
   List items = [];
+  final Map<String,int> itemDtls = {};
   String? selectedValue;
   int itemNum = 1;
 
@@ -192,10 +193,13 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
       var responseData = jsonDecode(res.body);
       print(responseData);
       for(int i = 0 ; i < responseData["data"].length ; i++){
+
         items.add(responseData["data"][i]["name"]);
+        itemDtls[responseData["data"][i]["name"]] = int.parse(responseData["data"][i]["qty_left"]);
+
       }
+      print(itemDtls);
       flag = 1;
-      print("Heloooooooo");
         setState(() {
 
         });
@@ -228,6 +232,8 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
           "challan_id":responseData["data"].toString(),
           "name":listOfColumns[i]["Name"],
           "qty":listOfColumns[i]["Qty"].toString(),
+          "qty_left" : itemDtls[listOfColumns[i]["Name"]].toString(),
+          "order_id" : widget.order.order_id
         },
       );
     }
@@ -245,9 +251,6 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
 
     loadOrderData();
     getItems()  {
-      print("*****************************************************************");
-      print(items);
-      print("*****************************************************************");
       dropdownItems=[];
       for (int i = 0; i < items.length; i++) {
         DropdownMenuItem<String> item = DropdownMenuItem<String>(
@@ -386,6 +389,8 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                               items: getItems(),
                               onChanged: (String? newValue) {
                                 selectedValue = newValue;
+                                print(itemDtls[selectedValue]);
+                                qty.text = itemDtls[selectedValue].toString();
                               },
                             )),
                         Container(
@@ -419,17 +424,24 @@ class _GenerateChallanPageState extends State<GenerateChallanContent> {
                                     side: BorderSide.none),
                                 minimumSize: const Size(190, 40)),
                             onPressed: () {
+                              if(selectedValue != null && qty.text.trim() != "" && int.parse(qty.text) > 0 && int.parse(qty.text) <= itemDtls[selectedValue]! ){
                                 listOfColumns.add({
                                   "Sr_no": itemNum.toString(),
                                   "Name": "$selectedValue",
                                   "Qty": qty.text
                                 });
-                                // int i = items.indexOf(selectedValue);
-                                // items.removeAt(i);
 
+                                int quty = itemDtls[selectedValue]!;
+                                quty = quty - int.parse(qty.text);
+                                itemDtls[selectedValue!] = quty;
+                                print(itemDtls[selectedValue]);
                                 itemNum = itemNum + 1;
                                 selectedValue = null;
+                                qty.text = "";
+
                                 setState(() {});
+
+                              }
                             },
                             child: const Text("Add Item"))
                       ],
