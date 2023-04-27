@@ -43,6 +43,11 @@ class _AddItemPageState extends State<AddItemContent> {
 
   TextEditingController newSize = TextEditingController();
 
+  TextEditingController newRegionPrice = TextEditingController();
+
+  TextEditingController newRegion = TextEditingController();
+
+
   loadData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     final user_id = await prefs.getString('id');
@@ -483,9 +488,7 @@ class _AddItemPageState extends State<AddItemContent> {
                                             isEnabled = false;
                                           });
                                           // print(newBasePrice.text);
-                                          setState(() {
-                                            isEnabled = false;
-                                          });
+
                                         },
                                         child: Text("Submit"),
                                         style: ElevatedButton.styleFrom(
@@ -525,10 +528,88 @@ class _AddItemPageState extends State<AddItemContent> {
                                 itemBuilder: (context, ind) {
                                   return Center(
                                     child: AddNewRegion(
-                                        context, regionList[ind], () {
-                                      regionList.removeAt(ind);
-                                      setState(() {});
-                                    }),
+                                        context, regionList[ind],
+                                      () async {
+                                        await http.post(
+                                            Uri.parse(
+                                                "http://urbanwebmobile.in/steffo/deleteregion.php"),
+                                            body: {
+                                              "regionName":
+                                              regionList[ind].name.toString(),
+                                            });
+                                          regionList.removeAt(ind);
+                                          setState(() {});
+                                      },
+                                      (){
+                                        showDialog(
+                                            context: context,
+                                            builder: (context) {
+                                              return Container(
+                                                child: Dialog(
+                                                  child: Container(
+                                                    height: 150,
+                                                    child: Column(
+                                                      mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .center,
+                                                      children: [
+                                                        Padding(
+                                                          padding:
+                                                          const EdgeInsets
+                                                              .all(10),
+                                                          child: TextFormField(
+                                                            maxLines: 1,
+                                                            controller: newRegionPrice,
+                                                            keyboardType:
+                                                            TextInputType
+                                                                .number,
+                                                            decoration:
+                                                            const InputDecoration(
+                                                              labelText:
+                                                              "New Price",
+                                                              floatingLabelBehavior:
+                                                              FloatingLabelBehavior
+                                                                  .never,
+                                                              border:
+                                                              OutlineInputBorder(
+                                                                // borderRadius: BorderRadius.circular(20),
+                                                                  borderSide:
+                                                                  BorderSide
+                                                                      .none),
+                                                              filled: true,
+                                                              fillColor:
+                                                              Color.fromRGBO(
+                                                                  233,
+                                                                  236,
+                                                                  239,
+                                                                  0.792156862745098), //Color.fromRGBO(233, 236, 239, 0.792156862745098)
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        ElevatedButton(
+                                                            onPressed: () {
+                                                              final numericRegex = RegExp(r'^[0-9]*$');
+                                                                if (numericRegex.hasMatch(newRegionPrice.text) && newRegionPrice.text.trim() != ""){
+                                                                    regionList[ind].cost = newRegionPrice.text;
+                                                                    http.post(
+                                                                        Uri.parse(
+                                                                            "http://urbanwebmobile.in/steffo/updateregion.php"),
+                                                                        body: {
+                                                                          "regionName": regionList[ind].name,
+                                                                          "price": newRegionPrice.text
+                                                                        });
+                                                                }
+                                                                Navigator.pop(context);
+                                                              },
+                                                            child: Text("Submit"))
+                                                      ],
+                                                    ),
+                                                  ),
+                                                ),
+                                              );
+                                            });
+                                      }
+                                    ),
                                   );
                                 },
                               ),
@@ -538,8 +619,9 @@ class _AddItemPageState extends State<AddItemContent> {
                                 return Column(
                                   children: [
                                     TextFormField(
+                                      controller: newRegion,
                                       maxLines: 1,
-                                      keyboardType: TextInputType.number,
+                                      keyboardType: TextInputType.name,
                                       decoration: const InputDecoration(
                                         labelText: "Add new Region",
                                         floatingLabelBehavior:
@@ -555,8 +637,12 @@ class _AddItemPageState extends State<AddItemContent> {
                                     ElevatedButton(
                                         // icon: Icon(Icons.done_outlined),
 
-                                        onPressed: () {
-                                          // print(newBasePrice.text);
+                                        onPressed: () async {
+                                          await http.post(
+                                              Uri.parse(
+                                                  "http://urbanwebmobile.in/steffo/addregion.php"),
+                                              body: {"regionName": newRegion.text});
+                                          Navigator.pop(context);
                                           setState(() {
                                             isEnabled = false;
                                           });

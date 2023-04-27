@@ -75,11 +75,15 @@ class _InventoryPageState extends State<InventoryContent> {
     print(responseData);
     for (int i = 0; i < responseData["data"].length; i++) {
       print(responseData['data'][i]['name']);
-      var ind = gradeList.indexWhere((element) =>
-          element.value?.trim() == responseData['data'][i]['name'].trim());
-      gradeList[ind].qty =
-          gradeList[ind].qty! + int.parse(responseData['data'][i]['qty_left']);
-      print(gradeList[ind].value! + " " + gradeList[ind].qty.toString());
+      try{
+        var ind = gradeList.indexWhere((element) =>
+            element.value?.trim() == responseData['data'][i]['name'].trim());
+        gradeList[ind].qty = gradeList[ind].qty! +
+            int.parse(responseData['data'][i]['qty_left']);
+      }catch(e){
+        print(e);
+      }
+      //print(gradeList[ind].value! + " " + gradeList[ind].qty.toString());
       Lumpsum l = Lumpsum();
       l.orderId = responseData["data"][i]["order_id"];
       l.name = responseData["data"][i]["name"];

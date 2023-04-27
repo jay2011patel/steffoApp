@@ -455,7 +455,7 @@ Widget AddNewSize(BuildContext context, ItemSize s, remove(), update()) {
       ));
 }
 
-Widget AddNewRegion(BuildContext context, Region r, c()) {
+Widget AddNewRegion(BuildContext context, Region r, remove(),update()) {
   return Container(
       width: MediaQuery.of(context).size.width,
       padding: EdgeInsets.only(left: 20.0, right: 20.0),
@@ -478,7 +478,7 @@ Widget AddNewRegion(BuildContext context, Region r, c()) {
                 flex: 1,
                 child: IconButton(
                     onPressed: () => {
-                          print("Edit button pressed"),
+                          update(),
                         },
                     icon: Icon(
                       Icons.edit,
@@ -489,8 +489,7 @@ Widget AddNewRegion(BuildContext context, Region r, c()) {
                 flex: 1,
                 child: IconButton(
                     onPressed: () => {
-                          c(),
-                          print("Delete button pressed"),
+                          remove()
                         },
                     icon: Icon(
                       Icons.delete_rounded,
