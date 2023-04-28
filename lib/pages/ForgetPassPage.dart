@@ -21,39 +21,38 @@ class ForgetPasscontent extends StatefulWidget {
 }
 
 class _ForgetPassPageState extends State<ForgetPasscontent>{
-  bool submitValid = false;
+  bool submitValid = true;
 
   final TextEditingController email = TextEditingController();
   final TextEditingController otp = TextEditingController();
-  EmailOTP myauth = EmailOTP();
+  EmailOTP myAuth = EmailOTP();
   
-  EmailAuth emailAuth =EmailAuth(sessionName: "sessionName");
+  // EmailAuth emailAuth =EmailAuth(sessionName: "sessionName");
   // void verify() {
   //   print(emailAuth.validateOtp(
   //       recipientMail: email.value.text,
   //       userOtp: otp.value.text));
   // }
-  @override
-  void initState() {
-    super.initState();
-    // Initialize the package
-    emailAuth = new EmailAuth(
-      sessionName: "Sample session",
-    );
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   // Initialize the package
+  //   emailAuth = new EmailAuth(
+  //     sessionName: "Sample session",
+  //   );
+  //   /// Configuring the remote server
+  //   // emailAuth.config(remoteServerConfiguration);
+  // }
 
-    /// Configuring the remote server
-    // emailAuth.config(remoteServerConfiguration);
-  }
-
-  void sendOtp() async {
-    bool result = await emailAuth.sendOtp(
-        recipientMail: email.toString(), otpLength: 4);
-    if (result) {
-      setState(() {
-        submitValid = true;
-      });
-    }
-  }
+  // void sendOtp() async {
+  //   bool result = await emailAuth.sendOtp(
+  //       recipientMail: email.toString(), otpLength: 4);
+  //   if (result) {
+  //     setState(() {
+  //       submitValid = true;
+  //     });
+  //   }
+  // }
 
 
   // final TextEditingController _otpController = TextEditingController();
@@ -188,13 +187,13 @@ class _ForgetPassPageState extends State<ForgetPasscontent>{
                             padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
                           // height: 60,
                           child:  buttonStyle("Send Code", () async{
-                              myauth.setConfig(
+                              myAuth.setConfig(
                               appEmail: "contact@gmail.com",
                               appName: "Email",
                               userEmail: email.text,
                               otpLength: 4,
                               otpType: OTPType.digitsOnly);
-                              if(await myauth.sendOTP()==true){
+                              if(await myAuth.sendOTP()==true){
                               ScaffoldMessenger.of(context)
                                   .showSnackBar(const SnackBar(
                               content: Text("OTP has been sent")

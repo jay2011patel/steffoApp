@@ -119,7 +119,6 @@ class _OrderPageState extends State<OrderPage> {
     //status.text = widget.order.status!;
 
     return Scaffold(
-
         appBar: appbar("Order",(){
           Navigator.pop(context);
         }),
@@ -137,246 +136,239 @@ class _OrderPageState extends State<OrderPage> {
             child: SingleChildScrollView(
                 child: Column(
                     children: [
-                      const Padding(padding: EdgeInsets.all(10)),
+                      // const Padding(padding: EdgeInsets.all(10)),
 
-                  Card(
-                    child: Container(
-                        padding: const EdgeInsets.all(10),
-                        width: MediaQuery.of(context).size.width - 20,
-                        decoration: BoxDecoration(
-                          // borderRadius: BorderRadius.circular(25),
-                          color: Colors.grey.withOpacity(0.20),
-                        ),
-                        child: Column(
-                            children: [
-                              Card(
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: const BoxDecoration(
-                                    color: Colors.white,
-                                  ),
-                                  child: Row(
-                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text("Order From:",
-                                          style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                      Text(widget.order.user_name!,
-                                          style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
-                                    ],
-                                  ),
-                                ),
-
+                  Container(
+                      padding: const EdgeInsets.all(10),
+                      width: MediaQuery.of(context).size.width - 10,
+                      // decoration: BoxDecoration(
+                      //   // borderRadius: BorderRadius.circular(25),
+                      //   color: Colors.blueAccent.withOpacity(0.20),
+                      // ),
+                      child: Column(
+                          children: [
+                            Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                borderRadius: BorderRadius.only(topLeft:Radius.circular(30),topRight: Radius.circular(30)),
+                                color: Colors.lightBlueAccent,
                               ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                                children: [
+                                  const Text("Order From:",
+                                      style: TextStyle(fontSize: 20,fontFamily: "Poppins_Bold")),
+                                  Text(widget.order.user_name!,
+                                      style: const TextStyle(fontSize: 20,fontFamily: "Poppins_bold",color: Colors.white))
+                                ],
+                              ),
+                            ),
 
+                            SizedBox(
+                              height: 10,
+                            ),
 
-                              Card(
-                                child: Container(
-                                  padding: const EdgeInsets.all(10),
-                                  decoration: const BoxDecoration(
-                                    // borderRadius: BorderRadius.circular(20),
-                                    color: Colors.white,
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      Row(
-                                        children: const [
-                                          Text("Shipping Address :",
-                                              style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                        ],
-                                      ),
+                            Card(
+                              elevation: 10,
+                              child: Container(
+                                padding: const EdgeInsets.all(10),
+                                decoration: const BoxDecoration(
+                                  // borderRadius: BorderRadius.circular(20),
+                                  color: Colors.white,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      children: const [
+                                        Text("Shipping Address :",
+                                            style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                      ],
+                                    ),
 
-                                      Row(
-                                        children: [
-                                          Flexible(
-                                            child: Text(widget.order.party_address!,
-                                                style: const TextStyle(
-                                                  fontSize: 15,
-                                                  fontFamily: "Poppins",
-                                                )
-                                            ),
+                                    Row(
+                                      children: [
+                                        Flexible(
+                                          child: Text(widget.order.party_address!,
+                                              style: const TextStyle(
+                                                fontSize: 15,
+                                                fontFamily: "Poppins",
+                                              )
                                           ),
-                                        ],
-                                      ),
-                                      // const Padding(padding: EdgeInsets.only(right: 10)),
-                                      // Row(
-                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      //   children: [
-                                      //     const Text("Shipping Address :",
-                                      //         style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                      //     // SizedBox(width: 60,),
-                                      //     Flexible(
-                                      //       child: Text(widget.order.party_address!,
-                                      //           style: const TextStyle(
-                                      //             fontSize: 15,
-                                      //             fontFamily: "Poppins",
-                                      //           )
-                                      //       ),
-                                      //     )
-                                      //   ],
-                                      // ),
-                                      const SizedBox(
-                                        height: 5.0,
-                                      ),
+                                        ),
+                                      ],
+                                    ),
+                                    // const Padding(padding: EdgeInsets.only(right: 10)),
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     const Text("Shipping Address :",
+                                    //         style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    //     // SizedBox(width: 60,),
+                                    //     Flexible(
+                                    //       child: Text(widget.order.party_address!,
+                                    //           style: const TextStyle(
+                                    //             fontSize: 15,
+                                    //             fontFamily: "Poppins",
+                                    //           )
+                                    //       ),
+                                    //     )
+                                    //   ],
+                                    // ),
+                                    const SizedBox(
+                                      height: 5.0,
+                                    ),
 
-                                      Row(
-                                        children:const [
-                                          Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Text(widget.order.party_mob_num!,
-                                              style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
-                                        ],
-                                      ),
-                                      // Row(
-                                      //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                      //   children: [
-                                      //     const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                      //     Text(widget.order.party_mob_num!,
-                                      //         style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
-                                      //   ],
-                                      // ),
-                                    ],
-                                  ),
-
+                                    Row(
+                                      children:const [
+                                        Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                      ],
+                                    ),
+                                    Row(
+                                      children: [
+                                        Text(widget.order.party_mob_num!,
+                                            style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                      ],
+                                    ),
+                                    // Row(
+                                    //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    //   children: [
+                                    //     const Text("Contact:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                    //     Text(widget.order.party_mob_num!,
+                                    //         style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                    //   ],
+                                    // ),
+                                  ],
                                 ),
+
                               ),
+                            ),
 
-                          // const SizedBox(
-                          //   height: 10.0,
-                          // ),
-                          // Card(
-                          //   child: Container(
-                          //       padding:const  EdgeInsets.all(10),
-                          //       decoration: const BoxDecoration(
-                          //         // borderRadius: BorderRadius.circular(20),
-                          //         color: Colors.white,
-                          //       ),
-                          //       ),
-                          // ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Card(
-                            child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: const BoxDecoration(
-                                  // borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        // const SizedBox(
+                        //   height: 10.0,
+                        // ),
+                        // Card(
+                        //   child: Container(
+                        //       padding:const  EdgeInsets.all(10),
+                        //       decoration: const BoxDecoration(
+                        //         // borderRadius: BorderRadius.circular(20),
+                        //         color: Colors.white,
+                        //       ),
+                        //       ),
+                        // ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Card(
+                          elevation: 10,
+                          child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                // borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                                  children: [
-                                    const Text("Loading Type:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.loading_type!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
-                                  ],
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Card(
-                            child: Container(
-                                padding: const EdgeInsets.all(10),
-                                decoration: const BoxDecoration(
-                                  // borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text("Loading Type:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                  Text(widget.order.loading_type!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                ],
+                              )),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Card(
+                          elevation: 10,
+                          child: Container(
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                // borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                                  children: [
-                                    const Text("Base Price:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.base_price!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
-                                  ],
-                                )),
-                          ),
-                          const SizedBox(
-                            height: 10.0,
-                          ),
-                          Card(
-                            child: Container(
-                                // margin: EdgeInsets.only(top: 10),
-                                padding: const EdgeInsets.all(10),
-                                decoration: const BoxDecoration(
-                                  // borderRadius: BorderRadius.circular(20),
-                                  color: Colors.white,
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text("Base Price:", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                  Text(widget.order.base_price!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                ],
+                              )),
+                        ),
+                        const SizedBox(
+                          height: 10.0,
+                        ),
+                        Card(
+                          elevation: 10,
+                          shadowColor: Colors.grey,
+                          child: Container(
+                              // margin: EdgeInsets.only(top: 10),
+                              padding: const EdgeInsets.all(10),
+                              decoration: const BoxDecoration(
+                                // borderRadius: BorderRadius.circular(20),
+                                color: Colors.white,
+                              ),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
 
-                                  children:  [
-                                    const Text("Status: ", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
-                                    Text(widget.order.status!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
-                                  ],
-                                )),
-                          ),
+                                children:  [
+                                  const Text("Status: ", style: TextStyle(fontSize: 15,fontFamily: "Poppins_Bold")),
+                                  Text(widget.order.status!, style: const TextStyle(fontSize: 15,fontFamily: "Poppins"))
+                                ],
+                              )),
+                        ),
 
-                        ])),
-                  ),
+                      ])),
                   const SizedBox(
                     height: 10.0,
                   ),
 
-                  Card(
-                    child: Container(
-                        padding: const EdgeInsets.all(10),
-                        // margin: EdgeInsets.fromLTRB(0, 0, 0, 10),
-                        width: MediaQuery.of(context).size.width - 20,
-                        decoration: BoxDecoration(
-                          // borderRadius: BorderRadius.circular(25),
-                          color: Colors.grey.withOpacity(0.20),
-                        ),
-                        child: Column(
-                          children: [
-                            SingleChildScrollView(
-                              scrollDirection: Axis.vertical,
-                              child: Card(
-                                child: Container(
-                                    height: 250,
-                                    width: MediaQuery.of(context).size.width - 20,
-                                    padding: const EdgeInsets.only(
-                                        top: 10, bottom: 10, left: 10, right: 10),
-                                    decoration: BoxDecoration(
-                                        color: Colors.white,
-                                        borderRadius: BorderRadius.circular(20.0)),
-                                    // alignment: Alignment.center,
-                                    // padding: const EdgeInsets.only(top: 20),
-                                    child: SingleChildScrollView(
-                                      child: DataTable(
-                                        headingTextStyle: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            color: Colors.black),
-                                        columnSpacing: 0,
-                                        columns: const [
-                                          DataColumn(label: Text("Sr\nNo")),
-                                          DataColumn(label: Text("Item name")),
-                                          DataColumn(label: Text("Quantity\n(Tons)")),
-                                          DataColumn(label: Text("Price"))
+                  SingleChildScrollView(
+                    scrollDirection: Axis.vertical,
+                    child: Card(
+                      margin: EdgeInsets.only(left: 20,right: 20),
+                      elevation: 10,
+                      child: Container(
+                          height: 250,
+                          width: MediaQuery.of(context).size.width - 20,
+                          padding: const EdgeInsets.only(
+                              top: 10, bottom: 10, left: 10, right: 10),
+                          decoration: BoxDecoration(
+                              // color: Colors.grey.withOpacity(0.20),
+                              // borderRadius: BorderRadius.circular(20.0)
+                          ),
+                          // alignment: Alignment.center,
+                          // padding: const EdgeInsets.only(top: 20),
+                          child: SingleChildScrollView(
+                            child: DataTable(
+                              headingTextStyle: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.black),
+                              columnSpacing: 0,
+                              columns: const [
+                                DataColumn(label: Text("Sr\nNo")),
+                                DataColumn(label: Text("Item name")),
+                                DataColumn(label: Text("Quantity\n(Tons)")),
+                                DataColumn(label: Text("Price"))
 
-                                        ],
-                                        rows: listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
-                                            .map(
-                                          ((element) => DataRow(
-                                            cells: <DataCell>[
-                                              DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
-                                              DataCell(Text(element["Name"]!)),
-                                              DataCell(Text(element["Qty"]!)),
-                                              DataCell(Text(element["Price"]!)),
-                                            ],
-                                          )),
-                                        )
-                                            .toList(),
-                                      ),
-                                    )),
-                              ),
+                              ],
+                              rows: listOfColumns // Loops through dataColumnText, each iteration assigning the value to element
+                                  .map(
+                                ((element) => DataRow(
+                                  cells: <DataCell>[
+                                    DataCell(Text(element["Sr_no"]!)), //Extracting from Map element the value
+                                    DataCell(Text(element["Name"]!)),
+                                    DataCell(Text(element["Qty"]!)),
+                                    DataCell(Text(element["Price"]!)),
+                                  ],
+                                )),
+                              )
+                                  .toList(),
                             ),
-                          ],
-                        )
+                          )),
                     ),
                   ),
+                  SizedBox(height: 10,),
                   LayoutBuilder(builder: (context, constraints) {
                     if(widget.order.status == "Pending" && id == widget.order.reciever_id){
                       return Container(
