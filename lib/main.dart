@@ -7,6 +7,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/pages/ChangePP.dart';
 import 'package:stefomobileapp/pages/DealerPage.dart';
 import 'package:stefomobileapp/pages/EditableProfilePage.dart';
@@ -80,10 +81,25 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreen extends State<SplashScreen> {
+  bool allowDirectLogin = false;
+  loadData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    if(prefs.containsKey('isLoggedIn')){
+      allowDirectLogin = true;
+    }
+  }
+
   @override
-  void initState() {
-    Timer(
-        Duration(seconds: 4), () => Navigator.of(context).pushNamed('/lrpage'));
+  void initState()  {
+    loadData();
+        Timer(
+        Duration(seconds: 4), (){
+          if(allowDirectLogin){
+            Navigator.of(context).pushNamed('/home');
+          }else{
+            Navigator.of(context).pushNamed('/lrpage');
+          }
+      });
     super.initState();
   }
 

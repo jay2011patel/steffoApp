@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stefomobileapp/ui/common.dart';
 
@@ -65,7 +66,7 @@ class _loginPageState extends State<LoginContent> {
     focusNode2.dispose();
     super.dispose();
   }
-
+  bool rememberMe = false;
   onLogin(String email, String pw) async {
     var test = await http.post(
       Uri.parse('http://urbanwebmobile.in/steffo/login.php'),
@@ -95,7 +96,9 @@ class _loginPageState extends State<LoginContent> {
       prefs.setString('panNumber', responseData["panNumber"]);
       prefs.setString('adhNumber', responseData["adhNumber"]);
       prefs.setString('address', responseData["address"]);
-
+      if(rememberMe){
+        prefs.setString('isLoggedIn','true');
+      }
       if (responseData['userStatus'] == 'Approved') {
         Navigator.of(context).pushNamed("/home");
         Fluttertoast.showToast(
@@ -204,7 +207,7 @@ class _loginPageState extends State<LoginContent> {
 
                         Container(
                           width: width,
-                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 10),
+                          padding: const EdgeInsets.fromLTRB(10, 5, 10, 0),
                           child: TextFormField(
                           key: field2Key,
                           focusNode: focusNode2,
@@ -255,6 +258,14 @@ class _loginPageState extends State<LoginContent> {
                               return const Text("");
                              }
                         }),
+                        Row(
+                          children: [
+                            Checkbox(value: rememberMe, onChanged: (bool? value) { rememberMe = value!; setState(() {
+
+                            }); },),
+                            Text("Remember Me ?",style: GoogleFonts.poppins(textStyle: TextStyle(color: Colors.white)),)
+                          ],
+                        ),
 
                     //------------------------------LoginButton-----------------------------
 

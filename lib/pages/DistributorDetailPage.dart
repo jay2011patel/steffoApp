@@ -204,7 +204,16 @@ class DistributorDetailState extends State<DistributorDetailContent>{
                         ],
                       ),
                     ),
-                    SizedBox(height: 10,)
+                    SizedBox(height: 10,),
+                    Container(
+                      width: MediaQuery.of(context).size.width,
+                      margin: EdgeInsets.only(top: 10),
+                      padding: EdgeInsets.symmetric(horizontal: 20),
+                      child: ElevatedButton(
+                        onPressed: (){},
+                        child: Text("View Inventory"),
+                      )
+                    ),
 
 
                   ],
