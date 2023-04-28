@@ -60,15 +60,29 @@ Widget buttonStyle(String str, void c()) {
 
 //----------------------------------Appbar----------------------------------
 
-AppBar appbar(String txt, void c()) {
+AppBar appbar(String txt, void c(), {void Function()? alert}) {
   return AppBar(
+    elevation: 1,
     actions: [
-      IconButton(
-          onPressed: () {},
-          icon: const Icon(
-            Icons.menu,
-            color: Colors.white,
-          ))
+      LayoutBuilder(builder: (context, constraints) {
+        if (txt == 'Home') {
+          return IconButton(
+              onPressed: () {
+                alert!();
+              },
+              icon: const Icon(
+                Icons.power_settings_new_rounded,
+                color: Colors.black,
+              ));
+        } else {
+          return IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.menu,
+                color: Colors.white,
+              ));
+        }
+      })
     ],
     title: Center(
         child: Text(
@@ -78,12 +92,7 @@ AppBar appbar(String txt, void c()) {
           color: Color.fromRGBO(19, 59, 78, 1), fontFamily: "Poppins_Bold"),
     )),
     backgroundColor: Colors.white,
-    leading: IconButton(
-        onPressed: c,
-        icon: const Icon(
-          Icons.arrow_back_ios_new,
-          color: Colors.black,
-        )),
+    leading: Image.asset("assets/images/logo_foreground.png"),
   );
 }
 

@@ -72,25 +72,14 @@ class _HomePageState extends State<HomeContent> {
         if (_selected == 0) {
           // LogoutAlert();
         }
-        setState(() {
-          LogoutAlert();
-          // _selected = 0;
-          // Navigator.pushReplacement(
-          //   context,
-          //   PageRouteBuilder(
-          //     pageBuilder: (context, animation1, animation2) => HomePage(),
-          //     transitionDuration: Duration.zero,
-          //     reverseTransitionDuration: Duration.zero,
-          //   ),
-          // );
-        });
+        SystemNavigator.pop();
         return false;
       },
       child: Scaffold(
           appBar: appbar("Home", () {
             print("Back Pressed");
             Navigator.pop(context);
-          }),
+          }, alert: LogoutAlert),
           body: HomePageBody(),
           floatingActionButton: LayoutBuilder(builder: (context, constraints) {
             if (user_type != "Manufacturer" && isSalesEnabled == "true") {
@@ -233,7 +222,9 @@ class _HomePageState extends State<HomeContent> {
         req.reciever_id = responseData["data"][i]["supplier_id"];
         req.user_id = responseData["data"][i]["user_id"];
         req.user_mob_num = responseData["data"][i]["mobileNumber"];
-        req.user_name = responseData["data"][i]["firstName"] + " " + responseData["data"][i]["lastName"];
+        req.user_name = responseData["data"][i]["firstName"] +
+            " " +
+            responseData["data"][i]["lastName"];
         req.status = responseData["data"][i]["orderStatus"];
         req.party_name = responseData["data"][i]["partyName"];
         req.party_address = responseData["data"][i]["shippingAddress"];
@@ -268,7 +259,7 @@ class _HomePageState extends State<HomeContent> {
           child: Column(
             children: [
               LayoutBuilder(builder: (context, constraints) {
-                if(isRes1Loaded){
+                if (isRes1Loaded) {
                   if (responseData1['images'].length > 0) {
                     return Container(
                       margin: EdgeInsets.fromLTRB(0, 10, 0, 0),
@@ -320,18 +311,20 @@ class _HomePageState extends State<HomeContent> {
                                       child: IconButton(
                                           onPressed: () async {
                                             var res1 = await http.post(
-                                              Uri.parse("http://urbanwebmobile.in/steffo/delcar.php"),
-                                              body: {
-                                                "id"  : responseData1['images'][i]['id'].toString(),
-                                                "name"  : responseData1['images'][i]['name'],
-                                              }
-                                            );
+                                                Uri.parse(
+                                                    "http://urbanwebmobile.in/steffo/delcar.php"),
+                                                body: {
+                                                  "id": responseData1['images']
+                                                          [i]['id']
+                                                      .toString(),
+                                                  "name":
+                                                      responseData1['images'][i]
+                                                          ['name'],
+                                                });
 
-                                              responseData1['images']
-                                                  .removeAt(i);
+                                            responseData1['images'].removeAt(i);
 
-                                            setState(() {
-                                            });
+                                            setState(() {});
                                           },
                                           icon: Icon(Icons.delete),
                                           color: Colors.white),
@@ -354,11 +347,10 @@ class _HomePageState extends State<HomeContent> {
                                       child: IconButton(
                                           onPressed: () async {
                                             await pickMultipleImage(
-                                                ImageSource.gallery
-                                            );
+                                                ImageSource.gallery);
 
                                             setState(() {
-                                              m=id;
+                                              m = id;
                                             });
                                           },
                                           icon: Icon(Icons.add),
@@ -394,9 +386,7 @@ class _HomePageState extends State<HomeContent> {
                       child: IconButton(
                         onPressed: () {
                           pickMultipleImage(ImageSource.gallery);
-                          setState(() {
-
-                          });
+                          setState(() {});
                         },
                         icon: Icon(Icons.add_circle_outline_rounded),
                       ),
@@ -404,7 +394,7 @@ class _HomePageState extends State<HomeContent> {
                   } else {
                     return Container();
                   }
-                }else{
+                } else {
                   return Container();
                 }
               }),
@@ -901,12 +891,12 @@ class _HomePageState extends State<HomeContent> {
         String baseImage = base64Encode(imgBytes);
         var res = await http.post(
             Uri.parse("http://www.urbanwebmobile.in/steffo/setcarousel.php"),
-            body: {"name": image.name, "value": baseImage}
-        );
+            body: {"name": image.name, "value": baseImage});
 
         var picUpRes = jsonDecode(res.body);
 
-        responseData1['images'].add({"id": picUpRes['data'],"name": image.name});
+        responseData1['images']
+            .add({"id": picUpRes['data'], "name": image.name});
       }
       setState(() {});
     } catch (e) {
@@ -920,7 +910,7 @@ class _HomePageState extends State<HomeContent> {
     //     type: QuickAlertType.custom,
     //     title: "Logout?",
     //     text: "Are you sure?");
-
+    print("object");
     QuickAlert.show(
         context: context,
         type: QuickAlertType.error,
