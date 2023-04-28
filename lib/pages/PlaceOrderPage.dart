@@ -833,7 +833,7 @@ class _PlaceOrderPageState extends State<PlaceOrderContent> {
                           focusNode: focusNode8,
                           validator: (selectedValue) {
                             if (selectedValue == null) {
-                              return 'Please select a value.';
+                              // return 'Please select a value.';
                             }
                             return null;
                           },

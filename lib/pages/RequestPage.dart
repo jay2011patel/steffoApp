@@ -139,6 +139,7 @@ class _RequestPageState extends State<RequestContent>{
         req.base_price = responseData["data"][i]["basePrice"];
         req.order_id = responseData["data"][i]["order_id"].toString();
         if(req.status?.trim() == "Pending" && id == req.reciever_id) {
+          print(req.loading_type);
           requestList.add(req);
         }
       }

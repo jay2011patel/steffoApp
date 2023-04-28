@@ -98,9 +98,7 @@ class _AddItemPageState extends State<AddItemContent> {
       print(responseData['data'][i]['name']);
       var ind = gradeList.indexWhere((element) =>
           element.value?.trim() == responseData['data'][i]['name'].trim());
-
-      print(gradeList[ind].value!);
-    }
+      }
     isDataLoaded = true;
     setState(() {});
   }
