@@ -95,9 +95,9 @@ class _SplashScreen extends State<SplashScreen> {
         Timer(
         Duration(seconds: 4), (){
           if(allowDirectLogin){
-            Navigator.of(context).pushNamed('/home');
+            Navigator.of(context).pushReplacementNamed('/home');
           }else{
-            Navigator.of(context).pushNamed('/lrpage');
+            Navigator.of(context).pushReplacementNamed('/lrpage');
           }
       });
     super.initState();

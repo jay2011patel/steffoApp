@@ -22,6 +22,7 @@ import 'package:stylish_bottom_bar/stylish_bottom_bar.dart';
 import 'package:http/http.dart' as http;
 import '../Models/order.dart';
 import '../ui/cards.dart';
+import 'LoginPage.dart';
 import 'RequestPage.dart';
 import 'package:contained_tab_bar_view/contained_tab_bar_view.dart';
 import 'package:image_picker/image_picker.dart';
@@ -923,13 +924,13 @@ class _HomePageState extends State<HomeContent> {
 
         // customAsset: Icon(Icons.login_outlined),
         onConfirmBtnTap: () async {
-          Navigator.pushReplacement(
+          SharedPreferences prefs = await SharedPreferences.getInstance();
+          prefs.clear();
+          Navigator.pushAndRemoveUntil(
               context,
-              PageRouteBuilder(
-                pageBuilder: (context, animation1, animation2) => LRPage(),
-                transitionDuration: Duration.zero,
-                reverseTransitionDuration: Duration.zero,
-              ));
+              MaterialPageRoute(builder: (BuildContext context) => LoginPage()),
+              ModalRoute.withName('/') // Replace this with your root screen's route name (usually '/')
+          );
         },
         onCancelBtnTap: () {
           Get.back();

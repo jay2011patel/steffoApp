@@ -34,7 +34,7 @@ class FirstScreen extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 20),
                   width: MediaQuery.of(context).size.width,
                   child: buttonWhite("Login",
-                      () => {Navigator.of(context).pushNamed('/login')})),
+                      () => {Navigator.of(context).pushReplacementNamed('/login')})),
             ),
             Container(
               margin: EdgeInsets.fromLTRB(0, 10, 0, 0),

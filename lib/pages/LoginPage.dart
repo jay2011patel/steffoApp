@@ -66,7 +66,7 @@ class _loginPageState extends State<LoginContent> {
     focusNode2.dispose();
     super.dispose();
   }
-  bool rememberMe = false;
+  bool rememberMe = true;
   onLogin(String email, String pw) async {
     var test = await http.post(
       Uri.parse('http://urbanwebmobile.in/steffo/login.php'),
